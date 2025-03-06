@@ -1,0 +1,17 @@
+{
+    "rpc": {
+        "RpcServer": [ "127.0.0.1" ],
+        "RpcAppId": "fd1f126e6be14e3cb8979e449214394a",
+        "RpcAppSecret": "475b1cf2686f4906a4ae6925396d59da",
+        "RpcSystemType": "basic.hr.service",
+        "LocalMac": "7c:b2:7d:ea:fd:df"
+    },
+  "db": {
+    "SqlSugar": [
+        {
+            "ConfigId": "default",
+            "ConnectionString": "Data Source=.;Initial Catalog=WedonekBase;Persist Security Info=True;User ID=sa;Password=tc426831;Max Pool Size = 1024;Encrypt=True;TrustServerCertificate=True;"
+        }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<EnablePreviewFeatures>True</EnablePreviewFeatures>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PublishTrimmed>false</PublishTrimmed>
+		<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>Basic.HrGatewaryModular.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>Basic.HrGatewaryModular.xml</DocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="WeDonekRpc.ApiGateway" Version="1.0.2" />
+	  <PackageReference Include="WeDonekRpc.Client" Version="1.0.1" />
+	  <PackageReference Include="WeDonekRpc.Helper" Version="1.0.2" />
+	  <PackageReference Include="WeDonekRpc.HttpApiGateway" Version="1.0.2" />
+	  <PackageReference Include="WeDonekRpc.Modular" Version="1.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Basic.HrRemoteModel\Basic.HrRemoteModel.csproj" />
+	</ItemGroup>
+</Project>

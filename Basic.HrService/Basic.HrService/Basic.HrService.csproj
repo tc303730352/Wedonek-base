@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnablePreviewFeatures>True</EnablePreviewFeatures>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Base.HrExtendService\Base.HrExtendService.csproj" />
+		<ProjectReference Include="..\Basic.HrCollect\Basic.HrCollect.csproj" />
+		<ProjectReference Include="..\Basic.HrLocalEvent\Basic.HrLocalEvent.csproj" />
+		<ProjectReference Include="..\Basic.HrModel\Basic.HrModel.csproj" />
+		<ProjectReference Include="..\Basic.HrRemoteModel\Basic.HrRemoteModel.csproj" />
+		<PackageReference Include="WeDonekRpc.CacheClient" Version="1.0.1" />
+		<PackageReference Include="WeDonekRpc.Client" Version="1.0.1" />
+		<PackageReference Include="WeDonekRpc.Helper" Version="1.0.2" />
+		<PackageReference Include="WeDonekRpc.Model" Version="1.0.1" />
+		<PackageReference Include="WeDonekRpc.Modular" Version="1.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Helper\" />
+	</ItemGroup>
+
+</Project>

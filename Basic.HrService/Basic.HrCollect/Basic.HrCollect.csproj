@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <EnablePreviewFeatures>True</EnablePreviewFeatures>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WeDonekRpc.Helper" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basic.HrDAL\Basic.HrDAL.csproj" />
+    <ProjectReference Include="..\Basic.HrModel\Basic.HrModel.csproj" />
+    <ProjectReference Include="..\Basic.HrRemoteModel\Basic.HrRemoteModel.csproj" />
+  </ItemGroup>
+
+</Project>

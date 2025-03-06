@@ -1,0 +1,1525 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Basic.HrGatewaryModular</name>
+    </assembly>
+    <members>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Add(Basic.HrRemoteModel.Company.Model.CompanyAdd)">
+            <summary>
+            新增公司
+            </summary>
+            <param name="datum">公司资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Delete(System.Int64)">
+            <summary>
+            删除公司
+            </summary>
+            <param name="id">公司ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Get(System.Int64)">
+            <summary>
+            获取公司信息
+            </summary>
+            <param name="id">公司ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetList(Basic.HrGatewaryModular.Model.Company.UI_GetCompanyList)">
+            <summary>
+            获取公司列表
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetTree(Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree)">
+            <summary>
+            获取公司列表树形结构
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Set(Basic.HrGatewaryModular.Model.Company.UI_SetCompany)">
+            <summary>
+            修改公司资料
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Add(Basic.HrRemoteModel.Dept.Model.DeptAdd)">
+            <summary>
+            添加部门
+            </summary>
+            <param name="datum">部门资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Delete(System.Int64)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="id">部门ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Enable(System.Int64[])">
+            <summary>
+            启用部门
+            </summary>
+            <param name="deptId">部门ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Gets(Basic.HrRemoteModel.Dept.Model.DeptQueryParam)">
+            <summary>
+            查询单位部门
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Get(System.Int64)">
+            <summary>
+            获取部门信息
+            </summary>
+            <param name="id">部门ID</param>
+            <returns>部门资料</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.GetSelect(Basic.HrRemoteModel.Dept.Model.DeptGetArg)">
+            <summary>
+            获取部门选项
+            </summary>
+            <param name="getParam">查询参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.GetTree(Basic.HrRemoteModel.Dept.Model.DeptGetArg)">
+            <summary>
+            获取部门树形结构
+            </summary>
+            <param name="param">部门查询参数</param>
+            <returns>部门树</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Set(Basic.HrGatewaryModular.Model.Dept.UI_SetDept)">
+            <summary>
+            修改部门资料
+            </summary>
+            <param name="param">参数</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.SetLeader(WeDonekRpc.HttpApiGateway.Model.LongNullParam{System.Nullable{System.Int64}})">
+            <summary>
+            设置负载人
+            </summary>
+            <param name="leader"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.Stop(System.Int64)">
+            <summary>
+            停用部门
+            </summary>
+            <param name="deptId">部门ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptChangeApi.GetDept(System.Int64,System.Nullable{System.Boolean})">
+            <summary>
+            获取变动的部门列表
+            </summary>
+            <param name="deptId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptChangeApi.GetDisbandedEmps(Basic.HrRemoteModel.DeptChange.Model.DeptDisbandedArg)">
+            <summary>
+            获取解散部门影响的人员
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptChangeApi.GetMergeEmp(Basic.HrRemoteModel.DeptChange.Model.DeptMergeArg)">
+            <summary>
+            获取合并部门影响的人员
+            </summary>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptChangeApi.Merge(System.Int64,System.Int64)">
+            <summary>
+            合并部门
+            </summary>
+            <param name="deptId"></param>
+            <param name="toDeptId"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptChangeApi.ToVoid(System.Int64)">
+            <summary>
+            解散部门
+            </summary>
+            <param name="deptId"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptProwerApi.Get(System.Int64,System.Int64)">
+            <summary>
+            获取员工部门数据权限
+            </summary>
+            <param name="empId">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DeptProwerApi.Set(Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower)">
+            <summary>
+            设置员工部门权限
+            </summary>
+            <param name="param">参数</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Add(Basic.HrRemoteModel.Dic.Model.DicAdd)">
+            <summary>
+            新建字典
+            </summary>
+            <param name="datum">字典资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Delete(System.Int64)">
+            <summary>
+            删除字典
+            </summary>
+            <param name="id">字典ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Enable(System.Int64)">
+            <summary>
+            启用字典
+            </summary>
+            <param name="id">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Get(System.Int64)">
+            <summary>
+            获取字典
+            </summary>
+            <param name="id">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Query(Basic.HrGatewaryModular.Model.Dic.UI_QueryDic)">
+            <summary>
+            查询字典
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Set(Basic.HrGatewaryModular.Model.Dic.UI_SetDic)">
+            <summary>
+            修改字典
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicApi.Stop(System.Int64)">
+            <summary>
+            停用字典
+            </summary>
+            <param name="id">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Add(Basic.HrRemoteModel.DicItem.Model.DicItemAdd)">
+            <summary>
+            添加字典项
+            </summary>
+            <param name="datum">字典项资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Delete(System.Int64)">
+            <summary>
+            删除字典项
+            </summary>
+            <param name="id">字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Enable(System.Int64)">
+            <summary>
+            启用字典项
+            </summary>
+            <param name="id">启用字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Gets(System.Int64)">
+            <summary>
+            获取字典项
+            </summary>
+            <param name="dicId">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.GetItems(Basic.HrRemoteModel.DicItem.Model.DicItemQuery)">
+            <summary>
+            查询字典项
+            </summary>
+            <param name="query">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Set(Basic.HrGatewaryModular.Model.DicItem.UI_SetDicItem)">
+            <summary>
+            设置字典项
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Stop(System.Int64)">
+            <summary>
+            停用字典项
+            </summary>
+            <param name="id">字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Move(System.Int64,System.Int64)">
+            <summary>
+            设置排序位
+            </summary>
+            <param name="id"></param>
+            <param name="sort"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.CheckIsRepeat(Basic.HrRemoteModel.Emp.Model.DataRepeatCheck)">
+            <summary>
+            检查数据是否重复
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.SetEmpPost(WeDonekRpc.HttpApiGateway.Model.LongParam{System.String})">
+            <summary>
+            修改人员岗位
+            </summary>
+            <param name="set"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.Add(Basic.HrRemoteModel.Emp.Model.EmpAdd)">
+            <summary>
+            新建人员
+            </summary>
+            <param name="datum">人员信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.SaveHead(Basic.HrGatewaryModular.Model.Emp.SetEmpHead)">
+            <summary>
+            保存人员头像
+            </summary>
+            <param name="head"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.Delete(System.Int64)">
+            <summary>
+            删除人员
+            </summary>
+            <param name="id">人员ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.Get(System.Int64)">
+            <summary>
+            获取人员信息
+            </summary>
+            <param name="id">人员ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.GetData(System.Int64)">
+            <summary>
+            获取人员详细
+            </summary>
+            <param name="id">人员ID</param>
+            <returns>人员详细</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.GetBasics(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Int64[]})">
+            <summary>
+            根据人员ID和公司ID获取人员基本信息
+            </summary>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.GetBasic(System.Int64,System.Int64)">
+            <summary>
+            获取人员基本信息
+            </summary>
+            <param name="empId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.GetSelectItem(Basic.HrRemoteModel.Emp.Model.SelectGetParam)">
+            <summary>
+            获取人员选择项
+            </summary>
+            <param name="param">选择项资料</param>
+            <returns>人员信息</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.Query(Basic.HrGatewaryModular.Model.Emp.UI_QueryEmp)">
+            <summary>
+            查询人员信息
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.QueryEmp(WeDonekRpc.HttpApiGateway.Model.PagingParam{Basic.HrRemoteModel.Emp.Model.EmpQuery})">
+            <summary>
+            查询人员信息
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.Set(Basic.HrGatewaryModular.Model.Emp.UI_SetEmp)">
+            <summary>
+            修改人员资料
+            </summary>
+            <param name="param">参数</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.SetStatus(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.HrEmpStatus})">
+            <summary>
+            启用
+            </summary>
+            <param name="set"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpLoginApi.GetLoginDatum">
+            <summary>
+            获取登陆资料
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpLoginApi.EmpPwdLogin(Basic.HrGatewaryModular.Model.EmpLogin.UI_EmpPwdLogin)">
+            <summary>
+            人员密码登陆
+            </summary>
+            <param name="param">参数</param>
+            <returns>登陆结果</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpRoleApi.Get(System.Int64)">
+            <summary>
+            获取人员角色列表
+            </summary>
+            <param name="empId">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpRoleApi.Set(Basic.HrGatewaryModular.Model.EmpRole.UI_SetEmpRole)">
+            <summary>
+            修改人员角色
+            </summary>
+            <param name="param">参数</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.Add(Basic.HrRemoteModel.EmpTitle.Model.EmpTitleAdd)">
+            <summary>
+            添加人员职务
+            </summary>
+            <param name="datum">职务资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.Delete(System.Int64)">
+            <summary>
+            删除人员职务
+            </summary>
+            <param name="id">职务ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.Get(System.Int64)">
+            <summary>
+            获取职务
+            </summary>
+            <param name="id">职务ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.GetList(System.Int64,System.Int64)">
+            <summary>
+            获取职务列表
+            </summary>
+            <param name="empId">人员ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EnumApi.GetItems(System.String)">
+            <summary>
+            获取枚举项
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.LoginUserApi.DeleteAccount(System.Int64)">
+            <summary>
+            删除账户
+            </summary>
+            <param name="empId">人员ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.LoginUserApi.ResetPwd(System.Int64)">
+            <summary>
+            重置密码
+            </summary>
+            <param name="empId"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.LoginUserApi.UpdatePwd(Basic.HrRemoteModel.LoginUser.Model.PwdSetArg)">
+            <summary>
+            修改密码
+            </summary>
+            <param name="set"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.LoginUserApi.OpenAccount(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Int64[]})">
+            <summary>
+            开通账号
+            </summary>
+            <param name="set">人员ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.LoginUserApi.Query(Basic.HrGatewaryModular.Model.LoginUser.UI_QueryLoginUser)">
+            <summary>
+            查询登陆账号信息
+            </summary>
+            <param name="param">参数</param>
+            <returns>登陆用户资料</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Add(Basic.HrRemoteModel.Prower.Model.ProwerAdd)">
+            <summary>
+            添加目录权限
+            </summary>
+            <param name="datum">目录权限资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Get(System.Int64)">
+            <summary>
+            获取目录权限
+            </summary>
+            <param name="id">权限ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.GetTree(Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree)">
+            <summary>
+            获取目录权限树
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.GetTreeBySystem">
+            <summary>
+            获取目录权限树含子系统
+            </summary>
+            <returns>目录权限子系统</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Query(Basic.HrGatewaryModular.Model.Prower.UI_QueryPrower)">
+            <summary>
+            查询目录权限
+            </summary>
+            <param name="param">参数</param>
+            <returns>目录权限</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Set(Basic.HrGatewaryModular.Model.Prower.UI_SetPrower)">
+            <summary>
+            修改权限
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleApi.Add(Basic.HrRemoteModel.Role.Model.RoleSet)">
+            <summary>
+            添加角色
+            </summary>
+            <param name="datum">角色资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleApi.Delete(System.Int64)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id">角色ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleApi.GetDetailed(System.Int64)">
+            <summary>
+            获取角色详细
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>角色详细</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleApi.GetSelect">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleApi.Query(WeDonekRpc.HttpApiGateway.Model.PagingParam{Basic.HrRemoteModel.Role.Model.RoleGetParam})">
+            <summary>
+            获取角色列表
+            </summary>
+            <param name="param">角色查询参数</param>
+            <returns>角色资料</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleApi.Set(Basic.HrGatewaryModular.Model.Role.UI_SetRole)">
+            <summary>
+            修改角色
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Add(Basic.HrRemoteModel.TreeDic.Model.TreeDicItemAdd)">
+            <summary>
+            添加树形字典项
+            </summary>
+            <param name="datum">树形字典资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Delete(System.Int64)">
+            <summary>
+            删除树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Enable(System.Int64)">
+            <summary>
+            启用树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.GetDicTree(System.Int64)">
+            <summary>
+            获取树形字典项
+            </summary>
+            <param name="dicId">字典ID</param>
+            <returns>树形字典</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Get(System.Int64)">
+            <summary>
+            获取树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Move(Basic.HrGatewaryModular.Model.TreeDic.UI_MoveTreeDicItem)">
+            <summary>
+            移动树形字典
+            </summary>
+            <param name="param">参数</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Query(Basic.HrGatewaryModular.Model.TreeDic.UI_QueryTreeDicItem)">
+            <summary>
+            查询字典项
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Set(Basic.HrGatewaryModular.Model.TreeDic.UI_SetTreeDicItem)">
+            <summary>
+            修改树形字典项
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Stop(System.Int64)">
+            <summary>
+            停用树形字典项
+            </summary>
+            <param name="id">树形字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetDeptSelect(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">
+            <summary>
+            获取独立单位
+            </summary>
+            <param name="param">查询参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetDeptTree(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">
+            <summary>
+            获取独立机构树
+            </summary>
+            <param name="param">查询参数</param>
+            <returns>部门树</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetSelect(Basic.HrRemoteModel.Unit.Model.UnitQueryParam)">
+            <summary>
+            获取单位选项数据
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetTree(Basic.HrRemoteModel.Unit.Model.UnitQueryParam)">
+            <summary>
+            选项单位树形
+            </summary>
+            <param name="param">查询参数</param>
+            <returns>部门树</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.AddCompany(Basic.HrRemoteModel.Company.Model.CompanyAdd)">
+            <summary>
+            新增公司
+            </summary>
+            <param name="datum">公司资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.DeleteCompany(System.Int64)">
+            <summary>
+            删除公司
+            </summary>
+            <param name="id">公司ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.GetCompany(System.Int64)">
+            <summary>
+            获取公司信息
+            </summary>
+            <param name="id">公司ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.GetCompanyList(System.Nullable{System.Int64},System.Boolean)">
+            <summary>
+            获取公司列表
+            </summary>
+            <param name="parentId">父级公司ID</param>
+            <param name="isAllChildren">是否包含所有下级</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.GetCompanyTree(System.Nullable{System.Int64},Basic.HrRemoteModel.HrCompanyStatus[])">
+            <summary>
+            获取公司列表树形结构
+            </summary>
+            <param name="parentId">父级公司ID</param>
+            <param name="status">公司状态</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.SetCompany(System.Int64,Basic.HrRemoteModel.Company.Model.CompanySet)">
+            <summary>
+            修改公司资料
+            </summary>
+            <param name="id">公司ID</param>
+            <param name="datum">公司资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptProwerService.GetDeptPrower(System.Int64,System.Int64)">
+            <summary>
+            获取员工部门数据权限
+            </summary>
+            <param name="empId">员工ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptProwerService.SetDeptPrower(System.Int64,System.Int64,System.Int64[])">
+            <summary>
+            设置员工部门权限
+            </summary>
+            <param name="empId">员工ID</param>
+            <param name="deptId">拥有的部门ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.AddDept(Basic.HrRemoteModel.Dept.Model.DeptAdd)">
+            <summary>
+            添加部门
+            </summary>
+            <param name="datum">部门资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.DeleteDept(System.Int64)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="id">部门ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.EnableDept(System.Int64[])">
+            <summary>
+            启用部门
+            </summary>
+            <param name="deptId">部门ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.GetDept(System.Int64)">
+            <summary>
+            获取部门信息
+            </summary>
+            <param name="id">部门ID</param>
+            <returns>部门资料</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.GetDeptSelect(Basic.HrRemoteModel.Dept.Model.DeptGetArg)">
+            <summary>
+            获取部门选项
+            </summary>
+            <param name="getParam">查询参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.GetDeptTree(Basic.HrRemoteModel.Dept.Model.DeptGetArg)">
+            <summary>
+            获取部门树形结构
+            </summary>
+            <param name="param">部门查询参数</param>
+            <returns>部门树</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.SetDept(System.Int64,Basic.HrRemoteModel.Dept.Model.DeptSet)">
+            <summary>
+            修改部门资料
+            </summary>
+            <param name="id">部门ID</param>
+            <param name="dept">部门资料</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.StopDept(System.Int64)">
+            <summary>
+            停用部门
+            </summary>
+            <param name="deptId">部门ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.Gets(Basic.HrRemoteModel.Dept.Model.DeptQueryParam)">
+            <summary>
+            获取部门列表
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptService.SetLeader(System.Int64,System.Nullable{System.Int64})">
+            <summary>
+            修改负载人
+            </summary>
+            <param name="id"></param>
+            <param name="leaderId"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.AddDicItem(Basic.HrRemoteModel.DicItem.Model.DicItemAdd)">
+            <summary>
+            添加字典项
+            </summary>
+            <param name="datum">字典项资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.DeleteDicItem(System.Int64)">
+            <summary>
+            删除字典项
+            </summary>
+            <param name="id">字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.EnableDicItem(System.Int64)">
+            <summary>
+            启用字典项
+            </summary>
+            <param name="id">启用字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.GetDicItems(System.Int64)">
+            <summary>
+            获取字典项
+            </summary>
+            <param name="dicId">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.Gets(Basic.HrRemoteModel.DicItem.Model.DicItemQuery)">
+            <summary>
+            查询字典项
+            </summary>
+            <param name="query">查询参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.SetDicItem(System.Int64,Basic.HrRemoteModel.DicItem.Model.DicItemSet)">
+            <summary>
+            设置字典项
+            </summary>
+            <param name="id">字典项ID</param>
+            <param name="itemSet">字典项资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicItemService.StopDicItem(System.Int64)">
+            <summary>
+            停用字典项
+            </summary>
+            <param name="id">字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.AddDic(Basic.HrRemoteModel.Dic.Model.DicAdd)">
+            <summary>
+            新建字典
+            </summary>
+            <param name="datum">字典资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.DeleteDic(System.Int64)">
+            <summary>
+            删除字典
+            </summary>
+            <param name="id">字典ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.EnableDic(System.Int64)">
+            <summary>
+            启用字典
+            </summary>
+            <param name="id">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.GetDic(System.Int64)">
+            <summary>
+            获取字典
+            </summary>
+            <param name="id">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.QueryDic(Basic.HrRemoteModel.Dic.Model.DicQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+            <summary>
+            查询字典
+            </summary>
+            <param name="query">字典查询参数</param>
+            <param name="paging">分页参数</param>
+            <param name="count">数据总数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.SetDic(System.Int64,Basic.HrRemoteModel.Dic.Model.DicSet)">
+            <summary>
+            修改字典
+            </summary>
+            <param name="id">字典ID</param>
+            <param name="datum">字典资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IDicService.StopDic(System.Int64)">
+            <summary>
+            停用字典
+            </summary>
+            <param name="id">字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpLoginService.EmpPwdLogin(System.String,System.String)">
+            <summary>
+            人员密码登陆
+            </summary>
+            <param name="loginName">登陆名</param>
+            <param name="password">登陆密码</param>
+            <returns>登陆结果</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpRoleService.GetEmpRole(System.Int64)">
+            <summary>
+            获取人员角色列表
+            </summary>
+            <param name="empId">人员ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpRoleService.SetEmpRole(System.Int64,System.Int64[])">
+            <summary>
+            修改人员角色
+            </summary>
+            <param name="empId">人员ID</param>
+            <param name="roleId">人员角色列表</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.AddEmp(Basic.HrRemoteModel.Emp.Model.EmpAdd)">
+            <summary>
+            新建人员
+            </summary>
+            <param name="datum">人员信息</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.CheckIsRepeat(Basic.HrRemoteModel.Emp.Model.DataRepeatCheck)">
+            <summary>
+            检查是否重复
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.DeleteEmp(System.Int64)">
+            <summary>
+            删除人员
+            </summary>
+            <param name="id">人员ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.GetEmp(System.Int64)">
+            <summary>
+            获取人员信息
+            </summary>
+            <param name="id">人员ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.GetEmpData(System.Int64)">
+            <summary>
+            获取人员详细
+            </summary>
+            <param name="id">人员ID</param>
+            <returns>人员详细</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.GetEmpSelectItem(Basic.HrRemoteModel.Emp.Model.SelectGetParam)">
+            <summary>
+            获取人员选择项
+            </summary>
+            <param name="param">选择项资料</param>
+            <returns>人员信息</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.QueryEmp(Basic.HrRemoteModel.Emp.Model.EmpQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+            <summary>
+            查询人员信息
+            </summary>
+            <param name="query">人员查询参数</param>
+            <param name="paging">分页参数</param>
+            <param name="count">数据总数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.SetEmp(System.Int64,Basic.HrRemoteModel.Emp.Model.EmpSet)">
+            <summary>
+            修改人员资料
+            </summary>
+            <param name="id">人员ID</param>
+            <param name="datum">人员资料</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.AddEmpTitle(Basic.HrRemoteModel.EmpTitle.Model.EmpTitleAdd)">
+            <summary>
+            添加人员职务
+            </summary>
+            <param name="datum">职务资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.DeleteEmpTitle(System.Int64)">
+            <summary>
+            删除人员职务
+            </summary>
+            <param name="id">职务ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.GetEmpTitle(System.Int64)">
+            <summary>
+            获取职务
+            </summary>
+            <param name="id">职务ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.GetEmpTitleList(System.Int64,System.Int64)">
+            <summary>
+            获取职务列表
+            </summary>
+            <param name="empId">人员ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ILoginUserService.DeleteAccount(System.Int64)">
+            <summary>
+            删除账户
+            </summary>
+            <param name="empId">人员ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ILoginUserService.OpenAccount(System.Int64[],System.Int64)">
+            <summary>
+            开通账号
+            </summary>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ILoginUserService.QueryLoginUser(Basic.HrRemoteModel.LoginUser.Model.LoginUserQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+            <summary>
+            查询登陆账号信息
+            </summary>
+            <param name="query">查询参数</param>
+            <param name="paging">分页参数</param>
+            <param name="count">数据总数</param>
+            <returns>登陆用户资料</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.AddPrower(Basic.HrRemoteModel.Prower.Model.ProwerAdd)">
+            <summary>
+            添加目录权限
+            </summary>
+            <param name="datum">目录权限资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.GetPrower(System.Int64)">
+            <summary>
+            获取目录权限
+            </summary>
+            <param name="id">权限ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.GetProwerTree(System.Int64,System.Nullable{System.Boolean})">
+            <summary>
+            获取目录权限树
+            </summary>
+            <param name="subSystemId">子级系统ID</param>
+            <param name="isEnable">是否启用</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.GetProwerTreeBySystem">
+            <summary>
+            获取目录权限树含子系统
+            </summary>
+            <returns>目录权限子系统</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.QueryPrower(Basic.HrRemoteModel.Prower.Model.ProwerQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+            <summary>
+            查询目录权限
+            </summary>
+            <param name="queryParam">查询参数</param>
+            <param name="paging">分页参数</param>
+            <param name="count">数据总数</param>
+            <returns>目录权限</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.SetPrower(System.Int64,Basic.HrRemoteModel.Prower.Model.ProwerSet)">
+            <summary>
+            修改权限
+            </summary>
+            <param name="id">目录权限ID</param>
+            <param name="datum">目录权限资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IRoleService.AddRole(Basic.HrRemoteModel.Role.Model.RoleSet)">
+            <summary>
+            添加角色
+            </summary>
+            <param name="datum">角色资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IRoleService.DeleteRole(System.Int64)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id">角色ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IRoleService.GetRoleDetailed(System.Int64)">
+            <summary>
+            获取角色详细
+            </summary>
+            <param name="id">角色ID</param>
+            <returns>角色详细</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IRoleService.SetRole(System.Int64,Basic.HrRemoteModel.Role.Model.RoleSet)">
+            <summary>
+            修改角色
+            </summary>
+            <param name="id">角色ID</param>
+            <param name="datum">角色资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.AddTreeDicItem(Basic.HrRemoteModel.TreeDic.Model.TreeDicItemAdd)">
+            <summary>
+            添加树形字典项
+            </summary>
+            <param name="datum">树形字典资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.DeleteTreeDicItem(System.Int64)">
+            <summary>
+            删除树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.EnableTreeDicItem(System.Int64)">
+            <summary>
+            启用树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.GetDicTree(System.Int64)">
+            <summary>
+            获取树形字典项
+            </summary>
+            <param name="dicId">字典ID</param>
+            <returns>树形字典</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.GetTreeDicItem(System.Int64)">
+            <summary>
+            获取树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.MoveTreeDicItem(System.Int64,System.Int64)">
+            <summary>
+            移动树形字典
+            </summary>
+            <param name="fromId">来源</param>
+            <param name="toId">目的地</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.QueryTreeDicItem(Basic.HrRemoteModel.TreeDic.Model.TreeItemQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+            <summary>
+            查询字典项
+            </summary>
+            <param name="query">查询项</param>
+            <param name="paging">分页参数</param>
+            <param name="count">数据总数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.SetTreeDicItem(System.Int64,Basic.HrRemoteModel.TreeDic.Model.TreeDicItemSet)">
+            <summary>
+            修改树形字典项
+            </summary>
+            <param name="id">树形字典项ID</param>
+            <param name="datum">树形字典项资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.ITreeDicService.StopTreeDicItem(System.Int64)">
+            <summary>
+            停用树形字典项
+            </summary>
+            <param name="id">树形字典ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitDeptSelect(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">
+            <summary>
+            获取独立单位
+            </summary>
+            <param name="param">查询参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitDeptTree(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">
+            <summary>
+            获取独立机构树
+            </summary>
+            <param name="param">查询参数</param>
+            <returns>部门树</returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitSelect(Basic.HrRemoteModel.Unit.Model.UnitQueryParam)">
+            <summary>
+            获取单位选项数据
+            </summary>
+            <param name="param">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitTree(Basic.HrRemoteModel.Unit.Model.UnitQueryParam)">
+            <summary>
+            选项单位树形
+            </summary>
+            <param name="param">查询参数</param>
+            <returns>部门树</returns>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyList">
+            <summary>
+            获取公司列表 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyList.ParentId">
+            <summary>
+            父级公司ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyList.IsAllChildren">
+            <summary>
+            是否包含所有下级
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree">
+            <summary>
+            获取公司列表树形结构 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree.ParentId">
+            <summary>
+            父级公司ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree.Status">
+            <summary>
+            公司状态
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Company.UI_SetCompany">
+            <summary>
+            修改公司资料 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_SetCompany.Id">
+            <summary>
+            公司ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_SetCompany.Datum">
+            <summary>
+            公司资料
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DeptChange.DeptChangeDto.ChangeDept">
+            <summary>
+            变动受影响的部门
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.DeptPrower.UI_GetDeptPrower">
+            <summary>
+            获取员工部门数据权限 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_GetDeptPrower.EmpId">
+            <summary>
+            员工ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_GetDeptPrower.CompanyId">
+            <summary>
+            公司ID
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower">
+            <summary>
+            设置员工部门权限 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower.EmpId">
+            <summary>
+            员工ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower.DeptId">
+            <summary>
+            拥有的部门ID
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Dept.UI_SetDept">
+            <summary>
+            修改部门资料 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Dept.UI_SetDept.Id">
+            <summary>
+            部门ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Dept.UI_SetDept.Dept">
+            <summary>
+            部门资料
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.DicItem.UI_QueryDicItem">
+            <summary>
+            查询字典项 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DicItem.UI_QueryDicItem.Query">
+            <summary>
+            查询参数
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.DicItem.UI_SetDicItem">
+            <summary>
+            设置字典项 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DicItem.UI_SetDicItem.Id">
+            <summary>
+            字典项ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.DicItem.UI_SetDicItem.ItemSet">
+            <summary>
+            字典项资料
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Dic.UI_QueryDic">
+            <summary>
+            查询字典 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Dic.UI_QueryDic.Query">
+            <summary>
+            字典查询参数
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Dic.UI_SetDic">
+            <summary>
+            修改字典 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Dic.UI_SetDic.Id">
+            <summary>
+            字典ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Dic.UI_SetDic.Datum">
+            <summary>
+            字典资料
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.SubSystem">
+            <summary>
+            子系统
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.Prower">
+            <summary>
+            菜单列表
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.Company">
+            <summary>
+            人员公司
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.CurSubSysId">
+            <summary>
+            当前选择的子系统
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.UnitId">
+            <summary>
+            所在单位ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.CompanyId">
+            <summary>
+            入职部门
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.EmpId">
+            <summary>
+            员工ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.EmpName">
+            <summary>
+            员工名
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.DeptId">
+            <summary>
+            部门ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.HeadUri">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.EmpLogin.UI_EmpPwdLogin">
+            <summary>
+            人员密码登陆 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.UI_EmpPwdLogin.LoginName">
+            <summary>
+            登陆名
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.UI_EmpPwdLogin.Password">
+            <summary>
+            登陆密码
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.EmpRole.UI_GetEmpRole">
+            <summary>
+            获取人员角色列表 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpRole.UI_GetEmpRole.EmpId">
+            <summary>
+            人员ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpRole.UI_GetEmpRole.CompanyId">
+            <summary>
+            公司id
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.EmpRole.UI_SetEmpRole">
+            <summary>
+            修改人员角色 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpRole.UI_SetEmpRole.EmpId">
+            <summary>
+            人员ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpRole.UI_SetEmpRole.RoleId">
+            <summary>
+            人员角色列表
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Emp.SetEmpHead.Id">
+            <summary>
+            数据ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Emp.SetEmpHead.FileId">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Emp.UI_QueryEmp">
+            <summary>
+            查询人员信息 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Emp.UI_QueryEmp.Query">
+            <summary>
+            人员查询参数
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Emp.UI_SetEmp">
+            <summary>
+            修改人员资料 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Emp.UI_SetEmp.Id">
+            <summary>
+            人员ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Emp.UI_SetEmp.Datum">
+            <summary>
+            人员资料
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EnumDic.EnumItem.Text">
+            <summary>
+            文本
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EnumDic.EnumItem.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.LoginUser.UI_QueryLoginUser">
+            <summary>
+            查询登陆账号信息 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.LoginUser.UI_QueryLoginUser.Query">
+            <summary>
+            查询参数
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree">
+            <summary>
+            获取目录权限树 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree.SubSystemId">
+            <summary>
+            子级系统ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree.IsEnable">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_QueryPrower">
+            <summary>
+            查询目录权限 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_QueryPrower.QueryParam">
+            <summary>
+            查询参数
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower">
+            <summary>
+            修改权限 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower.Id">
+            <summary>
+            目录权限ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower.Datum">
+            <summary>
+            目录权限资料
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.Role.UI_SetRole">
+            <summary>
+            修改角色 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Role.UI_SetRole.Id">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Role.UI_SetRole.Datum">
+            <summary>
+            角色资料
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.TreeDic.UI_MoveTreeDicItem">
+            <summary>
+            移动树形字典 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.TreeDic.UI_MoveTreeDicItem.FromId">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.TreeDic.UI_MoveTreeDicItem.ToId">
+            <summary>
+            目的地
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.TreeDic.UI_QueryTreeDicItem">
+            <summary>
+            查询字典项 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.TreeDic.UI_QueryTreeDicItem.Query">
+            <summary>
+            查询项
+            </summary>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Model.TreeDic.UI_SetTreeDicItem">
+            <summary>
+            修改树形字典项 UI参数实体
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.TreeDic.UI_SetTreeDicItem.Id">
+            <summary>
+            树形字典项ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.TreeDic.UI_SetTreeDicItem.Datum">
+            <summary>
+            树形字典项资料
+            </summary>
+        </member>
+    </members>
+</doc>

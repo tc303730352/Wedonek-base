@@ -1,0 +1,122 @@
+﻿using Basic.HrModel.DB;
+using Basic.HrModel.Role;
+using Basic.HrModel.RolePrower;
+using Basic.HrRemoteModel.Role.Model;
+using WeDonekRpc.Helper;
+using WeDonekRpc.Helper.IdGenerator;
+using WeDonekRpc.Model;
+using WeDonekRpc.SqlSugar;
+
+namespace Basic.HrDAL.Repository
+{
+    internal class RoleDAL : BasicDAL<DBRole, long>, IRoleDAL
+    {
+        public RoleDAL (IRepository<DBRole> basicDAL) : base(basicDAL)
+        {
+        }
+        public void Delete (DBRole role, long[] roleProwerId)
+        {
+            if (roleProwerId.IsNull())
+            {
+                base.Delete(role.Id);
+                return;
+            }
+            ISqlQueue<DBRole> queue = this._BasicDAL.BeginQueue();
+            queue.Delete<DBRolePrower>(a => roleProwerId.Contains(a.Id));
+            queue.Delete(a => a.Id == role.Id);
+            if (queue.Submit() <= 0)
+            {
+                throw new ErrorException("hr.role.delete.fail");
+            }
+        }
+        public void Set (DBRole role, RoleSetDatum set, long[] roleProwerId, RolePrower[] prower)
+        {
+            ISqlQueue<DBRole> queue = this._BasicDAL.BeginQueue();
+            _ = queue.Update(role, set);
+            if (!roleProwerId.IsNull())
+            {
+                queue.Delete<DBRolePrower>(a => roleProwerId.Contains(a.Id));
+            }
+            if (!prower.IsNull())
+            {
+                queue.Insert(prower.ConvertAll(a => new DBRolePrower
+                {
+                    Id = IdentityHelper.CreateId(),
+                    SubSystemId = a.SubSystemId,
+                    ProwerId = a.ProwerId,
+                    ProwerType = a.ProwerType,
+                    RoleId = role.Id
+                }));
+            }
+            if (queue.Submit() <= 0)
+            {
+                throw new ErrorException("hr.role.set.fail");
+            }
+        }
+        public void Add (DBRole add, RolePrower[] prower)
+        {
+            add.Id = IdentityHelper.CreateId();
+            add.AddTime = DateTime.Now;
+            if (prower.IsNull())
+            {
+                this._BasicDAL.Insert(add);
+            }
+            else
+            {
+                ISqlQueue<DBRole> queue = this._BasicDAL.BeginQueue();
+                queue.Insert(add);
+                queue.Insert(prower.ConvertAll(a => new DBRolePrower
+                {
+                    Id = IdentityHelper.CreateId(),
+                    SubSystemId = a.SubSystemId,
+                    ProwerId = a.ProwerId,
+                    ProwerType = a.ProwerType,
+                    RoleId = add.Id
+                }));
+                if (queue.Submit() <= 0)
+                {
+                    throw new ErrorException("hr.role.add.fail");
+                }
+            }
+        }
+        public void SetIsEnable (DBRole role, bool enable)
+        {
+            if (!this._BasicDAL.Update(a => a.IsEnable == enable, a => a.Id == role.Id))
+            {
+                throw new ErrorException("hr.role.enable.set.fail");
+            }
+        }
+        public void SetIsAdmin (DBRole role, bool isAdmin, bool enable)
+        {
+            if (!this._BasicDAL.Update(a => new DBRole
+            {
+                IsEnable = enable,
+                IsAdmin = isAdmin,
+            }, a => a.Id == role.Id))
+            {
+                throw new ErrorException("hr.role.admin.set.fail");
+            }
+        }
+
+        public Result[] Query<Result> (RoleGetParam query, IBasicPage paging, out int count) where Result : class, new()
+        {
+            return this._BasicDAL.Query<Result>(query.ToWhere(), paging, out count);
+        }
+
+        public long GetDefRole ()
+        {
+            return this._BasicDAL.Get(a => a.IsEnable && a.IsDefRole, a => a.Id);
+        }
+        public void SetIsDef (DBRole role, long defId)
+        {
+            ISqlQueue<DBRole> queue = this._BasicDAL.BeginQueue();
+            queue.UpdateOneColumn(a => a.IsDefRole == true, a => a.Id == role.Id);
+            queue.UpdateOneColumn(a => a.IsDefRole == false, a => a.Id == defId);
+            _ = queue.Submit();
+        }
+        public bool CheckIsAdmin (long[] roleId)
+        {
+            return this._BasicDAL.IsExist(a => roleId.Contains(a.Id) && a.IsAdmin);
+        }
+    }
+}
