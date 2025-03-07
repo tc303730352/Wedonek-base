@@ -6,7 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import BasicLayout from '@/layout/basicLayout'
-const defLoadRoute = ['shop']
+const defLoadRoute = []
 const defRoute = []
 export const getLayout = (name) => {
   if (name === 'BasicLayout') {
