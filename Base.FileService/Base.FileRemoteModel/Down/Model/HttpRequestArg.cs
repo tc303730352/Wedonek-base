@@ -1,16 +1,8 @@
-﻿using System.Net;
-using WeDonekRpc.Helper.Http;
-
-namespace Base.FileRemoteModel.Down.Model
+﻿namespace Base.FileRemoteModel.Down.Model
 {
     public class HttpRequestArg
     {
         public string Accept
-        {
-            get;
-            set;
-        }
-        public SecurityProtocolType? SecurityProtocolType
         {
             get;
             set;
@@ -35,20 +27,13 @@ namespace Base.FileRemoteModel.Down.Model
             get;
             set;
         }
-        public int? Timeout
+        public TimeSpan? Timeout
         {
             get;
             set;
         }
-        /// <summary>
-        /// 读写超时时间
-        /// </summary>
-        public int? ReadWriteTimeout
-        {
-            get;
-            set;
-        }
-        public string Referer
+
+        public Uri Referer
         {
             get;
             set;
@@ -65,14 +50,5 @@ namespace Base.FileRemoteModel.Down.Model
             set;
         }
 
-        public CertInfo HttpsCert
-        {
-            get;
-            set;
-        }
-
-        public int? ContinueTimeout { get; set; }
-        public string ProtocolVersion { get; set; }
-        public bool? SendChunked { get; set; }
     }
 }

@@ -13,11 +13,11 @@
 		<ProjectReference Include="..\Basic.HrLocalEvent\Basic.HrLocalEvent.csproj" />
 		<ProjectReference Include="..\Basic.HrModel\Basic.HrModel.csproj" />
 		<ProjectReference Include="..\Basic.HrRemoteModel\Basic.HrRemoteModel.csproj" />
-		<PackageReference Include="WeDonekRpc.CacheClient" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Client" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Helper" Version="1.0.2" />
-		<PackageReference Include="WeDonekRpc.Model" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Modular" Version="1.0.1" />
+		<PackageReference Include="WeDonekRpc.CacheClient" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Client" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Modular" Version="1.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>

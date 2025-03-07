@@ -3,6 +3,11 @@
     public class DownFileParam
     {
         /// <summary>
+        /// 方案名
+        /// </summary>
+        public string Scheme { get; set; }
+
+        /// <summary>
         /// 用户ID
         /// </summary>
         public long? UserId { get; set; }
@@ -15,6 +20,7 @@
         /// 标签
         /// </summary>
         public string Tag { get; set; }
+
         /// <summary>
         /// 关联的PK
         /// </summary>
