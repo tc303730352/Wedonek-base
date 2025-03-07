@@ -7,14 +7,14 @@
 	  <EnablePreviewFeatures>True</EnablePreviewFeatures>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="WeDonekRpc.ApiGateway" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.CacheClient" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Client" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Helper" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.HttpApiDoc" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.HttpApiGateway" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.HttpService" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Model" Version="1.0.1" />
+		<PackageReference Include="WeDonekRpc.ApiGateway" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.CacheClient" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Client" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.HttpApiDoc" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.HttpApiGateway" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.HttpService" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Base.FileCollect\Base.FileCollect.csproj" />

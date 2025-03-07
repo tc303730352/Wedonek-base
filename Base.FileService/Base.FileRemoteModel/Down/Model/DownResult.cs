@@ -2,16 +2,6 @@
 {
     public class DownResult
     {
-        public bool IsSuccess
-        {
-            get;
-            set;
-        }
-        public string Error
-        {
-            get;
-            set;
-        }
         public Uri FileUri
         {
             get;

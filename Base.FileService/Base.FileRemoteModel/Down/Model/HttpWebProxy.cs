@@ -2,7 +2,7 @@
 {
     public class HttpWebProxy
     {
-        public Uri Address
+        public string Address
         {
             get;
             set;
@@ -26,20 +26,17 @@
     }
     public class Credentials
     {
-        /// <summary>
-        /// 方案名
-        /// </summary>
-        public string Scheme
+        public string UserName
         {
             get;
             set;
         }
-        public Uri Uri
+        public string Pwd
         {
             get;
             set;
         }
-        public string AuthType
+        public string Domain
         {
             get;
             set;

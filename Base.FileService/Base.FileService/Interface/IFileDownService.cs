@@ -4,6 +4,7 @@ namespace Base.FileService.Interface
 {
     public interface IFileDownService
     {
-        DownResult DownSmallFile (Uri uri, DownFileParam obj);
+        bool AddClient ( string scheme, HttpClientParam config );
+        DownResult DownSmallFile ( Uri uri, DownFileParam obj );
     }
 }

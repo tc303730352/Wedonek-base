@@ -7,11 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="WeDonekRpc.Client" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Helper" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.Model" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.SqlSugar" Version="1.0.1" />
-		<PackageReference Include="WeDonekRpc.SqlSugarDbTran" Version="1.0.1" />
+		<PackageReference Include="WeDonekRpc.Client" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.SqlSugar" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.SqlSugarDbTran" Version="1.1.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Base.FileModel\Base.FileModel.csproj" />

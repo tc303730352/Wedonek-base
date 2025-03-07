@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SqlSugarCore" Version="5.1.4.171" />
-    <PackageReference Include="WeDonekRpc.Helper" Version="1.0.1" />
+    <PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base.FileRemoteModel\Base.FileRemoteModel.csproj" />

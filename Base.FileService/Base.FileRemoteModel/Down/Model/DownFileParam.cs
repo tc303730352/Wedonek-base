@@ -1,5 +1,14 @@
 ﻿namespace Base.FileRemoteModel.Down.Model
 {
+    public enum RequestDataType
+    {
+        None = 0,
+        Form = 1,
+        JSON = 2,
+        XML = 3,
+        Text = 4,
+        Binary = 5,
+    }
     public class DownFileParam
     {
         /// <summary>
@@ -47,7 +56,17 @@
             get;
             set;
         }
+        public string HttpMethod { get; set; }
 
+        /// <summary>
+        /// 请求数据类型
+        /// </summary>
+        public RequestDataType DataType { get; set; }
+
+        /// <summary>
+        /// 扩展名
+        /// </summary>
+        public string Extension { get; set; }
         /// <summary>
         /// 请求配置(为空采用默认规则)
         /// </summary>

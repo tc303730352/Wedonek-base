@@ -7,75 +7,78 @@ namespace Base.FileService.Helper
 {
     internal static class DownLinq
     {
-        private static readonly HttpRequestSet _defRequestSet = new HttpRequestSet(HttpReqType.File);
-        public static HttpRequestSet ToRequestSet (this HttpRequestArg arg)
+        private static readonly RequestSet _defRequestSet = new RequestSet();
+
+        private static string _GetContentType ( RequestDataType dataType, string extension )
         {
-            if (arg == null)
+            if ( dataType == RequestDataType.None )
+            {
+                if ( extension.IsNull() )
+                {
+                    return "application/octet-stream";
+                }
+                return HttpHeaderHelper.GetContentType(extension);
+            }
+            else if ( dataType == RequestDataType.JSON )
+            {
+                return "application/json";
+            }
+            else if ( dataType == RequestDataType.XML )
+            {
+                return "text/xml";
+            }
+            else if ( dataType == RequestDataType.Form )
+            {
+                return "application/x-www-form-urlencoded";
+            }
+            else if ( dataType == RequestDataType.Text )
+            {
+                return "text/plain";
+            }
+            return "application/octet-stream";
+        }
+        public static HttpRequestMessage ToHttpRequestMessage ( this DownFileParam param, RequestSet set, Uri uri )
+        {
+            HttpMethod method = HttpMethod.Parse(param.HttpMethod);
+            if ( method != HttpMethod.Post || method != HttpMethod.Get || method != HttpMethod.Put || method != HttpMethod.Delete )
+            {
+                throw new ErrorException("file.http.method.not.supported");
+            }
+            HttpRequestMessage message = new HttpRequestMessage(method, uri);
+            if ( message.Method == HttpMethod.Put || message.Method == HttpMethod.Post )
+            {
+                string contentType = _GetContentType(param.DataType, param.Extension);
+                message.Content = new StringContent(param.PostData, set.RequestEncoding, contentType);
+            }
+            return message;
+        }
+        public static RequestSet ToRequestSet ( this HttpRequestArg arg )
+        {
+            if ( arg == null )
             {
                 return _defRequestSet;
             }
-            HttpRequestSet req = new HttpRequestSet(HttpReqType.File);
-            if (arg.HttpsCert != null)
-            {
-                req.HttpsCert = arg.HttpsCert;
-            }
-            if (arg.Cookies != null)
-            {
-                req.Cookies = arg.Cookies;
-            }
-            if (arg.HeadList != null)
-            {
-                req.HeadList = arg.HeadList;
-            }
-            if (arg.Accept.IsNotNull())
+            RequestSet req = new RequestSet();
+            req.Referer = arg.Referer;
+            req.HeadList = arg.HeadList;
+            req.Cookies = arg.Cookies;
+            if ( arg.Accept.IsNotNull() )
             {
                 req.Accept = arg.Accept;
             }
-            if (arg.ContentType.IsNotNull())
-            {
-                req.ContentType = arg.ContentType;
-            }
-            if (arg.ProtocolVersion.IsNotNull())
-            {
-                req.ProtocolVersion = Version.Parse(arg.ProtocolVersion);
-            }
-            if (arg.ReadWriteTimeout.HasValue)
-            {
-                req.ReadWriteTimeout = arg.ReadWriteTimeout.Value;
-            }
-            if (arg.Referer.IsNotNull())
-            {
-                req.Referer = arg.Referer;
-            }
-            if (arg.Referer.IsNotNull())
-            {
-                req.Referer = arg.Referer;
-            }
-            if (arg.ContinueTimeout.HasValue)
-            {
-                req.ContinueTimeout = arg.ContinueTimeout.Value;
-            }
-            if (arg.RequestEncoding.IsNotNull())
+            if ( arg.RequestEncoding.IsNotNull() )
             {
                 req.RequestEncoding = Encoding.GetEncoding(arg.RequestEncoding);
             }
-            if (arg.ResponseEncoding.IsNotNull())
+            if ( arg.ResponseEncoding.IsNotNull() )
             {
                 req.ResponseEncoding = Encoding.GetEncoding(arg.RequestEncoding);
             }
-            if (arg.SecurityProtocolType.HasValue)
-            {
-                req.SecurityProtocolType = arg.SecurityProtocolType.Value;
-            }
-            if (arg.SendChunked.HasValue)
-            {
-                req.SendChunked = arg.SendChunked.Value;
-            }
-            if (arg.Timeout.HasValue)
+            if ( arg.Timeout.HasValue )
             {
                 req.Timeout = arg.Timeout.Value;
             }
-            if (arg.UserAgent.IsNotNull())
+            if ( arg.UserAgent.IsNotNull() )
             {
                 req.UserAgent = arg.UserAgent;
             }
