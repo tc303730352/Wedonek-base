@@ -79,6 +79,7 @@
             <div style="width: 100%; height: 350px; overflow-y: auto;">
               <w-table
                 :data="prowers"
+                :select-keys="selectKeys"
                 row-key="Id"
                 :is-select="true"
                 :is-multiple="true"
@@ -102,6 +103,7 @@
 import { getTreeBySystem } from '@/api/role/prower'
 import * as roleApi from '@/api/role/role'
 import { GetEnables } from '@/api/role/opPrower'
+import { Set } from '@/api/role/rolePrower'
 export default {
   name: 'EditRole',
   components: {},
@@ -135,6 +137,7 @@ export default {
       trees: [],
       source: null,
       chioseKeys: [],
+      selectKeys: [],
       prowerId: null,
       chioseId: null,
       rules: {
@@ -167,8 +170,12 @@ export default {
     this.loadTrees()
   },
   methods: {
-    saveOperPrower() {
-
+    async saveOperPrower(e) {
+      await Set(this.roleId, this.chioseId, e.keys)
+      this.$message({
+        message: '保存成功!',
+        type: 'success'
+      })
     },
     async loadTrees() {
       const list = await getTreeBySystem()

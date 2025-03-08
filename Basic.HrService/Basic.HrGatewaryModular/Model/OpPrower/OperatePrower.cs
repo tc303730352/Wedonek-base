@@ -2,11 +2,17 @@
 
 namespace Basic.HrGatewaryModular.Model.OpPrower
 {
-    public class OperatePrower : OperateProwerBase
+    public class OperatePrower
     {
         /// <summary>
-        /// 是否选中
+        /// 操作权限列表
         /// </summary>
-        public bool IsSelected { get; set; }
+        public OperateProwerBase[] Prowers { get; set; }
+
+
+        /// <summary>
+        /// 选中的权限
+        /// </summary>
+        public long[] Selected { get; set; }
     }
 }

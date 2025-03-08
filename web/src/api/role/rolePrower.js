@@ -5,11 +5,12 @@ function formatRequestUri(name) {
 }
 export function Set(roleId, prowerId, opId) {
   return request({
-    url: formatRequestUri('GetEnables'),
-    method: 'get',
-    params: {
-      prowerId,
-      roleId
+    url: formatRequestUri('Set'),
+    method: 'post',
+    data: {
+      RoleId: roleId,
+      ProwerId: prowerId,
+      OperateId: opId
     }
   })
 }

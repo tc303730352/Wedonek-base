@@ -456,11 +456,18 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.GetEnables(System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.GetEnables(System.Int64,System.Int64)">
             <summary>
             获取操作权限
             </summary>
             <param name="prowerId">权限ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Gets(System.Int64)">
+            <summary>
+            获取操作权限集
+            </summary>
+            <param name="prowerId"></param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.OperatePrower.Model.OperateProwerSet})">
@@ -563,21 +570,7 @@
             角色权限接口
             </summary>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.GetProwerId(System.Int64)">
-            <summary>
-            获取权限ID
-            </summary>
-            <param name="roleId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.Gets(System.Int64)">
-            <summary>
-            获取权限集
-            </summary>
-            <param name="prowerId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Int64[]})">
+        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.Set(Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet)">
             <summary>
             修改权限集
             </summary>
@@ -1484,6 +1477,16 @@
             查询参数
             </summary>
         </member>
+        <member name="P:Basic.HrGatewaryModular.Model.OpPrower.OperatePrower.Prowers">
+            <summary>
+            操作权限列表
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.OpPrower.OperatePrower.Selected">
+            <summary>
+            选中的权限
+            </summary>
+        </member>
         <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree">
             <summary>
             获取目录权限树 UI参数实体
@@ -1522,6 +1525,21 @@
         <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower.Datum">
             <summary>
             目录权限资料
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet.RoleId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet.ProwerId">
+            <summary>
+            权限ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet.OperateId">
+            <summary>
+            操作ID
             </summary>
         </member>
         <member name="T:Basic.HrGatewaryModular.Model.Role.UI_SetRole">

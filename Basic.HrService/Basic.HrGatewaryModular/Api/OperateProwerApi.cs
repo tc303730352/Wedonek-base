@@ -35,7 +35,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="prowerId">权限ID</param>
         /// <returns></returns>
-        public OperatePrower[] GetEnables ( [NumValidate("hr.prower.id.error", 1)] long roleId, [NumValidate("hr.prower.id.error", 1)] long prowerId )
+        public OperatePrower GetEnables ( [NumValidate("hr.prower.id.error", 1)] long roleId, [NumValidate("hr.prower.id.error", 1)] long prowerId )
         {
             return this._Service.GetEnables(roleId, prowerId);
         }
