@@ -8,25 +8,27 @@
   >
     <el-card>
       <span slot="header">基本信息</span>
-      <el-form ref="roleEdit" :model="role" :rules="rules">
-        <el-form-item label="角色名" prop="RoleName">
+      <el-form ref="roleEdit" :model="role">
+        <el-form-item label="角色名">
           <el-input
-            v-model="role.RoleName"
-            maxlength="100"
+            :value="role.RoleName"
+            :readonly="true"
             placeholder="角色名"
           />
         </el-form-item>
-        <el-form-item label="是否为管理员" prop="IsAdmin">
+        <el-form-item label="是否为管理员">
           <el-switch
-            v-model="role.IsAdmin"
+            :readonly="true"
+            :checked="role.IsAdmin"
             :inactive-value="false"
             class="el-input"
             :active-value="true"
           />
         </el-form-item>
-        <el-form-item label="备注" prop="Remark">
+        <el-form-item label="备注">
           <el-input
-            v-model="role.Remark"
+            :readonly="true"
+            :value="role.Remark"
             type="textarea"
             maxlength="255"
             placeholder="备注"
@@ -46,12 +48,11 @@
               :highlight-current="true"
               :expand-on-click-node="false"
               style="width: 100%"
-              :show-checkbox="true"
+              :show-checkbox="false"
               :default-checked-keys="chioseKeys"
               :check-strictly="false"
               node-key="key"
               @node-click="chiosePrower"
-              @check-change="checkChange"
             >
               <span slot-scope="{ node, data }" class="slot-t-node">
                 <template>
@@ -81,21 +82,17 @@
                 :data="prowers"
                 :select-keys="selectKeys"
                 row-key="Id"
-                :is-select="checkIsChiose()"
+                :disabled="true"
+                :is-select="true"
                 :is-multiple="true"
                 :columns="columns"
                 :is-paging="false"
-                @selected="saveOperPrower"
               />
             </div>
           </el-card>
         </el-col>
       </el-row>
     </el-card>
-    <div slot="footer">
-      <el-button type="primary" @click="save">保存</el-button>
-      <el-button @click="resetForm">重置</el-button>
-    </div>
   </el-dialog>
 </template>
 
@@ -103,7 +100,6 @@
 import { getTreeBySystem } from '@/api/role/prower'
 import * as roleApi from '@/api/role/role'
 import { GetEnables } from '@/api/role/opPrower'
-import { Set } from '@/api/role/rolePrower'
 export default {
   name: 'EditRole',
   components: {},
@@ -139,16 +135,7 @@ export default {
       chioseKeys: [],
       selectKeys: [],
       prowerId: null,
-      chioseId: null,
-      rules: {
-        RoleName: [
-          {
-            required: true,
-            message: '角色名不能为空！',
-            trigger: 'blur'
-          }
-        ]
-      }
+      chioseId: null
     }
   },
   computed: {
@@ -176,13 +163,6 @@ export default {
       }
       return false
     },
-    async saveOperPrower(e) {
-      await Set(this.roleId, this.chioseId, e.keys)
-      this.$message({
-        message: '保存成功!',
-        type: 'success'
-      })
-    },
     async loadTrees() {
       const list = await getTreeBySystem()
       this.trees = list.map((c) => {
@@ -204,20 +184,6 @@ export default {
         this.chioseId = data.key
         this.pTitle = data.label + '操作权限列表'
         this.loadPrower(data.key)
-      }
-    },
-    checkChange(data, checked) {
-      if (data.type === 'isSubSystem') {
-        return
-      }
-      const index = this.prowerId.findIndex((c) => c === data.key)
-      if (checked) {
-        if (index !== -1) {
-          return
-        }
-        this.prowerId.push(data.key)
-      } else if (index !== -1) {
-        this.prowerId.splice(index, 1)
       }
     },
     getProwers(list) {
@@ -249,38 +215,6 @@ export default {
         return t
       })
     },
-    save() {
-      const that = this
-      this.$refs['roleEdit'].validate((valid) => {
-        if (valid) {
-          if (that.roleId) {
-            that.setRole()
-          } else {
-            that.addRole()
-          }
-        } else {
-          return false
-        }
-      })
-    },
-    async setRole() {
-      this.role.ProwerId = this.prowerId
-      await roleApi.set(this.roleId, this.role)
-      this.$message({
-        message: '更新成功!',
-        type: 'success'
-      })
-      this.$emit('close', true)
-    },
-    async addRole() {
-      this.role.ProwerId = this.prowerId
-      this.roleId = await roleApi.add(this.role)
-      this.$message({
-        message: '添加成功!',
-        type: 'success'
-      })
-      this.$emit('close', true)
-    },
     async loadPrower(prowerId) {
       const res = await GetEnables(prowerId, this.roleId)
       if (res == null) {
@@ -292,44 +226,17 @@ export default {
       this.selectKeys = res.Selected
     },
     async reset() {
-      if (this.roleId == null) {
-        this.role = {
-          IsAdmin: false
-        }
-        this.prowerId = []
-        this.chioseKeys = []
-        this.source = {}
-        this.$refs.prowerTree.setCheckedKeys([], false)
-      } else {
-        const res = await roleApi.get(this.roleId)
-        this.role = res
-        this.source = res
-        this.prowerId = res.ProwerId
-        this.chioseKeys = res.ProwerId
-        if (!res.IsAdmin) {
-          this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
-        }
+      const res = await roleApi.get(this.roleId)
+      this.role = res
+      this.source = res
+      this.prowerId = res.ProwerId
+      this.chioseKeys = res.ProwerId
+      if (!res.IsAdmin) {
+        this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
       }
     },
     closeForm() {
-      this.$emit('close', false)
-    },
-    resetForm() {
-      if (this.roleId == null) {
-        this.role = {
-          IsAdmin: false
-        }
-        this.prowerId = []
-        this.chioseKeys = []
-        this.$refs.prowerTree.setCheckedKeys([], false)
-      } else {
-        this.role = this.source
-        this.prowerId = this.role.ProwerId
-        this.chioseKeys = this.role.ProwerId
-        if (!this.role.IsAdmin) {
-          this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
-        }
-      }
+      this.$emit('close')
     }
   }
 }

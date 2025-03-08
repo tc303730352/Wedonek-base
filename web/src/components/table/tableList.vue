@@ -24,7 +24,7 @@
         v-if="isSelect && isMultiple"
         type="selection"
         :resizable="false"
-        :selectable="checkIsSelect"
+        :selectable="checkIsDisabled"
         fixed="left"
         width="55"
       />
@@ -36,7 +36,7 @@
         <template slot-scope="scope">
           <el-radio
             v-model="chioseKey"
-            :disabled="!checkIsSelect(scope.row)"
+            :disabled="!checkIsDisabled(scope.row)"
             :label="scope.row[rowKey]"
           >{{
           }}</el-radio>
@@ -72,6 +72,10 @@ export default {
     data: {
       type: Array,
       default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
     border: {
       type: Boolean,
@@ -171,9 +175,18 @@ export default {
     columns: {
       handler(val) {
         this.colList = val
-        this.isMerge = val.findIndex((c) => c.isMerge) != -1
+        this.isMerge = val.findIndex((c) => c.isMerge) !== -1
       },
       immediate: true
+    },
+    isSelect: {
+      handler(val) {
+        if (val && this.allKey.length !== 0) {
+          return
+        }
+        this.loadSelected(this.data)
+      },
+      immediate: false
     },
     selectKeys: {
       handler(val) {
@@ -193,7 +206,7 @@ export default {
           if (val && val.length > 0) {
             this.loadSelected(val)
           }
-          this.dataList = val
+          this.dataList = val == null ? [] : val
           this.loading = false
         }
       },
@@ -205,6 +218,9 @@ export default {
     this.curTable = this.$refs[this.id]
   },
   methods: {
+    checkIsDisabled(row) {
+      return this.disabled === false && this.checkIsSelect(row)
+    },
     initSelect(val) {
       if (val == null || val.length === 0) {
         this.chioseKey = null
@@ -236,7 +252,7 @@ export default {
         this.curTable.clearSelection()
         if (this.selected.length > 0) {
           this.selected.forEach((c) => {
-            const row = this.dataList.find((a) => a[this.rowKey] == c)
+            const row = this.dataList.find((a) => a[this.rowKey] === c)
             if (row) {
               this.curTable.toggleRowSelection(row, true)
             }

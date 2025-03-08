@@ -61,6 +61,15 @@
         <el-button
           size="mini"
           type="primary"
+          title="显示"
+          icon="el-icon-view"
+          circle
+          @click="showView(e.row)"
+        />
+        <el-button
+          v-if="e.row.IsEnable == false"
+          size="mini"
+          type="primary"
           title="编辑角色"
           icon="el-icon-edit"
           circle
@@ -78,6 +87,7 @@
       </template>
     </w-table>
     <editRole :visible="visable" :role-id="roleId" @close="close" />
+    <roleView :visible="viewVisable" :role-id="roleId" @close="viewVisable=false" />
   </el-card>
 </template>
 
@@ -85,9 +95,11 @@
 import moment from 'moment'
 import * as roleApi from '@/api/role/role'
 import editRole from './components/editRole.vue'
+import roleView from './components/roleView.vue'
 export default {
   components: {
-    editRole
+    editRole,
+    roleView
   },
   data() {
     return {
@@ -96,6 +108,7 @@ export default {
         QueryKey: null
       },
       visable: false,
+      viewVisable: false,
       roleId: null,
       columns: [
         {
@@ -195,6 +208,10 @@ export default {
         this.reset()
       }
     },
+    showView(row) {
+      this.roleId = row.Id
+      this.viewVisable = true
+    },
     async setIsEnable(row, isEnable) {
       await roleApi.setIsEnable(row.Id, isEnable)
       row.IsEnable = isEnable
@@ -213,10 +230,7 @@ export default {
       }
       await roleApi.setIsDefRole(row.Id)
       const def = this.roles.find((c) => c.IsDefRole)
-      if (def) {
-        def.IsDefRole = false
-      }
-      row.IsDefRole = true
+      def.IsDefRole = def
     },
     dropRole(row) {
       const title = '确认删除角色 ' + row.RoleName + '?'
