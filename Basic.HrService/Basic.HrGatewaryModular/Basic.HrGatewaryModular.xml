@@ -444,6 +444,39 @@
             <param name="param">参数</param>
             <returns>登陆用户资料</returns>
         </member>
+        <member name="T:Basic.HrGatewaryModular.Api.OperateProwerApi">
+            <summary>
+            操作权限接口
+            </summary>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Add(Basic.HrRemoteModel.OperatePrower.Model.OperateProwerAdd)">
+            <summary>
+            添加操作权限
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.GetEnables(System.Int64)">
+            <summary>
+            获取操作权限
+            </summary>
+            <param name="prowerId">权限ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.OperatePrower.Model.OperateProwerSet})">
+            <summary>
+            设置操作权限
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.SetIsEnable(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Boolean})">
+            <summary>
+            启用操作权限
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Add(Basic.HrRemoteModel.Prower.Model.ProwerAdd)">
             <summary>
             添加目录权限
@@ -524,6 +557,31 @@
             </summary>
             <param name="param">参数</param>
             <returns></returns>
+        </member>
+        <member name="T:Basic.HrGatewaryModular.Api.RoleProwerApi">
+            <summary>
+            角色权限接口
+            </summary>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.GetProwerId(System.Int64)">
+            <summary>
+            获取权限ID
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.Gets(System.Int64)">
+            <summary>
+            获取权限集
+            </summary>
+            <param name="prowerId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Int64[]})">
+            <summary>
+            修改权限集
+            </summary>
+            <param name="param"></param>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.TreeDicApi.Add(Basic.HrRemoteModel.TreeDic.Model.TreeDicItemAdd)">
             <summary>

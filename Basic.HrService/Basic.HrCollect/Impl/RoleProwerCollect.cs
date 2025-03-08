@@ -11,33 +11,33 @@ namespace Basic.HrCollect.Impl
     {
         private readonly IRoleProwerDAL _RolePrower;
         private readonly IProwerDAL _Prower;
-        public RoleProwerCollect (IRoleProwerDAL rolePrower, IProwerDAL prower)
+        public RoleProwerCollect ( IRoleProwerDAL rolePrower, IProwerDAL prower )
         {
             this._RolePrower = rolePrower;
             this._Prower = prower;
         }
 
-        public void Clear (long roleId)
+        public void Clear ( long roleId )
         {
             this._RolePrower.Clear(roleId);
         }
-        public long[] GetSubSysId (long[] roleId)
+        public long[] GetSubSysId ( long[] roleId )
         {
             return this._RolePrower.GetSubSysId(roleId);
         }
-        public long[] GetProwerId (long[] roleId, long subSysId, ProwerType prowerType)
+        public long[] GetProwerId ( long[] roleId, long subSysId, ProwerType prowerType )
         {
             return this._RolePrower.GetProwerId(roleId, subSysId, prowerType);
         }
-        public string[] GetProwerCode (long[] roleId, ProwerType prowerType)
+        public string[] GetProwerCode ( long[] roleId, ProwerType prowerType )
         {
             long[] prowerId = this._RolePrower.GetProwerId(roleId, prowerType);
-            return this._Prower.Gets(a => prowerId.Contains(a.Id) && a.IsEnable, a => a.ProwerCode).Distinct().ToArray();
+            return this._Prower.Gets(a => prowerId.Contains(a.Id) && a.IsEnable, a => a.ProwerCode).Distinct();
         }
-        public ProwerRouteDto[] GetPrower (long[] roleId)
+        public ProwerRouteDto[] GetPrower ( long[] roleId )
         {
             long[] prowerId = this._RolePrower.GetProwerId(roleId, ProwerType.menu);
-            if (prowerId.IsNull())
+            if ( prowerId.IsNull() )
             {
                 return Array.Empty<ProwerRouteDto>();
             }
@@ -51,14 +51,14 @@ namespace Basic.HrCollect.Impl
             ProwerRouteDto[] dir = this._Prower.Gets<ProwerRouteDto>(dirId.Distinct().ToArray());
             return dir.Add(menu);
         }
-        public string GetHomeUri (long systemId, long[] roleId)
+        public string GetHomeUri ( long systemId, long[] roleId )
         {
             long[] prowerId = this._RolePrower.GetProwerId(roleId, ProwerType.menu);
             return this._Prower.GetHomeUri(systemId, prowerId);
         }
-        public void Set (DBRole role, RolePrower[] prowers)
+        public void Set ( DBRole role, RolePrower[] prowers )
         {
-            if (role.IsEnable)
+            if ( role.IsEnable )
             {
                 throw new Exception("hr.role.not.can.update");
             }

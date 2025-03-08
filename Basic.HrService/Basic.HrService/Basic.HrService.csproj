@@ -8,6 +8,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Helper\**" />
+	  <EmbeddedResource Remove="Helper\**" />
+	  <None Remove="Helper\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Base.HrExtendService\Base.HrExtendService.csproj" />
 		<ProjectReference Include="..\Basic.HrCollect\Basic.HrCollect.csproj" />
 		<ProjectReference Include="..\Basic.HrLocalEvent\Basic.HrLocalEvent.csproj" />
@@ -18,10 +24,6 @@
 		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
 		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
 		<PackageReference Include="WeDonekRpc.Modular" Version="1.1.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Helper\" />
 	</ItemGroup>
 
 </Project>

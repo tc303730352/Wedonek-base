@@ -1,0 +1,32 @@
+﻿using SqlSugar;
+
+namespace Basic.HrModel.DB
+{
+    /// <summary>
+    /// 角色操作权限
+    /// </summary>
+    [SugarTable("RoleOperatePrower")]
+    public class DBRoleOperatePrower
+    {
+        /// <summary>
+        /// 数据ID
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
+        public long Id { get; set; }
+
+        /// <summary>
+        /// 角色ID
+        /// </summary>
+        public long RoleId { get; set; }
+
+        /// <summary>
+        /// 目录权限ID
+        /// </summary>
+        public long ProwerId { get; set; }
+
+        /// <summary>
+        /// 操作权限值
+        /// </summary>
+        public string OperateVal { get; set; }
+    }
+}

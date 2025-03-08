@@ -24,11 +24,7 @@
         /// <summary>
         ///菜单 
         /// </summary>
-        menu = 0,
-        /// <summary>
-        /// 功能模块
-        /// </summary>
-        function = 2
+        menu = 0
     }
 
 
