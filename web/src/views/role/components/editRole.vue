@@ -276,8 +276,14 @@ export default {
       this.$emit('close', true)
     },
     async loadPrower(prowerId) {
-      const list = await GetEnables(prowerId, this.roleId)
-      this.prowers = list
+      const res = await GetEnables(prowerId, this.roleId)
+      if (res == null) {
+        this.prowers = []
+        this.selectKeys = []
+        return
+      }
+      this.prowers = res.Prowers
+      this.selectKeys = res.Selected
     },
     async reset() {
       if (this.roleId == null) {
