@@ -148,5 +148,15 @@ namespace Basic.HrCollect.Impl
         {
             return this._Prower.GetHomeUri(subSystemId);
         }
+
+        public bool SetSort ( DBProwerList db, int sort )
+        {
+            if ( db.Sort == sort )
+            {
+                return false;
+            }
+            this._Prower.SetSort(db, sort);
+            return true;
+        }
     }
 }

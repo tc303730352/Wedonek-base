@@ -6,6 +6,7 @@ namespace Basic.HrService.Interface
 {
     public interface IProwerService
     {
+        bool SetSort ( long id, int sort );
         ProwerDataTree[] GetTrees ( ProwerQuery query );
         ProwerTree[] GetProwerTree ( long subSysId, bool? isEnable );
         long Add ( ProwerAdd add );

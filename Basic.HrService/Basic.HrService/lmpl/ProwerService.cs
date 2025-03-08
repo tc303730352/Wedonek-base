@@ -25,7 +25,11 @@ namespace Basic.HrService.lmpl
         {
             return this._Prower.Add(add);
         }
-
+        public bool SetSort ( long id, int sort )
+        {
+            DBProwerList db = this._Prower.Get(id);
+            return this._Prower.SetSort(db, sort);
+        }
         public ProwerData Get ( long id )
         {
             DBProwerList db = this._Prower.Get(id);

@@ -14,6 +14,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
+        public bool SetProwerSort ( SetProwerSort obj )
+        {
+            return this._Service.SetSort(obj.Id, obj.Sort);
+        }
         public ProwerDataTree[] GetProwerTrees ( GetProwerTrees obj )
         {
             return this._Service.GetTrees(obj.Query);

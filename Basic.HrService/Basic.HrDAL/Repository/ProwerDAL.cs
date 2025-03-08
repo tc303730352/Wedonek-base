@@ -85,5 +85,13 @@ namespace Basic.HrDAL.Repository
         {
             return this._BasicDAL.Gets<T>(param.ToWhere(subSysId));
         }
+
+        public void SetSort ( DBProwerList db, int sort )
+        {
+            if ( !this._BasicDAL.Update(a => a.Sort == sort, a => a.Id == db.Id) )
+            {
+                throw new ErrorException("hr.prower.sort.set.fail");
+            }
+        }
     }
 }

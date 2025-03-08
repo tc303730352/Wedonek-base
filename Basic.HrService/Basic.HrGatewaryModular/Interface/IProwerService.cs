@@ -55,6 +55,6 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="datum">目录权限资料</param>
         /// <returns></returns>
         bool SetPrower ( long id, ProwerSet datum );
-
+        bool SetSort ( long id, int value );
     }
 }

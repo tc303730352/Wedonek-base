@@ -20,5 +20,6 @@ namespace Basic.HrCollect
         ProwerBasic[] GetFulls ( long[] ids );
         string GetHomeUri ( long subSysId );
         T[] Gets<T> ( ProwerQuery query ) where T : class, new();
+        bool SetSort ( DBProwerList db, int sort );
     }
 }

@@ -32,3 +32,14 @@ export function GetProwerTrees(query) {
     data: query
   })
 }
+
+export function SetSort(id, sort) {
+  return request({
+    url: formatRequestUri('SetSort'),
+    method: 'post',
+    data: {
+      Id: id,
+      Value: sort
+    }
+  })
+}

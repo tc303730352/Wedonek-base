@@ -24,5 +24,6 @@ namespace Basic.HrDAL
         T[] Gets<T> ( long[] subSysId, ProwerGetParam param ) where T : class, new();
 
         T[] Gets<T> ( ProwerQuery query ) where T : class, new();
+        void SetSort ( DBProwerList db, int sort );
     }
 }

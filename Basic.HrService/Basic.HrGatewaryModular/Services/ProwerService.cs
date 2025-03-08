@@ -68,5 +68,13 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
+        public bool SetSort ( long id, int sort )
+        {
+            return new SetProwerSort
+            {
+                Id = id,
+                Sort = sort
+            }.Send();
+        }
     }
 }

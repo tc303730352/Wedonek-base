@@ -73,6 +73,15 @@ namespace Basic.HrGatewaryModular.Api
             return this._Service.GetTrees(query);
         }
         /// <summary>
+        /// 设置排序位
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public bool SetSort ( LongParam<int> param )
+        {
+            return this._Service.SetSort(param.Id, param.Value);
+        }
+        /// <summary>
         /// 修改权限
         /// </summary>
         /// <param name="param">参数</param>

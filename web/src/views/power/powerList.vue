@@ -92,22 +92,7 @@
           />
         </template>
         <template slot="Sort" slot-scope="e">
-          <el-button
-            v-if="e.row.Sort != 1"
-            icon="el-icon-caret-top"
-            size="mini"
-            style="float: left"
-            circle
-            @click="upItem(e.row)"
-          />
-          <el-button
-            v-if="e.row.Sort != maxSort"
-            size="mini"
-            style="float: right"
-            icon="el-icon-caret-bottom"
-            circle
-            @click="downItem(e.row, e.index)"
-          />
+          <el-input-number v-model="e.row.Sort" style="width: 150px;" placeholder="排序位" @change="setPowerSort(e.row)" />
         </template>
         <template slot="ProwerType" slot-scope="e">
           <span v-if="e.row.ProwerType == 0">菜单</span>
@@ -119,7 +104,7 @@
 </template>
 
 <script>
-import { GetTrees, GetProwerTrees } from '@/api/role/prower'
+import { GetTrees, GetProwerTrees, SetSort } from '@/api/role/prower'
 import {
   HrEnumDic
 } from '@/config/publicDic'
@@ -185,7 +170,7 @@ export default {
         title: '排序位',
         align: 'center',
         slotName: 'Sort',
-        width: 90
+        width: 200
       },
       {
         key: 'Description',
@@ -206,6 +191,13 @@ export default {
   methods: {
     addPower() {
 
+    },
+    async setPowerSort(row) {
+      await SetSort(row.Id, row.Sort)
+      this.$message({
+        type: 'success',
+        message: '保存成功!'
+      })
     },
     reset() {
       this.queryParam.QueryKey = null
