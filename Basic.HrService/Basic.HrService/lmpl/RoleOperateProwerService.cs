@@ -1,6 +1,7 @@
 ﻿using Basic.HrCollect;
 using Basic.HrModel.OperatePrower;
 using Basic.HrService.Interface;
+using WeDonekRpc.Helper;
 
 namespace Basic.HrService.lmpl
 {
@@ -27,7 +28,11 @@ namespace Basic.HrService.lmpl
 
         public void Set ( long roleId, long prowerId, long[] operateId )
         {
-            OperateItem[] items = this._Operate.Gets<OperateItem>(operateId);
+            OperateItem[] items = null;
+            if ( operateId.IsNull() )
+            {
+                items = this._Operate.Gets<OperateItem>(operateId);
+            }
             this._Service.Set(roleId, prowerId, items);
         }
     }

@@ -9,7 +9,7 @@
                 "MemoryUpSize": 10485760
             },
             "log": {
-                "IsEnable":  true
+                "IsEnable":  false
             },
             "gzip": {
                 "IsEnable": true,
