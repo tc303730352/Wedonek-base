@@ -1,4 +1,5 @@
 ﻿using Basic.HrGatewaryModular.Interface;
+using Basic.HrGatewaryModular.Model.OpPrower;
 using Basic.HrRemoteModel.OperatePrower.Model;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -34,11 +35,19 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="prowerId">权限ID</param>
         /// <returns></returns>
-        public OperateProwerBase[] GetEnables ( [NumValidate("hr.prower.id.error", 1)] long prowerId )
+        public OperatePrower[] GetEnables ( [NumValidate("hr.prower.id.error", 1)] long roleId, [NumValidate("hr.prower.id.error", 1)] long prowerId )
         {
-            return this._Service.GetEnables(prowerId);
+            return this._Service.GetEnables(roleId, prowerId);
         }
-
+        /// <summary>
+        /// 获取操作权限集
+        /// </summary>
+        /// <param name="prowerId"></param>
+        /// <returns></returns>
+        public OperateProwerDto[] Gets ( [NumValidate("hr.prower.id.error", 1)] long prowerId )
+        {
+            return this._Service.Gets(prowerId);
+        }
         /// <summary>
         /// 设置操作权限
         /// </summary>

@@ -17,13 +17,9 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service.Set(obj.RoleId, obj.ProwerId);
         }
-        public long[] GetRoleProwerId ( GetRoleProwerId obj )
+        public long[] GetRoleOperateId ( GetRoleOperateId obj )
         {
-            return this._Service.GetProwerId(obj.RoleId);
-        }
-        public string[] GetRoleProwerVal ( GetRoleProwerVal obj )
-        {
-            return this._Service.GetProwerVal(obj.RoleId);
+            return this._Service.GetOperateId(obj.RoleId, obj.ProwerId);
         }
     }
 }

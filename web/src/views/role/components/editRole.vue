@@ -2,7 +2,7 @@
   <el-dialog
     :title="title"
     :visible="visible"
-    width="800px"
+    width="1000px"
     :before-close="closeForm"
     :close-on-click-modal="false"
   >
@@ -36,39 +36,54 @@
     </el-card>
     <el-card v-if="!role.IsAdmin" style="margin-top: 10px">
       <span slot="header">权限目录</span>
-      <div style="width: 100%; height: 350px; overflow-y: auto">
-        <el-tree
-          ref="prowerTree"
-          :data="trees"
-          :default-expand-all="true"
-          :highlight-current="true"
-          :expand-on-click-node="false"
-          style="width: 100%"
-          :show-checkbox="true"
-          :default-checked-keys="chioseKeys"
-          :check-strictly="false"
-          node-key="key"
-          @check-change="checkChange"
-        >
-          <span slot-scope="{ node, data }" class="slot-t-node">
-            <template>
-              <template v-if="data.style">
-                <i
-                  v-if="data.style.icon.indexOf('el-') == 0"
-                  :class="data.style.icon"
-                  :style="{ color: data.style.color, marginRight: '5px' }"
-                />
-                <svg-icon
-                  v-else
-                  :icon-class="data.style.icon"
-                  :style="{ color: data.style.color, marginRight: '5px' }"
-                />
-              </template>
-              <span>{{ node.label }}</span>
-            </template>
-          </span>
-        </el-tree>
-      </div>
+      <el-row style="width: 100%;">
+        <el-col :span="8">
+          <div style="width: 100%; height: 350px; overflow-y: auto;">
+            <el-tree
+              ref="prowerTree"
+              :data="trees"
+              :default-expand-all="true"
+              :highlight-current="true"
+              :expand-on-click-node="false"
+              style="width: 100%"
+              :show-checkbox="true"
+              :default-checked-keys="chioseKeys"
+              :check-strictly="false"
+              node-key="key"
+              @node-click="chiosePrower"
+              @check-change="checkChange"
+            >
+              <span slot-scope="{ node, data }" class="slot-t-node">
+                <template>
+                  <template v-if="data.style">
+                    <i
+                      v-if="data.style.icon.indexOf('el-') == 0"
+                      :class="data.style.icon"
+                      :style="{ color: data.style.color, marginRight: '5px' }"
+                    />
+                    <svg-icon
+                      v-else
+                      :icon-class="data.style.icon"
+                      :style="{ color: data.style.color, marginRight: '5px' }"
+                    />
+                  </template>
+                  <span>{{ node.label }}</span>
+                </template>
+              </span>
+            </el-tree>
+          </div>
+        </el-col>
+        <el-col :span="16">
+          <div style="width: 100%; height: 350px; overflow-y: auto;">
+            <w-table
+              :data="prowers"
+              row-key="Id"
+              :columns="columns"
+              :is-paging="false"
+            />
+          </div>
+        </el-col>
+      </el-row>
     </el-card>
     <div slot="footer">
       <el-button type="primary" @click="save">保存</el-button>
@@ -80,6 +95,7 @@
 <script>
 import { getTreeBySystem } from '@/api/role/prower'
 import * as roleApi from '@/api/role/role'
+import { GetEnables } from '@/api/role/opPrower'
 export default {
   name: 'EditRole',
   components: {},
@@ -96,6 +112,18 @@ export default {
   data() {
     return {
       title: '新增角色',
+      prowers: [],
+      columns: [{
+        key: 'OperateName',
+        title: '权限名',
+        align: 'center',
+        minWidth: 150
+      }, {
+        key: 'Show',
+        title: '说明',
+        align: 'left',
+        minWidth: 150
+      }],
       role: {},
       trees: [],
       source: null,
@@ -147,17 +175,22 @@ export default {
         return t
       })
     },
-    checkChange(data, checked, indeterminate) {
-      if (data.type == 'isSubSystem') {
+    chiosePrower(data) {
+      if (data.type === 0) {
+        this.loadPrower(parseInt(data.key))
+      }
+    },
+    checkChange(data, checked) {
+      if (data.type === 'isSubSystem') {
         return
       }
-      const index = this.prowerId.findIndex((c) => c == data.key)
+      const index = this.prowerId.findIndex((c) => c === data.key)
       if (checked) {
-        if (index != -1) {
+        if (index !== -1) {
           return
         }
         this.prowerId.push(data.key)
-      } else if (index != -1) {
+      } else if (index !== -1) {
         this.prowerId.splice(index, 1)
       }
     },
@@ -168,23 +201,23 @@ export default {
           type: c.ProwerType,
           label: c.Name
         }
-        if (c.ProwerType == 1) {
+        if (c.ProwerType === 1) {
           t.style = {
             icon: 'el-icon-folder',
             color: '#409eff'
           }
-        } else if (c.ProwerType == 0) {
+        } else if (c.ProwerType === 0) {
           t.style = {
             icon: 'el-icon-document',
             color: '#000'
           }
-        } else if (c.ProwerType == 2) {
+        } else if (c.ProwerType === 2) {
           t.style = {
             icon: 'component',
             color: '#000'
           }
         }
-        if (c.Children && c.Children.length != 0) {
+        if (c.Children && c.Children.length !== 0) {
           t.children = this.getProwers(c.Children)
         }
         return t
@@ -206,7 +239,6 @@ export default {
     },
     async setRole() {
       this.role.ProwerId = this.prowerId
-      console.log(this.role)
       await roleApi.set(this.roleId, this.role)
       this.$message({
         message: '更新成功!',
@@ -216,12 +248,16 @@ export default {
     },
     async addRole() {
       this.role.ProwerId = this.prowerId
-      await roleApi.add(this.role)
+      this.roleId = await roleApi.add(this.role)
       this.$message({
         message: '添加成功!',
         type: 'success'
       })
       this.$emit('close', true)
+    },
+    async loadPrower(prowerId) {
+      const list = await GetEnables(this.roleId, prowerId)
+      this.prowers = list
     },
     async reset() {
       if (this.roleId == null) {
@@ -256,9 +292,9 @@ export default {
         this.$refs.prowerTree.setCheckedKeys([], false)
       } else {
         this.role = this.source
-        this.prowerId = res.ProwerId
-        this.chioseKeys = res.ProwerId
-        if (!res.IsAdmin) {
+        this.prowerId = this.role.ProwerId
+        this.chioseKeys = this.role.ProwerId
+        if (!this.role.IsAdmin) {
           this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
         }
       }

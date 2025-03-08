@@ -1,6 +1,10 @@
 ﻿using Basic.HrGatewaryModular.Interface;
+using Basic.HrGatewaryModular.Model.OpPrower;
 using Basic.HrRemoteModel.OperatePrower;
 using Basic.HrRemoteModel.OperatePrower.Model;
+using Basic.HrRemoteModel.RolePrower;
+using WeDonekRpc.Client;
+using WeDonekRpc.Helper;
 
 namespace Basic.HrGatewaryModular.Services
 {
@@ -21,12 +25,27 @@ namespace Basic.HrGatewaryModular.Services
                 Data = data
             }.Send();
         }
-        public OperateProwerBase[] GetEnables ( long prowerId )
+        public OperatePrower[] GetEnables ( long roleId, long prowerId )
         {
-            return new GetsEnableOpPrower
+            OperateProwerBase[] list = new GetsEnableOpPrower
             {
                 ProwerId = prowerId
             }.Send();
+            if ( list.IsNull() )
+            {
+                return Array.Empty<OperatePrower>();
+            }
+            OperatePrower[] dtos = list.ConvertMap<OperateProwerBase, OperatePrower>();
+            long[] ids = new GetRoleOperateId
+            {
+                RoleId = roleId,
+                ProwerId = prowerId
+            }.Send();
+            dtos.ForEach(c =>
+            {
+                c.IsSelected = ids.Contains(c.Id);
+            });
+            return dtos;
         }
         public bool SetIsEnable ( long id, bool isEnable )
         {
@@ -34,6 +53,14 @@ namespace Basic.HrGatewaryModular.Services
             {
                 Id = id,
                 IsEnable = isEnable
+            }.Send();
+        }
+
+        public OperateProwerDto[] Gets ( long prowerId )
+        {
+            return new GetsOperatePrower
+            {
+                ProwerId = prowerId
             }.Send();
         }
     }

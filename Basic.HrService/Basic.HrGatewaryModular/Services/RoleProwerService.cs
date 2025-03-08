@@ -1,6 +1,4 @@
 ﻿using Basic.HrGatewaryModular.Interface;
-using Basic.HrRemoteModel.OperatePrower;
-using Basic.HrRemoteModel.OperatePrower.Model;
 using Basic.HrRemoteModel.RolePrower;
 
 namespace Basic.HrGatewaryModular.Services
@@ -15,18 +13,11 @@ namespace Basic.HrGatewaryModular.Services
                 ProwerId = prowerId
             }.Send();
         }
-        public long[] GetProwerId ( long roleId )
+        public long[] GetOperateId ( long roleId )
         {
-            return new GetRoleProwerId
+            return new GetRoleOperateId
             {
                 RoleId = roleId
-            }.Send();
-        }
-        public OperateProwerDto[] Gets ( long prowerId )
-        {
-            return new GetsOperatePrower
-            {
-                ProwerId = prowerId
             }.Send();
         }
     }

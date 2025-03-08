@@ -5,10 +5,10 @@ namespace Basic.HrCollect
     public interface IRoleOperateProwerCollect
     {
         void Clear ( long roleId );
-        long[] GetProwerId ( long roleId );
-        string[] GetProwerVal ( long roleId );
+        long[] GetOperateId ( long roleId, long prowerId );
+        string[] GetOperateVal ( long roleId );
 
-        string[] GetProwerVal ( long[] roleId );
+        string[] GetOperateVal ( long[] roleId );
         void Set ( long roleId, OperateItem[] prowers );
     }
 }

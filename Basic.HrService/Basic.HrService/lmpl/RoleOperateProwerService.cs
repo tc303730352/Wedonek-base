@@ -15,14 +15,14 @@ namespace Basic.HrService.lmpl
             this._Operate = operate;
         }
 
-        public long[] GetProwerId ( long roleId )
+        public long[] GetOperateId ( long roleId, long prowerId )
         {
-            return this._Service.GetProwerId(roleId);
+            return this._Service.GetOperateId(roleId, prowerId);
         }
 
-        public string[] GetProwerVal ( long roleId )
+        public string[] GetOperateVal ( long roleId )
         {
-            return this._Service.GetProwerVal(roleId);
+            return this._Service.GetOperateVal(roleId);
         }
 
         public void Set ( long roleId, long[] prowerId )

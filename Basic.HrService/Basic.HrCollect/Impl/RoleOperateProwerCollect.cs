@@ -20,17 +20,17 @@ namespace Basic.HrCollect.Impl
         {
             this._BasicDAL.Clear(roleId);
         }
-        public string[] GetProwerVal ( long roleId )
+        public string[] GetOperateVal ( long roleId )
         {
             return this._BasicDAL.Gets(a => a.RoleId == roleId, a => a.OperateVal);
         }
-        public string[] GetProwerVal ( long[] roleId )
+        public string[] GetOperateVal ( long[] roleId )
         {
             return this._BasicDAL.Gets(a => roleId.Contains(a.RoleId), a => a.OperateVal).Distinct().ToArray();
         }
-        public long[] GetProwerId ( long roleId )
+        public long[] GetOperateId ( long roleId, long prowerId )
         {
-            return this._BasicDAL.Gets(a => a.RoleId == roleId, a => a.ProwerId);
+            return this._BasicDAL.Gets(a => a.RoleId == roleId && a.ProwerId == prowerId, a => a.OperateId);
         }
     }
 }

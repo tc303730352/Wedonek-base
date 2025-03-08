@@ -4,8 +4,9 @@ using WeDonekRpc.Model;
 namespace Basic.HrRemoteModel.RolePrower
 {
     [IRemoteConfig("basic.hr.service")]
-    public class GetRoleProwerId : RpcRemoteArray<long>
+    public class GetRoleOperateId : RpcRemoteArray<long>
     {
         public long RoleId { get; set; }
+        public long ProwerId { get; set; }
     }
 }

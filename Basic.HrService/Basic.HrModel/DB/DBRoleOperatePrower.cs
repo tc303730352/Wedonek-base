@@ -25,6 +25,11 @@ namespace Basic.HrModel.DB
         public long ProwerId { get; set; }
 
         /// <summary>
+        /// 操作ID
+        /// </summary>
+        public long OperateId { get; set; }
+
+        /// <summary>
         /// 操作权限值
         /// </summary>
         public string OperateVal { get; set; }

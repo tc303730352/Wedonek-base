@@ -21,9 +21,9 @@
     <w-table
       :data="roles"
       :columns="columns"
-      :isPaging="true"
-      @load="load"
+      :is-paging="true"
       :paging="paging"
+      @load="load"
     >
       <template slot="IsEnable" slot-scope="e">
         <el-switch
@@ -32,16 +32,16 @@
           :inactive-value="false"
           :active-value="true"
           @change="(val) => setIsEnable(e.row, val)"
-        ></el-switch>
-      </template> 
+        />
+      </template>
       <template slot="IsAdmin" slot-scope="e">
         <el-switch
           :value="e.row.IsAdmin"
           :inactive-value="false"
           :active-value="true"
           @change="(val) => setIsAdmin(e.row, val)"
-        ></el-switch>
-      </template>  
+        />
+      </template>
       <template slot="EmpNum" slot-scope="e">
         <el-button type="text" @click="showEmp(e.row)">{{ e.row.EmpNum }}</el-button>
       </template>
@@ -52,7 +52,7 @@
           :inactive-value="false"
           :active-value="true"
           @change="(val) => setIsDefRole(e.row, val)"
-        ></el-switch>
+        />
       </template>
       <template slot="AddTime" slot-scope="e">
         {{ moment(e.row.AddTime).format("YYYY-MM-DD HH:mm") }}
@@ -63,28 +63,28 @@
           type="primary"
           title="编辑角色"
           icon="el-icon-edit"
-          @click="edit(e.row)"
           circle
-        ></el-button>
+          @click="edit(e.row)"
+        />
         <el-button
           v-if="e.row.IsEnable == false"
           size="mini"
           type="danger"
           title="删除角色"
           icon="el-icon-delete"
-          @click="dropRole(e.row)"
           circle
-        ></el-button>
+          @click="dropRole(e.row)"
+        />
       </template>
     </w-table>
-    <editRole :visible="visable" :roleId="roleId" @close="close"></editRole>
+    <editRole :visible="visable" :role-id="roleId" @close="close" />
   </el-card>
 </template>
 
 <script>
-import moment from "moment";
-import * as roleApi from "@/api/role/role";
-import editRole from "./components/editRole.vue";
+import moment from 'moment'
+import * as roleApi from '@/api/role/role'
+import editRole from './components/editRole.vue'
 export default {
   components: {
     editRole
@@ -93,160 +93,160 @@ export default {
     return {
       roles: [],
       queryParam: {
-        QueryKey: null,
+        QueryKey: null
       },
       visable: false,
       roleId: null,
       columns: [
         {
-          sortby: "RoleName",
-          key: "RoleName",
-          title: "角色名",
-          align: "center",
+          sortby: 'RoleName',
+          key: 'RoleName',
+          title: '角色名',
+          align: 'center',
           minWidth: 150,
-          sortable: "custom",
+          sortable: 'custom'
         },
         {
-          sortby: "Remark",
-          key: "Remark",
-          title: "备注",
-          align: "center",
+          sortby: 'Remark',
+          key: 'Remark',
+          title: '备注',
+          align: 'center',
           minWidth: 200,
-          sortable: "custom",
+          sortable: 'custom'
         },
         {
-          sortby: "IsDefRole",
-          key: "IsDefRole",
-          title: "默认角色",
-          align: "center",
-          slotName: "IsDefRole",
+          sortby: 'IsDefRole',
+          key: 'IsDefRole',
+          title: '默认角色',
+          align: 'center',
+          slotName: 'IsDefRole',
           minWidth: 100,
-          sortable: "custom",
+          sortable: 'custom'
         },
         {
-          sortby: "IsAdmin",
-          key: "IsAdmin",
-          title: "是否为管理员",
-          align: "center",
-          slotName: "IsAdmin",
+          sortby: 'IsAdmin',
+          key: 'IsAdmin',
+          title: '是否为管理员',
+          align: 'center',
+          slotName: 'IsAdmin',
           minWidth: 100,
-          sortable: "custom",
+          sortable: 'custom'
         },
         {
-          sortby: "IsEnable",
-          key: "IsEnable",
-          title: "是否启用",
-          align: "center",
+          sortby: 'IsEnable',
+          key: 'IsEnable',
+          title: '是否启用',
+          align: 'center',
           minWidth: 100,
-          slotName: "IsEnable",
-          sortable: "custom",
+          slotName: 'IsEnable',
+          sortable: 'custom'
         },
         {
-          key: "EmpNum",
-          title: "员工数",
-          align: "right",
+          key: 'EmpNum',
+          title: '员工数',
+          align: 'right',
           minWidth: 100,
-          slotName: "EmpNum",
+          slotName: 'EmpNum'
         },
         {
-          key: "AddTime",
-          title: "添加时间",
-          align: "center",
+          key: 'AddTime',
+          title: '添加时间',
+          align: 'center',
           minWidth: 120,
-          slotName: "AddTime",
+          slotName: 'AddTime'
         },
         {
-          key: "Action",
-          title: "操作",
-          align: "left",
-          fixed: "right",
-          width: "100px",
-          slotName: "action",
-        },
+          key: 'Action',
+          title: '操作',
+          align: 'left',
+          fixed: 'right',
+          width: '100px',
+          slotName: 'action'
+        }
       ],
       paging: {
         Size: 20,
         Index: 1,
-        SortName: "Id",
+        SortName: 'Id',
         IsDesc: false,
-        Total: 0,
-      },
-    };
+        Total: 0
+      }
+    }
   },
   mounted() {
-    this.load();
+    this.load()
   },
   methods: {
     moment,
-    showEmp(row){
-      this.$router.push({name:'user', query: { roleId: row.Id }})
+    showEmp(row) {
+      this.$router.push({ name: 'user', query: { roleId: row.Id }})
     },
     addRole() {
-      this.roleId = null;
-      this.visable = true;
+      this.roleId = null
+      this.visable = true
     },
     edit(row) {
-      this.roleId = row.Id;
-      this.visable = true;
+      this.roleId = row.Id
+      this.visable = true
     },
     close(isRefresh) {
       this.visable = false
-      if(isRefresh) {
+      if (isRefresh) {
         this.reset()
       }
     },
     async setIsEnable(row, isEnable) {
-      await roleApi.setIsEnable(row.Id, isEnable);
-      row.IsEnable = isEnable;
+      await roleApi.setIsEnable(row.Id, isEnable)
+      row.IsEnable = isEnable
     },
-    async setIsAdmin(row,isAdmin){
-      await roleApi.setIsAdmin(row.Id, isAdmin);
-      row.IsAdmin = isAdmin;
+    async setIsAdmin(row, isAdmin) {
+      await roleApi.setIsAdmin(row.Id, isAdmin)
+      row.IsAdmin = isAdmin
     },
     async setIsDefRole(row, isDef) {
       if (!isDef) {
         this.$message({
-          type: "error",
-          message: "必须存在一个默认角色!",
-        });
-        return;
+          type: 'error',
+          message: '必须存在一个默认角色!'
+        })
+        return
       }
-      await roleApi.setIsDefRole(row.Id);
-      const def = this.roles.find((c) => c.IsDefRole);
+      await roleApi.setIsDefRole(row.Id)
+      const def = this.roles.find((c) => c.IsDefRole)
       if (def) {
-        def.IsDefRole = false;
+        def.IsDefRole = false
       }
-      row.IsDefRole = true;
+      row.IsDefRole = true
     },
     dropRole(row) {
-      const title = "确认删除角色 " + row.RoleName + "?";
-      const that = this;
-      this.$confirm(title, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      const title = '确认删除角色 ' + row.RoleName + '?'
+      const that = this
+      this.$confirm(title, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
-        that.submitDrop(row.Id);
-      });
+        that.submitDrop(row.Id)
+      })
     },
     async submitDrop(id) {
-      await roleApi.deleteRole(id);
+      await roleApi.deleteRole(id)
       this.$message({
-        type: "success",
-        message: "删除成功!",
-      });
-      this.load();
+        type: 'success',
+        message: '删除成功!'
+      })
+      this.load()
     },
     reset() {
-      this.queryParam.QueryKey = null;
-      this.paging.Index = 1;
-      this.load();
+      this.queryParam.QueryKey = null
+      this.paging.Index = 1
+      this.load()
     },
     async load() {
-      const res = await roleApi.query(this.queryParam, this.paging);
-      this.roles = res.List;
-      this.paging.Total = res.Count;
-    },
-  },
-};
+      const res = await roleApi.query(this.queryParam, this.paging)
+      this.roles = res.List
+      this.paging.Total = res.Count
+    }
+  }
+}
 </script>

@@ -64,7 +64,7 @@ namespace Basic.HrService.lmpl
             }
             DBDept dept = this._Dept.Get(emp.DeptId);
             string[] title = this._EmpTitle.GetTitle(emp.EmpId, emp.DeptId);
-            string[] prower = isAdmin ? _AllPrower : this._RolePrower.GetProwerVal(roleId);
+            string[] prower = isAdmin ? _AllPrower : this._RolePrower.GetOperateVal(roleId);
             return new LoginResult
             {
                 EmpId = emp.EmpId,

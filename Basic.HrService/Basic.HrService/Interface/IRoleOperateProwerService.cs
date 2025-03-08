@@ -2,8 +2,8 @@
 {
     public interface IRoleOperateProwerService
     {
-        long[] GetProwerId ( long roleId );
-        string[] GetProwerVal ( long roleId );
+        long[] GetOperateId ( long roleId, long prowerId );
+        string[] GetOperateVal ( long roleId );
         void Set ( long roleId, long[] prowerId );
     }
 }
