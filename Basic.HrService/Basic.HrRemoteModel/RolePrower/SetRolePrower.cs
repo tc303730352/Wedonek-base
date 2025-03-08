@@ -11,6 +11,7 @@ namespace Basic.HrRemoteModel.RolePrower
     {
         public long RoleId { get; set; }
 
-        public long[] ProwerId { get; set; }
+        public long ProwerId { get; set; }
+        public long[] OperateId { get; set; }
     }
 }

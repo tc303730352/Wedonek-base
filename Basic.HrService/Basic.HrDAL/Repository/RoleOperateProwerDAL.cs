@@ -18,17 +18,18 @@ namespace Basic.HrDAL.Repository
             this._BasicDAL.Insert(add);
             return add.Id;
         }
-        private void _Add ( OperateItem[] prowers, long roleId )
+        private void _Add ( OperateItem[] prowers, long prowerId, long roleId )
         {
             this._BasicDAL.Insert(prowers.ConvertAll(a => new DBRoleOperatePrower
             {
                 Id = IdentityHelper.CreateId(),
                 RoleId = roleId,
+                OperateId = a.Id,
                 OperateVal = a.OperateVal,
-                ProwerId = a.Id
+                ProwerId = prowerId
             }));
         }
-        private void _Set ( long roleId, OperateItem[] prowers, long[] ids )
+        private void _Set ( long roleId, long prowerId, OperateItem[] prowers, long[] ids )
         {
             ISqlQueue<DBRoleOperatePrower> queue = this._BasicDAL.BeginQueue();
             queue.Delete(a => ids.Contains(a.Id));
@@ -37,7 +38,8 @@ namespace Basic.HrDAL.Repository
                 Id = IdentityHelper.CreateId(),
                 RoleId = roleId,
                 OperateVal = a.OperateVal,
-                ProwerId = a.Id
+                ProwerId = prowerId,
+                OperateId = a.Id
             }));
             if ( queue.Submit() <= 0 )
             {
@@ -56,9 +58,9 @@ namespace Basic.HrDAL.Repository
                 throw new ErrorException("hr.role.operate.prower.delete.fail");
             }
         }
-        public void Set ( long roleId, OperateItem[] prowers )
+        public void Set ( long roleId, long prowerId, OperateItem[] prowers )
         {
-            long[] ids = this._BasicDAL.Gets(a => a.RoleId == roleId, a => a.Id);
+            long[] ids = this._BasicDAL.Gets(a => a.RoleId == roleId && a.ProwerId == prowerId, a => a.Id);
             if ( ids.IsNull() && prowers.IsNull() )
             {
                 return;
@@ -72,11 +74,11 @@ namespace Basic.HrDAL.Repository
             }
             else if ( ids.IsNull() )
             {
-                this._Add(prowers, roleId);
+                this._Add(prowers, prowerId, roleId);
             }
             else
             {
-                this._Set(roleId, prowers, ids);
+                this._Set(roleId, prowerId, prowers, ids);
             }
         }
     }

@@ -9,6 +9,6 @@ namespace Basic.HrCollect
         string[] GetOperateVal ( long roleId );
 
         string[] GetOperateVal ( long[] roleId );
-        void Set ( long roleId, OperateItem[] prowers );
+        void Set ( long roleId, long prowerId, OperateItem[] prowers );
     }
 }

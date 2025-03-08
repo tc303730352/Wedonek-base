@@ -250,7 +250,7 @@ export default {
       const key = e.column.property
       if (e.row.rowSpan != null && e.row.rowSpan[key] != null) {
         const num = this.rowSpan[key]
-        if (num == null || num == Number.NaN || num == e.rowIndex) {
+        if (num == null || num === Number.NaN || num === e.rowIndex) {
           this.rowSpan[key] = e.rowIndex + e.row.rowSpan[key]
           row = e.row.rowSpan[key]
         } else if (num > e.rowIndex) {
@@ -294,7 +294,7 @@ export default {
       this.selectEvent()
     },
     loadSelected(rows) {
-      if (!this.isSelect || rows == null || rows.length == 0) {
+      if (!this.isSelect || rows == null || rows.length === 0) {
         return
       }
       const keys = []

@@ -12,9 +12,9 @@ namespace Basic.HrCollect.Impl
             this._BasicDAL = basicDAL;
         }
 
-        public void Set ( long roleId, OperateItem[] prowers )
+        public void Set ( long roleId, long prowerId, OperateItem[] prowers )
         {
-            this._BasicDAL.Set(roleId, prowers);
+            this._BasicDAL.Set(roleId, prowerId, prowers);
         }
         public void Clear ( long roleId )
         {

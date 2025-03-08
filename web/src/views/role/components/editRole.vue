@@ -74,14 +74,20 @@
           </div>
         </el-col>
         <el-col :span="16">
-          <div style="width: 100%; height: 350px; overflow-y: auto;">
-            <w-table
-              :data="prowers"
-              row-key="Id"
-              :columns="columns"
-              :is-paging="false"
-            />
-          </div>
+          <el-card>
+            <span slot="header">{{ pTitle }}</span>
+            <div style="width: 100%; height: 350px; overflow-y: auto;">
+              <w-table
+                :data="prowers"
+                row-key="Id"
+                :is-select="true"
+                :is-multiple="true"
+                :columns="columns"
+                :is-paging="false"
+                @selected="saveOperPrower"
+              />
+            </div>
+          </el-card>
         </el-col>
       </el-row>
     </el-card>
@@ -113,6 +119,7 @@ export default {
     return {
       title: '新增角色',
       prowers: [],
+      pTitle: '操作权限列表',
       columns: [{
         key: 'OperateName',
         title: '权限名',
@@ -129,6 +136,7 @@ export default {
       source: null,
       chioseKeys: [],
       prowerId: null,
+      chioseId: null,
       rules: {
         RoleName: [
           {
@@ -159,6 +167,9 @@ export default {
     this.loadTrees()
   },
   methods: {
+    saveOperPrower() {
+
+    },
     async loadTrees() {
       const list = await getTreeBySystem()
       this.trees = list.map((c) => {
@@ -176,8 +187,10 @@ export default {
       })
     },
     chiosePrower(data) {
-      if (data.type === 0) {
-        this.loadPrower(parseInt(data.key))
+      if (data.type === 0 && this.chioseId !== data.key) {
+        this.chioseId = data.key
+        this.pTitle = data.label + '操作权限列表'
+        this.loadPrower(data.key)
       }
     },
     checkChange(data, checked) {
@@ -256,7 +269,7 @@ export default {
       this.$emit('close', true)
     },
     async loadPrower(prowerId) {
-      const list = await GetEnables(this.roleId, prowerId)
+      const list = await GetEnables(prowerId, this.roleId)
       this.prowers = list
     },
     async reset() {

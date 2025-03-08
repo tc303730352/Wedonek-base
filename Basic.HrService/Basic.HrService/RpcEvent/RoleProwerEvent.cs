@@ -15,7 +15,7 @@ namespace Basic.HrService.RpcEvent
 
         public void SetRolePrower ( SetRolePrower obj )
         {
-            this._Service.Set(obj.RoleId, obj.ProwerId);
+            this._Service.Set(obj.RoleId, obj.ProwerId, obj.OperateId);
         }
         public long[] GetRoleOperateId ( GetRoleOperateId obj )
         {

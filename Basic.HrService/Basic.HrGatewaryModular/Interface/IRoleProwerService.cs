@@ -1,7 +1,9 @@
-﻿namespace Basic.HrGatewaryModular.Interface
+﻿using Basic.HrGatewaryModular.Model.RolePrower;
+
+namespace Basic.HrGatewaryModular.Interface
 {
     public interface IRoleProwerService
     {
-        void Set ( long roleId, long[] prowerId );
+        void Set ( RoleProwerSet param );
     }
 }

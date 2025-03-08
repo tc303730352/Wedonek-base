@@ -1,6 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
+using Basic.HrGatewaryModular.Model.RolePrower;
 using WeDonekRpc.HttpApiGateway;
-using WeDonekRpc.HttpApiGateway.Model;
 
 namespace Basic.HrGatewaryModular.Api
 {
@@ -20,9 +20,9 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改权限集
         /// </summary>
         /// <param name="param"></param>
-        public void Set ( LongParam<long[]> param )
+        public void Set ( RoleProwerSet param )
         {
-            this._Service.Set(param.Id, param.Value);
+            this._Service.Set(param);
         }
     }
 }

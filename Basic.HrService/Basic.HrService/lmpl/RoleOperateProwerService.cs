@@ -25,10 +25,10 @@ namespace Basic.HrService.lmpl
             return this._Service.GetOperateVal(roleId);
         }
 
-        public void Set ( long roleId, long[] prowerId )
+        public void Set ( long roleId, long prowerId, long[] operateId )
         {
-            OperateItem[] items = this._Operate.Gets<OperateItem>(prowerId);
-            this._Service.Set(roleId, items);
+            OperateItem[] items = this._Operate.Gets<OperateItem>(operateId);
+            this._Service.Set(roleId, prowerId, items);
         }
     }
 }
