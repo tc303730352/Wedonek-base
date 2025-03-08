@@ -10,5 +10,9 @@ namespace Basic.HrRemoteModel.Prower
     [IRemoteConfig("basic.hr.service")]
     public class GetProwerTreeBySystem : RpcRemoteArray<ProwerSubSystem>
     {
+        /// <summary>
+        /// 权限类型
+        /// </summary>
+        public ProwerGetParam Param { get; set; }
     }
 }

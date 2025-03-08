@@ -10,32 +10,32 @@ namespace Basic.HrService.RpcEvent
     {
         private readonly IProwerService _Service;
 
-        public ProwerEvent (IProwerService service)
+        public ProwerEvent ( IProwerService service )
         {
             this._Service = service;
         }
 
-        public long AddPrower (AddPrower add)
+        public long AddPrower ( AddPrower add )
         {
             return this._Service.Add(add.Datum);
         }
-        public PagingResult<ProwerBase> QueryPrower (QueryPrower obj)
+        public PagingResult<ProwerBase> QueryPrower ( QueryPrower obj )
         {
             return this._Service.Query(obj.QueryParam, obj.ToBasicPage());
         }
-        public ProwerTree[] GetProwerTree (GetProwerTree obj)
+        public ProwerTree[] GetProwerTree ( GetProwerTree obj )
         {
             return this._Service.GetProwerTree(obj.SubSystemId, obj.IsEnable);
         }
-        public ProwerSubSystem[] GetProwerTreeBySystem ()
+        public ProwerSubSystem[] GetProwerTreeBySystem ( GetProwerTreeBySystem obj )
         {
-            return this._Service.GetTrees();
+            return this._Service.GetTrees(obj.Param);
         }
-        public bool SetPrower (SetPrower obj)
+        public bool SetPrower ( SetPrower obj )
         {
             return this._Service.Set(obj.Id, obj.Datum);
         }
-        public ProwerData GetPrower (GetPrower obj)
+        public ProwerData GetPrower ( GetPrower obj )
         {
             return this._Service.Get(obj.Id);
         }

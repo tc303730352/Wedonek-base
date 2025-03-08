@@ -4,7 +4,7 @@ namespace Basic.HrCollect
 {
     public interface ISubSystemCollect
     {
-        SubSystemDto[] Gets (long[] ids);
-        SubSystemDto[] GetEnables ();
+        SubSystemDto[] Gets ( long[] ids );
+        SubSystemDto[] Gets ( bool? isEnable );
     }
 }

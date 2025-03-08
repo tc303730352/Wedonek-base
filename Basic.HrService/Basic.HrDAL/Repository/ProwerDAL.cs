@@ -59,14 +59,6 @@ namespace Basic.HrDAL.Repository
             return this._BasicDAL.Max(a => a.SubSystemId == subSysId && a.ParentId == parentId, a => a.Sort);
         }
 
-        public void Delete ( long[] ids )
-        {
-            if ( !this._BasicDAL.Delete(a => ids.Contains(a.Id)) )
-            {
-                throw new ErrorException("hr.prower.delete.fail");
-            }
-        }
-
         public void SetRelation ( ProwerRelationSet[] sets )
         {
             if ( !this._BasicDAL.Update<ProwerRelationSet>(sets) )
@@ -74,6 +66,7 @@ namespace Basic.HrDAL.Repository
                 throw new ErrorException("hr.prower.delete.fail");
             }
         }
+
         public string GetHomeUri ( long subSysId )
         {
             return this._BasicDAL.Get(a => a.SubSystemId == subSysId && a.ProwerType == HrRemoteModel.ProwerType.menu && a.IsEnable, a => a.RouteName, "LevelNum,Sort");
@@ -81,6 +74,11 @@ namespace Basic.HrDAL.Repository
         public string GetHomeUri ( long subSysId, long[] prowerId )
         {
             return this._BasicDAL.Get(a => a.SubSystemId == subSysId && prowerId.Contains(a.Id) && a.IsEnable, a => a.RouteName, "LevelNum,Sort");
+        }
+
+        public T[] Gets<T> ( long[] subSysId, ProwerGetParam param ) where T : class, new()
+        {
+            return this._BasicDAL.Gets<T>(param.ToWhere(subSysId));
         }
     }
 }

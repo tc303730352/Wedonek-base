@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { getTreeBySystem } from '@/api/role/prower'
+import { GetTrees } from '@/api/role/prower'
 import * as roleApi from '@/api/role/role'
 import { GetEnables } from '@/api/role/opPrower'
 export default {
@@ -164,7 +164,9 @@ export default {
       return false
     },
     async loadTrees() {
-      const list = await getTreeBySystem()
+      const list = await GetTrees({
+        IsEnable: true
+      })
       this.trees = list.map((c) => {
         const t = {
           key: c.SubSysId,
@@ -201,11 +203,6 @@ export default {
         } else if (c.ProwerType === 0) {
           t.style = {
             icon: 'el-icon-document',
-            color: '#000'
-          }
-        } else if (c.ProwerType === 2) {
-          t.style = {
-            icon: 'component',
             color: '#000'
           }
         }

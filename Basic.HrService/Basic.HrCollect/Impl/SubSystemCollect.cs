@@ -7,17 +7,21 @@ namespace Basic.HrCollect.Impl
     {
         private readonly ISubSystemDAL _SubSystemDAL;
 
-        public SubSystemCollect (ISubSystemDAL subSystemDAL)
+        public SubSystemCollect ( ISubSystemDAL subSystemDAL )
         {
             this._SubSystemDAL = subSystemDAL;
         }
-        public SubSystemDto[] Gets (long[] ids)
+        public SubSystemDto[] Gets ( long[] ids )
         {
             return this._SubSystemDAL.Gets<SubSystemDto>(a => ids.Contains(a.Id) && a.IsEnable);
         }
-        public SubSystemDto[] GetEnables ()
+        public SubSystemDto[] Gets ( bool? isEnable )
         {
-            return this._SubSystemDAL.GetEnables();
+            if ( isEnable.HasValue )
+            {
+                return this._SubSystemDAL.Gets<SubSystemDto>(a => a.IsEnable == isEnable.Value);
+            }
+            return this._SubSystemDAL.GetAll<SubSystemDto>();
         }
 
     }

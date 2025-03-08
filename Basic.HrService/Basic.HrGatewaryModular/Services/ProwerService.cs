@@ -7,7 +7,7 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class ProwerService : IProwerService
     {
-        public long AddPrower (ProwerAdd datum)
+        public long AddPrower ( ProwerAdd datum )
         {
             return new AddPrower
             {
@@ -15,7 +15,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public ProwerData GetPrower (long id)
+        public ProwerData GetPrower ( long id )
         {
             return new GetPrower
             {
@@ -23,7 +23,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public ProwerTree[] GetProwerTree (long subSystemId, bool? isEnable)
+        public ProwerTree[] GetProwerTree ( long subSystemId, bool? isEnable )
         {
             return new GetProwerTree
             {
@@ -32,12 +32,15 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public ProwerSubSystem[] GetProwerTreeBySystem ()
+        public ProwerSubSystem[] GetTrees ( ProwerGetParam param )
         {
-            return new GetProwerTreeBySystem().Send();
+            return new GetProwerTreeBySystem
+            {
+                Param = param
+            }.Send();
         }
 
-        public ProwerBase[] QueryPrower (ProwerQuery queryParam, IBasicPage paging, out int count)
+        public ProwerBase[] QueryPrower ( ProwerQuery queryParam, IBasicPage paging, out int count )
         {
             return new QueryPrower
             {
@@ -50,7 +53,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send(out count);
         }
 
-        public bool SetPrower (long id, ProwerSet datum)
+        public bool SetPrower ( long id, ProwerSet datum )
         {
             return new SetPrower
             {

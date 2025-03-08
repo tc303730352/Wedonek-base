@@ -9,7 +9,7 @@ namespace Basic.HrService.Interface
         ProwerTree[] GetProwerTree (long subSysId, bool? isEnable);
         long Add (ProwerAdd add);
         ProwerData Get (long id);
-        ProwerSubSystem[] GetTrees ();
+        ProwerSubSystem[] GetTrees ( ProwerGetParam param );
         PagingResult<ProwerBase> Query (ProwerQuery queryParam, IBasicPage basicPage);
         bool Set (long id, ProwerSet datum);
     }

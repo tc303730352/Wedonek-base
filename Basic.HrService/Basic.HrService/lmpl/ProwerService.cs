@@ -48,14 +48,14 @@ namespace Basic.HrService.lmpl
                 return tree;
             });
         }
-        public ProwerSubSystem[] GetTrees ()
+        public ProwerSubSystem[] GetTrees ( ProwerGetParam param )
         {
-            SubSystemDto[] subs = this._SubSystem.GetEnables();
+            SubSystemDto[] subs = this._SubSystem.Gets(param.IsEnable);
             if ( subs.IsNull() )
             {
                 return null;
             }
-            ProwerDto[] dtos = this._Prower.GetDtos(subs.ConvertAll(a => a.Id));
+            ProwerDto[] dtos = this._Prower.GetDtos(subs.ConvertAll(a => a.Id), param);
             return subs.ConvertAll(a => new ProwerSubSystem
             {
                 SubSysId = a.Id,
