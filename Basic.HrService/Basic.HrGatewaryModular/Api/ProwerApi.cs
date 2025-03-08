@@ -4,6 +4,7 @@ using Basic.HrRemoteModel.Prower.Model;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
+using WeDonekRpc.HttpApiGateway.Model;
 
 namespace Basic.HrGatewaryModular.Api
 {
@@ -57,9 +58,9 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns>目录权限</returns>
-        public PagingResult<ProwerBase> Query ( [NullValidate("hr.prower.param.null")] UI_QueryPrower param )
+        public PagingResult<ProwerBase> Query ( [NullValidate("hr.prower.param.null")] PagingParam<ProwerQuery> param )
         {
-            ProwerBase[] results = this._Service.QueryPrower(param.QueryParam, param, out int count);
+            ProwerBase[] results = this._Service.QueryPrower(param.Query, param, out int count);
             return new PagingResult<ProwerBase>(count, results);
         }
 

@@ -10,6 +10,7 @@
         :default-expand-all="true"
         :highlight-current="true"
         :expand-on-click-node="false"
+        :current-node-key="chioseKey"
         style="width: 100%"
         :check-strictly="false"
         node-key="key"
@@ -38,18 +39,68 @@
       <div slot="header">
         <span>{{ title }}</span>
       </div>
+      <el-row>
+        <el-form :inline="true" :model="queryParam">
+          <el-form-item label="关键字">
+            <el-input
+              v-model="queryParam.QueryKey"
+              placeholder="菜单名"
+              @change="loadPower"
+            />
+          </el-form-item>
+          <el-form-item label="启用状态">
+            <el-select
+              v-model="queryParam.IsEnable"
+              placeholder="启用状态"
+              @change="loadPower"
+            >
+              <el-option :value="null">全部</el-option>
+              <el-option :value="true">启用</el-option>
+              <el-option :value="false">未启用</el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-checkbox
+              v-model="queryParam.IsShowAll"
+              label="是否显示所有下级"
+              @change="loadPower"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="success" @click="addPower">添加员工</el-button>
+            <el-button @click="reset">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-row>
     </el-card>
   </leftRightSplit>
 </template>
 
 <script>
-import { GetTrees } from '@/api/role/prower'
+import { GetTrees, Query } from '@/api/role/prower'
 export default {
   components: {},
   data() {
     return {
       title: '新增角色',
       menus: [],
+      dataList: null,
+      queryParam: {
+        SubSystemId: null,
+        QueryKey: null,
+        ParentId: null,
+        IsShowAll: true,
+        ProwerType: null,
+        IsEnable: null
+      },
+      paging: {
+        Size: 20,
+        Index: 1,
+        SortName: 'Id',
+        IsDesc: false,
+        Total: 0
+      },
+      chioseKey: null,
       columns: [{
         key: 'OperateName',
         title: '权限名',
@@ -72,11 +123,46 @@ export default {
     this.loadTrees()
   },
   methods: {
+    addPower() {
+
+    },
+    reset() {
+      this.queryParam.QueryKey = null
+      this.queryParam.IsShowAll = true
+      this.queryParam.IsEnable = true
+      this.queryParam.ProwerType = null
+      this.loadPower()
+    },
+    chioseMenu(e) {
+      if (e.type === 'isSubSystem' && e.key !== this.queryParam.SubSystemId) {
+        this.queryParam.SubSystemId = e.key
+        this.queryParam.ParentId = null
+      } else if (e.type === 1 && e.key !== this.queryParam.ParentId) {
+        this.queryParam.SubSystemId = e.sysId
+        this.queryParam.ParentId = e.key
+      } else {
+        return
+      }
+      this.loadPower()
+    },
+    async loadPower() {
+      const res = await Query(this.queryParam, this.paging)
+      if (res.List) {
+        this.dataList = res.List
+      } else {
+        this.dataList = []
+      }
+      this.paging.Total = res.Count
+    },
     async loadTrees() {
       const list = await GetTrees({
         ProwerType: 1
       })
-      this.trees = list.map((c) => {
+      const subSys = list[0]
+      this.chioseKey = subSys.SubSysId
+      this.queryParam.SubSystemId = this.chioseKey
+      this.title = subSys.SubSysName + '菜单列表'
+      this.menus = list.map((c) => {
         const t = {
           key: c.SubSysId,
           type: 'isSubSystem',
@@ -86,16 +172,18 @@ export default {
             color: '#f56c6c'
           }
         }
-        t.children = this.getProwers(c.Prowers)
+        t.children = this.getProwers(c.Prowers, c.SubSysId)
         return t
       })
+      this.loadPower()
     },
-    getProwers(list) {
+    getProwers(list, sysId) {
       return list.map((c) => {
         const t = {
           key: c.Id,
           type: c.ProwerType,
-          label: c.Name
+          label: c.Name,
+          sysId: sysId
         }
         if (c.ProwerType === 1) {
           t.style = {
@@ -104,7 +192,7 @@ export default {
           }
         }
         if (c.Children && c.Children.length !== 0) {
-          t.children = this.getProwers(c.Children)
+          t.children = this.getProwers(c.Children, sysId)
         }
         return t
       })

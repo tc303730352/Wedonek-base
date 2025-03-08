@@ -10,3 +10,17 @@ export function GetTrees(param) {
     data: param
   })
 }
+
+export function Query(query, paging) {
+  return request({
+    url: formatRequestUri('Query'),
+    method: 'post',
+    data: {
+      Query: query,
+      Index: paging.Index,
+      Size: paging.Size,
+      SortName: paging.SortName,
+      IsDesc: paging.IsDesc
+    }
+  })
+}

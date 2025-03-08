@@ -23,6 +23,7 @@ namespace Basic.HrDAL.Repository
         }
         public Result[] Query<Result> ( ProwerQuery query, IBasicPage paging, out int count ) where Result : class, new()
         {
+            paging.InitOrderBy("Id", false);
             return this._BasicDAL.Query<Result>(query.ToWhere(this), paging, out count);
         }
         public void Add ( DBProwerList add )
