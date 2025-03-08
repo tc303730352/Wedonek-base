@@ -8,10 +8,7 @@ namespace Basic.HrModel.DB
     {
         [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }
-        /// <summary>
-        /// 权限码
-        /// </summary>
-        public string ProwerCode { get; set; }
+
         /// <summary>
         /// 子系统ID
         /// </summary>

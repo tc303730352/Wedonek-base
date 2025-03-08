@@ -29,11 +29,7 @@ namespace Basic.HrCollect.Impl
         {
             return this._RolePrower.GetProwerId(roleId, subSysId, prowerType);
         }
-        public string[] GetProwerCode ( long[] roleId, ProwerType prowerType )
-        {
-            long[] prowerId = this._RolePrower.GetProwerId(roleId, prowerType);
-            return this._Prower.Gets(a => prowerId.Contains(a.Id) && a.IsEnable, a => a.ProwerCode).Distinct();
-        }
+
         public ProwerRouteDto[] GetPrower ( long[] roleId )
         {
             long[] prowerId = this._RolePrower.GetProwerId(roleId, ProwerType.menu);

@@ -15,23 +15,23 @@ namespace Basic.HrService.lmpl
         private readonly ISubSystemCollect _SubSystem;
         private readonly IProwerCollect _Prower;
 
-        public ProwerService (ISubSystemCollect subSystem,
-            IProwerCollect prower)
+        public ProwerService ( ISubSystemCollect subSystem,
+            IProwerCollect prower )
         {
             this._SubSystem = subSystem;
             this._Prower = prower;
         }
-        public long Add (ProwerAdd add)
+        public long Add ( ProwerAdd add )
         {
             return this._Prower.Add(add);
         }
 
-        public ProwerData Get (long id)
+        public ProwerData Get ( long id )
         {
             DBProwerList db = this._Prower.Get(id);
             return db.ConvertMap<DBProwerList, ProwerData>();
         }
-        public ProwerTree[] GetProwerTree (long subSysId, bool? isEnable)
+        public ProwerTree[] GetProwerTree ( long subSysId, bool? isEnable )
         {
             ProwerDto[] dtos = this._Prower.GetDtos(subSysId, isEnable);
             return dtos.Convert(c => c.ParentId == 0, c =>
@@ -51,7 +51,7 @@ namespace Basic.HrService.lmpl
         public ProwerSubSystem[] GetTrees ()
         {
             SubSystemDto[] subs = this._SubSystem.GetEnables();
-            if (subs.IsNull())
+            if ( subs.IsNull() )
             {
                 return null;
             }
@@ -76,19 +76,19 @@ namespace Basic.HrService.lmpl
             });
         }
 
-        public PagingResult<ProwerBase> Query (ProwerQuery query, IBasicPage paging)
+        public PagingResult<ProwerBase> Query ( ProwerQuery query, IBasicPage paging )
         {
             ProwerBase[] list = this._Prower.Query<ProwerBase>(query, paging, out int count);
             return new PagingResult<ProwerBase>(list, count);
         }
 
-        public bool Set (long id, ProwerSet datum)
+        public bool Set ( long id, ProwerSet datum )
         {
             DBProwerList db = this._Prower.Get(id);
             return this._Prower.Set(db, datum);
         }
 
-        private void _InitChildren (ProwerTree tree, ProwerDto[] prowers)
+        private void _InitChildren ( ProwerTree tree, ProwerDto[] prowers )
         {
             tree.Children = prowers.Convert(c => c.ParentId == tree.Id, c =>
             {

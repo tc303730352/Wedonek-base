@@ -10,10 +10,10 @@ namespace Basic.HrDAL.Repository
 {
     internal class ProwerDAL : BasicDAL<DBProwerList, long>, IProwerDAL
     {
-        public ProwerDAL (IRepository<DBProwerList> basicDAL) : base(basicDAL)
+        public ProwerDAL ( IRepository<DBProwerList> basicDAL ) : base(basicDAL)
         {
         }
-        public DBProwerList[] GetEnables (long subSystemId)
+        public DBProwerList[] GetEnables ( long subSystemId )
         {
             return this._BasicDAL.Gets(a => a.SubSystemId == subSystemId && a.IsEnable);
         }
@@ -21,64 +21,64 @@ namespace Basic.HrDAL.Repository
         {
             return this._BasicDAL.Gets(a => a.IsEnable);
         }
-        public Result[] Query<Result> (ProwerQuery query, IBasicPage paging, out int count) where Result : class, new()
+        public Result[] Query<Result> ( ProwerQuery query, IBasicPage paging, out int count ) where Result : class, new()
         {
             return this._BasicDAL.Query<Result>(query.ToWhere(this), paging, out count);
         }
-        public void Add (DBProwerList add)
+        public void Add ( DBProwerList add )
         {
             add.Id = IdentityHelper.CreateId();
             add.IsEnable = false;
             add.AddTime = DateTime.Now;
             this._BasicDAL.Insert(add);
         }
-        public void Enable (DBProwerList source)
+        public void Enable ( DBProwerList source )
         {
-            if (!this._BasicDAL.Update(a => a.IsEnable == true, a => a.Id == source.Id))
+            if ( !this._BasicDAL.Update(a => a.IsEnable == true, a => a.Id == source.Id) )
             {
                 throw new ErrorException("hr.prower.enable.fail");
             }
         }
-        public long[] GetAllSubId (string levelCode, bool? isEnable)
+        public long[] GetAllSubId ( string levelCode, bool? isEnable )
         {
-            if (isEnable.HasValue)
+            if ( isEnable.HasValue )
             {
                 return this._BasicDAL.Gets(a => a.LevelCode.StartsWith(levelCode) && a.IsEnable == isEnable.Value, a => a.Id);
             }
             return this._BasicDAL.Gets(a => a.LevelCode.StartsWith(levelCode), a => a.Id);
         }
-        public void Stop (long[] ids)
+        public void Stop ( long[] ids )
         {
-            if (!this._BasicDAL.Update(a => a.IsEnable == false, a => ids.Contains(a.Id)))
+            if ( !this._BasicDAL.Update(a => a.IsEnable == false, a => ids.Contains(a.Id)) )
             {
                 throw new ErrorException("hr.prower.stop.fail");
             }
         }
-        public int GetSort (long subSysId, long parentId)
+        public int GetSort ( long subSysId, long parentId )
         {
             return this._BasicDAL.Max(a => a.SubSystemId == subSysId && a.ParentId == parentId, a => a.Sort);
         }
 
-        public void Delete (long[] ids)
+        public void Delete ( long[] ids )
         {
-            if (!this._BasicDAL.Delete(a => ids.Contains(a.Id)))
+            if ( !this._BasicDAL.Delete(a => ids.Contains(a.Id)) )
             {
                 throw new ErrorException("hr.prower.delete.fail");
             }
         }
 
-        public void SetRelation (ProwerRelationSet[] sets)
+        public void SetRelation ( ProwerRelationSet[] sets )
         {
-            if (!this._BasicDAL.Update<ProwerRelationSet>(sets))
+            if ( !this._BasicDAL.Update<ProwerRelationSet>(sets) )
             {
                 throw new ErrorException("hr.prower.delete.fail");
             }
         }
-        public string GetHomeUri (long subSysId)
+        public string GetHomeUri ( long subSysId )
         {
             return this._BasicDAL.Get(a => a.SubSystemId == subSysId && a.ProwerType == HrRemoteModel.ProwerType.menu && a.IsEnable, a => a.RouteName, "LevelNum,Sort");
         }
-        public string GetHomeUri (long subSysId, long[] prowerId)
+        public string GetHomeUri ( long subSysId, long[] prowerId )
         {
             return this._BasicDAL.Get(a => a.SubSystemId == subSysId && prowerId.Contains(a.Id) && a.IsEnable, a => a.RouteName, "LevelNum,Sort");
         }
