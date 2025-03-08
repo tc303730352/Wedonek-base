@@ -14,10 +14,7 @@ namespace Basic.HrRemoteModel.Prower.Model
         /// 父级ID
         /// </summary>
         public long? ParentId { get; set; }
-        /// <summary>
-        /// 是否返回所有下级
-        /// </summary>
-        public bool IsShowAll { get; set; }
+
 
         /// <summary>
         /// 菜单类型

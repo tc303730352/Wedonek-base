@@ -81,7 +81,42 @@ namespace Basic.HrService.lmpl
             ProwerBase[] list = this._Prower.Query<ProwerBase>(query, paging, out int count);
             return new PagingResult<ProwerBase>(list, count);
         }
-
+        public ProwerDataTree[] GetTrees ( ProwerQuery query )
+        {
+            ProwerBaseDto[] list = this._Prower.Gets<ProwerBaseDto>(query);
+            if ( list.IsNull() )
+            {
+                return Array.Empty<ProwerDataTree>();
+            }
+            int lvl = list.Min(c => c.LevelNum);
+            return list.Convert(c => c.LevelNum == lvl, c =>
+            {
+                return new ProwerDataTree
+                {
+                    Id = c.Id,
+                    Icon = c.Icon,
+                    Description = c.Description,
+                    Name = c.Name,
+                    ProwerType = c.ProwerType,
+                    Children = this._GetChildren(c, list)
+                };
+            });
+        }
+        public ProwerDataTree[] _GetChildren ( ProwerBaseDto prt, ProwerBaseDto[] list )
+        {
+            return list.Convert(c => c.ParentId == prt.Id, c =>
+            {
+                return new ProwerDataTree
+                {
+                    Id = c.Id,
+                    Icon = c.Icon,
+                    Description = c.Description,
+                    Name = c.Name,
+                    ProwerType = c.ProwerType,
+                    Children = this._GetChildren(c, list)
+                };
+            });
+        }
         public bool Set ( long id, ProwerSet datum )
         {
             DBProwerList db = this._Prower.Get(id);

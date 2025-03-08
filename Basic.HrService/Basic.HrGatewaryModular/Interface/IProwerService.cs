@@ -13,6 +13,12 @@ namespace Basic.HrGatewaryModular.Interface
         long AddPrower ( ProwerAdd datum );
 
         /// <summary>
+        /// 获取目录权限树
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        ProwerDataTree[] GetTrees ( ProwerQuery query );
+        /// <summary>
         /// 获取目录权限
         /// </summary>
         /// <param name="id">权限ID</param>

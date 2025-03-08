@@ -6,11 +6,12 @@ namespace Basic.HrService.Interface
 {
     public interface IProwerService
     {
-        ProwerTree[] GetProwerTree (long subSysId, bool? isEnable);
-        long Add (ProwerAdd add);
-        ProwerData Get (long id);
+        ProwerDataTree[] GetTrees ( ProwerQuery query );
+        ProwerTree[] GetProwerTree ( long subSysId, bool? isEnable );
+        long Add ( ProwerAdd add );
+        ProwerData Get ( long id );
         ProwerSubSystem[] GetTrees ( ProwerGetParam param );
-        PagingResult<ProwerBase> Query (ProwerQuery queryParam, IBasicPage basicPage);
-        bool Set (long id, ProwerSet datum);
+        PagingResult<ProwerBase> Query ( ProwerQuery queryParam, IBasicPage basicPage );
+        bool Set ( long id, ProwerSet datum );
     }
 }

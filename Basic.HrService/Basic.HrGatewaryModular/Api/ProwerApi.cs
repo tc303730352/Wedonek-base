@@ -63,7 +63,15 @@ namespace Basic.HrGatewaryModular.Api
             ProwerBase[] results = this._Service.QueryPrower(param.Query, param, out int count);
             return new PagingResult<ProwerBase>(count, results);
         }
-
+        /// <summary>
+        /// 获取目录权限树
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public ProwerDataTree[] GetProwerTrees ( ProwerQuery query )
+        {
+            return this._Service.GetTrees(query);
+        }
         /// <summary>
         /// 修改权限
         /// </summary>

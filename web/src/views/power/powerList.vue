@@ -60,9 +60,11 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-checkbox
-              v-model="queryParam.IsShowAll"
-              label="是否显示所有下级"
+            <enumItem
+              v-model="queryParam.ProwerType"
+              :dic-key="HrEnumDic.hrProwerType"
+              placeholder="权限类型"
+              :multiple="true"
               @change="loadPower"
             />
           </el-form-item>
@@ -72,16 +74,28 @@
           </el-form-item>
         </el-form>
       </el-row>
+      <w-table
+        :data="dataList"
+        :columns="columns"
+        :is-paging="false"
+        row-key="Id"
+      >
+        <template slot="action" slot-scope="e" />
+      </w-table>
     </el-card>
   </leftRightSplit>
 </template>
 
 <script>
-import { GetTrees, Query } from '@/api/role/prower'
+import { GetTrees, GetProwerTrees } from '@/api/role/prower'
+import {
+  hrProwerType
+} from '@/config/publicDic'
 export default {
   components: {},
   data() {
     return {
+      hrProwerType,
       title: '新增角色',
       menus: [],
       dataList: null,
@@ -89,7 +103,6 @@ export default {
         SubSystemId: null,
         QueryKey: null,
         ParentId: null,
-        IsShowAll: true,
         ProwerType: null,
         IsEnable: null
       },
@@ -146,13 +159,7 @@ export default {
       this.loadPower()
     },
     async loadPower() {
-      const res = await Query(this.queryParam, this.paging)
-      if (res.List) {
-        this.dataList = res.List
-      } else {
-        this.dataList = []
-      }
-      this.paging.Total = res.Count
+      this.dataList = await GetProwerTrees(this.queryParam)
     },
     async loadTrees() {
       const list = await GetTrees({

@@ -22,5 +22,7 @@ namespace Basic.HrDAL
         string GetHomeUri ( long subSysId, long[] prowerId );
         string GetHomeUri ( long subSysId );
         T[] Gets<T> ( long[] subSysId, ProwerGetParam param ) where T : class, new();
+
+        T[] Gets<T> ( ProwerQuery query ) where T : class, new();
     }
 }

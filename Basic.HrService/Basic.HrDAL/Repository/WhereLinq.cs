@@ -89,20 +89,12 @@ namespace Basic.HrDAL.Repository
             return where.And(a => a.IsToVoid == false);
         }
 
-        public static Expression<Func<DBProwerList, bool>> ToWhere ( this ProwerQuery query, IBasicDAL<DBProwerList, long> prowerDAL )
+        public static Expression<Func<DBProwerList, bool>> ToWhere ( this ProwerQuery query )
         {
             ExpressionStarter<DBProwerList> where = PredicateBuilder.New<DBProwerList>(a => a.SubSystemId == query.SubSystemId);
             if ( query.ParentId.HasValue )
             {
-                if ( query.IsShowAll )
-                {
-                    string levelCode = prowerDAL.Get(query.ParentId.Value, a => a.LevelCode) + query.ParentId.Value + "|";
-                    where = where.And(a => a.LevelCode.StartsWith(levelCode));
-                }
-                else
-                {
-                    where = where.And(a => a.ParentId == query.ParentId.Value);
-                }
+                where = where.And(a => a.ParentId == query.ParentId.Value);
             }
             if ( query.IsEnable.HasValue )
             {

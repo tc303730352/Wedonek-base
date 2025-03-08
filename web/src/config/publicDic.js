@@ -5,7 +5,8 @@ module.exports = {
     hrWorkStatus: 'HrWorkStatus',
     hrUserSex: 'HrUserSex',
     dicStatus: 'DicStatus',
-    dicItemStatus: 'DicItemStatus'
+    dicItemStatus: 'DicItemStatus',
+    hrProwerType: 'ProwerType'
   },
   HrItemDic: {
     deptTag: '3',

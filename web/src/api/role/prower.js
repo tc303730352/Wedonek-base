@@ -24,3 +24,11 @@ export function Query(query, paging) {
     }
   })
 }
+
+export function GetProwerTrees(query) {
+  return request({
+    url: formatRequestUri('GetProwerTrees'),
+    method: 'post',
+    data: query
+  })
+}

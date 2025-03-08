@@ -21,10 +21,14 @@ namespace Basic.HrDAL.Repository
         {
             return this._BasicDAL.Gets(a => a.IsEnable);
         }
+        public T[] Gets<T> ( ProwerQuery query ) where T : class, new()
+        {
+            return this._BasicDAL.Gets<T>(query.ToWhere());
+        }
         public Result[] Query<Result> ( ProwerQuery query, IBasicPage paging, out int count ) where Result : class, new()
         {
             paging.InitOrderBy("Id", false);
-            return this._BasicDAL.Query<Result>(query.ToWhere(this), paging, out count);
+            return this._BasicDAL.Query<Result>(query.ToWhere(), paging, out count);
         }
         public void Add ( DBProwerList add )
         {

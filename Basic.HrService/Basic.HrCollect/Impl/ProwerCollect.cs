@@ -17,6 +17,10 @@ namespace Basic.HrCollect.Impl
         {
             this._Prower = prower;
         }
+        public T[] Gets<T> ( ProwerQuery query ) where T : class, new()
+        {
+            return this._Prower.Gets<T>(query);
+        }
         public Result[] Query<Result> ( ProwerQuery query, IBasicPage paging, out int count ) where Result : class, new()
         {
             return this._Prower.Query<Result>(query, paging, out count);

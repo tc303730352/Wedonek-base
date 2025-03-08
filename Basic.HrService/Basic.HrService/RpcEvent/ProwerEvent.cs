@@ -14,7 +14,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
-
+        public ProwerDataTree[] GetProwerTrees ( GetProwerTrees obj )
+        {
+            return this._Service.GetTrees(obj.Query);
+        }
         public long AddPrower ( AddPrower add )
         {
             return this._Service.Add(add.Datum);

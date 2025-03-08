@@ -22,7 +22,13 @@ namespace Basic.HrGatewaryModular.Services
                 Id = id,
             }.Send();
         }
-
+        public ProwerDataTree[] GetTrees ( ProwerQuery query )
+        {
+            return new GetProwerTrees
+            {
+                Query = query
+            }.Send();
+        }
         public ProwerTree[] GetProwerTree ( long subSystemId, bool? isEnable )
         {
             return new GetProwerTree
