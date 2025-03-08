@@ -50,9 +50,5 @@ namespace Basic.HrModel.Prower
         /// 是否启用
         /// </summary>
         public bool IsEnable { get; set; }
-        /// <summary>
-        /// 添加时间
-        /// </summary>
-        public DateTime AddTime { get; set; }
     }
 }

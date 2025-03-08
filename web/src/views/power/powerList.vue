@@ -80,7 +80,39 @@
         :is-paging="false"
         row-key="Id"
       >
-        <template slot="action" slot-scope="e" />
+        <template slot="Icon" slot-scope="e">
+          <i :class="e.row.Icon" />
+        </template>
+        <template slot="IsEnable" slot-scope="e">
+          <el-switch
+            v-model="e.row.IsEnable"
+            active-text="启用"
+            inactive-text="停用"
+            @change="setIsEnable(e.row)"
+          />
+        </template>
+        <template slot="Sort" slot-scope="e">
+          <el-button
+            v-if="e.row.Sort != 1"
+            icon="el-icon-caret-top"
+            size="mini"
+            style="float: left"
+            circle
+            @click="upItem(e.row)"
+          />
+          <el-button
+            v-if="e.row.Sort != maxSort"
+            size="mini"
+            style="float: right"
+            icon="el-icon-caret-bottom"
+            circle
+            @click="downItem(e.row, e.index)"
+          />
+        </template>
+        <template slot="ProwerType" slot-scope="e">
+          <span v-if="e.row.ProwerType == 0">菜单</span>
+          <span v-else-if="e.row.ProwerType == 1">目录</span>
+        </template>
       </w-table>
     </el-card>
   </leftRightSplit>
@@ -89,13 +121,13 @@
 <script>
 import { GetTrees, GetProwerTrees } from '@/api/role/prower'
 import {
-  hrProwerType
+  HrEnumDic
 } from '@/config/publicDic'
 export default {
   components: {},
   data() {
     return {
-      hrProwerType,
+      HrEnumDic,
       title: '新增角色',
       menus: [],
       dataList: null,
@@ -114,13 +146,49 @@ export default {
         Total: 0
       },
       chioseKey: null,
+      maxSort: 1,
       columns: [{
-        key: 'OperateName',
+        key: 'Icon',
+        title: '图标',
+        align: 'left',
+        slotName: 'Icon',
+        width: 100
+      },
+      {
+        key: 'Name',
         title: '权限名',
+        align: 'left',
+        width: 200
+      },
+      {
+        key: 'ProwerType',
+        title: '权限类型',
         align: 'center',
-        minWidth: 150
-      }, {
-        key: 'Show',
+        slotName: 'ProwerType',
+        width: 80
+      },
+      {
+        key: 'RouteName',
+        title: '页面路由名',
+        align: 'left',
+        width: 150
+      },
+      {
+        key: 'IsEnable',
+        title: '是否启用',
+        align: 'center',
+        slotName: 'IsEnable',
+        width: 200
+      },
+      {
+        key: 'Sort',
+        title: '排序位',
+        align: 'center',
+        slotName: 'Sort',
+        width: 90
+      },
+      {
+        key: 'Description',
         title: '说明',
         align: 'left',
         minWidth: 150
@@ -160,6 +228,7 @@ export default {
     },
     async loadPower() {
       this.dataList = await GetProwerTrees(this.queryParam)
+      this.maxSort = this.dataList.Max('Sort')
     },
     async loadTrees() {
       const list = await GetTrees({

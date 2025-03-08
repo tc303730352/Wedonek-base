@@ -98,6 +98,9 @@ namespace Basic.HrService.lmpl
                     Description = c.Description,
                     Name = c.Name,
                     ProwerType = c.ProwerType,
+                    Sort = c.Sort,
+                    IsEnable = c.IsEnable,
+                    RouteName = c.RouteName,
                     Children = this._GetChildren(c, list)
                 };
             });
@@ -113,6 +116,9 @@ namespace Basic.HrService.lmpl
                     Description = c.Description,
                     Name = c.Name,
                     ProwerType = c.ProwerType,
+                    Sort = c.Sort,
+                    IsEnable = c.IsEnable,
+                    RouteName = c.RouteName,
                     Children = this._GetChildren(c, list)
                 };
             });
