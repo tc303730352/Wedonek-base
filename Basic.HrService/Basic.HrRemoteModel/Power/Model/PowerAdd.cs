@@ -16,11 +16,5 @@ namespace Basic.HrRemoteModel.Power.Model
         [NumValidate("hr.power.parent.id.error", 0)]
         public long ParentId { get; set; }
 
-        /// <summary>
-        /// 权限类型
-        /// </summary>
-        [EnumValidate("hr.power.type.error", typeof(PowerType))]
-        public PowerType PowerType { get; set; }
-
     }
 }

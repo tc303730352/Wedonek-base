@@ -1,4 +1,5 @@
-﻿using Basic.HrRemoteModel.Power.Model;
+﻿using Basic.HrGatewaryModular.Model.Power;
+using Basic.HrRemoteModel.Power.Model;
 using WeDonekRpc.Model;
 
 namespace Basic.HrGatewaryModular.Interface
@@ -54,7 +55,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="id">目录权限ID</param>
         /// <param name="datum">目录权限资料</param>
         /// <returns></returns>
-        bool SetPower ( long id, PowerSet datum );
+        bool SetPower ( long id, PowerSetDto datum );
         bool SetSort ( long id, int value );
     }
 }

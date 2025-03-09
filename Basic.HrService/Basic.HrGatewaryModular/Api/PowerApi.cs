@@ -90,7 +90,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
-        public bool Set ( [NullValidate("hr.power.param.null")] LongParam<PowerSet> param )
+        public bool Set ( [NullValidate("hr.power.param.null")] LongParam<PowerSetDto> param )
         {
             return this._Service.SetPower(param.Id, param.Value);
         }

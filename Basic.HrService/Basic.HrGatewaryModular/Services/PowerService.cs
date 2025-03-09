@@ -1,6 +1,8 @@
 ﻿using Basic.HrGatewaryModular.Interface;
+using Basic.HrGatewaryModular.Model.Power;
 using Basic.HrRemoteModel.Power;
 using Basic.HrRemoteModel.Power.Model;
+using WeDonekRpc.Client;
 using WeDonekRpc.Model;
 
 namespace Basic.HrGatewaryModular.Services
@@ -59,12 +61,12 @@ namespace Basic.HrGatewaryModular.Services
             }.Send(out count);
         }
 
-        public bool SetPower ( long id, PowerSet datum )
+        public bool SetPower ( long id, PowerSetDto datum )
         {
             return new SetPower
             {
                 Id = id,
-                Datum = datum,
+                Datum = datum.ConvertMap<PowerSetDto, PowerSet>(),
             }.Send();
         }
 
