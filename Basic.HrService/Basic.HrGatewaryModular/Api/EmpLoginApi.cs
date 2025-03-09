@@ -9,7 +9,7 @@ namespace Basic.HrGatewaryModular.Api
     internal class EmpLoginApi : ApiController
     {
         private readonly IEmpLoginService _Service;
-        public EmpLoginApi (IEmpLoginService service)
+        public EmpLoginApi ( IEmpLoginService service )
         {
             this._Service = service;
         }
@@ -26,8 +26,8 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns>登陆结果</returns>
-        [ApiPrower(false)]
-        public EmpLoginRes EmpPwdLogin ([NullValidate("hr.emplogin.param.null")] UI_EmpPwdLogin param)
+        [ApiPower(false)]
+        public EmpLoginRes EmpPwdLogin ( [NullValidate("hr.emplogin.param.null")] UI_EmpPwdLogin param )
         {
             return this._Service.EmpPwdLogin(param.LoginName, param.Password);
         }

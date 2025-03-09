@@ -518,7 +518,7 @@
             <param name="param">参数</param>
             <returns>目录权限</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.GetProwerTrees(Basic.HrRemoteModel.Power.Model.PowerQuery)">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.GetPowerTrees(Basic.HrRemoteModel.Power.Model.PowerQuery)">
             <summary>
             获取目录权限树
             </summary>

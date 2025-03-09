@@ -19,7 +19,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">公司资料</param>
         /// <returns></returns>
-        [ApiPrower("all", "hr.company.add")]
+        [ApiPower("all", "hr.company.add")]
         public long Add ( [NullValidate("hr.company.datum.null")] CompanyAdd datum )
         {
             return this._Service.AddCompany(datum);

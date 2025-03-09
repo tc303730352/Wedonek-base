@@ -45,7 +45,7 @@ namespace Basic.HrGatewaryModular.Services
             string applyId = "Hr_" + result.EmpId;
             UserState state = new UserState
             {
-                Prower = result.Power,
+                Power = result.Power,
                 Param = new Dictionary<string, StateParam>
                 {
                     {"UserId",new StateParam(result.EmpId) },
