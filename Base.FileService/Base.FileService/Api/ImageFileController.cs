@@ -14,13 +14,13 @@ namespace Base.FileService.Api
     {
         private readonly IImageFileService _ImgService;
 
-        public ImageFileController (IImageFileService imgService)
+        public ImageFileController ( IImageFileService imgService )
         {
             this._ImgService = imgService;
         }
-        [ApiPrower(false)]
+        [ApiPower(false)]
         [ApiRouteName("/file/read/image/")]
-        public IResponse ReadImage (bool isDown)
+        public IResponse ReadImage ( bool isDown )
         {
             UserFileDto file = base.RequestState.Get<UserFileDto>("file");
             ImgOperate op = this.Request.QueryString.GetImgOperate();

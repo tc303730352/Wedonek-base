@@ -15,42 +15,42 @@ namespace Base.FileService.lmpl
         private readonly IUserFileCollect _UserFile;
         private readonly IUserFileDirCollect _UserFileDir;
         private readonly IFileConfig _Config;
-        public UserFileService (IUserFileCollect userFile, IFileConfig config, IUserFileDirCollect userFileDir)
+        public UserFileService ( IUserFileCollect userFile, IFileConfig config, IUserFileDirCollect userFileDir )
         {
             this._Config = config;
             this._UserFile = userFile;
             this._UserFileDir = userFileDir;
         }
 
-        public void SaveSort (Dictionary<long, int> sort)
+        public void SaveSort ( Dictionary<long, int> sort )
         {
             this._UserFile.SaveSort(sort);
         }
-        public void Drop (string dirKey, long linkBizPk, string tag)
+        public void Drop ( string dirKey, long linkBizPk, string tag )
         {
             UserFileDirDto dir = this._UserFileDir.GetDir(dirKey);
             long[] ids = this._UserFile.GetIds(dir.Id, linkBizPk, tag);
-            if (ids.IsNull())
+            if ( ids.IsNull() )
             {
                 return;
             }
             this._UserFile.Drop(ids);
         }
 
-        public void Delete (long fileId, IUserState state)
+        public void Delete ( long fileId, IUserState state )
         {
             UserFileDto file = this._UserFile.GetFile(fileId);
             long empId = state.GetValue<long>("EmpId");
-            if (file.UserId != empId || ( !file.OperatePrower.IsNull() && !file.OperatePrower.IsExists<string>(c => state.Prower.IsExists(c)) ))
+            if ( file.UserId != empId || ( !file.OperatePower.IsNull() && !file.OperatePower.IsExists<string>(state.Power.IsExists) ) )
             {
-                throw new ErrorException("file.delete.prower.error");
+                throw new ErrorException("file.delete.power.error");
             }
-            else if (file.FileStatus == UserFileStatus.起草)
+            else if ( file.FileStatus == UserFileStatus.起草 )
             {
                 this._UserFile.Delete(fileId);
                 return;
             }
-            else if (file.FileStatus == UserFileStatus.停用 || file.FileStatus == UserFileStatus.已删除)
+            else if ( file.FileStatus == UserFileStatus.停用 || file.FileStatus == UserFileStatus.已删除 )
             {
                 return;
             }
@@ -58,10 +58,10 @@ namespace Base.FileService.lmpl
         }
 
 
-        public DirUpConfig GetUploadConfig (GetConfigArg arg)
+        public DirUpConfig GetUploadConfig ( GetConfigArg arg )
         {
             UserFileDirDto dir = this._UserFileDir.GetDir(arg.DirKey);
-            if (!arg.LinkBizPk.HasValue)
+            if ( !arg.LinkBizPk.HasValue )
             {
                 return new DirUpConfig
                 {
@@ -84,29 +84,29 @@ namespace Base.FileService.lmpl
                 }).ToArray()
             };
         }
-        public void SaveFile (long[] fileId, long linkBizPk, long[] dropId)
+        public void SaveFile ( long[] fileId, long linkBizPk, long[] dropId )
         {
             this._UserFile.SaveFile(fileId, linkBizPk, dropId);
         }
-        public void SaveFile (long fileId, long linkBizPk, long[] dropId)
+        public void SaveFile ( long fileId, long linkBizPk, long[] dropId )
         {
             UserFileDto file = this._UserFile.GetFile(fileId);
             this._UserFile.SaveFile(file, linkBizPk, dropId);
         }
-        public void Drop (long[] fileId)
+        public void Drop ( long[] fileId )
         {
             this._UserFile.Drop(fileId);
         }
-        public void Drop (long fileId)
+        public void Drop ( long fileId )
         {
             this._UserFile.Drop(fileId);
         }
 
-        public void Drop (string[] dirKey, long[] linkBizPk)
+        public void Drop ( string[] dirKey, long[] linkBizPk )
         {
             long[] dirId = this._UserFileDir.GetDirId(dirKey);
             long[] ids = this._UserFile.GetIds(dirId, linkBizPk);
-            if (ids.IsNull())
+            if ( ids.IsNull() )
             {
                 return;
             }

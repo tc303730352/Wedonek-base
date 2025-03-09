@@ -36,14 +36,14 @@ namespace Base.FileModel.UserFile
         /// <summary>
         /// 权限类型
         /// </summary>
-        public FilePrower Prower { get; set; }
+        public FilePower Power { get; set; }
 
         public string[] PowerCode { get; set; }
 
         /// <summary>
         /// 操作权限码
         /// </summary>
-        public string[] OperatePrower { get; set; }
+        public string[] OperatePower { get; set; }
         /// <summary>
         /// 标注
         /// </summary>

@@ -62,12 +62,12 @@ namespace Base.FileService.lmpl
                 UserId = state.ToUserId(),
                 UserType = state.ToUserType(),
                 UserDirId = userDir.Id,
-                Prower = userDir.Prower,
+                Power = userDir.Power,
                 PowerCode = userDir.ReadPower,
                 LinkBizPk = file.Form.LinkBizPk,
                 Tag = file.Form.Tag,
                 Extension = ext,
-                OperatePrower = userDir.UpPower,
+                OperatePower = userDir.UpPower,
                 FileName = file.FileName,
                 FileType = ext.GetFileType(),
                 FileId = fileId,
@@ -86,21 +86,21 @@ namespace Base.FileService.lmpl
         {
             BlockUpArg arg = (BlockUpArg)result.File.Form;
             BlockUpExtend extend = (BlockUpExtend)result.File.Extend;
-            UserFileDirDto userDir = _UserFileDir.GetDir(arg.DirKey);
+            UserFileDirDto userDir = this._UserFileDir.GetDir(arg.DirKey);
             long fileSize = result.File.FileSize;
-            IDirState dir = _PhysicalDir.GetDir(ref fileSize);
+            IDirState dir = this._PhysicalDir.GetDir(ref fileSize);
             FileDatum datum = dir.SaveFile(file);
             UserFileAdd add = new UserFileAdd
             {
                 UserId = extend.UserId,
                 UserType = extend.UserType,
                 UserDirId = dir.Id,
-                Prower = userDir.Prower,
+                Power = userDir.Power,
                 PowerCode = userDir.ReadPower,
                 LinkBizPk = arg.LinkBizPk,
                 Tag = arg.Tag,
                 Extension = datum.Extension,
-                OperatePrower = userDir.UpPower,
+                OperatePower = userDir.UpPower,
                 FileName = file.FileName,
                 FileType = datum.FileType,
                 FileId = this._RegFile(datum)

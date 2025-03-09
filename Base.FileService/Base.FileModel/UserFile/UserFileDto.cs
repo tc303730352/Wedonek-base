@@ -21,7 +21,7 @@ namespace Base.FileModel.UserFile
         /// <summary>
         /// 文件权限
         /// </summary>
-        public FilePrower Prower { get; set; }
+        public FilePower Power { get; set; }
 
         /// <summary>
         /// 权限码
@@ -31,7 +31,7 @@ namespace Base.FileModel.UserFile
         /// <summary>
         /// 操作权限码
         /// </summary>
-        public string[] OperatePrower { get; set; }
+        public string[] OperatePower { get; set; }
         /// <summary>
         /// 文件状态
         /// </summary>

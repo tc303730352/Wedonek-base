@@ -42,7 +42,7 @@ namespace Base.FileModel.UserFileDir
         /// <summary>
         /// 访问权限
         /// </summary>
-        public FilePrower Prower { get; set; }
+        public FilePower Power { get; set; }
 
         [SugarColumn(IsJson = true)]
         public string[] ReadPower { get; set; }

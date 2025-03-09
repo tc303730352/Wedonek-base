@@ -17,7 +17,7 @@ namespace Base.FileDAL.Model
         /// <summary>
         /// 文件权限
         /// </summary>
-        public FilePrower Prower { get; set; }
+        public FilePower Power { get; set; }
 
         public string FileName { get; set; }
 

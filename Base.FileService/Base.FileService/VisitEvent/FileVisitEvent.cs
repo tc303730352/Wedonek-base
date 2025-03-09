@@ -17,42 +17,42 @@ namespace Base.FileService.VisitEvent
         private readonly IUserFileCollect _Service;
         private readonly IFileConfig _Config;
 
-        public FileVisitEvent (IUserFileCollect service, IFileConfig config)
+        public FileVisitEvent ( IUserFileCollect service, IFileConfig config )
         {
             this._Config = config;
             this._Service = service;
         }
         private UserFileDto _UserFile;
 
-        public void CheckAccredit (IApiService service, ApiAccreditSet source)
+        public void CheckAccredit ( IApiService service, ApiAccreditSet source )
         {
-            if (this._UserFile.Prower == FilePrower.公共)
+            if ( this._UserFile.Power == FilePower.公共 )
             {
                 return;
             }
             service.CheckAccredit();
-            if (this._UserFile.Prower == FilePrower.共享)
+            if ( this._UserFile.Power == FilePower.共享 )
             {
                 return;
             }
-            else if (this._UserFile.Prower == FilePrower.指定权限 && service.UserState.CheckPrower(this._UserFile.PowerCode))
+            else if ( this._UserFile.Power == FilePower.指定权限 && service.UserState.CheckPower(this._UserFile.PowerCode) )
             {
                 return;
             }
-            else if (this._UserFile.UserId == service.UserState.GetValue<long>("EmpId"))
+            else if ( this._UserFile.UserId == service.UserState.GetValue<long>("EmpId") )
             {
                 return;
             }
-            throw new ErrorException("accredit.no.prower");
+            throw new ErrorException("accredit.no.power");
         }
 
-        public bool CheckCache (IApiService service, string etag, string toUpdateTime)
+        public bool CheckCache ( IApiService service, string etag, string toUpdateTime )
         {
-            if (etag.IsNotNull())
+            if ( etag.IsNotNull() )
             {
                 return this._UserFile.Etag == etag;
             }
-            else if (toUpdateTime.IsNotNull() && DateTime.TryParse(toUpdateTime, out DateTime time))
+            else if ( toUpdateTime.IsNotNull() && DateTime.TryParse(toUpdateTime, out DateTime time) )
             {
                 return time == this._UserFile.SaveTime;
             }
@@ -63,31 +63,31 @@ namespace Base.FileService.VisitEvent
         {
         }
 
-        public void EndRequest (IApiService service)
+        public void EndRequest ( IApiService service )
         {
         }
 
-        public void InitIdentity (IApiService service)
+        public void InitIdentity ( IApiService service )
         {
 
         }
 
-        public void InitRequest (IApiService service)
+        public void InitRequest ( IApiService service )
         {
             Uri uri = service.Request.Url;
             string id = Path.GetFileNameWithoutExtension(uri.LocalPath);
-            if (id.IsNull())
+            if ( id.IsNull() )
             {
                 throw new ErrorException("file.id.null");
             }
-            else if (!long.TryParse(id, out long fileId))
+            else if ( !long.TryParse(id, out long fileId) )
             {
                 throw new ErrorException("file.id.error");
             }
             else
             {
                 this._UserFile = this._Service.GetFile(fileId);
-                if (this._UserFile.FileStatus == UserFileStatus.已删除 || this._UserFile.FileStatus == UserFileStatus.停用)
+                if ( this._UserFile.FileStatus == UserFileStatus.已删除 || this._UserFile.FileStatus == UserFileStatus.停用 )
                 {
                     throw new ErrorException("file.not.find");
                 }
@@ -95,16 +95,16 @@ namespace Base.FileService.VisitEvent
             }
         }
 
-        public void ReplyEvent (IApiService service, IResponse response)
+        public void ReplyEvent ( IApiService service, IResponse response )
         {
-            if (this._UserFile == null || ( this._UserFile.Prower != FilePrower.共享 && this._UserFile.Prower != FilePrower.公共 ))
+            if ( this._UserFile == null || ( this._UserFile.Power != FilePower.共享 && this._UserFile.Power != FilePower.公共 ) )
             {
                 return;
             }
-            if (response is StreamResponse stream && !stream.IsBinary)
+            if ( response is StreamResponse stream && !stream.IsBinary )
             {
                 HttpCacheConfig cache = this._Config.CacheSet;
-                if (cache.CacheType != HttpCacheType.NoStore && cache.CacheType != HttpCacheType.Private)
+                if ( cache.CacheType != HttpCacheType.NoStore && cache.CacheType != HttpCacheType.Private )
                 {
                     stream.Cache = new HttpCacheSet
                     {

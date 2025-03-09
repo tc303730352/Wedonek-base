@@ -55,7 +55,7 @@ namespace Base.FileModel.DB
         /// <summary>
         /// 文件权限
         /// </summary>
-        public FilePrower Prower { get; set; }
+        public FilePower Power { get; set; }
 
         /// <summary>
         /// 权限码
@@ -67,7 +67,7 @@ namespace Base.FileModel.DB
         /// 操作权限码
         /// </summary>
         [SugarColumn(IsJson = true)]
-        public string[] OperatePrower { get; set; }
+        public string[] OperatePower { get; set; }
 
         /// <summary>
         /// 标签

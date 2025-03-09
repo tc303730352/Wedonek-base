@@ -39,7 +39,7 @@
     /// <summary>
     /// 文件权限
     /// </summary>
-    public enum FilePrower
+    public enum FilePower
     {
         公共 = 0,
         私有 = 1,

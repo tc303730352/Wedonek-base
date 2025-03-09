@@ -10,13 +10,13 @@ namespace Base.FileService.Api
     [ApiEventAttr(typeof(FileVisitEvent))]
     internal class FileReadController : ApiController
     {
-        [ApiPrower(false)]
+        [ApiPower(false)]
         [ApiRouteName("/file/read/")]
-        public IResponse ReadFile (bool isDown)
+        public IResponse ReadFile ( bool isDown )
         {
             UserFileDto file = base.RequestState.Get<UserFileDto>("file");
             FileInfo fileInfo = new FileInfo(file.FilePath);
-            if (isDown)
+            if ( isDown )
             {
                 return new StreamResponse(fileInfo, file.FileName) { IsBinary = true };
             }
