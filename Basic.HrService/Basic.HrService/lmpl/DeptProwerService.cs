@@ -4,26 +4,26 @@ using Basic.HrService.Interface;
 
 namespace Basic.HrService.lmpl
 {
-    internal class DeptProwerService : IDeptProwerService
+    internal class DeptPowerService : IDeptPowerService
     {
-        private readonly IEmpDeptProwerCollect _DeptPrower;
+        private readonly IEmpDeptPowerCollect _DeptPower;
         private readonly IDeptCollect _Dept;
-        public DeptProwerService (IEmpDeptProwerCollect deptPrower, IDeptCollect dept)
+        public DeptPowerService ( IEmpDeptPowerCollect deptPower, IDeptCollect dept )
         {
             this._Dept = dept;
-            this._DeptPrower = deptPrower;
+            this._DeptPower = deptPower;
         }
 
-        public long[] GetDeptPrower (long empId, long companyId)
+        public long[] GetDeptPower ( long empId, long companyId )
         {
-            return this._DeptPrower.GetDeptId(empId, companyId);
+            return this._DeptPower.GetDeptId(empId, companyId);
         }
-        public void SetPrower (long empId, long companyId, long[] deptId)
+        public void SetPower ( long empId, long companyId, long[] deptId )
         {
             KeyValuePair<long, long>[] depts = this._Dept.GetUnitId(deptId);
-            if (this._DeptPrower.SetDeptId(empId, companyId, depts))
+            if ( this._DeptPower.SetDeptId(empId, companyId, depts) )
             {
-                new UserChangeEvent(empId).AsyncSend("DeptProwerChange");
+                new UserChangeEvent(empId).AsyncSend("DeptPowerChange");
             }
         }
     }

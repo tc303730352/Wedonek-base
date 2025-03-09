@@ -43,3 +43,32 @@ export function SetSort(id, sort) {
     }
   })
 }
+
+export function Add(data) {
+  return request({
+    url: formatRequestUri('Add'),
+    method: 'post',
+    data
+  })
+}
+
+export function Set(id, data) {
+  return request({
+    url: formatRequestUri('Set'),
+    method: 'post',
+    data: {
+      Id: id,
+      Value: data
+    }
+  })
+}
+
+export function Get(id) {
+  return request({
+    url: formatRequestUri('Get'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

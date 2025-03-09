@@ -15,7 +15,7 @@
         Email = 3
     }
 
-    public enum ProwerType
+    public enum PowerType
     {
         /// <summary>
         /// 目录

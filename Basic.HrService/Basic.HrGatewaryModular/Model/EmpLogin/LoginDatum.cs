@@ -13,7 +13,7 @@ namespace Basic.HrGatewaryModular.Model.EmpLogin
         /// <summary>
         /// 菜单列表
         /// </summary>
-        public Dictionary<long, ProwerRoute[]> Prower { get; set; }
+        public Dictionary<long, PowerRoute[]> Power { get; set; }
         /// <summary>
         /// 人员公司
         /// </summary>

@@ -9,12 +9,12 @@ namespace Basic.HrService.lmpl
 {
     internal class EmpLoginService : IEmpLoginService
     {
-        private static readonly string[] _AllPrower = new string[] { "all" };
+        private static readonly string[] _AllPower = new string[] { "all" };
         private readonly ILoginUserCollect _LoginUser;
         private readonly IEmpCollect _Emp;
         private readonly IHrConfig _Config;
         private readonly IEmpTitleCollect _EmpTitle;
-        private readonly IRoleOperateProwerCollect _RolePrower;
+        private readonly IRoleOperatePowerCollect _RolePower;
         private readonly IEmpRoleCollect _EmpRole;
         private readonly IRoleCollect _Role;
         private readonly IDeptCollect _Dept;
@@ -22,7 +22,7 @@ namespace Basic.HrService.lmpl
             IEmpCollect emp,
             IHrConfig config,
             IEmpTitleCollect empTitle,
-            IRoleOperateProwerCollect rolePrower,
+            IRoleOperatePowerCollect rolePower,
             IEmpRoleCollect empRole,
             IRoleCollect role,
             IDeptCollect dept )
@@ -31,7 +31,7 @@ namespace Basic.HrService.lmpl
             this._Emp = emp;
             this._Config = config;
             this._EmpTitle = empTitle;
-            this._RolePrower = rolePrower;
+            this._RolePower = rolePower;
             this._EmpRole = empRole;
             this._Role = role;
             this._Dept = dept;
@@ -60,11 +60,11 @@ namespace Basic.HrService.lmpl
             bool isAdmin = this._Role.CheckIsAdmin(roleId);
             if ( roleId.IsNull() && isAdmin == false )
             {
-                throw new ErrorException("hr.user.no.prower");
+                throw new ErrorException("hr.user.no.power");
             }
             DBDept dept = this._Dept.Get(emp.DeptId);
             string[] title = this._EmpTitle.GetTitle(emp.EmpId, emp.DeptId);
-            string[] prower = isAdmin ? _AllPrower : this._RolePrower.GetOperateVal(roleId);
+            string[] power = isAdmin ? _AllPower : this._RolePower.GetOperateVal(roleId);
             return new LoginResult
             {
                 EmpId = emp.EmpId,
@@ -73,7 +73,7 @@ namespace Basic.HrService.lmpl
                 Post = emp.PostCode,
                 Title = title,
                 UnitId = dept.UnitId,
-                Prower = prower,
+                Power = power,
                 EmpName = emp.EmpName,
                 IsAdmin = isAdmin
             };

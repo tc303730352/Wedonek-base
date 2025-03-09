@@ -14,7 +14,7 @@ namespace Basic.HrModel.Dept
             get;
             set;
         }
-        public long[] DeptPrower { get; set; }
+        public long[] DeptPower { get; set; }
         public bool IsOpenAccount { get; set; }
     }
     public class MergeDept
@@ -41,7 +41,7 @@ namespace Basic.HrModel.Dept
         /// </summary>
         public long[] EmpTitleId { get; set; }
 
-        public long[] DropProwerId { get; set; }
+        public long[] DropPowerId { get; set; }
     }
 
     public class EmpTitleAdd

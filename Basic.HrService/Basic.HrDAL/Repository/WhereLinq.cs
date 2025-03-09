@@ -7,7 +7,7 @@ using Basic.HrRemoteModel.Dept.Model;
 using Basic.HrRemoteModel.Dic.Model;
 using Basic.HrRemoteModel.DicItem.Model;
 using Basic.HrRemoteModel.Emp.Model;
-using Basic.HrRemoteModel.Prower.Model;
+using Basic.HrRemoteModel.Power.Model;
 using Basic.HrRemoteModel.Role.Model;
 using Basic.HrRemoteModel.TreeDic.Model;
 using LinqKit;
@@ -20,12 +20,12 @@ namespace Basic.HrDAL.Repository
 {
     internal static class WhereLinq
     {
-        public static Expression<Func<DBProwerList, bool>> ToWhere ( this ProwerGetParam query, long[] subSysId )
+        public static Expression<Func<DBPowerList, bool>> ToWhere ( this PowerGetParam query, long[] subSysId )
         {
-            ExpressionStarter<DBProwerList> where = PredicateBuilder.New<DBProwerList>(a => subSysId.Contains(a.SubSystemId));
-            if ( query.ProwerType.HasValue )
+            ExpressionStarter<DBPowerList> where = PredicateBuilder.New<DBPowerList>(a => subSysId.Contains(a.SubSystemId));
+            if ( query.PowerType.HasValue )
             {
-                where = where.And(a => a.ProwerType == query.ProwerType.Value);
+                where = where.And(a => a.PowerType == query.PowerType.Value);
             }
             if ( query.IsEnable.HasValue )
             {
@@ -89,9 +89,9 @@ namespace Basic.HrDAL.Repository
             return where.And(a => a.IsToVoid == false);
         }
 
-        public static Expression<Func<DBProwerList, bool>> ToWhere ( this ProwerQuery query )
+        public static Expression<Func<DBPowerList, bool>> ToWhere ( this PowerQuery query )
         {
-            ExpressionStarter<DBProwerList> where = PredicateBuilder.New<DBProwerList>(a => a.SubSystemId == query.SubSystemId);
+            ExpressionStarter<DBPowerList> where = PredicateBuilder.New<DBPowerList>(a => a.SubSystemId == query.SubSystemId);
             if ( query.ParentId.HasValue )
             {
                 where = where.And(a => a.ParentId == query.ParentId.Value);
@@ -100,9 +100,9 @@ namespace Basic.HrDAL.Repository
             {
                 where = where.And(a => a.IsEnable == query.IsEnable.Value);
             }
-            if ( !query.ProwerType.IsNull() )
+            if ( !query.PowerType.IsNull() )
             {
-                where = where.And(a => query.ProwerType.Contains(a.ProwerType));
+                where = where.And(a => query.PowerType.Contains(a.PowerType));
             }
             if ( query.QueryKey.IsNotNull() )
             {

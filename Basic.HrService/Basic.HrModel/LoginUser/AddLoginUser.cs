@@ -9,7 +9,7 @@ namespace Basic.HrModel.LoginUser
             get;
             set;
         }
-        public DBEmpDeptPrower[] DeptPrower
+        public DBEmpDeptPower[] DeptPower
         {
             get;
             set;

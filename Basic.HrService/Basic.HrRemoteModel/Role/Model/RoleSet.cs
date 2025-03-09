@@ -25,6 +25,6 @@ namespace Basic.HrRemoteModel.Role.Model
         /// <summary>
         /// 权限列表
         /// </summary>
-        public long[] ProwerId { get; set; }
+        public long[] PowerId { get; set; }
     }
 }

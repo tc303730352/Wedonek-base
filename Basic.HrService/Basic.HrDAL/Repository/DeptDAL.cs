@@ -12,36 +12,36 @@ namespace Basic.HrDAL.Repository
 {
     internal class DeptDAL : BasicDAL<DBDept, long>, IDeptDAL
     {
-        public DeptDAL (IRepository<DBDept> basicDAL) : base(basicDAL)
+        public DeptDAL ( IRepository<DBDept> basicDAL ) : base(basicDAL)
         {
         }
-        public Result[] Gets<Result> (DeptQueryParam query) where Result : class, new()
+        public Result[] Gets<Result> ( DeptQueryParam query ) where Result : class, new()
         {
             return this._BasicDAL.Gets<Result>(query.ToWhere(this._BasicDAL));
         }
-        public Result[] Query<Result> (DeptQueryParam query, IBasicPage paging, out int count) where Result : class
+        public Result[] Query<Result> ( DeptQueryParam query, IBasicPage paging, out int count ) where Result : class
         {
             paging.InitOrderBy("Id", true);
             return this._BasicDAL.Query<Result>(query.ToWhere(this._BasicDAL), paging, out count);
         }
-        public void AddDept (DBDept dept)
+        public void AddDept ( DBDept dept )
         {
             dept.Id = IdentityHelper.CreateId();
-            if (dept.UnitId == 0 && dept.IsUnit)
+            if ( dept.UnitId == 0 && dept.IsUnit )
             {
                 dept.UnitId = dept.Id;
             }
             this._BasicDAL.Insert(dept);
         }
-        public bool CheckShortRepeat (long companyId, long parentId, string shortName)
+        public bool CheckShortRepeat ( long companyId, long parentId, string shortName )
         {
             return this._BasicDAL.IsExist(c => c.CompanyId == companyId && c.ParentId == parentId && c.ShortName == shortName && c.IsToVoid == false);
         }
-        public bool CheckRepeat (long companyId, long parentId, string deptName)
+        public bool CheckRepeat ( long companyId, long parentId, string deptName )
         {
             return this._BasicDAL.IsExist(c => c.CompanyId == companyId && c.ParentId == parentId && c.DeptName == deptName && c.IsToVoid == false);
         }
-        public string GetUnitDeptName (long id)
+        public string GetUnitDeptName ( long id )
         {
             var dept = this._BasicDAL.Get(a => a.Id == id, a => new
             {
@@ -50,14 +50,14 @@ namespace Basic.HrDAL.Repository
                 a.DeptName,
                 a.ShortName
             });
-            if (dept.IsUnit)
+            if ( dept.IsUnit )
             {
                 return dept.ShortName.GetValueOrDefault(dept.DeptName);
             }
             string unit = this.GetDeptName(dept.UnitId);
             return unit + "-" + dept.ShortName.GetValueOrDefault(dept.DeptName);
         }
-        public string GetDeptName (long id)
+        public string GetDeptName ( long id )
         {
             var dept = this._BasicDAL.Get(a => a.Id == id, a => new
             {
@@ -66,7 +66,7 @@ namespace Basic.HrDAL.Repository
             });
             return dept.ShortName.GetValueOrDefault(dept.DeptName);
         }
-        public Dictionary<long, string> GetDeptName (long[] ids)
+        public Dictionary<long, string> GetDeptName ( long[] ids )
         {
             return this._BasicDAL.Gets(a => ids.Contains(a.Id), a => new
             {
@@ -77,74 +77,74 @@ namespace Basic.HrDAL.Repository
         }
 
 
-        public void Delete (long[] ids)
+        public void Delete ( long[] ids )
         {
-            if (!this._BasicDAL.Delete(a => ids.Contains(a.Id)))
+            if ( !this._BasicDAL.Delete(a => ids.Contains(a.Id)) )
             {
                 throw new ErrorException("hr.dept.delete.fail");
             }
         }
 
-        public int GetMaxSort (long companyId, long parentId)
+        public int GetMaxSort ( long companyId, long parentId )
         {
             return this._BasicDAL.Max(a => a.CompanyId == companyId && a.ParentId == parentId && a.IsToVoid == false, a => a.Sort);
         }
 
-        public long[] GetsSubId (DBDept dept)
+        public long[] GetsSubId ( DBDept dept )
         {
             string level = dept.LevelCode + dept.Id + "|";
             return this._BasicDAL.Gets(a => a.LevelCode.StartsWith(level) && a.IsToVoid == false, a => a.Id);
         }
 
-        public long[] GetsSubId (DBDept dept, HrDeptStatus status)
+        public long[] GetsSubId ( DBDept dept, HrDeptStatus status )
         {
             string level = dept.LevelCode + dept.Id + "|";
             return this._BasicDAL.Gets(a => a.LevelCode.StartsWith(level) && a.Status == status && a.IsToVoid == false, a => a.Id);
         }
-        public long[] GetSubDeptId (long unitId, DBDept dept)
+        public long[] GetSubDeptId ( long unitId, DBDept dept )
         {
             string level = dept.LevelCode + dept.Id + "|";
             return this._BasicDAL.Gets(a => a.UnitId == unitId && a.LevelCode.StartsWith(level) && a.IsUnit == false && a.IsToVoid == false, a => a.Id);
         }
 
 
-        public void EnableDept (long[] ids)
+        public void EnableDept ( long[] ids )
         {
-            if (!this._BasicDAL.Update(a => a.Status == HrDeptStatus.启用, a => ids.Contains(a.Id)))
+            if ( !this._BasicDAL.Update(a => a.Status == HrDeptStatus.启用, a => ids.Contains(a.Id)) )
             {
                 throw new ErrorException("hr.dept.enable.fail");
             }
         }
 
-        public void EnableDept (DBDept dept)
+        public void EnableDept ( DBDept dept )
         {
-            if (!this._BasicDAL.Update(a => a.Status == HrDeptStatus.启用, a => a.Id == dept.Id))
+            if ( !this._BasicDAL.Update(a => a.Status == HrDeptStatus.启用, a => a.Id == dept.Id) )
             {
                 throw new ErrorException("hr.dept.enable.fail");
             }
         }
 
-        public void StopDept (long[] ids)
+        public void StopDept ( long[] ids )
         {
-            if (!this._BasicDAL.Update(a => a.Status == HrDeptStatus.停用, a => ids.Contains(a.Id)))
+            if ( !this._BasicDAL.Update(a => a.Status == HrDeptStatus.停用, a => ids.Contains(a.Id)) )
             {
                 throw new ErrorException("hr.dept.stop.fail");
             }
         }
 
-        public T[] GetDepts<T> (DeptGetParam param) where T : class, new()
+        public T[] GetDepts<T> ( DeptGetParam param ) where T : class, new()
         {
             return this._BasicDAL.Gets<T>(param.ToWhere(this._BasicDAL));
         }
-        public T[] GetUnitDepts<T> (UnitGetParam param) where T : class, new()
+        public T[] GetUnitDepts<T> ( UnitGetParam param ) where T : class, new()
         {
             return this._BasicDAL.Gets<T>(param.ToWhere(this._BasicDAL));
         }
-        public long[] GetEnableDeptId (long unitId)
+        public long[] GetEnableDeptId ( long unitId )
         {
             return this._BasicDAL.Gets(a => a.UnitId == unitId && a.Status == HrDeptStatus.启用 && a.IsToVoid == false, a => a.Id);
         }
-        public bool Set (DBDept dept, DeptSet set)
+        public bool Set ( DBDept dept, DeptSet set )
         {
             return this._BasicDAL.Update(dept, new DeptSetDto
             {
@@ -154,11 +154,11 @@ namespace Basic.HrDAL.Repository
                 DeptTag = set.DeptTag.Join('|', '|')
             });
         }
-        public void Set (DBDept dept, DeptSetArg arg, SubDeptSet[] sets)
+        public void Set ( DBDept dept, DeptSetArg arg, SubDeptSet[] sets )
         {
-            if (sets.IsNull())
+            if ( sets.IsNull() )
             {
-                if (!this._BasicDAL.Update(dept, arg))
+                if ( !this._BasicDAL.Update(dept, arg) )
                 {
                     throw new ErrorException("hr.dept.set.fail");
                 }
@@ -168,26 +168,26 @@ namespace Basic.HrDAL.Repository
             queue.Update(sets, "LevelCode", "Lvl");
             _ = queue.Submit();
         }
-        public void SetLeader (DBDept dept, long? leaderId)
+        public void SetLeader ( DBDept dept, long? leaderId )
         {
-            if (!this._BasicDAL.Update(a => a.LeaderId == leaderId, a => a.Id == dept.Id))
+            if ( !this._BasicDAL.Update(a => a.LeaderId == leaderId, a => a.Id == dept.Id) )
             {
                 throw new ErrorException("hr.dept.leader.set.fail");
             }
         }
-        public void Merge (MergeDept merge, MergeSubDeptSet[] subs)
+        public void Merge ( MergeDept merge, MergeSubDeptSet[] subs )
         {
             ISqlQueue<DBDept> queue = this._BasicDAL.BeginQueue();
             queue.UpdateOneColumn(a => a.IsToVoid == true, a => a.Id == merge.ToVoid.Id);
-            if (!subs.IsNull())
+            if ( !subs.IsNull() )
             {
                 queue.Update(subs, "LevelCode", "Lvl", "ParentId");
             }
-            if (!merge.DropProwerId.IsNull())
+            if ( !merge.DropPowerId.IsNull() )
             {
-                queue.Delete<DBEmpDeptPrower>(a => merge.DropProwerId.Contains(a.Id));
+                queue.Delete<DBEmpDeptPower>(a => merge.DropPowerId.Contains(a.Id));
             }
-            if (!merge.Emp.IsNull())
+            if ( !merge.Emp.IsNull() )
             {
                 queue.Update<DBEmpList>(merge.Emp.ConvertAll(a => new DBEmpList
                 {
@@ -195,11 +195,11 @@ namespace Basic.HrDAL.Repository
                     DeptId = a.DeptId,
                     UnitId = merge.ToDept.UnitId,
                 }), "DeptId", "UnitId");
-                if (!merge.EmpTitleId.IsNull())
+                if ( !merge.EmpTitleId.IsNull() )
                 {
                     queue.Delete<DBEmpTitle>(a => merge.EmpTitleId.Contains(a.Id));
                 }
-                if (!merge.EmpTitle.IsNull())
+                if ( !merge.EmpTitle.IsNull() )
                 {
                     queue.Insert<DBEmpTitle>(merge.EmpTitle.ConvertAll(a => new DBEmpTitle
                     {
@@ -212,16 +212,16 @@ namespace Basic.HrDAL.Repository
                     }));
                 }
 
-                List<DBEmpDeptPrower> adds = [];
+                List<DBEmpDeptPower> adds = [];
                 merge.Emp.ForEach(c =>
                 {
-                    if (!c.IsOpenAccount)
+                    if ( !c.IsOpenAccount )
                     {
                         return;
                     }
-                    else if (c.DeptPrower.IsNull())
+                    else if ( c.DeptPower.IsNull() )
                     {
-                        adds.Add(new DBEmpDeptPrower
+                        adds.Add(new DBEmpDeptPower
                         {
                             CompanyId = merge.ToDept.CompanyId,
                             Id = IdentityHelper.CreateId(),
@@ -232,9 +232,9 @@ namespace Basic.HrDAL.Repository
                     }
                     else
                     {
-                        c.DeptPrower.ForEach(a =>
+                        c.DeptPower.ForEach(a =>
                         {
-                            adds.Add(new DBEmpDeptPrower
+                            adds.Add(new DBEmpDeptPower
                             {
                                 CompanyId = merge.ToDept.CompanyId,
                                 Id = IdentityHelper.CreateId(),
@@ -245,19 +245,19 @@ namespace Basic.HrDAL.Repository
                         });
                     }
                 });
-                if (adds.Count > 0)
+                if ( adds.Count > 0 )
                 {
-                    queue.Insert<DBEmpDeptPrower>(adds);
+                    queue.Insert<DBEmpDeptPower>(adds);
                 }
             }
             _ = queue.Submit();
         }
 
-        public void ToVoidDept (long[] deptId)
+        public void ToVoidDept ( long[] deptId )
         {
             ISqlQueue<DBDept> queue = this._BasicDAL.BeginQueue();
             queue.UpdateOneColumn(a => a.IsToVoid == true, a => deptId.Contains(a.Id));
-            queue.Delete<DBEmpDeptPrower>(a => deptId.Contains(a.Id));
+            queue.Delete<DBEmpDeptPower>(a => deptId.Contains(a.Id));
             _ = queue.Submit();
         }
     }

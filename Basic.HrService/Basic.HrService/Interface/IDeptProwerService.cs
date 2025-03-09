@@ -1,8 +1,8 @@
 ﻿namespace Basic.HrService.Interface
 {
-    public interface IDeptProwerService
+    public interface IDeptPowerService
     {
-        long[] GetDeptPrower (long empId, long companyId);
-        void SetPrower (long empId, long companyId, long[] deptId);
+        long[] GetDeptPower ( long empId, long companyId );
+        void SetPower ( long empId, long companyId, long[] deptId );
     }
 }

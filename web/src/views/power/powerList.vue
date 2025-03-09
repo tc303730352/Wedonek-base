@@ -177,6 +177,11 @@ export default {
         title: '说明',
         align: 'left',
         minWidth: 150
+      }, {
+        key: 'Action',
+        title: '操作',
+        align: 'left',
+        width: 200
       }]
     }
   },

@@ -8,6 +8,6 @@
         /// <summary>
         /// 权限
         /// </summary>
-        public long[] ProwerId { get; set; }
+        public long[] PowerId { get; set; }
     }
 }

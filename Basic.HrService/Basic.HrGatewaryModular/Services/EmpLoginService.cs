@@ -12,11 +12,11 @@ namespace Basic.HrGatewaryModular.Services
     {
         private readonly IAccreditService _Accredit;
 
-        public EmpLoginService (IAccreditService accredit)
+        public EmpLoginService ( IAccreditService accredit )
         {
             this._Accredit = accredit;
         }
-        public LoginDatum GetLoginDatum (IUserState state)
+        public LoginDatum GetLoginDatum ( IUserState state )
         {
             long empId = state.ToEmpId();
             EmpLoginDatum datum = new GetEmpLoginDatum
@@ -27,7 +27,7 @@ namespace Basic.HrGatewaryModular.Services
             {
                 Company = datum.Company,
                 CurSubSysId = datum.CurSubSysId,
-                Prower = datum.Prower,
+                Power = datum.Power,
                 SubSystem = datum.SubSystem,
                 Datum = new LoginUser
                 {
@@ -40,12 +40,12 @@ namespace Basic.HrGatewaryModular.Services
                 }
             };
         }
-        private EmpLoginRes _GetLoginResult (LoginResult result)
+        private EmpLoginRes _GetLoginResult ( LoginResult result )
         {
             string applyId = "Hr_" + result.EmpId;
             UserState state = new UserState
             {
-                Prower = result.Prower,
+                Prower = result.Power,
                 Param = new Dictionary<string, StateParam>
                 {
                     {"UserId",new StateParam(result.EmpId) },
@@ -63,7 +63,7 @@ namespace Basic.HrGatewaryModular.Services
                 AccreditId = accreditId
             };
         }
-        public EmpLoginRes EmpPwdLogin (string loginName, string password)
+        public EmpLoginRes EmpPwdLogin ( string loginName, string password )
         {
             LoginResult result = new EmpPwdLogin
             {

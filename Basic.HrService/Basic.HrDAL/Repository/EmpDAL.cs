@@ -116,7 +116,7 @@ namespace Basic.HrDAL.Repository
             }
             if (soure.IsOpenAccount && deptId != set.DeptId)
             {
-                queue.Delete<DBEmpDeptPrower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+                queue.Delete<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }
             _ = queue.Submit();
             return cols;
@@ -186,7 +186,7 @@ namespace Basic.HrDAL.Repository
             }
             if (soure.IsOpenAccount && deptId != datum.DeptId)
             {
-                queue.Delete<DBEmpDeptPrower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+                queue.Delete<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }
             _ = queue.Submit();
             return cols;

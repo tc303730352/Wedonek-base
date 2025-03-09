@@ -4,10 +4,10 @@ namespace Basic.HrDAL
 {
     public static class ConstDic
     {
-        public static readonly ProwerType[] MenuPrower = new ProwerType[]
+        public static readonly PowerType[] MenuPower = new PowerType[]
            {
-                ProwerType.dir,
-                ProwerType.menu
+                PowerType.dir,
+                PowerType.menu
            };
     }
 }

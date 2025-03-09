@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Basic.HrCollect;
 using Basic.HrModel.DB;
-using Basic.HrModel.Prower;
+using Basic.HrModel.Power;
 using Basic.HrModel.SubSystem;
 using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.EmpLogin.Model;
@@ -16,56 +16,56 @@ namespace Basic.HrService.lmpl
     {
         private readonly IEmpCollect _Emp;
         private readonly IEmpTitleCollect _EmpTitle;
-        private readonly IRoleProwerCollect _RolePrower;
+        private readonly IRolePowerCollect _RolePower;
         private readonly IRoleCollect _Role;
         private readonly ICompanyCollect _Company;
         private readonly ISubSystemCollect _SubSystem;
         private readonly IEmpRoleCollect _EmpRole;
-        private readonly IProwerCollect _Prower;
+        private readonly IPowerCollect _Power;
         public EmpLoginDatumService (
             ICompanyCollect company,
             IEmpTitleCollect empTitle,
             IRoleCollect role,
-            IRoleProwerCollect rolePrower,
+            IRolePowerCollect rolePower,
             IEmpRoleCollect empRole,
-            IProwerCollect prower,
+            IPowerCollect power,
             IEmpCollect emp,
-            ISubSystemCollect subSystem)
+            ISubSystemCollect subSystem )
         {
             this._Emp = emp;
-            this._Prower = prower;
+            this._Power = power;
             this._Role = role;
             this._Company = company;
             this._SubSystem = subSystem;
             this._EmpTitle = empTitle;
-            this._RolePrower = rolePrower;
+            this._RolePower = rolePower;
             this._EmpRole = empRole;
         }
-        public EmpLoginDatum Get (long empId)
+        public EmpLoginDatum Get ( long empId )
         {
             DBEmpList emp = this._Emp.Get<DBEmpList>(empId);
             long[] roleId = this._EmpRole.GetRoleId(empId);
             bool isAdmin = this._Role.CheckIsAdmin(roleId);
             long[] subId;
-            ProwerRouteDto[] prower;
+            PowerRouteDto[] power;
             long curSubId;
-            if (isAdmin == false)
+            if ( isAdmin == false )
             {
-                subId = this._RolePrower.GetSubSysId(roleId);
-                prower = this._RolePrower.GetPrower(roleId);
+                subId = this._RolePower.GetSubSysId(roleId);
+                power = this._RolePower.GetPower(roleId);
                 curSubId = subId[0];
             }
             else
             {
-                prower = this._Prower.GetEnables();
-                subId = prower.Distinct(a => a.SubSystemId);
+                power = this._Power.GetEnables();
+                subId = power.Distinct(a => a.SubSystemId);
                 curSubId = subId[0];
             }
             SubSystemDto[] subs = this._SubSystem.Gets(subId);
             SubSystemItem[] items = subs.ConvertMap<SubSystemDto, SubSystemItem>();
             items.ForEach(c =>
             {
-                ProwerRouteDto dto = prower.Where(a => a.SubSystemId == c.Id && a.ProwerType == ProwerType.menu).OrderBy(a => a.LevelNum).ThenBy(a => a.Sort).FirstOrDefault();
+                PowerRouteDto dto = power.Where(a => a.SubSystemId == c.Id && a.PowerType == PowerType.menu).OrderBy(a => a.LevelNum).ThenBy(a => a.Sort).FirstOrDefault();
                 c.Home = new HomeSet
                 {
                     Name = dto.RouteName,
@@ -73,7 +73,7 @@ namespace Basic.HrService.lmpl
                 };
             });
             Dictionary<long, string> com = this.GetEmpCompany(empId);
-            int minLevel = prower.Min(a => a.LevelNum);
+            int minLevel = power.Min(a => a.LevelNum);
             return new EmpLoginDatum
             {
                 Company = com,
@@ -81,7 +81,7 @@ namespace Basic.HrService.lmpl
                 UserHead = emp.UserHead,
                 SubSystem = items,
                 CurSubSysId = subId[0],
-                Prower = subs.ToDictionary(a => a.Id, b => prower.Convert(c => c.LevelNum == minLevel && c.SubSystemId == b.Id, a => new ProwerRoute
+                Power = subs.ToDictionary(a => a.Id, b => power.Convert(c => c.LevelNum == minLevel && c.SubSystemId == b.Id, a => new PowerRoute
                 {
                     Description = a.Description,
                     Id = a.Id,
@@ -89,31 +89,31 @@ namespace Basic.HrService.lmpl
                     Layout = a.Layout,
                     PagePath = a.PagePath,
                     RoutePath = a.RoutePath,
-                    ProwerType = a.ProwerType,
+                    PowerType = a.PowerType,
                     Name = a.Name,
                     PageParam = a.PageParam,
                     RouteName = a.RouteName,
-                    Children = prower.Convert(b => b.ParentId == a.Id, this._GetProwerRoute)
+                    Children = power.Convert(b => b.ParentId == a.Id, this._GetPowerRoute)
                 }))
             };
         }
-        public Dictionary<long, string> GetEmpCompany (long empId)
+        public Dictionary<long, string> GetEmpCompany ( long empId )
         {
             long[] comId = this._EmpTitle.GetCompanyIds(empId);
-            if (comId.IsNull())
+            if ( comId.IsNull() )
             {
                 return null;
             }
             return this._Company.GetNames(comId);
         }
-        private ProwerRoute _GetProwerRoute (ProwerRouteDto a)
+        private PowerRoute _GetPowerRoute ( PowerRouteDto a )
         {
-            return new ProwerRoute
+            return new PowerRoute
             {
                 Description = a.Description,
                 Id = a.Id,
                 Icon = a.Icon,
-                ProwerType = a.ProwerType,
+                PowerType = a.PowerType,
                 Layout = a.Layout,
                 Name = a.Name,
                 PageParam = a.PageParam,

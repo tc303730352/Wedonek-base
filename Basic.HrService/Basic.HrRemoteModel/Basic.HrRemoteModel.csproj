@@ -13,7 +13,7 @@
 		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="DeptPrower\Model\" />
+	  <Folder Include="DeptPower\Model\" />
 	</ItemGroup>
 
 </Project>

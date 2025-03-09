@@ -1,7 +1,7 @@
 ﻿using Basic.HrCollect;
 using Basic.HrModel.DB;
 using Basic.HrModel.Dept;
-using Basic.HrModel.DeptPrower;
+using Basic.HrModel.DeptPower;
 using Basic.HrModel.Emp;
 using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.DeptChange.Model;
@@ -16,43 +16,43 @@ namespace Basic.HrService.lmpl
         private readonly IEmpCollect _Emp;
         private readonly IDeptCollect _Dept;
         private readonly ITitleDicItemCollect _Title;
-        private readonly IEmpDeptProwerCollect _DeptPrower;
+        private readonly IEmpDeptPowerCollect _DeptPower;
         private readonly IEmpTitleCollect _EmpTitle;
         private readonly IPostDicItemCollect _Post;
-        public DeptChangeService (IEmpCollect emp,
+        public DeptChangeService ( IEmpCollect emp,
             IDeptCollect dept,
-            IEmpDeptProwerCollect deptPrower,
+            IEmpDeptPowerCollect deptPower,
             ITitleDicItemCollect title,
             IPostDicItemCollect post,
-            IEmpTitleCollect empTitle)
+            IEmpTitleCollect empTitle )
         {
             this._Post = post;
-            this._DeptPrower = deptPrower;
+            this._DeptPower = deptPower;
             this._Emp = emp;
             this._Dept = dept;
             this._Title = title;
             this._EmpTitle = empTitle;
         }
 
-        public void ToVoid (long deptId)
+        public void ToVoid ( long deptId )
         {
             DBDept dept = this._Dept.Get(deptId);
             long[] ids = this._Dept.GetEnableSubId(dept).Add(deptId);
-            if (this._Emp.CheckDeptIsExists(ids))
+            if ( this._Emp.CheckDeptIsExists(ids) )
             {
                 throw new ErrorException("hr.dept.emp.not.null");
             }
             this._Dept.ToVoidDept(ids);
         }
-        public void MergeDept (long deptId, long toDeptId)
+        public void MergeDept ( long deptId, long toDeptId )
         {
             DBDept dept = this._Dept.Get(deptId);
             DBDept to = this._Dept.Get(toDeptId);
-            if (dept.IsUnit != to.IsUnit)
+            if ( dept.IsUnit != to.IsUnit )
             {
                 throw new ErrorException("hr.dept.merge.type.error");
             }
-            else if (dept.CompanyId != to.CompanyId)
+            else if ( dept.CompanyId != to.CompanyId )
             {
                 throw new ErrorException("public.param.error");
             }
@@ -73,7 +73,7 @@ namespace Basic.HrService.lmpl
                 ToDept = to,
                 ToVoid = dept
             };
-            if (!emps.IsNull())
+            if ( !emps.IsNull() )
             {
                 merge.Emp = emps.ConvertAll(a =>
                 {
@@ -97,11 +97,11 @@ namespace Basic.HrService.lmpl
 
                 merge.EmpTitle = title.Convert(a =>
                 {
-                    if (a.DeptId != toDeptId)
+                    if ( a.DeptId != toDeptId )
                     {
                         return true;
                     }
-                    else if (toTitle.TryGetValue(a.EmpId, out string[] codes))
+                    else if ( toTitle.TryGetValue(a.EmpId, out string[] codes) )
                     {
                         return !codes.Contains(a.TitleCode);
                     }
@@ -113,22 +113,22 @@ namespace Basic.HrService.lmpl
                     TitleCode = a.TitleCode
                 });
                 merge.EmpTitleId = title.ConvertAll(a => a.Id);
-                EmpDeptPrower[] prowers = this._DeptPrower.GetDeptPrower(empId, subDeptId.Add(toDeptId));
-                if (!prowers.IsNull())
+                EmpDeptPower[] powers = this._DeptPower.GetDeptPower(empId, subDeptId.Add(toDeptId));
+                if ( !powers.IsNull() )
                 {
-                    merge.DropProwerId = prowers.ConvertAll(a => a.Id);
+                    merge.DropPowerId = powers.ConvertAll(a => a.Id);
                     merge.Emp.ForEach(a =>
                     {
-                        if (a.IsOpenAccount)
+                        if ( a.IsOpenAccount )
                         {
-                            a.DeptPrower = prowers.Where(c => c.EmpId == a.EmpId && c.DeptId != deptId).Select(c => c.DeptId).Append(a.DeptId).Distinct().ToArray();
+                            a.DeptPower = powers.Where(c => c.EmpId == a.EmpId && c.DeptId != deptId).Select(c => c.DeptId).Append(a.DeptId).Distinct().ToArray();
                         }
                     });
                 }
             }
             this._Dept.Merge(merge);
         }
-        public ChangeDeptTree GetDept (long deptId, bool? isUnit)
+        public ChangeDeptTree GetDept ( long deptId, bool? isUnit )
         {
             DBDept dept = this._Dept.Get(deptId);
             DeptBase[] depts = this._Dept.GetDepts(new DeptGetParam
@@ -153,7 +153,7 @@ namespace Basic.HrService.lmpl
                 IsUnit = dept.IsUnit,
             };
         }
-        public DisbandedDeptEmp[] GetDisbandedDeptEmp (DeptDisbandedArg arg)
+        public DisbandedDeptEmp[] GetDisbandedDeptEmp ( DeptDisbandedArg arg )
         {
             EmpDto[] emps = this._Emp.GetEmps<EmpDto>(new EmpGetParam
             {
@@ -171,7 +171,7 @@ namespace Basic.HrService.lmpl
             DisbandedDeptEmp[] dtos = emps.ConvertMap<EmpDto, DisbandedDeptEmp>();
             Dictionary<long, string[]> titles = this._EmpTitle.GetEmpDeptTitle(dtos.ConvertAll(a => a.EmpId), arg.DeptId);
             List<string> titleId = [];
-            titles.ForEach((a, v) =>
+            titles.ForEach(( a, v ) =>
             {
                 titleId.AddRange(v);
             });
@@ -184,7 +184,7 @@ namespace Basic.HrService.lmpl
                 c.Unit = unitName;
                 c.UnitId = unitId;
                 c.Dept = deptName;
-                if (titles.TryGetValue(c.EmpId, out string[] title))
+                if ( titles.TryGetValue(c.EmpId, out string[] title) )
                 {
                     c.TitleId = title;
                     c.Title = title.ConvertAll(a => titleName.GetValueOrDefault(a));
@@ -192,7 +192,7 @@ namespace Basic.HrService.lmpl
             });
             return dtos;
         }
-        public MergeEmp GetMergeEmp (DeptMergeArg arg)
+        public MergeEmp GetMergeEmp ( DeptMergeArg arg )
         {
             EmpDto[] emps = this._Emp.GetEmps<EmpDto>(new EmpGetParam
             {
@@ -218,12 +218,12 @@ namespace Basic.HrService.lmpl
             MergeEmpDto[] dtos = emps.ConvertMap<EmpDto, MergeEmpDto>();
             Dictionary<long, string[]> titles = this._EmpTitle.GetEmpTitle(dtos.ConvertAll(a => new KeyValuePair<long, long>(a.EmpId, a.DeptId)));
             List<string> titleId = [];
-            titles.ForEach((a, v) =>
+            titles.ForEach(( a, v ) =>
             {
                 titleId.AddRange(v);
             });
             Dictionary<long, string[]> toTitle = this._EmpTitle.GetEmpDeptTitle(dtos.Convert(c => c.DeptId == arg.ToDeptId, c => c.EmpId), arg.ToDeptId);
-            toTitle.ForEach((a, v) =>
+            toTitle.ForEach(( a, v ) =>
             {
                 titleId.AddRange(v);
             });
@@ -231,17 +231,17 @@ namespace Basic.HrService.lmpl
             Dictionary<string, string> postName = this._Post.GetPostName(dtos.Convert(c => c.PostCode));
             dtos.ForEach(c =>
             {
-                if (titles.TryGetValue(c.EmpId, out string[] title))
+                if ( titles.TryGetValue(c.EmpId, out string[] title) )
                 {
                     c.TitleId = title;
                     c.Title = title.ConvertAll(a => titleName.GetValueOrDefault(a));
                 }
-                if (toTitle.TryGetValue(c.EmpId, out title))
+                if ( toTitle.TryGetValue(c.EmpId, out title) )
                 {
                     c.ToTitleId = title;
                     c.ToTitle = title.ConvertAll(a => titleName.GetValueOrDefault(a));
                 }
-                if (c.PostCode.IsNotNull())
+                if ( c.PostCode.IsNotNull() )
                 {
                     c.Post = postName.GetValueOrDefault(c.PostCode);
                 }

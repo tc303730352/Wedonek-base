@@ -12,28 +12,28 @@ namespace Basic.HrCollect.Impl
     {
         private readonly ILoginUserDAL _LoginUser;
 
-        public LoginUserCollect (ILoginUserDAL loginUser)
+        public LoginUserCollect ( ILoginUserDAL loginUser )
         {
             this._LoginUser = loginUser;
         }
-        public DBLoginUser[] GetAccounts (long[] empId)
+        public DBLoginUser[] GetAccounts ( long[] empId )
         {
             return this._LoginUser.Gets<DBLoginUser>(a => empId.Contains(a.EmpId));
         }
-        public bool DeleteAccount (DBEmpList emp)
+        public bool DeleteAccount ( DBEmpList emp )
         {
-            if (!emp.IsOpenAccount)
+            if ( !emp.IsOpenAccount )
             {
                 return false;
             }
-            else if (emp.Status == HrEmpStatus.禁用)
+            else if ( emp.Status == HrEmpStatus.禁用 )
             {
                 throw new ErrorException("hr.emp.already.disabled");
             }
             this._LoginUser.Clear(emp.EmpId);
             return true;
         }
-        public void SetAccount (DBEmpList emp)
+        public void SetAccount ( DBEmpList emp )
         {
 
             List<LoginUser> accounts =
@@ -49,7 +49,7 @@ namespace Basic.HrCollect.Impl
                     LoginType = AccountType.手机号
                 }
             ];
-            if (!emp.Email.IsNull())
+            if ( !emp.Email.IsNull() )
             {
                 accounts.Add(new LoginUser
                 {
@@ -61,7 +61,7 @@ namespace Basic.HrCollect.Impl
             long[] dropId = users.Convert(a =>
             {
                 LoginUser t = accounts.Find(c => c.LoginType == a.LoginType);
-                if (t == null)
+                if ( t == null )
                 {
                     return true;
                 }
@@ -70,10 +70,10 @@ namespace Basic.HrCollect.Impl
             _ = accounts.RemoveAll(c => users.IsExists(a => a.LoginType == c.LoginType && a.LoginName == c.LoginName));
             this._LoginUser.Set(emp.EmpId, dropId, accounts);
         }
-        public void OpenAccount (OpenAccountParam open)
+        public void OpenAccount ( OpenAccountParam open )
         {
             List<DBLoginUser> accounts = [];
-            DBEmpDeptPrower[] depts = open.EmpTitle.ConvertAll(c => new DBEmpDeptPrower
+            DBEmpDeptPower[] depts = open.EmpTitle.ConvertAll(c => new DBEmpDeptPower
             {
                 DeptId = c.DeptId,
                 UnitId = c.UnitId,
@@ -97,7 +97,7 @@ namespace Basic.HrCollect.Impl
                     Id = IdentityHelper.CreateId(),
                     LoginType = AccountType.手机号
                 });
-                if (!c.Email.IsNull())
+                if ( !c.Email.IsNull() )
                 {
                     accounts.Add(new DBLoginUser
                     {
@@ -112,22 +112,22 @@ namespace Basic.HrCollect.Impl
             {
                 Emps = open.Emps,
                 Account = accounts,
-                DeptPrower = depts
+                DeptPower = depts
             });
         }
 
-        public long GetEmpId (string loginName)
+        public long GetEmpId ( string loginName )
         {
             AccountType accountType;
-            if (loginName.Validate(ValidateFormat.手机号))
+            if ( loginName.Validate(ValidateFormat.手机号) )
             {
                 accountType = AccountType.手机号;
             }
-            else if (loginName.Validate(ValidateFormat.Email))
+            else if ( loginName.Validate(ValidateFormat.Email) )
             {
                 accountType = AccountType.Email;
             }
-            else if (loginName.Validate(ValidateFormat.数字字母))
+            else if ( loginName.Validate(ValidateFormat.数字字母) )
             {
                 accountType = AccountType.登陆名;
             }
@@ -136,7 +136,7 @@ namespace Basic.HrCollect.Impl
                 throw new ErrorException("hr.login.name.error");
             }
             long empId = this._LoginUser.GetEmpId(loginName, accountType);
-            if (empId == 0)
+            if ( empId == 0 )
             {
                 throw new ErrorException("hr.login.user.not.find");
             }

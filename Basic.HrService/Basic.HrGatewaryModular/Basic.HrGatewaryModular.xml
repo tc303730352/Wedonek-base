@@ -146,14 +146,14 @@
             </summary>
             <param name="deptId"></param>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.DeptProwerApi.Get(System.Int64,System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Api.DeptPowerApi.Get(System.Int64,System.Int64)">
             <summary>
             获取员工部门数据权限
             </summary>
             <param name="empId">参数</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.DeptProwerApi.Set(Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower)">
+        <member name="M:Basic.HrGatewaryModular.Api.DeptPowerApi.Set(Basic.HrGatewaryModular.Model.DeptPower.UI_SetDeptPower)">
             <summary>
             设置员工部门权限
             </summary>
@@ -444,81 +444,95 @@
             <param name="param">参数</param>
             <returns>登陆用户资料</returns>
         </member>
-        <member name="T:Basic.HrGatewaryModular.Api.OperateProwerApi">
+        <member name="T:Basic.HrGatewaryModular.Api.OperatePowerApi">
             <summary>
             操作权限接口
             </summary>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Add(Basic.HrRemoteModel.OperatePrower.Model.OperateProwerAdd)">
+        <member name="M:Basic.HrGatewaryModular.Api.OperatePowerApi.Add(Basic.HrRemoteModel.OperatePower.Model.OperatePowerAdd)">
             <summary>
             添加操作权限
             </summary>
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.GetEnables(System.Int64,System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Api.OperatePowerApi.GetEnables(System.Int64,System.Int64)">
             <summary>
             获取操作权限
             </summary>
-            <param name="prowerId">权限ID</param>
+            <param name="powerId">权限ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Gets(System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Api.OperatePowerApi.Gets(System.Int64)">
             <summary>
             获取操作权限集
             </summary>
-            <param name="prowerId"></param>
+            <param name="powerId"></param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.OperatePrower.Model.OperateProwerSet})">
+        <member name="M:Basic.HrGatewaryModular.Api.OperatePowerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.OperatePower.Model.OperatePowerSet})">
             <summary>
             设置操作权限
             </summary>
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.OperateProwerApi.SetIsEnable(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Boolean})">
+        <member name="M:Basic.HrGatewaryModular.Api.OperatePowerApi.SetIsEnable(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Boolean})">
             <summary>
             启用操作权限
             </summary>
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Add(Basic.HrRemoteModel.Prower.Model.ProwerAdd)">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.Add(Basic.HrRemoteModel.Power.Model.PowerAdd)">
             <summary>
             添加目录权限
             </summary>
             <param name="datum">目录权限资料</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Get(System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.Get(System.Int64)">
             <summary>
             获取目录权限
             </summary>
             <param name="id">权限ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.GetTree(Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree)">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.GetTree(Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree)">
             <summary>
             获取目录权限树
             </summary>
             <param name="param">参数</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.GetTreeBySystem">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.GetTrees(Basic.HrRemoteModel.Power.Model.PowerGetParam)">
             <summary>
             获取目录权限树含子系统
             </summary>
             <returns>目录权限子系统</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Query(Basic.HrGatewaryModular.Model.Prower.UI_QueryPrower)">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.Query(WeDonekRpc.HttpApiGateway.Model.PagingParam{Basic.HrRemoteModel.Power.Model.PowerQuery})">
             <summary>
             查询目录权限
             </summary>
             <param name="param">参数</param>
             <returns>目录权限</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.ProwerApi.Set(Basic.HrGatewaryModular.Model.Prower.UI_SetPrower)">
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.GetProwerTrees(Basic.HrRemoteModel.Power.Model.PowerQuery)">
+            <summary>
+            获取目录权限树
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.SetSort(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Int32})">
+            <summary>
+            设置排序位
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.PowerApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.Power.Model.PowerSet})">
             <summary>
             修改权限
             </summary>
@@ -565,12 +579,12 @@
             <param name="param">参数</param>
             <returns></returns>
         </member>
-        <member name="T:Basic.HrGatewaryModular.Api.RoleProwerApi">
+        <member name="T:Basic.HrGatewaryModular.Api.RolePowerApi">
             <summary>
             角色权限接口
             </summary>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.RoleProwerApi.Set(Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet)">
+        <member name="M:Basic.HrGatewaryModular.Api.RolePowerApi.Set(Basic.HrGatewaryModular.Model.RolePower.RolePowerSet)">
             <summary>
             修改权限集
             </summary>
@@ -709,14 +723,14 @@
             <param name="datum">公司资料</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IDeptProwerService.GetDeptPrower(System.Int64,System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptPowerService.GetDeptPower(System.Int64,System.Int64)">
             <summary>
             获取员工部门数据权限
             </summary>
             <param name="empId">员工ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IDeptProwerService.SetDeptPrower(System.Int64,System.Int64,System.Int64[])">
+        <member name="M:Basic.HrGatewaryModular.Interface.IDeptPowerService.SetDeptPower(System.Int64,System.Int64,System.Int64[])">
             <summary>
             设置员工部门权限
             </summary>
@@ -1016,21 +1030,28 @@
             <param name="count">数据总数</param>
             <returns>登陆用户资料</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.AddPrower(Basic.HrRemoteModel.Prower.Model.ProwerAdd)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.AddPower(Basic.HrRemoteModel.Power.Model.PowerAdd)">
             <summary>
             添加目录权限
             </summary>
             <param name="datum">目录权限资料</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.GetPrower(System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetTrees(Basic.HrRemoteModel.Power.Model.PowerQuery)">
+            <summary>
+            获取目录权限树
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetPower(System.Int64)">
             <summary>
             获取目录权限
             </summary>
             <param name="id">权限ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.GetProwerTree(System.Int64,System.Nullable{System.Boolean})">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetPowerTree(System.Int64,System.Nullable{System.Boolean})">
             <summary>
             获取目录权限树
             </summary>
@@ -1038,13 +1059,13 @@
             <param name="isEnable">是否启用</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.GetProwerTreeBySystem">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetTrees(Basic.HrRemoteModel.Power.Model.PowerGetParam)">
             <summary>
             获取目录权限树含子系统
             </summary>
             <returns>目录权限子系统</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.QueryPrower(Basic.HrRemoteModel.Prower.Model.ProwerQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.QueryPower(Basic.HrRemoteModel.Power.Model.PowerQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
             <summary>
             查询目录权限
             </summary>
@@ -1053,7 +1074,7 @@
             <param name="count">数据总数</param>
             <returns>目录权限</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IProwerService.SetPrower(System.Int64,Basic.HrRemoteModel.Prower.Model.ProwerSet)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.SetPower(System.Int64,Basic.HrRemoteModel.Power.Model.PowerSet)">
             <summary>
             修改权限
             </summary>
@@ -1232,32 +1253,32 @@
             变动受影响的部门
             </summary>
         </member>
-        <member name="T:Basic.HrGatewaryModular.Model.DeptPrower.UI_GetDeptPrower">
+        <member name="T:Basic.HrGatewaryModular.Model.DeptPower.UI_GetDeptPower">
             <summary>
             获取员工部门数据权限 UI参数实体
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_GetDeptPrower.EmpId">
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPower.UI_GetDeptPower.EmpId">
             <summary>
             员工ID
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_GetDeptPrower.CompanyId">
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPower.UI_GetDeptPower.CompanyId">
             <summary>
             公司ID
             </summary>
         </member>
-        <member name="T:Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower">
+        <member name="T:Basic.HrGatewaryModular.Model.DeptPower.UI_SetDeptPower">
             <summary>
             设置员工部门权限 UI参数实体
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower.EmpId">
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPower.UI_SetDeptPower.EmpId">
             <summary>
             员工ID
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.DeptPrower.UI_SetDeptPrower.DeptId">
+        <member name="P:Basic.HrGatewaryModular.Model.DeptPower.UI_SetDeptPower.DeptId">
             <summary>
             拥有的部门ID
             </summary>
@@ -1332,7 +1353,7 @@
             子系统
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.Prower">
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.Power">
             <summary>
             菜单列表
             </summary>
@@ -1477,67 +1498,42 @@
             查询参数
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.OpPrower.OperatePrower.Prowers">
+        <member name="P:Basic.HrGatewaryModular.Model.OpPower.OperatePower.Powers">
             <summary>
             操作权限列表
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.OpPrower.OperatePrower.Selected">
+        <member name="P:Basic.HrGatewaryModular.Model.OpPower.OperatePower.Selected">
             <summary>
             选中的权限
             </summary>
         </member>
-        <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree">
+        <member name="T:Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree">
             <summary>
             获取目录权限树 UI参数实体
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree.SubSystemId">
+        <member name="P:Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree.SubSystemId">
             <summary>
             子级系统ID
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_GetProwerTree.IsEnable">
+        <member name="P:Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree.IsEnable">
             <summary>
             是否启用
             </summary>
         </member>
-        <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_QueryPrower">
-            <summary>
-            查询目录权限 UI参数实体
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_QueryPrower.QueryParam">
-            <summary>
-            查询参数
-            </summary>
-        </member>
-        <member name="T:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower">
-            <summary>
-            修改权限 UI参数实体
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower.Id">
-            <summary>
-            目录权限ID
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Prower.UI_SetPrower.Datum">
-            <summary>
-            目录权限资料
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet.RoleId">
+        <member name="P:Basic.HrGatewaryModular.Model.RolePower.RolePowerSet.RoleId">
             <summary>
             角色ID
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet.ProwerId">
+        <member name="P:Basic.HrGatewaryModular.Model.RolePower.RolePowerSet.PowerId">
             <summary>
             权限ID
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.RolePrower.RoleProwerSet.OperateId">
+        <member name="P:Basic.HrGatewaryModular.Model.RolePower.RolePowerSet.OperateId">
             <summary>
             操作ID
             </summary>

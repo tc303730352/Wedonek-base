@@ -25,7 +25,7 @@ namespace Basic.HrDAL.Repository
                     Id = IdentityHelper.CreateId()
                 };
             }));
-            queue.Insert(add.DeptPrower);
+            queue.Insert(add.DeptPower);
             queue.Insert(add.Account);
             queue.Update<DBEmpList>(add.Emps.ConvertAll(a => new DBEmpList
             {

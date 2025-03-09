@@ -1,6 +1,6 @@
 ﻿namespace Basic.HrRemoteModel.EmpLogin.Model
 {
-    public class ProwerRoute
+    public class PowerRoute
     {
         public long Id { get; set; }
 
@@ -40,10 +40,10 @@
         /// <summary>
         /// 下级
         /// </summary>
-        public ProwerRoute[] Children { get; set; }
+        public PowerRoute[] Children { get; set; }
         /// <summary>
         /// 菜单类型
         /// </summary>
-        public ProwerType ProwerType { get; set; }
+        public PowerType PowerType { get; set; }
     }
 }

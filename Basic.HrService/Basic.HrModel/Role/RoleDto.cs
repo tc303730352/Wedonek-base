@@ -4,7 +4,7 @@ namespace Basic.HrModel.Role
 {
     public class RoleDto : DBRole
     {
-        public long[] ProwerId
+        public long[] PowerId
         {
             get;
             set;

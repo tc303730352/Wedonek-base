@@ -6,18 +6,18 @@ using WeDonekRpc.Client.Interface;
 namespace Basic.HrLocalEvent.User
 {
     [LocalEventName("Delete")]
-    internal class ClearEmpDeptPrower : IEventHandler<UserChangeEvent>
+    internal class ClearEmpDeptPower : IEventHandler<UserChangeEvent>
     {
-        private readonly IEmpDeptProwerCollect _EmpDeptPrower;
+        private readonly IEmpDeptPowerCollect _EmpDeptPower;
 
-        public ClearEmpDeptPrower (IEmpDeptProwerCollect empDeptPrower)
+        public ClearEmpDeptPower ( IEmpDeptPowerCollect empDeptPower )
         {
-            this._EmpDeptPrower = empDeptPrower;
+            this._EmpDeptPower = empDeptPower;
         }
 
-        public void HandleEvent (UserChangeEvent data, string eventName)
+        public void HandleEvent ( UserChangeEvent data, string eventName )
         {
-            this._EmpDeptPrower.Clear(data.EmpId);
+            this._EmpDeptPower.Clear(data.EmpId);
         }
     }
 }

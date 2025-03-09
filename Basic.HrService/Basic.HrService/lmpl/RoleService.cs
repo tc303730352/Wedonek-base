@@ -1,9 +1,9 @@
 ﻿using Basic.HrCollect;
 using Basic.HrLocalEvent.Model;
 using Basic.HrModel.DB;
-using Basic.HrModel.Prower;
+using Basic.HrModel.Power;
 using Basic.HrModel.Role;
-using Basic.HrModel.RolePrower;
+using Basic.HrModel.RolePower;
 using Basic.HrRemoteModel.Role.Model;
 using Basic.HrService.Interface;
 using WeDonekRpc.Client;
@@ -15,84 +15,84 @@ namespace Basic.HrService.lmpl
     internal class RoleService : IRoleService
     {
         private readonly IRoleCollect _Role;
-        private readonly IProwerCollect _Prower;
+        private readonly IPowerCollect _Power;
         private readonly IEmpRoleCollect _EmpRole;
-        public RoleService (IRoleCollect role,
-            IProwerCollect prower,
-            IEmpRoleCollect empRole)
+        public RoleService ( IRoleCollect role,
+            IPowerCollect power,
+            IEmpRoleCollect empRole )
         {
             this._Role = role;
-            this._Prower = prower;
+            this._Power = power;
             this._EmpRole = empRole;
         }
-        public void SetIsEnable (long id, bool enable)
+        public void SetIsEnable ( long id, bool enable )
         {
             DBRole role = this._Role.Get(id);
-            if (this._Role.SetIsEnable(role, enable))
+            if ( this._Role.SetIsEnable(role, enable) )
             {
                 new RoleEvent(role).AsyncPublic("SetIsEnable");
             }
         }
-        public long Add (RoleSet add)
+        public long Add ( RoleSet add )
         {
-            RolePrower[] prowers = null;
-            if (!add.ProwerId.IsNull())
+            RolePower[] powers = null;
+            if ( !add.PowerId.IsNull() )
             {
-                ProwerBasic[] list = this._Prower.GetFulls(add.ProwerId);
-                if (list.IsNull())
+                PowerBasic[] list = this._Power.GetFulls(add.PowerId);
+                if ( list.IsNull() )
                 {
-                    throw new ErrorException("hr.prower.not.find");
+                    throw new ErrorException("hr.power.not.find");
                 }
-                prowers = list.ConvertAll(c => new RolePrower
+                powers = list.ConvertAll(c => new RolePower
                 {
-                    ProwerId = c.Id,
+                    PowerId = c.Id,
                     SubSystemId = c.SubSystemId,
-                    ProwerType = c.ProwerType
+                    PowerType = c.PowerType
                 });
             }
             RoleSetDatum datum = add.ConvertMap<RoleSet, RoleSetDatum>();
-            return this._Role.Add(datum, prowers);
+            return this._Role.Add(datum, powers);
         }
-        public bool Set (long roleId, RoleSet set)
+        public bool Set ( long roleId, RoleSet set )
         {
             DBRole role = this._Role.Get(roleId);
-            RolePrower[] prowers = null;
-            if (!set.ProwerId.IsNull())
+            RolePower[] powers = null;
+            if ( !set.PowerId.IsNull() )
             {
-                ProwerBasic[] list = this._Prower.GetFulls(set.ProwerId);
-                if (list.IsNull())
+                PowerBasic[] list = this._Power.GetFulls(set.PowerId);
+                if ( list.IsNull() )
                 {
-                    throw new ErrorException("hr.prower.not.find");
+                    throw new ErrorException("hr.power.not.find");
                 }
-                prowers = list.ConvertAll(c => new RolePrower
+                powers = list.ConvertAll(c => new RolePower
                 {
-                    ProwerId = c.Id,
+                    PowerId = c.Id,
                     SubSystemId = c.SubSystemId,
-                    ProwerType = c.ProwerType
+                    PowerType = c.PowerType
                 });
             }
             RoleSetDatum datum = set.ConvertMap<RoleSet, RoleSetDatum>();
-            if (this._Role.Set(role, datum, prowers))
+            if ( this._Role.Set(role, datum, powers) )
             {
                 new RoleEvent(role).AsyncPublic("Update");
                 return true;
             }
             return false;
         }
-        public RoleDetailed GetDetailed (long id)
+        public RoleDetailed GetDetailed ( long id )
         {
             RoleDto role = this._Role.GetRole(id);
             RoleDetailed dto = role.ConvertMap<RoleDto, RoleDetailed>();
             return dto;
         }
-        public void Delete (long id)
+        public void Delete ( long id )
         {
             DBRole role = this._Role.Get(id);
             this._Role.Delete(role);
             new RoleEvent(role).AsyncPublic("Delete");
         }
 
-        public RoleDatum Get (long id)
+        public RoleDatum Get ( long id )
         {
             DBRole role = this._Role.Get(id);
             return role.ConvertMap<DBRole, RoleDatum>();
@@ -101,10 +101,10 @@ namespace Basic.HrService.lmpl
         {
             return this._Role.GetSelect();
         }
-        public PagingResult<RoleDatum> Query (RoleGetParam param, IBasicPage paging)
+        public PagingResult<RoleDatum> Query ( RoleGetParam param, IBasicPage paging )
         {
             DBRole[] roles = this._Role.Query<DBRole>(param, paging, out int count);
-            if (roles.IsNull())
+            if ( roles.IsNull() )
             {
                 return new PagingResult<RoleDatum>();
             }
@@ -116,22 +116,22 @@ namespace Basic.HrService.lmpl
             });
             return new PagingResult<RoleDatum>(dtos, count);
         }
-        public void SetIsAdmin (long id, bool isAdmin)
+        public void SetIsAdmin ( long id, bool isAdmin )
         {
             DBRole role = this._Role.Get(id);
-            if (this._Role.SetIsAdmin(role, isAdmin))
+            if ( this._Role.SetIsAdmin(role, isAdmin) )
             {
                 new RoleEvent(role).AsyncPublic("SetIsAdmin");
             }
         }
-        public void SetDefRole (long id)
+        public void SetDefRole ( long id )
         {
             DBRole role = this._Role.Get(id);
-            if (role.IsDefRole)
+            if ( role.IsDefRole )
             {
                 return;
             }
-            else if (!role.IsEnable)
+            else if ( !role.IsEnable )
             {
                 throw new ErrorException("hr.def.role.must.enable");
             }

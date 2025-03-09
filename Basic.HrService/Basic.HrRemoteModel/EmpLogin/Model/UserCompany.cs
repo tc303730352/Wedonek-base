@@ -32,11 +32,11 @@
         /// <summary>
         /// 部门权限
         /// </summary>
-        public long[] DeptPrower { get; set; }
+        public long[] DeptPower { get; set; }
         /// <summary>
         /// 权限
         /// </summary>
-        public string[] Prower { get; set; }
+        public string[] Power { get; set; }
 
         /// <summary>
         /// 是否是管理员

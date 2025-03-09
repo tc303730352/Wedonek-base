@@ -8,9 +8,9 @@ namespace Basic.HrLocalEvent.Emp
     [LocalEventName("Delete")]
     internal class ClearEmpRole : IEventHandler<EmpLocalEvent>
     {
-        private readonly IEmpDeptProwerCollect _Service;
+        private readonly IEmpDeptPowerCollect _Service;
 
-        public ClearEmpRole (IEmpDeptProwerCollect service)
+        public ClearEmpRole (IEmpDeptPowerCollect service)
         {
             this._Service = service;
         }

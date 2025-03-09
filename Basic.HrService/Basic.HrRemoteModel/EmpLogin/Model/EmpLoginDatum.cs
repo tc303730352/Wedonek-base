@@ -1,5 +1,4 @@
-﻿using System.Collections.Frozen;
-using Basic.HrRemoteModel.SubSystem.Model;
+﻿using Basic.HrRemoteModel.SubSystem.Model;
 
 namespace Basic.HrRemoteModel.EmpLogin.Model
 {
@@ -20,7 +19,7 @@ namespace Basic.HrRemoteModel.EmpLogin.Model
         /// <summary>
         /// 菜单列表
         /// </summary>
-        public Dictionary<long, ProwerRoute[]> Prower { get; set; }
+        public Dictionary<long, PowerRoute[]> Power { get; set; }
         /// <summary>
         /// 人员公司
         /// </summary>
