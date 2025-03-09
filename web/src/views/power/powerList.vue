@@ -67,7 +67,6 @@
                 :multiple="true"
                 @change="loadPower"
               >
-                <el-option :value="null" label="全部">全部</el-option>
                 <el-option :value="1" label="目录">目录</el-option>
                 <el-option :value="0" label="菜单">菜单</el-option>
               </el-select>
@@ -85,14 +84,15 @@
           row-key="Id"
         >
           <template slot="Icon" slot-scope="e">
-            <i :class="e.row.Icon" />
+            <i v-if="e.row.Icon.startsWith('el-icon')" :class="e.row.Icon" />
+            <svg-icon v-else style="font-size: 20px" :icon-class="e.row.Icon" />
           </template>
           <template slot="IsEnable" slot-scope="e">
             <el-switch
               v-model="e.row.IsEnable"
               active-text="启用"
               inactive-text="停用"
-              @change="setIsEnable(e.row)"
+              @change="setState(e.row)"
             />
           </template>
           <template slot="Sort" slot-scope="e">
@@ -103,6 +103,15 @@
             <span v-else-if="e.row.PowerType == 1">目录</span>
           </template>
           <template slot="action" slot-scope="e">
+            <el-button
+              v-if="e.row.PowerType == 0"
+              size="mini"
+              type="primary"
+              title="显示菜单"
+              icon="el-icon-setting"
+              circle
+              @click="showPower(e.row)"
+            />
             <el-button
               v-if="!e.row.IsEnable"
               size="mini"
@@ -126,18 +135,21 @@
       </el-card>
     </leftRightSplit>
     <editPower :id="id" :visible="visible" :sub-system="subSystem" :parent-id="queryParam.ParentId" :sub-system-id="queryParam.SubSystemId" @close="closePower" />
+    <editOperatePower :power-id="id" :visible="opVisible" :power-name="powerName" @close="opVisible = false" />
   </div>
 </template>
 
 <script>
-import { GetTrees, GetPowerTrees, SetSort, Delete } from '@/api/role/power'
+import { GetTrees, GetPowerTrees, SetSort, Delete, SetIsEnable } from '@/api/role/power'
 import editPower from './components/editPower.vue'
+import editOperatePower from './components/editOperatePower.vue'
 import {
   HrEnumDic
 } from '@/config/publicDic'
 export default {
   components: {
-    editPower
+    editPower,
+    editOperatePower
   },
   data() {
     return {
@@ -147,6 +159,8 @@ export default {
       dataList: null,
       visible: false,
       subSystem: null,
+      powerName: null,
+      opVisible: false,
       id: null,
       queryParam: {
         SubSystemId: null,
@@ -228,6 +242,18 @@ export default {
       this.id = null
       this.visible = true
     },
+    showPower(row) {
+      this.id = row.Id
+      this.powerName = row.OperateName
+      this.opVisible = true
+    },
+    async setState(row) {
+      await SetIsEnable(row.Id, row.IsEnable)
+      this.$message({
+        type: 'success',
+        message: '保存成功!'
+      })
+    },
     editPower(row) {
       this.id = row.Id
       this.visible = true
@@ -253,7 +279,6 @@ export default {
       this.loadPower()
     },
     chioseMenu(e) {
-      console.log(e)
       this.subSystem = e.label
       this.title = e.label + '菜单列表'
       if (e.type === 'isSubSystem' && (e.key !== this.queryParam.SubSystemId || this.queryParam.ParentId != null)) {
@@ -275,11 +300,13 @@ export default {
       const list = await GetTrees({
         PowerType: 1
       })
-      const subSys = list[0]
-      this.chioseKey = subSys.SubSysId
-      this.subSystem = subSys.SubSysName
-      this.queryParam.SubSystemId = this.chioseKey
-      this.title = subSys.SubSysName + '菜单列表'
+      if (this.chioseKey == null) {
+        const subSys = list[0]
+        this.chioseKey = subSys.SubSysId
+        this.subSystem = subSys.SubSysName
+        this.queryParam.SubSystemId = this.chioseKey
+        this.title = subSys.SubSysName + '菜单列表'
+      }
       this.menus = list.map((c) => {
         const t = {
           key: c.SubSysId,
@@ -303,16 +330,19 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        that.submitDrop(row.Id)
+        that.submitDrop(row)
       })
     },
-    async submitDrop(id) {
-      await Delete(id)
+    async submitDrop(row) {
+      await Delete(row.Id)
       this.$message({
         type: 'success',
         message: '删除成功!'
       })
       this.loadPower()
+      if (row.PowerType === 1) {
+        this.loadTrees()
+      }
     },
     getPowers(list, sysId) {
       return list.map((c) => {

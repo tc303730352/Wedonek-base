@@ -1,5 +1,6 @@
 ﻿using Basic.HrDAL;
 using Basic.HrModel.OperatePower;
+using WeDonekRpc.Helper;
 
 namespace Basic.HrCollect.Impl
 {
@@ -31,6 +32,16 @@ namespace Basic.HrCollect.Impl
         public long[] GetOperateId ( long roleId, long powerId )
         {
             return this._BasicDAL.Gets(a => a.RoleId == roleId && a.PowerId == powerId, a => a.OperateId);
+        }
+
+        public void ClearByPowerId ( long powerId )
+        {
+            long[] ids = this._BasicDAL.Gets(a => a.PowerId == powerId, a => a.Id);
+            if ( ids.IsNull() )
+            {
+                return;
+            }
+            this._BasicDAL.Delete(ids);
         }
     }
 }

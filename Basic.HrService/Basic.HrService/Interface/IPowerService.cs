@@ -15,6 +15,6 @@ namespace Basic.HrService.Interface
         PagingResult<PowerBase> Query ( PowerQuery queryParam, IBasicPage basicPage );
         bool Set ( long id, PowerSet datum );
         void Delete ( long id );
-        void SetIsEnable ( long id, bool isEnable );
+        bool SetIsEnable ( long id, bool isEnable );
     }
 }

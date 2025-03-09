@@ -1,8 +1,15 @@
 <template>
   <div>
     <el-input v-model="icon" :readonly="true">
-      <i v-if="icon" slot="prepend" style="font-size: 20px;" :class="icon" />
-      <el-button slot="append" type="primary" @click="chioseIcon">选择图标</el-button>
+      <div v-if="icon" slot="prepend">
+        <i v-if="icon.startsWith('el-icon')" style="font-size: 20px" :class="icon" />
+        <svg-icon v-else style="font-size: 20px" :icon-class="icon" />
+      </div>
+      <el-button
+        slot="append"
+        type="primary"
+        @click="chioseIcon"
+      >选择图标</el-button>
     </el-input>
     <el-dialog
       title="选择图标"
@@ -13,7 +20,22 @@
       :close-on-click-modal="false"
     >
       <div class="iconList">
-        <div v-for="i in icons" :key="i" :class="'icon '+(i == chiose ? 'chiose': '')" @click="clickIcon(i)"><i :class="i" /></div>
+        <div
+          v-for="i in icons"
+          :key="i"
+          :class="'icon ' + (i == chiose ? 'chiose' : '')"
+          @click="clickIcon(i)"
+        >
+          <i :class="i" />
+        </div>
+        <div
+          v-for="i in svgIcons"
+          :key="i"
+          :class="'icon ' + (i == chiose ? 'chiose' : '')"
+          @click="clickIcon(i)"
+        >
+          <svg-icon :icon-class="i" />
+        </div>
       </div>
       <el-row slot="footer" style="text-align: center; margin-top: 20px">
         <el-button @click="reset">重 置</el-button>
@@ -24,10 +46,8 @@
 </template>
 
 <script>
-
 export default {
-  components: {
-  },
+  components: {},
   props: {
     value: {
       type: String,
@@ -39,7 +59,56 @@ export default {
       icon: null,
       chiose: null,
       visible: false,
-      icons: ['el-icon-platform-eleme',
+      svgIcons: [
+        '404',
+        'bug',
+        'chart',
+        'clipboard',
+        'component',
+        'dashboard',
+        'documentation',
+        'drag',
+        'edit',
+        'education',
+        'email',
+        'example',
+        'excel',
+        'exit-fullscreen',
+        'eye-open',
+        'eye',
+        'form',
+        'fullscreen',
+        'guide',
+        'icon',
+        'international',
+        'language',
+        'link',
+        'list',
+        'lock',
+        'message',
+        'money',
+        'nested',
+        'password',
+        'pdf',
+        'people',
+        'peoples',
+        'qq',
+        'search',
+        'shopping',
+        'size',
+        'skill',
+        'star',
+        'tab',
+        'table',
+        'theme',
+        'tree-table',
+        'tree',
+        'user',
+        'wechat',
+        'zip'
+      ],
+      icons: [
+        'el-icon-platform-eleme',
         'el-icon-eleme',
         'el-icon-delete-solid',
         'el-icon-delete',
@@ -318,7 +387,8 @@ export default {
         'el-icon-potato-strips',
         'el-icon-lollipop',
         'el-icon-ice-cream-square',
-        'el-icon-ice-cream-round']
+        'el-icon-ice-cream-round'
+      ]
     }
   },
   watch: {
@@ -345,9 +415,7 @@ export default {
       this.$emit('input', this.chiose)
       this.visible = false
     },
-    reset() {
-
-    }
+    reset() {}
   }
 }
 </script>
@@ -358,7 +426,7 @@ export default {
   height: 600px;
   overflow-y: auto;
 }
-.iconList .icon{
+.iconList .icon {
   width: 70px;
   height: 70px;
   line-height: 70px;
@@ -369,9 +437,9 @@ export default {
   cursor: pointer;
   margin: 5px;
 }
-.iconList .chiose{
-   border-color:red;
-   border-width: 1px;
-   border-style: solid;
+.iconList .chiose {
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
 }
 </style>

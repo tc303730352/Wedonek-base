@@ -1,4 +1,5 @@
 ﻿using Basic.HrCollect;
+using Basic.HrLocalEvent.Model;
 using Basic.HrModel.DB;
 using Basic.HrModel.Power;
 using Basic.HrModel.SubSystem;
@@ -158,12 +159,13 @@ namespace Basic.HrService.lmpl
         {
             DBPowerList db = this._Power.Get(id);
             this._Power.Delete(db);
+            new PowerEvent(db).AsyncPublic();
         }
 
-        public void SetIsEnable ( long id, bool isEnable )
+        public bool SetIsEnable ( long id, bool isEnable )
         {
             DBPowerList db = this._Power.Get(id);
-            this._Power.SetIsEnable(db, isEnable);
+            return this._Power.SetIsEnable(db, isEnable);
         }
     }
 }

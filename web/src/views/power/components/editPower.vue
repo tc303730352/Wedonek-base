@@ -245,7 +245,7 @@ export default {
       const that = this
       this.$refs['powerEdit'].validate((valid) => {
         if (valid) {
-          if (that.roleId) {
+          if (that.id != null) {
             that.setPower()
           } else {
             that.addPower()

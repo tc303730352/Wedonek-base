@@ -35,7 +35,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="powerId">权限ID</param>
         /// <returns></returns>
-        public OperatePower GetEnables ( [NumValidate("hr.power.id.error", 1)] long roleId, [NumValidate("hr.power.id.error", 1)] long powerId )
+        public OperatePower GetEnables ( [NumValidate("hr.role.id.error", 1)] long roleId, [NumValidate("hr.power.id.error", 1)] long powerId )
         {
             return this._Service.GetEnables(roleId, powerId);
         }
@@ -66,6 +66,14 @@ namespace Basic.HrGatewaryModular.Api
         public bool SetIsEnable ( LongParam<bool> data )
         {
             return this._Service.SetIsEnable(data.Id, data.Value);
+        }
+        /// <summary>
+        /// 删除操作权限
+        /// </summary>
+        /// <param name="id"></param>
+        public void Delete ( [NumValidate("hr.operate.power.id.error", 1)] long id )
+        {
+            this._Service.Delete(id);
         }
     }
 }

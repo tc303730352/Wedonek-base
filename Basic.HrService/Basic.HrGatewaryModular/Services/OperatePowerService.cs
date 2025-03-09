@@ -60,5 +60,13 @@ namespace Basic.HrGatewaryModular.Services
                 PowerId = powerId
             }.Send();
         }
+
+        public void Delete ( long id )
+        {
+            new DeleteOperatePower
+            {
+                Id = id
+            }.Send();
+        }
     }
 }

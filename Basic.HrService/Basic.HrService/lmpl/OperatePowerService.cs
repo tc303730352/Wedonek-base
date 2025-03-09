@@ -19,6 +19,12 @@ namespace Basic.HrService.lmpl
             return this._Service.Add(data);
         }
 
+        public void Delete ( long id )
+        {
+            DBOperatePower source = this._Service.Get(id);
+            this._Service.Delete(source);
+        }
+
         public OperatePowerBase[] GetEnables ( long powerId )
         {
             return this._Service.GetEnables(powerId);

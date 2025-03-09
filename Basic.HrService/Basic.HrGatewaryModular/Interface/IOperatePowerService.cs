@@ -10,5 +10,6 @@ namespace Basic.HrGatewaryModular.Interface
         bool Set ( long id, OperatePowerSet data );
         bool SetIsEnable ( long id, bool isEnable );
         OperatePowerDto[] Gets ( long powerId );
+        void Delete ( long id );
     }
 }

@@ -12,5 +12,7 @@ namespace Basic.HrCollect
         Result[] Gets<Result> ( long[] ids ) where Result : class;
         bool Set ( DBOperatePower source, OperatePowerSet data );
         bool SetIsEnable ( DBOperatePower source, bool isEnable );
+        void Delete ( DBOperatePower source );
+        void Clear ( long powerId );
     }
 }

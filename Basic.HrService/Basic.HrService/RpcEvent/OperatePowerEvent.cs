@@ -13,6 +13,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
+        public void DeleteOperatePower ( DeleteOperatePower obj )
+        {
+            this._Service.Delete(obj.Id);
+        }
         public OperatePowerBase[] GetsEnableOpPower ( GetsEnableOpPower obj )
         {
             return this._Service.GetEnables(obj.PowerId);

@@ -35,6 +35,14 @@ namespace Basic.HrCollect.Impl
             DBOperatePower add = data.ConvertMap<OperatePowerAdd, DBOperatePower>();
             return this._BasicDAL.Add(add);
         }
+        public void Delete ( DBOperatePower source )
+        {
+            if ( source.IsEnable )
+            {
+                throw new ErrorException("hr.operate.power.already.enable");
+            }
+            this._BasicDAL.Delete(source.Id);
+        }
         public bool SetIsEnable ( DBOperatePower source, bool isEnable )
         {
             if ( source.IsEnable == isEnable )
@@ -66,6 +74,16 @@ namespace Basic.HrCollect.Impl
         public Result[] Gets<Result> ( long[] ids ) where Result : class
         {
             return this._BasicDAL.Gets<Result>(ids);
+        }
+
+        public void Clear ( long powerId )
+        {
+            long[] ids = this._BasicDAL.Gets(a => a.PowerId == powerId, a => a.Id);
+            if ( ids.IsNull() )
+            {
+                return;
+            }
+            this._BasicDAL.Delete(ids);
         }
     }
 }

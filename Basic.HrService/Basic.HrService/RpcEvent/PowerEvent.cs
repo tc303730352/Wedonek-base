@@ -50,9 +50,9 @@ namespace Basic.HrService.RpcEvent
         {
             return this._Service.Get(obj.Id);
         }
-        public void SetPowerIsEnable ( SetPowerIsEnable obj )
+        public bool SetPowerIsEnable ( SetPowerIsEnable obj )
         {
-            this._Service.SetIsEnable(obj.Id, obj.IsEnable);
+            return this._Service.SetIsEnable(obj.Id, obj.IsEnable);
         }
     }
 }
