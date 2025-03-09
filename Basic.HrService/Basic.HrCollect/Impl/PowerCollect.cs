@@ -123,8 +123,17 @@ namespace Basic.HrCollect.Impl
             db.Sort = this._Power.GetSort(add.SubSystemId, add.ParentId) + 1;
             if ( add.ParentId != 0 )
             {
-                string level = this._Power.Get(add.ParentId, a => a.LevelCode);
-                db.LevelCode = level + add.ParentId + "|";
+                var prt = this._Power.Get(add.ParentId, a => new
+                {
+                    a.LevelCode,
+                    a.LevelNum
+                });
+                db.LevelCode = prt.LevelCode + add.ParentId + "|";
+                db.LevelNum = prt.LevelNum;
+            }
+            else
+            {
+                db.LevelNum = 1;
             }
             this._Power.Add(db);
             return db.Id;
@@ -152,6 +161,25 @@ namespace Basic.HrCollect.Impl
                 return false;
             }
             this._Power.SetSort(db, sort);
+            return true;
+        }
+
+        public void Delete ( DBPowerList db )
+        {
+            if ( db.IsEnable )
+            {
+                throw new ErrorException("hr.power.not.can.enable");
+            }
+            this._Power.Delete(db.Id);
+        }
+
+        public bool SetIsEnable ( DBPowerList db, bool isEnable )
+        {
+            if ( db.IsEnable == isEnable )
+            {
+                return false;
+            }
+            this._Power.SetIsEnable(db.Id, isEnable);
             return true;
         }
     }

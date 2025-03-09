@@ -96,5 +96,12 @@ namespace Basic.HrDAL.Repository
                 throw new ErrorException("hr.power.sort.set.fail");
             }
         }
+        public void SetIsEnable ( long id, bool isEnable )
+        {
+            if ( !this._BasicDAL.Update(a => a.IsEnable == isEnable, a => a.Id == id) )
+            {
+                throw new ErrorException("hr.power.set.fail");
+            }
+        }
     }
 }

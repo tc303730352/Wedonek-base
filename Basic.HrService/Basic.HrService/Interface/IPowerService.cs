@@ -14,5 +14,7 @@ namespace Basic.HrService.Interface
         PowerSubSystem[] GetTrees ( PowerGetParam param );
         PagingResult<PowerBase> Query ( PowerQuery queryParam, IBasicPage basicPage );
         bool Set ( long id, PowerSet datum );
+        void Delete ( long id );
+        void SetIsEnable ( long id, bool isEnable );
     }
 }

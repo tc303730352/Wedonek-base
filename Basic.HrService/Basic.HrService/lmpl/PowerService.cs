@@ -153,5 +153,17 @@ namespace Basic.HrService.lmpl
                 });
             }
         }
+
+        public void Delete ( long id )
+        {
+            DBPowerList db = this._Power.Get(id);
+            this._Power.Delete(db);
+        }
+
+        public void SetIsEnable ( long id, bool isEnable )
+        {
+            DBPowerList db = this._Power.Get(id);
+            this._Power.SetIsEnable(db, isEnable);
+        }
     }
 }

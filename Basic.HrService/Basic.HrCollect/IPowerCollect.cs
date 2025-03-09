@@ -21,5 +21,7 @@ namespace Basic.HrCollect
         string GetHomeUri ( long subSysId );
         T[] Gets<T> ( PowerQuery query ) where T : class, new();
         bool SetSort ( DBPowerList db, int sort );
+        void Delete ( DBPowerList db );
+        bool SetIsEnable ( DBPowerList db, bool isEnable );
     }
 }

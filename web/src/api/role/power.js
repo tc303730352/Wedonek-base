@@ -80,3 +80,13 @@ export function Get(id) {
     }
   })
 }
+
+export function Delete(id) {
+  return request({
+    url: formatRequestUri('Delete'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

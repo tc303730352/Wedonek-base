@@ -94,6 +94,21 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.SetPower(param.Id, param.Value);
         }
-
+        /// <summary>
+        /// 删除权限
+        /// </summary>
+        /// <param name="id"></param>
+        public void Delete ( [NumValidate("hr.power.id.error", 1)] long id )
+        {
+            this._Service.Delete(id);
+        }
+        /// <summary>
+        /// 设置是否启用
+        /// </summary>
+        /// <param name="param"></param>
+        public void SetIsEnable ( LongParam<bool> param )
+        {
+            this._Service.SetIsEnable(param.Id, param.Value);
+        }
     }
 }

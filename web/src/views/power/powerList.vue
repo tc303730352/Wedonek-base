@@ -102,15 +102,35 @@
             <span v-if="e.row.PowerType == 0">菜单</span>
             <span v-else-if="e.row.PowerType == 1">目录</span>
           </template>
+          <template slot="action" slot-scope="e">
+            <el-button
+              v-if="!e.row.IsEnable"
+              size="mini"
+              type="primary"
+              title="编辑菜单"
+              icon="el-icon-edit"
+              circle
+              @click="editPower(e.row)"
+            />
+            <el-button
+              v-if="!e.row.IsEnable"
+              size="mini"
+              type="danger"
+              title="删除菜单"
+              icon="el-icon-delete"
+              circle
+              @click="dropPower(e.row)"
+            />
+          </template>
         </w-table>
       </el-card>
     </leftRightSplit>
-    <editPower :id="id" :visible="visible" :sub-system="subSystem" :parent-id="queryParam.ParentId" :sub-system-id="queryParam.SubSystemId" @close="visible=false" />
+    <editPower :id="id" :visible="visible" :sub-system="subSystem" :parent-id="queryParam.ParentId" :sub-system-id="queryParam.SubSystemId" @close="closePower" />
   </div>
 </template>
 
 <script>
-import { GetTrees, GetPowerTrees, SetSort } from '@/api/role/power'
+import { GetTrees, GetPowerTrees, SetSort, Delete } from '@/api/role/power'
 import editPower from './components/editPower.vue'
 import {
   HrEnumDic
@@ -193,6 +213,7 @@ export default {
         key: 'Action',
         title: '操作',
         align: 'left',
+        slotName: 'action',
         width: 200
       }]
     }
@@ -206,6 +227,16 @@ export default {
     addPower() {
       this.id = null
       this.visible = true
+    },
+    editPower(row) {
+      this.id = row.Id
+      this.visible = true
+    },
+    closePower(isRefresh) {
+      this.visible = false
+      if (isRefresh) {
+        this.loadPower()
+      }
     },
     async setPowerSort(row) {
       await SetSort(row.Id, row.Sort)
@@ -222,8 +253,10 @@ export default {
       this.loadPower()
     },
     chioseMenu(e) {
+      console.log(e)
       this.subSystem = e.label
-      if (e.type === 'isSubSystem' && e.key !== this.queryParam.SubSystemId) {
+      this.title = e.label + '菜单列表'
+      if (e.type === 'isSubSystem' && (e.key !== this.queryParam.SubSystemId || this.queryParam.ParentId != null)) {
         this.queryParam.SubSystemId = e.key
         this.queryParam.ParentId = null
       } else if (e.type === 1 && e.key !== this.queryParam.ParentId) {
@@ -259,6 +292,25 @@ export default {
         }
         t.children = this.getPowers(c.Powers, c.SubSysId)
         return t
+      })
+      this.loadPower()
+    },
+    dropPower(row) {
+      const title = '确认删除菜单 ' + row.Name + '?'
+      const that = this
+      this.$confirm(title, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        that.submitDrop(row.Id)
+      })
+    },
+    async submitDrop(id) {
+      await Delete(id)
+      this.$message({
+        type: 'success',
+        message: '删除成功!'
       })
       this.loadPower()
     },

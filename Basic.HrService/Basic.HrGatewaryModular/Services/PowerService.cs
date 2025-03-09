@@ -78,5 +78,22 @@ namespace Basic.HrGatewaryModular.Services
                 Sort = sort
             }.Send();
         }
+
+        public void Delete ( long id )
+        {
+            new DeletePower
+            {
+                Id = id
+            }.Send();
+        }
+
+        public void SetIsEnable ( long id, bool isEnable )
+        {
+            new SetPowerIsEnable
+            {
+                Id = id,
+                IsEnable = isEnable
+            }.Send();
+        }
     }
 }

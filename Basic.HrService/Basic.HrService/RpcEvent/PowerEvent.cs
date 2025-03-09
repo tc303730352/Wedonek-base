@@ -30,6 +30,10 @@ namespace Basic.HrService.RpcEvent
         {
             return this._Service.Query(obj.QueryParam, obj.ToBasicPage());
         }
+        public void DeletePower ( DeletePower obj )
+        {
+            this._Service.Delete(obj.Id);
+        }
         public PowerTree[] GetPowerTree ( GetPowerTree obj )
         {
             return this._Service.GetPowerTree(obj.SubSystemId, obj.Param);
@@ -45,6 +49,10 @@ namespace Basic.HrService.RpcEvent
         public PowerData GetPower ( GetPower obj )
         {
             return this._Service.Get(obj.Id);
+        }
+        public void SetPowerIsEnable ( SetPowerIsEnable obj )
+        {
+            this._Service.SetIsEnable(obj.Id, obj.IsEnable);
         }
     }
 }

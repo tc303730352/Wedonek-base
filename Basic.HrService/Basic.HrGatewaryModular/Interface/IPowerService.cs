@@ -57,5 +57,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// <returns></returns>
         bool SetPower ( long id, PowerSetDto datum );
         bool SetSort ( long id, int value );
+        void Delete ( long id );
+        void SetIsEnable ( long id, bool isEnable );
     }
 }
