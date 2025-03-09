@@ -105,7 +105,7 @@
         </w-table>
       </el-card>
     </leftRightSplit>
-    <editPower :id="id" :visible="visible" :parent-id="queryParam.ParentId" :sub-system-id="queryParam.SubSystemId" @close="visible=false" />
+    <editPower :id="id" :visible="visible" :sub-system="subSystem" :parent-id="queryParam.ParentId" :sub-system-id="queryParam.SubSystemId" @close="visible=false" />
   </div>
 </template>
 
@@ -126,6 +126,7 @@ export default {
       menus: [],
       dataList: null,
       visible: false,
+      subSystem: null,
       id: null,
       queryParam: {
         SubSystemId: null,
@@ -221,6 +222,7 @@ export default {
       this.loadPower()
     },
     chioseMenu(e) {
+      this.subSystem = e.label
       if (e.type === 'isSubSystem' && e.key !== this.queryParam.SubSystemId) {
         this.queryParam.SubSystemId = e.key
         this.queryParam.ParentId = null
@@ -242,6 +244,7 @@ export default {
       })
       const subSys = list[0]
       this.chioseKey = subSys.SubSysId
+      this.subSystem = subSys.SubSysName
       this.queryParam.SubSystemId = this.chioseKey
       this.title = subSys.SubSysName + '菜单列表'
       this.menus = list.map((c) => {

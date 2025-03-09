@@ -109,7 +109,7 @@ namespace Basic.HrService.lmpl
                 };
             });
         }
-        public PowerDataTree[] _GetChildren ( PowerBaseDto prt, PowerBaseDto[] list )
+        private PowerDataTree[] _GetChildren ( PowerBaseDto prt, PowerBaseDto[] list )
         {
             return list.Convert(c => c.ParentId == prt.Id, c =>
             {

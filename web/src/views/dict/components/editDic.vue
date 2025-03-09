@@ -21,7 +21,7 @@
       <el-form-item label="是否是树形字典">
         <el-switch
           v-model="dic.IsTreeDic"
-          :disabled="this.id != null"
+          :disabled="id != null"
         />
       </el-form-item>
     </el-form>
