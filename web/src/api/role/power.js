@@ -1,11 +1,19 @@
 import request from '@/utils/request'
 
 function formatRequestUri(name) {
-  return 'hr/Prower/' + name
+  return 'hr/Power/' + name
 }
 export function GetTrees(param) {
   return request({
     url: formatRequestUri('GetTrees'),
+    method: 'post',
+    data: param
+  })
+}
+
+export function GetTree(param) {
+  return request({
+    url: formatRequestUri('GetTree'),
     method: 'post',
     data: param
   })
@@ -25,9 +33,9 @@ export function Query(query, paging) {
   })
 }
 
-export function GetProwerTrees(query) {
+export function GetPowerTrees(query) {
   return request({
-    url: formatRequestUri('GetProwerTrees'),
+    url: formatRequestUri('GetPowerTrees'),
     method: 'post',
     data: query
   })

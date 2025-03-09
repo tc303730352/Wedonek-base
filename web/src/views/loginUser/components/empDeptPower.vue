@@ -28,7 +28,7 @@
 
 <script>
 import unitDeptTree from '@/components/unit/unitDeptTree.vue'
-import * as deptProwerApi from '@/api/unit/deptPrower'
+import * as deptPowerApi from '@/api/unit/deptPower'
 export default {
   name: 'Layout',
   components: {
@@ -70,13 +70,13 @@ export default {
   },
   methods: {
     async load() {
-      this.chioseId = await deptProwerApi.get(this.empId, this.comId)
+      this.chioseId = await deptPowerApi.get(this.empId, this.comId)
     },
     async save() {
-      if (this.chioseId.length == 0) {
+      if (this.chioseId.length === 0) {
         return
       }
-      await deptProwerApi.set(this.empId, this.comId, this.chioseId)
+      await deptPowerApi.set(this.empId, this.comId, this.chioseId)
       this.$message({
         type: 'success',
         message: '设置成功!'

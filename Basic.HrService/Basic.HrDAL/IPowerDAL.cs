@@ -23,6 +23,7 @@ namespace Basic.HrDAL
         string GetHomeUri ( long subSysId );
         T[] Gets<T> ( long[] subSysId, PowerGetParam param ) where T : class, new();
 
+        T[] Gets<T> ( long subSysId, PowerGetParam param ) where T : class, new();
         T[] Gets<T> ( PowerQuery query ) where T : class, new();
         void SetSort ( DBPowerList db, int sort );
     }

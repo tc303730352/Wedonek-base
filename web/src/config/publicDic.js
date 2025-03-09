@@ -6,7 +6,7 @@ module.exports = {
     hrUserSex: 'HrUserSex',
     dicStatus: 'DicStatus',
     dicItemStatus: 'DicItemStatus',
-    hrProwerType: 'ProwerType'
+    hrPowerType: 'PowerType'
   },
   HrItemDic: {
     deptTag: '3',

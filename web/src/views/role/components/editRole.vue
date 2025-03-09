@@ -40,7 +40,7 @@
         <el-col :span="8">
           <div style="width: 100%; height: 350px; overflow-y: auto;">
             <el-tree
-              ref="prowerTree"
+              ref="powerTree"
               :data="trees"
               :default-expand-all="true"
               :highlight-current="true"
@@ -50,7 +50,7 @@
               :default-checked-keys="chioseKeys"
               :check-strictly="false"
               node-key="key"
-              @node-click="chiosePrower"
+              @node-click="chiosePower"
               @check-change="checkChange"
             >
               <span slot-scope="{ node, data }" class="slot-t-node">
@@ -78,14 +78,14 @@
             <span slot="header">{{ pTitle }}</span>
             <div style="width: 100%; height: 350px; overflow-y: auto;">
               <w-table
-                :data="prowers"
+                :data="powers"
                 :select-keys="selectKeys"
                 row-key="Id"
                 :is-select="checkIsChiose()"
                 :is-multiple="true"
                 :columns="columns"
                 :is-paging="false"
-                @selected="saveOperPrower"
+                @selected="saveOperPower"
               />
             </div>
           </el-card>
@@ -100,10 +100,10 @@
 </template>
 
 <script>
-import { GetTrees } from '@/api/role/prower'
+import { GetTrees } from '@/api/role/power'
 import * as roleApi from '@/api/role/role'
-import { GetEnables } from '@/api/role/opPrower'
-import { Set } from '@/api/role/rolePrower'
+import { GetEnables } from '@/api/role/opPower'
+import { Set } from '@/api/role/rolePower'
 export default {
   name: 'EditRole',
   components: {},
@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       title: '新增角色',
-      prowers: [],
+      powers: [],
       pTitle: '操作权限列表',
       columns: [{
         key: 'OperateName',
@@ -138,7 +138,7 @@ export default {
       source: null,
       chioseKeys: [],
       selectKeys: [],
-      prowerId: null,
+      powerId: null,
       chioseId: null,
       rules: {
         RoleName: [
@@ -176,7 +176,7 @@ export default {
       }
       return false
     },
-    async saveOperPrower(e) {
+    async saveOperPower(e) {
       await Set(this.roleId, this.chioseId, e.keys)
       this.$message({
         message: '保存成功!',
@@ -197,51 +197,51 @@ export default {
             color: '#f56c6c'
           }
         }
-        t.children = this.getProwers(c.Prowers)
+        t.children = this.getPowers(c.Powers)
         return t
       })
     },
-    chiosePrower(data) {
+    chiosePower(data) {
       if (data.type === 0 && this.chioseId !== data.key) {
         this.chioseId = data.key
         this.pTitle = data.label + '操作权限列表'
-        this.loadPrower(data.key)
+        this.loadPower(data.key)
       }
     },
     checkChange(data, checked) {
       if (data.type === 'isSubSystem') {
         return
       }
-      const index = this.prowerId.findIndex((c) => c === data.key)
+      const index = this.powerId.findIndex((c) => c === data.key)
       if (checked) {
         if (index !== -1) {
           return
         }
-        this.prowerId.push(data.key)
+        this.powerId.push(data.key)
       } else if (index !== -1) {
-        this.prowerId.splice(index, 1)
+        this.powerId.splice(index, 1)
       }
     },
-    getProwers(list) {
+    getPowers(list) {
       return list.map((c) => {
         const t = {
           key: c.Id,
-          type: c.ProwerType,
+          type: c.PowerType,
           label: c.Name
         }
-        if (c.ProwerType === 1) {
+        if (c.PowerType === 1) {
           t.style = {
             icon: 'el-icon-folder',
             color: '#409eff'
           }
-        } else if (c.ProwerType === 0) {
+        } else if (c.PowerType === 0) {
           t.style = {
             icon: 'el-icon-document',
             color: '#000'
           }
         }
         if (c.Children && c.Children.length !== 0) {
-          t.children = this.getProwers(c.Children)
+          t.children = this.getPowers(c.Children)
         }
         return t
       })
@@ -261,7 +261,7 @@ export default {
       })
     },
     async setRole() {
-      this.role.ProwerId = this.prowerId
+      this.role.PowerId = this.powerId
       await roleApi.set(this.roleId, this.role)
       this.$message({
         message: '更新成功!',
@@ -270,7 +270,7 @@ export default {
       this.$emit('close', true)
     },
     async addRole() {
-      this.role.ProwerId = this.prowerId
+      this.role.PowerId = this.powerId
       this.roleId = await roleApi.add(this.role)
       this.$message({
         message: '添加成功!',
@@ -278,14 +278,14 @@ export default {
       })
       this.$emit('close', true)
     },
-    async loadPrower(prowerId) {
-      const res = await GetEnables(prowerId, this.roleId)
+    async loadPower(powerId) {
+      const res = await GetEnables(powerId, this.roleId)
       if (res == null) {
-        this.prowers = []
+        this.powers = []
         this.selectKeys = []
         return
       }
-      this.prowers = res.Prowers
+      this.powers = res.Powers
       this.selectKeys = res.Selected
     },
     async reset() {
@@ -293,18 +293,18 @@ export default {
         this.role = {
           IsAdmin: false
         }
-        this.prowerId = []
+        this.powerId = []
         this.chioseKeys = []
         this.source = {}
-        this.$refs.prowerTree.setCheckedKeys([], false)
+        this.$refs.powerTree.setCheckedKeys([], false)
       } else {
         const res = await roleApi.get(this.roleId)
         this.role = res
         this.source = res
-        this.prowerId = res.ProwerId
-        this.chioseKeys = res.ProwerId
+        this.powerId = res.PowerId
+        this.chioseKeys = res.PowerId
         if (!res.IsAdmin) {
-          this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
+          this.$refs.powerTree.setCheckedKeys(this.chioseKeys, false)
         }
       }
     },
@@ -316,15 +316,15 @@ export default {
         this.role = {
           IsAdmin: false
         }
-        this.prowerId = []
+        this.powerId = []
         this.chioseKeys = []
-        this.$refs.prowerTree.setCheckedKeys([], false)
+        this.$refs.powerTree.setCheckedKeys([], false)
       } else {
         this.role = this.source
-        this.prowerId = this.role.ProwerId
-        this.chioseKeys = this.role.ProwerId
+        this.powerId = this.role.PowerId
+        this.chioseKeys = this.role.PowerId
         if (!this.role.IsAdmin) {
-          this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
+          this.$refs.powerTree.setCheckedKeys(this.chioseKeys, false)
         }
       }
     }

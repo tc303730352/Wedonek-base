@@ -32,7 +32,7 @@ namespace Basic.HrService.RpcEvent
         }
         public PowerTree[] GetPowerTree ( GetPowerTree obj )
         {
-            return this._Service.GetPowerTree(obj.SubSystemId, obj.IsEnable);
+            return this._Service.GetPowerTree(obj.SubSystemId, obj.Param);
         }
         public PowerSubSystem[] GetPowerTreeBySystem ( GetPowerTreeBySystem obj )
         {

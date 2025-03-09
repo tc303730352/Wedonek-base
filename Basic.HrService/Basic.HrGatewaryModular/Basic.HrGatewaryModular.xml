@@ -1051,12 +1051,12 @@
             <param name="id">权限ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetPowerTree(System.Int64,System.Nullable{System.Boolean})">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetPowerTree(System.Int64,Basic.HrRemoteModel.Power.Model.PowerGetParam)">
             <summary>
             获取目录权限树
             </summary>
             <param name="subSystemId">子级系统ID</param>
-            <param name="isEnable">是否启用</param>
+            <param name="param">查询参数</param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetTrees(Basic.HrRemoteModel.Power.Model.PowerGetParam)">
@@ -1516,6 +1516,11 @@
         <member name="P:Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree.SubSystemId">
             <summary>
             子级系统ID
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree.PowerType">
+            <summary>
+            权限类型    
             </summary>
         </member>
         <member name="P:Basic.HrGatewaryModular.Model.Power.UI_GetPowerTree.IsEnable">

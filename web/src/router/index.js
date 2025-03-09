@@ -101,10 +101,10 @@ export const asyncRoutes = [
 ]
 
 const createRouter = (routers) => {
-  if (defRoute.length == 0) {
+  if (defRoute.length === 0) {
     initDefRoute()
   }
-  if (routers != null && routers.length != 0) {
+  if (routers != null && routers.length !== 0) {
     const list = [].concat(defRoute)
     mergeRoute(list, routers)
     return new Router({
@@ -128,7 +128,7 @@ export function resetRouter() {
   router.matcher = newRouter.matcher // reset router
 }
 function initDefRoute() {
-  if (defLoadRoute.length == 0) {
+  if (defLoadRoute.length === 0) {
     defRoute.push(...constantRoutes)
   } else {
     const routes = [].concat(constantRoutes)
@@ -143,7 +143,7 @@ function initDefRoute() {
 }
 function mergeRoute(source, to) {
   to.forEach(c => {
-    const route = source.find(a => a.path == c.path)
+    const route = source.find(a => a.path === c.path)
     if (route == null) {
       source.push(c)
     } else if (c.Children != null && c.Children.length > 0) {
@@ -179,9 +179,9 @@ export const formatDir = (dir, level) => {
 }
 export const formatRoutes = (routes, level) => {
   return routes.map(c => {
-    if (c.ProwerType == 1) {
+    if (c.PowerType === 1) {
       return formatDir(c, level)
-    } else if (c.ProwerType == 0 && level == 0) {
+    } else if (c.PowerType === 0 && level === 0) {
       return formatDir({
         Id: 'dir_' + c.Id,
         Children: [c],
@@ -213,11 +213,11 @@ export const formatPage = (page, level) => {
   if (page.PageParam != null) {
     route.params = {}
     for (const i in page.PageParam) {
-      if (i == 'keepAlive') {
+      if (i === 'keepAlive') {
         route.meta.keepAlive = page.PageParam.keepAlive
-      } else if (i == 'affix') {
+      } else if (i === 'affix') {
         route.meta.affix = page.PageParam.affix
-      } else if (i == 'hidden') {
+      } else if (i === 'hidden') {
         route.hidden = page.PageParam.hidden
       } else {
         route.params[i] = page.PageParam[i]

@@ -1,25 +1,25 @@
 import request from '@/utils/request'
 
 function formatRequestUri(name) {
-  return 'hr/OperatePrower/' + name
+  return 'hr/OperatePower/' + name
 }
-export function GetEnables(prowerId, roleId) {
+export function GetEnables(powerId, roleId) {
   return request({
     url: formatRequestUri('GetEnables'),
     method: 'get',
     params: {
-      prowerId,
+      powerId,
       roleId
     }
   })
 }
 
-export function Gets(prowerId) {
+export function Gets(powerId) {
   return request({
     url: formatRequestUri('Gets'),
     method: 'get',
     params: {
-      prowerId
+      powerId
     }
   })
 }

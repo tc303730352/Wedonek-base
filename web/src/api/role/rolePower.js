@@ -1,15 +1,15 @@
 import request from '@/utils/request'
 
 function formatRequestUri(name) {
-  return 'hr/RolePrower/' + name
+  return 'hr/RolePower/' + name
 }
-export function Set(roleId, prowerId, opId) {
+export function Set(roleId, powerId, opId) {
   return request({
     url: formatRequestUri('Set'),
     method: 'post',
     data: {
       RoleId: roleId,
-      ProwerId: prowerId,
+      PowerId: powerId,
       OperateId: opId
     }
   })

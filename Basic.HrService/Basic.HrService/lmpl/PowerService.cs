@@ -35,9 +35,9 @@ namespace Basic.HrService.lmpl
             DBPowerList db = this._Power.Get(id);
             return db.ConvertMap<DBPowerList, PowerData>();
         }
-        public PowerTree[] GetPowerTree ( long subSysId, bool? isEnable )
+        public PowerTree[] GetPowerTree ( long subSysId, PowerGetParam param )
         {
-            PowerDto[] dtos = this._Power.GetDtos(subSysId, isEnable);
+            PowerDto[] dtos = this._Power.GetDtos(subSysId, param);
             return dtos.Convert(c => c.ParentId == 0, c =>
             {
                 PowerTree tree = new PowerTree
@@ -135,19 +135,23 @@ namespace Basic.HrService.lmpl
 
         private void _InitChildren ( PowerTree tree, PowerDto[] powers )
         {
-            tree.Children = powers.Convert(c => c.ParentId == tree.Id, c =>
+            PowerDto[] list = powers.FindAll(c => c.ParentId == tree.Id);
+            if ( !list.IsNull() )
             {
-                PowerTree tree = new PowerTree
+                tree.Children = list.ConvertAll(c =>
                 {
-                    Id = c.Id,
-                    Icon = c.Icon,
-                    Description = c.Description,
-                    Name = c.Name,
-                    PowerType = c.PowerType
-                };
-                this._InitChildren(tree, powers);
-                return tree;
-            });
+                    PowerTree tree = new PowerTree
+                    {
+                        Id = c.Id,
+                        Icon = c.Icon,
+                        Description = c.Description,
+                        Name = c.Name,
+                        PowerType = c.PowerType
+                    };
+                    this._InitChildren(tree, powers);
+                    return tree;
+                });
+            }
         }
     }
 }

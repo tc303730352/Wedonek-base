@@ -8,89 +8,39 @@
   >
     <el-card>
       <span slot="header">基本信息</span>
-      <el-form ref="roleEdit" :model="role" :rules="rules">
-        <el-form-item label="角色名" prop="RoleName">
-          <el-input
-            v-model="role.RoleName"
-            maxlength="100"
-            placeholder="角色名"
-          />
+      <el-form ref="powerEdit" :model="power" :rules="rules">
+        <el-form-item label="菜单名" prop="Name">
+          <el-input v-model="power.Name" maxlength="100" placeholder="菜单名" />
         </el-form-item>
-        <el-form-item label="是否为管理员" prop="IsAdmin">
-          <el-switch
-            v-model="role.IsAdmin"
-            :inactive-value="false"
+        <el-form-item label="父级目录" prop="ParentId">
+          <el-cascader
+            v-model="power.ParentId"
+            :options="menus"
+            placeholder="父级目录"
+            :props="props"
+            :clearable="true"
             class="el-input"
-            :active-value="true"
           />
         </el-form-item>
-        <el-form-item label="备注" prop="Remark">
+        <el-form-item label="菜单类型" prop="PowerType">
+          <el-select
+            v-model="power.PowerType"
+            placeholder="菜单类型"
+          >
+            <el-option :value="null" label="全部">全部</el-option>
+            <el-option :value="1" label="目录">目录</el-option>
+            <el-option :value="0" label="菜单">菜单</el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" prop="Description">
           <el-input
-            v-model="role.Remark"
+            v-model="power.Description"
             type="textarea"
             maxlength="255"
             placeholder="备注"
           />
         </el-form-item>
       </el-form>
-    </el-card>
-    <el-card v-if="!role.IsAdmin" style="margin-top: 10px">
-      <span slot="header">权限目录</span>
-      <el-row style="width: 100%;">
-        <el-col :span="8">
-          <div style="width: 100%; height: 350px; overflow-y: auto;">
-            <el-tree
-              ref="prowerTree"
-              :data="trees"
-              :default-expand-all="true"
-              :highlight-current="true"
-              :expand-on-click-node="false"
-              style="width: 100%"
-              :show-checkbox="true"
-              :default-checked-keys="chioseKeys"
-              :check-strictly="false"
-              node-key="key"
-              @node-click="chiosePrower"
-              @check-change="checkChange"
-            >
-              <span slot-scope="{ node, data }" class="slot-t-node">
-                <template>
-                  <template v-if="data.style">
-                    <i
-                      v-if="data.style.icon.indexOf('el-') == 0"
-                      :class="data.style.icon"
-                      :style="{ color: data.style.color, marginRight: '5px' }"
-                    />
-                    <svg-icon
-                      v-else
-                      :icon-class="data.style.icon"
-                      :style="{ color: data.style.color, marginRight: '5px' }"
-                    />
-                  </template>
-                  <span>{{ node.label }}</span>
-                </template>
-              </span>
-            </el-tree>
-          </div>
-        </el-col>
-        <el-col :span="16">
-          <el-card>
-            <span slot="header">{{ pTitle }}</span>
-            <div style="width: 100%; height: 350px; overflow-y: auto;">
-              <w-table
-                :data="prowers"
-                :select-keys="selectKeys"
-                row-key="Id"
-                :is-select="checkIsChiose()"
-                :is-multiple="true"
-                :columns="columns"
-                :is-paging="false"
-                @selected="saveOperPrower"
-              />
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
     </el-card>
     <div slot="footer">
       <el-button type="primary" @click="save">保存</el-button>
@@ -100,13 +50,24 @@
 </template>
 
 <script>
-import * as prowerApi from '@/api/role/prower'
+import * as powerApi from '@/api/role/power'
+import {
+  HrEnumDic
+} from '@/config/publicDic'
 export default {
   components: {},
   props: {
     visible: {
       type: Boolean,
       default: false
+    },
+    subSystemId: {
+      type: String,
+      default: null
+    },
+    parentId: {
+      type: String,
+      default: null
     },
     id: {
       type: String,
@@ -115,106 +76,132 @@ export default {
   },
   data() {
     return {
-      title: '新增角色',
+      HrEnumDic,
+      title: '新增菜单',
+      powerId: null,
+      menus: [],
       rules: {
-        RoleName: [
+        Name: [
           {
             required: true,
-            message: '角色名不能为空！',
+            message: '菜单名不能为空！',
             trigger: 'blur'
           }
         ]
       },
+      props: {
+        multiple: false,
+        emitPath: false,
+        checkStrictly: true,
+        value: 'Id',
+        label: 'Name',
+        children: 'Children'
+      },
       power: {
-        ProwerCode: null,
-        SubSystemId: null
+        ParentId: null,
+        Name: null,
+        Description: null,
+        Icon: null,
+        PowerType: null,
+        RoutePath: null,
+        RouteName: null,
+        PagePath: null,
+        PageParam: {},
+        IsEnable: false
       }
     }
   },
-  computed: {
-    comId() {
-      return this.$store.getters.curComId
-    }
-  },
+  computed: {},
   watch: {
     visible: {
       handler(val) {
         if (val) {
+          this.loadPower()
           this.reset()
         }
       },
       immediate: true
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     save() {
       const that = this
-      this.$refs['roleEdit'].validate((valid) => {
+      this.$refs['powerEdit'].validate((valid) => {
         if (valid) {
           if (that.roleId) {
-            that.setRole()
+            that.setPower()
           } else {
-            that.addRole()
+            that.addPower()
           }
         } else {
           return false
         }
       })
     },
-    async setRole() {
-      this.role.ProwerId = this.prowerId
-      await roleApi.set(this.roleId, this.role)
+    async setPower() {
+      await powerApi.Set(this.id, this.power)
       this.$message({
         message: '更新成功!',
         type: 'success'
       })
       this.$emit('close', true)
     },
-    async addRole() {
-      this.role.ProwerId = this.prowerId
-      this.roleId = await roleApi.add(this.role)
+    async addPower() {
+      this.power.SubSystemId = this.subSystemId
+      this.powerId = await powerApi.Add(this.power)
       this.$message({
         message: '添加成功!',
         type: 'success'
       })
       this.$emit('close', true)
     },
+    async loadPower() {
+      const list = await powerApi.GetTree({
+        SubSystemId: this.subSystemId,
+        PowerType: 1
+      })
+      this.menus = list
+    },
     async reset() {
       if (this.id == null) {
-        this.role = {
-          IsAdmin: false
+        this.power = {
+          ParentId: null,
+          Name: null,
+          Description: null,
+          Icon: null,
+          PowerType: null,
+          RoutePath: null,
+          RouteName: null,
+          PagePath: null,
+          PageParam: {},
+          IsEnable: false
         }
       } else {
-        const res = await roleApi.get(this.roleId)
-        this.role = res
+        const res = await powerApi.Get(this.id)
+        this.power = res
         this.source = res
-        this.prowerId = res.ProwerId
-        this.chioseKeys = res.ProwerId
-        if (!res.IsAdmin) {
-          this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
-        }
       }
     },
     closeForm() {
       this.$emit('close', false)
     },
     resetForm() {
-      if (this.roleId == null) {
-        this.role = {
-          IsAdmin: false
+      if (this.id == null) {
+        this.power = {
+          ParentId: null,
+          Name: null,
+          Description: null,
+          Icon: null,
+          PowerType: null,
+          RoutePath: null,
+          RouteName: null,
+          PagePath: null,
+          PageParam: {},
+          IsEnable: false
         }
-        this.prowerId = []
-        this.chioseKeys = []
-        this.$refs.prowerTree.setCheckedKeys([], false)
       } else {
-        this.role = this.source
-        this.prowerId = this.role.ProwerId
-        this.chioseKeys = this.role.ProwerId
-        if (!this.role.IsAdmin) {
-          this.$refs.prowerTree.setCheckedKeys(this.chioseKeys, false)
-        }
+        this.power = this.source
       }
     }
   }

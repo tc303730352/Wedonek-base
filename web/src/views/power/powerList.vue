@@ -1,126 +1,137 @@
 <template>
-  <leftRightSplit :left-span="4">
-    <el-card slot="left">
-      <div slot="header">
-        <span>菜单目录</span>
-      </div>
-      <el-tree
-        ref="menus"
-        :data="menus"
-        :default-expand-all="true"
-        :highlight-current="true"
-        :expand-on-click-node="false"
-        :current-node-key="chioseKey"
-        style="width: 100%"
-        :check-strictly="false"
-        node-key="key"
-        @node-click="chioseMenu"
-      >
-        <span slot-scope="{ node, data }" class="slot-t-node">
-          <template>
-            <template v-if="data.style">
-              <i
-                v-if="data.style.icon.indexOf('el-') == 0"
-                :class="data.style.icon"
-                :style="{ color: data.style.color, marginRight: '5px' }"
-              />
-              <svg-icon
-                v-else
-                :icon-class="data.style.icon"
-                :style="{ color: data.style.color, marginRight: '5px' }"
-              />
+  <div>
+    <leftRightSplit :left-span="4">
+      <el-card slot="left">
+        <div slot="header">
+          <span>菜单目录</span>
+        </div>
+        <el-tree
+          ref="menus"
+          :data="menus"
+          :default-expand-all="true"
+          :highlight-current="true"
+          :expand-on-click-node="false"
+          :current-node-key="chioseKey"
+          style="width: 100%"
+          :check-strictly="false"
+          node-key="key"
+          @node-click="chioseMenu"
+        >
+          <span slot-scope="{ node, data }" class="slot-t-node">
+            <template>
+              <template v-if="data.style">
+                <i
+                  v-if="data.style.icon.indexOf('el-') == 0"
+                  :class="data.style.icon"
+                  :style="{ color: data.style.color, marginRight: '5px' }"
+                />
+                <svg-icon
+                  v-else
+                  :icon-class="data.style.icon"
+                  :style="{ color: data.style.color, marginRight: '5px' }"
+                />
+              </template>
+              <span>{{ node.label }}</span>
             </template>
-            <span>{{ node.label }}</span>
+          </span>
+        </el-tree>
+      </el-card>
+      <el-card slot="right">
+        <div slot="header">
+          <span>{{ title }}</span>
+        </div>
+        <el-row>
+          <el-form :inline="true" :model="queryParam">
+            <el-form-item label="关键字">
+              <el-input
+                v-model="queryParam.QueryKey"
+                placeholder="菜单名"
+                @change="loadPower"
+              />
+            </el-form-item>
+            <el-form-item label="启用状态">
+              <el-select
+                v-model="queryParam.IsEnable"
+                placeholder="启用状态"
+                @change="loadPower"
+              >
+                <el-option :value="null">全部</el-option>
+                <el-option :value="true">启用</el-option>
+                <el-option :value="false">未启用</el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="菜单类型">
+              <el-select
+                v-model="queryParam.PowerType"
+                placeholder="菜单类型"
+                :multiple="true"
+                @change="loadPower"
+              >
+                <el-option :value="null" label="全部">全部</el-option>
+                <el-option :value="1" label="目录">目录</el-option>
+                <el-option :value="0" label="菜单">菜单</el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="success" @click="addPower">添加菜单</el-button>
+              <el-button @click="reset">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-row>
+        <w-table
+          :data="dataList"
+          :columns="columns"
+          :is-paging="false"
+          row-key="Id"
+        >
+          <template slot="Icon" slot-scope="e">
+            <i :class="e.row.Icon" />
           </template>
-        </span>
-      </el-tree>
-    </el-card>
-    <el-card slot="right">
-      <div slot="header">
-        <span>{{ title }}</span>
-      </div>
-      <el-row>
-        <el-form :inline="true" :model="queryParam">
-          <el-form-item label="关键字">
-            <el-input
-              v-model="queryParam.QueryKey"
-              placeholder="菜单名"
-              @change="loadPower"
+          <template slot="IsEnable" slot-scope="e">
+            <el-switch
+              v-model="e.row.IsEnable"
+              active-text="启用"
+              inactive-text="停用"
+              @change="setIsEnable(e.row)"
             />
-          </el-form-item>
-          <el-form-item label="启用状态">
-            <el-select
-              v-model="queryParam.IsEnable"
-              placeholder="启用状态"
-              @change="loadPower"
-            >
-              <el-option :value="null">全部</el-option>
-              <el-option :value="true">启用</el-option>
-              <el-option :value="false">未启用</el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <enumItem
-              v-model="queryParam.ProwerType"
-              :dic-key="HrEnumDic.hrProwerType"
-              placeholder="权限类型"
-              :multiple="true"
-              @change="loadPower"
-            />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="success" @click="addPower">添加员工</el-button>
-            <el-button @click="reset">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </el-row>
-      <w-table
-        :data="dataList"
-        :columns="columns"
-        :is-paging="false"
-        row-key="Id"
-      >
-        <template slot="Icon" slot-scope="e">
-          <i :class="e.row.Icon" />
-        </template>
-        <template slot="IsEnable" slot-scope="e">
-          <el-switch
-            v-model="e.row.IsEnable"
-            active-text="启用"
-            inactive-text="停用"
-            @change="setIsEnable(e.row)"
-          />
-        </template>
-        <template slot="Sort" slot-scope="e">
-          <el-input-number v-model="e.row.Sort" style="width: 150px;" placeholder="排序位" @change="setPowerSort(e.row)" />
-        </template>
-        <template slot="ProwerType" slot-scope="e">
-          <span v-if="e.row.ProwerType == 0">菜单</span>
-          <span v-else-if="e.row.ProwerType == 1">目录</span>
-        </template>
-      </w-table>
-    </el-card>
-  </leftRightSplit>
+          </template>
+          <template slot="Sort" slot-scope="e">
+            <el-input-number v-model="e.row.Sort" style="width: 150px;" placeholder="排序位" @change="setPowerSort(e.row)" />
+          </template>
+          <template slot="PowerType" slot-scope="e">
+            <span v-if="e.row.PowerType == 0">菜单</span>
+            <span v-else-if="e.row.PowerType == 1">目录</span>
+          </template>
+        </w-table>
+      </el-card>
+    </leftRightSplit>
+    <editPower :id="id" :visible="visible" :parent-id="queryParam.ParentId" :sub-system-id="queryParam.SubSystemId" @close="visible=false" />
+  </div>
 </template>
 
 <script>
-import { GetTrees, GetProwerTrees, SetSort } from '@/api/role/prower'
+import { GetTrees, GetPowerTrees, SetSort } from '@/api/role/power'
+import editPower from './components/editPower.vue'
 import {
   HrEnumDic
 } from '@/config/publicDic'
 export default {
-  components: {},
+  components: {
+    editPower
+  },
   data() {
     return {
       HrEnumDic,
       title: '新增角色',
       menus: [],
       dataList: null,
+      visible: false,
+      id: null,
       queryParam: {
         SubSystemId: null,
         QueryKey: null,
         ParentId: null,
-        ProwerType: null,
+        PowerType: null,
         IsEnable: null
       },
       paging: {
@@ -146,10 +157,10 @@ export default {
         width: 200
       },
       {
-        key: 'ProwerType',
+        key: 'PowerType',
         title: '权限类型',
         align: 'center',
-        slotName: 'ProwerType',
+        slotName: 'PowerType',
         width: 80
       },
       {
@@ -186,16 +197,14 @@ export default {
     }
   },
   computed: {
-    comId() {
-      return this.$store.getters.curComId
-    }
   },
   mounted() {
     this.loadTrees()
   },
   methods: {
     addPower() {
-
+      this.id = null
+      this.visible = true
     },
     async setPowerSort(row) {
       await SetSort(row.Id, row.Sort)
@@ -208,7 +217,7 @@ export default {
       this.queryParam.QueryKey = null
       this.queryParam.IsShowAll = true
       this.queryParam.IsEnable = true
-      this.queryParam.ProwerType = null
+      this.queryParam.PowerType = null
       this.loadPower()
     },
     chioseMenu(e) {
@@ -224,12 +233,12 @@ export default {
       this.loadPower()
     },
     async loadPower() {
-      this.dataList = await GetProwerTrees(this.queryParam)
+      this.dataList = await GetPowerTrees(this.queryParam)
       this.maxSort = this.dataList.Max('Sort')
     },
     async loadTrees() {
       const list = await GetTrees({
-        ProwerType: 1
+        PowerType: 1
       })
       const subSys = list[0]
       this.chioseKey = subSys.SubSysId
@@ -245,27 +254,27 @@ export default {
             color: '#f56c6c'
           }
         }
-        t.children = this.getProwers(c.Prowers, c.SubSysId)
+        t.children = this.getPowers(c.Powers, c.SubSysId)
         return t
       })
       this.loadPower()
     },
-    getProwers(list, sysId) {
+    getPowers(list, sysId) {
       return list.map((c) => {
         const t = {
           key: c.Id,
-          type: c.ProwerType,
+          type: c.PowerType,
           label: c.Name,
           sysId: sysId
         }
-        if (c.ProwerType === 1) {
+        if (c.PowerType === 1) {
           t.style = {
             icon: 'el-icon-folder',
             color: '#409eff'
           }
         }
         if (c.Children && c.Children.length !== 0) {
-          t.children = this.getProwers(c.Children, sysId)
+          t.children = this.getPowers(c.Children, sysId)
         }
         return t
       })

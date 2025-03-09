@@ -14,10 +14,9 @@ namespace Basic.HrRemoteModel.Power
         /// 子级系统ID
         /// </summary>
         public long SubSystemId { get; set; }
-
         /// <summary>
-        /// 是否启用
+        /// 查询参数
         /// </summary>
-        public bool? IsEnable { get; set; }
+        public PowerGetParam Param { get; set; }
     }
 }

@@ -42,7 +42,11 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns></returns>
         public PowerTree[] GetTree ( [NullValidate("hr.power.param.null")] UI_GetPowerTree param )
         {
-            return this._Service.GetPowerTree(param.SubSystemId, param.IsEnable);
+            return this._Service.GetPowerTree(param.SubSystemId, new PowerGetParam
+            {
+                IsEnable = param.IsEnable,
+                PowerType = param.PowerType
+            });
         }
 
         /// <summary>

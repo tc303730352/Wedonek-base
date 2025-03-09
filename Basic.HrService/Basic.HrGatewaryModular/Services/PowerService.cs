@@ -29,12 +29,12 @@ namespace Basic.HrGatewaryModular.Services
                 Query = query
             }.Send();
         }
-        public PowerTree[] GetPowerTree ( long subSystemId, bool? isEnable )
+        public PowerTree[] GetPowerTree ( long subSystemId, PowerGetParam param )
         {
             return new GetPowerTree
             {
                 SubSystemId = subSystemId,
-                IsEnable = isEnable,
+                Param = param
             }.Send();
         }
 

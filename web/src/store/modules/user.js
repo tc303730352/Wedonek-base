@@ -47,19 +47,19 @@ const mutations = {
     state.subSystem = data.SubSystem
     state.routes = {}
     data.SubSystem.forEach(a => {
-      state.routes[a.Id] = formatRoutes(data.Prower[a.Id], 0)
+      state.routes[a.Id] = formatRoutes(data.Power[a.Id], 0)
       state.home[a.Id] = a.Home
       state.loadRoute[a.Id] = a.LoginRouteName
     })
     state.company = data.Company,
-      state.datum = {
-        empId: data.Datum.EmpId,
-        name: data.Datum.EmpName,
-        head: data.Datum.UserHead ?? '/image/defhead.png',
-        unitId: data.Datum.UnitId,
-        deptId: data.Datum.DeptId,
-        companyId: data.Datum.CompanyId
-      }
+    state.datum = {
+      empId: data.Datum.EmpId,
+      name: data.Datum.EmpName,
+      head: data.Datum.UserHead ?? '/image/defhead.png',
+      unitId: data.Datum.UnitId,
+      deptId: data.Datum.DeptId,
+      companyId: data.Datum.CompanyId
+    }
   }
 }
 async function checkLoginState() {

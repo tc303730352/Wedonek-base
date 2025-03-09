@@ -8,7 +8,7 @@ namespace Basic.HrService.Interface
     {
         bool SetSort ( long id, int sort );
         PowerDataTree[] GetTrees ( PowerQuery query );
-        PowerTree[] GetPowerTree ( long subSysId, bool? isEnable );
+        PowerTree[] GetPowerTree ( long subSysId, PowerGetParam param );
         long Add ( PowerAdd add );
         PowerData Get ( long id );
         PowerSubSystem[] GetTrees ( PowerGetParam param );

@@ -88,17 +88,13 @@ namespace Basic.HrCollect.Impl
             } while ( pid.Count > 0 );
             return list.ToArray();
         }
-        public PowerDto[] GetDtos ( long[] subSystemId, PowerGetParam getParam )
+        public PowerDto[] GetDtos ( long[] subSystemId, PowerGetParam param )
         {
-            return this._Power.Gets<PowerDto>(subSystemId, getParam).OrderBy(a => a.Sort).ToArray();
+            return this._Power.Gets<PowerDto>(subSystemId, param).OrderBy(a => a.Sort).ToArray();
         }
-        public PowerDto[] GetDtos ( long subSystemId, bool? isEnable )
+        public PowerDto[] GetDtos ( long subSystemId, PowerGetParam param )
         {
-            if ( isEnable.HasValue )
-            {
-                return this._Power.Gets<PowerDto>(a => a.SubSystemId == subSystemId && a.IsEnable == isEnable.Value).OrderBy(a => a.Sort).ToArray();
-            }
-            return this._Power.Gets<PowerDto>(a => a.SubSystemId == subSystemId).OrderBy(a => a.Sort).ToArray();
+            return this._Power.Gets<PowerDto>(subSystemId, param).OrderBy(a => a.Sort).ToArray();
         }
         public bool Set ( DBPowerList sour, PowerSet set )
         {

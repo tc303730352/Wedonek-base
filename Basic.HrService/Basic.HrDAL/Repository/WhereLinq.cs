@@ -33,6 +33,19 @@ namespace Basic.HrDAL.Repository
             }
             return where;
         }
+        public static Expression<Func<DBPowerList, bool>> ToWhere ( this PowerGetParam query, long subSysId )
+        {
+            ExpressionStarter<DBPowerList> where = PredicateBuilder.New<DBPowerList>(a => a.SubSystemId == subSysId);
+            if ( query.PowerType.HasValue )
+            {
+                where = where.And(a => a.PowerType == query.PowerType.Value);
+            }
+            if ( query.IsEnable.HasValue )
+            {
+                where = where.And(a => a.IsEnable == query.IsEnable.Value);
+            }
+            return where;
+        }
         public static Expression<Func<DBDept, bool>> ToWhere ( this DeptQueryParam query, IRepository<DBDept> repository )
         {
             ExpressionStarter<DBDept> where = PredicateBuilder.New<DBDept>(a => a.CompanyId == query.CompanyId);

@@ -85,7 +85,10 @@ namespace Basic.HrDAL.Repository
         {
             return this._BasicDAL.Gets<T>(param.ToWhere(subSysId));
         }
-
+        public T[] Gets<T> ( long subSysId, PowerGetParam param ) where T : class, new()
+        {
+            return this._BasicDAL.Gets<T>(param.ToWhere(subSysId));
+        }
         public void SetSort ( DBPowerList db, int sort )
         {
             if ( !this._BasicDAL.Update(a => a.Sort == sort, a => a.Id == db.Id) )

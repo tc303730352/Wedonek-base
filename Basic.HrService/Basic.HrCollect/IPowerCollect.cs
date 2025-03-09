@@ -12,7 +12,7 @@ namespace Basic.HrCollect
         bool Set ( DBPowerList sour, PowerSet set );
         long Add ( PowerAdd add );
         PowerDto[] GetDtos ( long[] subSystemId, PowerGetParam getParam );
-        PowerDto[] GetDtos ( long subSystemId, bool? isEnable );
+        PowerDto[] GetDtos ( long subSystemId, PowerGetParam param );
         PowerDto[] GetDtos ( long subSystemId );
         PowerBasic[] Gets ( long[] ids );
         PowerRouteDto[] GetEnables ();

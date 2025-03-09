@@ -29,9 +29,9 @@ namespace Basic.HrGatewaryModular.Interface
         /// 获取目录权限树
         /// </summary>
         /// <param name="subSystemId">子级系统ID</param>
-        /// <param name="isEnable">是否启用</param>
+        /// <param name="param">查询参数</param>
         /// <returns></returns>
-        PowerTree[] GetPowerTree ( long subSystemId, bool? isEnable );
+        PowerTree[] GetPowerTree ( long subSystemId, PowerGetParam param );
 
         /// <summary>
         /// 获取目录权限树含子系统
