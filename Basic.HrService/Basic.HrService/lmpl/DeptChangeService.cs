@@ -200,7 +200,8 @@ namespace Basic.HrService.lmpl
                 DeptId = new long[]
                 {
                     arg.DeptId
-                }
+                },
+                IsEntry = true,
             });
             long unitId = this._Dept.GetUnitId(arg.DeptId);
             string name = this._Dept.GetDeptName(unitId);

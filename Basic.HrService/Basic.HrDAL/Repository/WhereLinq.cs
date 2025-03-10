@@ -216,7 +216,7 @@ namespace Basic.HrDAL.Repository
             {
                 where = where.And(a => query.DeptId.Contains(a.DeptId));
             }
-            else
+            else if ( !query.DeptId.IsNull() )
             {
                 where = where.And(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && query.DeptId.Contains(b.DeptId) && b.EmpId == a.EmpId).Any());
             }
