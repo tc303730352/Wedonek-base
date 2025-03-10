@@ -18,16 +18,17 @@ namespace Base.FileService.lmpl
 
         private readonly IFileConfig _Config;
 
-        public FileService (IFileCollect service,
+        public FileService ( IFileCollect service,
             IUserFileCollect userFile,
-            IFileConfig config)
+            IFileConfig config )
         {
             this._UserFile = userFile;
             this._Service = service;
             this._Config = config;
         }
 
-        public UserFile SaveFile (IUpFile file, UpArg arg)
+
+        public UserFile SaveFile ( IUpFile file, UpArg arg )
         {
             FileDatum datum = arg.Dir.SaveFile(file);
             UserFileAdd add = new UserFileAdd
@@ -53,10 +54,10 @@ namespace Base.FileService.lmpl
                 FileName = datum.FileName,
             };
         }
-        private long _RegFile (FileDatum add)
+        private long _RegFile ( FileDatum add )
         {
             long fileId = this._Service.FindFileId(add.FileMd5);
-            if (fileId == 0)
+            if ( fileId == 0 )
             {
                 return this._Service.Add(add);
             }

@@ -3,6 +3,7 @@ using Base.FileModel.DB;
 using Base.FileModel.UserFile;
 using Base.FileRemoteModel;
 using Base.FileService.Interface;
+using Base.FileService.Model.File;
 using WeDonekRpc.Helper;
 using WeDonekRpc.HttpService.Interface;
 
@@ -14,17 +15,22 @@ namespace Base.FileService.Helper
         private static readonly string[] _audioFormat = new string[] { ".mp3", ".wma", ".wav", ".ape", ".flac", ".ogg", ".aac" };
         private static readonly string[] _docFormat = new string[] { ".doc", ".txt", ".docx", ".xlsx", ".xls", ".ppt", ".pptx", ".crv", ",wpf", ".docm", ".dotm", ".potx", ".pptm", ".ppa", ".emf", ".dotx", ".xlw", ".odt", ".pdf", ".rtf", ".xml", ".xlsm", ".xlsb", ".xltx", ".xltm" };
 
-        public static Uri GetFileUri (this DBUserFileList file, IFileConfig config)
+        public static Uri GetFileUri ( this DBUserFileList file, IFileConfig config )
+        {
+            string relativeUri = string.Format("file/user/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);
+            return new Uri(config.LocalUri, relativeUri);
+        }
+        public static Uri GetFileUri ( this FileUIDto file, IFileConfig config )
         {
             string relativeUri = string.Format("file/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);
             return new Uri(config.LocalUri, relativeUri);
         }
-        public static Uri GetFileUri (this UserFileBasic file, IFileConfig config)
+        public static Uri GetFileUri ( this UserFileBasic file, IFileConfig config )
         {
-            string relativeUri = string.Format("file/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);
+            string relativeUri = string.Format("file/user/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);
             return new Uri(config.LocalUri, relativeUri);
         }
-        public static FileDatum SaveFile (this IDirState dir, IUpFile file)
+        public static FileDatum SaveFile ( this IDirState dir, IUpFile file )
         {
             string ext = Path.GetExtension(file.FileName).ToLower();
             FileDatum datum = new FileDatum
@@ -39,27 +45,27 @@ namespace Base.FileService.Helper
                 LocalPath = Path.Combine("file_" + ext.Remove(0, 1), "Zone_" + file.FileMd5.GetZIndex(), file.FileMd5 + ext)
             };
             string path = dir.GetFullPath(datum.LocalPath);
-            if (!File.Exists(path))
+            if ( !File.Exists(path) )
             {
                 _ = file.SaveFile(path);
             }
             return datum;
         }
-        public static FileType GetFileType (this string ext)
+        public static FileType GetFileType ( this string ext )
         {
-            if (PublicDataDic.ImgFormat.Contains(ext))
+            if ( PublicDataDic.ImgFormat.Contains(ext) )
             {
                 return FileType.image;
             }
-            else if (_docFormat.Contains(ext))
+            else if ( _docFormat.Contains(ext) )
             {
                 return FileType.doc;
             }
-            else if (_videoFormat.Contains(ext))
+            else if ( _videoFormat.Contains(ext) )
             {
                 return FileType.video;
             }
-            else if (_audioFormat.Contains(ext))
+            else if ( _audioFormat.Contains(ext) )
             {
                 return FileType.audio;
             }

@@ -1,5 +1,6 @@
 ﻿using Base.FileCollect;
-using Base.FileModel.BaseFile;
+using Base.FileModel.UserFile;
+using Base.FileRemoteModel;
 using Base.FileService.Helper;
 using Base.FileService.Interface;
 using WeDonekRpc.Helper;
@@ -11,32 +12,49 @@ using WeDonekRpc.HttpService.Model;
 
 namespace Base.FileService.VisitEvent
 {
-    internal class FileVisitEvent : IApiServiceEvent
+    internal class UserFileVisitEvent : IApiServiceEvent
     {
-        private readonly IFileCollect _Service;
+        private readonly IUserFileCollect _Service;
         private readonly IFileConfig _Config;
-        private static readonly string[] _FilePower = new string[] { "file.visit.power" };
-        public FileVisitEvent ( IFileCollect service, IFileConfig config )
+
+        public UserFileVisitEvent ( IUserFileCollect service, IFileConfig config )
         {
             this._Config = config;
             this._Service = service;
         }
-        private FileBase _File;
+        private UserFileDto _UserFile;
 
         public void CheckAccredit ( IApiService service, ApiAccreditSet source )
         {
-            service.CheckAccredit(_FilePower);
+            if ( this._UserFile.Power == FilePower.公共 )
+            {
+                return;
+            }
+            service.CheckAccredit();
+            if ( this._UserFile.Power == FilePower.共享 )
+            {
+                return;
+            }
+            else if ( this._UserFile.Power == FilePower.指定权限 && service.UserState.CheckPower(this._UserFile.PowerCode) )
+            {
+                return;
+            }
+            else if ( this._UserFile.UserId == service.UserState.GetValue<long>("EmpId") )
+            {
+                return;
+            }
+            throw new ErrorException("accredit.no.power");
         }
 
         public bool CheckCache ( IApiService service, string etag, string toUpdateTime )
         {
             if ( etag.IsNotNull() )
             {
-                return this._File.Etag == etag;
+                return this._UserFile.Etag == etag;
             }
             else if ( toUpdateTime.IsNotNull() && DateTime.TryParse(toUpdateTime, out DateTime time) )
             {
-                return time == this._File.SaveTime;
+                return time == this._UserFile.SaveTime;
             }
             return false;
         }
@@ -68,14 +86,18 @@ namespace Base.FileService.VisitEvent
             }
             else
             {
-                this._File = this._Service.Get<FileBase>(fileId);
-                service.RequestState.Set("file", this._File);
+                this._UserFile = this._Service.GetFile(fileId);
+                if ( this._UserFile.FileStatus == UserFileStatus.已删除 || this._UserFile.FileStatus == UserFileStatus.停用 )
+                {
+                    throw new ErrorException("file.not.find");
+                }
+                service.RequestState.Set("file", this._UserFile);
             }
         }
 
         public void ReplyEvent ( IApiService service, IResponse response )
         {
-            if ( this._File == null )
+            if ( this._UserFile == null || ( this._UserFile.Power != FilePower.共享 && this._UserFile.Power != FilePower.公共 ) )
             {
                 return;
             }
@@ -90,8 +112,8 @@ namespace Base.FileService.VisitEvent
                         SMaxAge = cache.SMaxAge,
                         MaxAge = cache.MaxAge,
                         MustRevalidate = cache.MustRevalidate,
-                        Etag = this._File.Etag,
-                        LastModified = this._File.SaveTime
+                        Etag = this._UserFile.Etag,
+                        LastModified = this._UserFile.SaveTime
                     };
                 }
                 else

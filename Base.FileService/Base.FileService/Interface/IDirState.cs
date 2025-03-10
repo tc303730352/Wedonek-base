@@ -10,12 +10,12 @@ namespace Base.FileService.Interface
 
         string DirPath { get; }
 
-        bool Distribution (long fileSize);
+        bool Distribution ( long fileSize );
 
-        string GetFullPath (string basePath);
+        string GetFullPath ( string basePath );
 
-        string CombinePath (params string[] path);
+        string CombinePath ( params string[] path );
 
-        void Refresh (PhysicalDirDto state);
+        void Refresh ( PhysicalDirDto state );
     }
 }

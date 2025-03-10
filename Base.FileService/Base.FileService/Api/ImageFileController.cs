@@ -9,7 +9,7 @@ using WeDonekRpc.HttpApiGateway.Interface;
 
 namespace Base.FileService.Api
 {
-    [ApiEventAttr(typeof(FileVisitEvent))]
+    [ApiEventAttr(typeof(UserFileVisitEvent))]
     internal class ImageFileController : ApiController
     {
         private readonly IImageFileService _ImgService;
