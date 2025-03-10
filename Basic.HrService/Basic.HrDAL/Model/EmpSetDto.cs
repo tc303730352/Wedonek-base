@@ -76,5 +76,10 @@ namespace Basic.HrDAL.Model
         /// </summary>
         public string Nation { get; set; }
 
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        public HrUserType UserType { get; set; }
+
     }
 }

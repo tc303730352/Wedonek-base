@@ -14,61 +14,61 @@ namespace Basic.HrDAL.Repository
 {
     internal class EmpDAL : BasicDAL<DBEmpList, long>, IEmpDAL
     {
-        public EmpDAL (IRepository<DBEmpList> basicDAL) : base(basicDAL)
+        public EmpDAL ( IRepository<DBEmpList> basicDAL ) : base(basicDAL)
         {
         }
-        public void SetStatus (long empId, HrEmpStatus status)
+        public void SetStatus ( long empId, HrEmpStatus status )
         {
-            if (!this._BasicDAL.Update(a => a.Status == status, a => a.EmpId == empId))
+            if ( !this._BasicDAL.Update(a => a.Status == status, a => a.EmpId == empId) )
             {
                 throw new ErrorException("hr.emp.update.fail");
             }
         }
-        public EmpSelectItem[] GetSelectItems (SelectGetParam param)
+        public EmpSelectItem[] GetSelectItems ( SelectGetParam param )
         {
             return this._BasicDAL.Gets<EmpSelectItem>(param.ToWhere());
         }
-        public Result[] GetEmps<Result> (EmpGetParam getParam, Expression<Func<DBEmpList, Result>> selector)
+        public Result[] GetEmps<Result> ( EmpGetParam getParam, Expression<Func<DBEmpList, Result>> selector )
         {
             return this._BasicDAL.Gets<Result>(getParam.ToWhere(), selector);
         }
-        public Result[] GetEmps<Result> (EmpGetParam getParam) where Result : class, new()
+        public Result[] GetEmps<Result> ( EmpGetParam getParam ) where Result : class, new()
         {
             return this._BasicDAL.Gets<Result>(getParam.ToWhere());
         }
-        public Result[] Query<Result> (EmpQuery query, IBasicPage paging, out int count) where Result : class
+        public Result[] Query<Result> ( EmpQuery query, IBasicPage paging, out int count ) where Result : class
         {
             paging.InitOrderBy("EmpId", true);
             return this._BasicDAL.Query<Result>(query.ToWhere(), paging, out count);
         }
-        public void CheckPhone (string phone)
+        public void CheckPhone ( string phone )
         {
-            if (this._BasicDAL.IsExist(c => c.Phone == phone))
+            if ( this._BasicDAL.IsExist(c => c.Phone == phone) )
             {
                 throw new ErrorException("hr.emp.phone.repeat");
             }
         }
-        public void CheckEmpNo (string empNo)
+        public void CheckEmpNo ( string empNo )
         {
-            if (this._BasicDAL.IsExist(c => c.EmpNo == empNo))
+            if ( this._BasicDAL.IsExist(c => c.EmpNo == empNo) )
             {
                 throw new ErrorException("hr.emp.no.repeat");
             }
         }
 
-        public void CheckIDCard (string idCard)
+        public void CheckIDCard ( string idCard )
         {
-            if (this._BasicDAL.IsExist(c => c.IDCard == idCard))
+            if ( this._BasicDAL.IsExist(c => c.IDCard == idCard) )
             {
                 throw new ErrorException("hr.emp.idCard.repeat");
             }
         }
-        public void Add (DBEmpList add, string[] title)
+        public void Add ( DBEmpList add, string[] title )
         {
             add.EmpId = IdentityHelper.CreateId();
             add.Status = HrEmpStatus.起草;
             add.RegTime = DateTime.Now;
-            if (title.IsNull())
+            if ( title.IsNull() )
             {
                 this._BasicDAL.Insert(add);
                 return;
@@ -83,25 +83,25 @@ namespace Basic.HrDAL.Repository
                 Id = IdentityHelper.CreateId(),
                 TitleCode = a
             }));
-            if (queue.Submit() < 0)
+            if ( queue.Submit() < 0 )
             {
                 throw new ErrorException("hr.emp.add.fail");
             }
         }
-        public string[] Set (DBEmpList soure, EmpSetDto set, string[] title)
+        public string[] Set ( DBEmpList soure, EmpSetDto set, string[] title )
         {
             long deptId = soure.DeptId;
             string[] cols = soure.Merge(set);
-            if (cols.IsNull() && title.IsNull())
+            if ( cols.IsNull() && title.IsNull() )
             {
                 return cols;
             }
             ISqlQueue<DBEmpList> queue = this._BasicDAL.BeginQueue();
-            if (!cols.IsNull())
+            if ( !cols.IsNull() )
             {
                 queue.Update(soure, cols);
             }
-            if (!title.IsNull())
+            if ( !title.IsNull() )
             {
                 queue.Delete<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
                 queue.Insert<DBEmpTitle>(title.ConvertAll(a => new DBEmpTitle
@@ -114,28 +114,28 @@ namespace Basic.HrDAL.Repository
                     UnitId = set.UnitId
                 }));
             }
-            if (soure.IsOpenAccount && deptId != set.DeptId)
+            if ( soure.IsOpenAccount && deptId != set.DeptId )
             {
                 queue.Delete<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }
             _ = queue.Submit();
             return cols;
         }
-        public void SetEmpPost (long empId, string post)
+        public void SetEmpPost ( long empId, string post )
         {
-            if (!this._BasicDAL.Update(a => a.PostCode == post, a => a.EmpId == empId))
+            if ( !this._BasicDAL.Update(a => a.PostCode == post, a => a.EmpId == empId) )
             {
                 throw new ErrorException("hr.emp.post.update.fail");
             }
         }
-        public void SetUserHead (long empId, string head)
+        public void SetUserHead ( long empId, string head )
         {
-            if (!this._BasicDAL.Update(a => a.UserHead == head, a => a.EmpId == empId))
+            if ( !this._BasicDAL.Update(a => a.UserHead == head, a => a.EmpId == empId) )
             {
                 throw new ErrorException("hr.emp.head.update.fail");
             }
         }
-        public Dictionary<long, int> GetDeptEmpNum (long[] deptId)
+        public Dictionary<long, int> GetDeptEmpNum ( long[] deptId )
         {
             return this._BasicDAL.GroupBy(a => deptId.Contains(a.DeptId), a => a.DeptId, a => new
             {
@@ -143,35 +143,35 @@ namespace Basic.HrDAL.Repository
                 num = SqlFunc.AggregateCount(a.DeptId)
             }).ToDictionary(a => a.DeptId, a => a.num);
         }
-        public void SetPwd (long empId, string pwd)
+        public void SetPwd ( long empId, string pwd )
         {
-            if (!this._BasicDAL.Update(a => a.EmpPwd == pwd, a => a.EmpId == empId))
+            if ( !this._BasicDAL.Update(a => a.EmpPwd == pwd, a => a.EmpId == empId) )
             {
                 throw new ErrorException("hr.emp.pwd.update.fail");
             }
         }
-        public void CheckEmail (string email)
+        public void CheckEmail ( string email )
         {
-            if (this._BasicDAL.IsExist(c => c.Email == email))
+            if ( this._BasicDAL.IsExist(c => c.Email == email) )
             {
                 throw new ErrorException("hr.emp.email.repeat");
             }
         }
 
-        public string[] SetEmpEntry (DBEmpList soure, EmpEntry datum)
+        public string[] SetEmpEntry ( DBEmpList soure, EmpEntry datum )
         {
             long deptId = soure.DeptId;
             string[] cols = soure.Merge(datum);
-            if (cols.IsNull() && datum.Title.IsNull())
+            if ( cols.IsNull() && datum.Title.IsNull() )
             {
                 return cols;
             }
             ISqlQueue<DBEmpList> queue = this._BasicDAL.BeginQueue();
-            if (!cols.IsNull())
+            if ( !cols.IsNull() )
             {
                 queue.Update(soure, cols);
             }
-            if (!datum.Title.IsNull())
+            if ( !datum.Title.IsNull() )
             {
                 queue.Delete<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
                 queue.Insert<DBEmpTitle>(datum.Title.ConvertAll(a => new DBEmpTitle
@@ -184,7 +184,7 @@ namespace Basic.HrDAL.Repository
                     UnitId = datum.UnitId
                 }));
             }
-            if (soure.IsOpenAccount && deptId != datum.DeptId)
+            if ( soure.IsOpenAccount && deptId != datum.DeptId )
             {
                 queue.Delete<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }

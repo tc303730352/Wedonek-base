@@ -103,6 +103,12 @@ namespace Basic.HrRemoteModel.Emp.Model
         [LenValidate("hr.emp.user.head.length", 0, 510)]
         [FormatValidate("hr.emp.user.head.error", ValidateFormat.图片URI)]
         public string UserHead { get; set; }
+
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        [EnumValidate("hr.emp.user.type.error", typeof(HrUserType))]
+        public HrUserType UserType { get; set; }
         /// <summary>
         /// 文件ID
         /// </summary>

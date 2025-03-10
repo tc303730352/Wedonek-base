@@ -23,13 +23,13 @@ namespace Basic.HrService.lmpl
         private readonly IDeptCollect _Dept;
         private readonly ITitleDicItemCollect _Titles;
         private readonly IFileService _FileService;
-        public EmpService (IEmpCollect service,
+        public EmpService ( IEmpCollect service,
             IEmpTitleCollect title,
             IPostDicItemCollect post,
             ITitleDicItemCollect titleDic,
             ICompanyCollect company,
             IFileService file,
-            IDeptCollect dept)
+            IDeptCollect dept )
         {
             this._FileService = file;
             this._Titles = titleDic;
@@ -39,7 +39,7 @@ namespace Basic.HrService.lmpl
             this._Company = company;
             this._Dept = dept;
         }
-        public void SetEmpHead (long empId, string head, long fileId)
+        public void SetEmpHead ( long empId, string head, long fileId )
         {
             var emp = this._Service.Get(empId, a => new
             {
@@ -49,35 +49,35 @@ namespace Basic.HrService.lmpl
             this._Service.SetUserHead(empId, head);
             this._FileService.Save(fileId, empId, emp.UserHead);
         }
-        public void SetEmpPost (long empId, string post)
+        public void SetEmpPost ( long empId, string post )
         {
             this._Service.SetEmpPost(empId, post);
         }
-        public EmpSelectItem[] GetSelectItems (SelectGetParam param)
+        public EmpSelectItem[] GetSelectItems ( SelectGetParam param )
         {
             return this._Service.GetSelectItems(param);
         }
 
-        public EmpBasicDatum[] GetBasics (long[] empId, long companyId)
+        public EmpBasicDatum[] GetBasics ( long[] empId, long companyId )
         {
             EmpDto[] emps = this._Service.Gets<EmpDto>(empId);
-            if (emps.IsNull())
+            if ( emps.IsNull() )
             {
                 return Array.Empty<EmpBasicDatum>();
             }
             return this._Format(emps, companyId);
         }
-        private EmpBasicDatum[] _Format (EmpDto[] emps, long companyId)
+        private EmpBasicDatum[] _Format ( EmpDto[] emps, long companyId )
         {
             EmpBasicDatum[] list = emps.ConvertMap<EmpDto, EmpBasicDatum>();
             List<long> deptId = new List<long>(list.Length * 2);
             List<string> post = new List<string>(list.Length);
             long[] empId = new long[list.Length];
-            emps.ForEach((c, i) =>
+            emps.ForEach(( c, i ) =>
             {
                 deptId.Add(c.DeptId);
                 deptId.Add(c.UnitId);
-                if (c.PostCode.IsNotNull())
+                if ( c.PostCode.IsNotNull() )
                 {
                     post.Add(c.PostCode);
                 }
@@ -86,7 +86,7 @@ namespace Basic.HrService.lmpl
             EmpTitleDto[] titles = this._Title.GetEmpTitle(empId, companyId);
             Dictionary<string, string> titleName = null;
             long[] ids;
-            if (titles.Length > 0)
+            if ( titles.Length > 0 )
             {
                 titleName = this._Titles.GetTitleNames(titles.Distinct(a => a.TitleCode));
                 titles.ForEach(c =>
@@ -102,20 +102,20 @@ namespace Basic.HrService.lmpl
             }
             Dictionary<long, string> depts = this._Dept.GetDeptName(ids);
             Dictionary<string, string> posts = null;
-            if (post.Count > 0)
+            if ( post.Count > 0 )
             {
                 posts = this._Post.GetPostName(post.Distinct().ToArray());
             }
             list.ForEach(c =>
             {
-                if (!c.PostCode.IsNull())
+                if ( !c.PostCode.IsNull() )
                 {
                     c.Post = posts.GetValueOrDefault(c.PostCode);
                 }
-                if (titles != null)
+                if ( titles != null )
                 {
                     EmpTitleDto[] title = titles.FindAll(a => a.EmpId == c.EmpId && a.DeptId == c.DeptId);
-                    if (!title.IsNull())
+                    if ( !title.IsNull() )
                     {
                         c.DeptTitleId = title.ConvertAll(a => a.TitleCode);
                         c.DeptTitle = title.Join(",", a => titleName.GetValueOrDefault(a.TitleCode));
@@ -132,27 +132,27 @@ namespace Basic.HrService.lmpl
             });
             return list;
         }
-        public PagingResult<EmpBasicDto> QueryEmp (EmpQuery query, IBasicPage paging)
+        public PagingResult<EmpBasicDto> QueryEmp ( EmpQuery query, IBasicPage paging )
         {
             EmpDatumDto[] emps = this._Service.Query<EmpDatumDto>(query, paging, out int count);
-            if (emps.IsNull())
+            if ( emps.IsNull() )
             {
                 return new PagingResult<EmpBasicDto>();
             }
             EmpBasicDto[] dtos = this._Format(emps, query.CompanyId);
             return new PagingResult<EmpBasicDto>(dtos, count);
         }
-        private EmpBasicDto[] _Format (EmpDatumDto[] emps, long companyId)
+        private EmpBasicDto[] _Format ( EmpDatumDto[] emps, long companyId )
         {
             EmpBasicDto[] list = emps.ConvertMap<EmpDatumDto, EmpBasicDto>();
             List<long> deptId = new List<long>(list.Length * 2);
             List<string> post = new List<string>(list.Length);
             long[] empId = new long[list.Length];
-            emps.ForEach((c, i) =>
+            emps.ForEach(( c, i ) =>
             {
                 deptId.Add(c.DeptId);
                 deptId.Add(c.UnitId);
-                if (c.PostCode.IsNotNull())
+                if ( c.PostCode.IsNotNull() )
                 {
                     post.Add(c.PostCode);
                 }
@@ -161,7 +161,7 @@ namespace Basic.HrService.lmpl
             EmpTitleDto[] titles = this._Title.GetEmpTitle(empId, companyId);
             Dictionary<string, string> titleName = null;
             long[] ids;
-            if (titles.Length > 0)
+            if ( titles.Length > 0 )
             {
                 titleName = this._Titles.GetTitleNames(titles.Distinct(a => a.TitleCode));
                 titles.ForEach(c =>
@@ -177,20 +177,20 @@ namespace Basic.HrService.lmpl
             }
             Dictionary<long, string> depts = this._Dept.GetDeptName(ids);
             Dictionary<string, string> posts = null;
-            if (post.Count > 0)
+            if ( post.Count > 0 )
             {
                 posts = this._Post.GetPostName(post.Distinct().ToArray());
             }
             list.ForEach(c =>
             {
-                if (!c.PostCode.IsNull())
+                if ( !c.PostCode.IsNull() )
                 {
                     c.Post = posts.GetValueOrDefault(c.PostCode);
                 }
-                if (titles != null)
+                if ( titles != null )
                 {
                     EmpTitleDto[] title = titles.FindAll(a => a.EmpId == c.EmpId && a.DeptId == c.DeptId);
-                    if (!title.IsNull())
+                    if ( !title.IsNull() )
                     {
                         c.DeptTitleId = title.ConvertAll(a => a.TitleCode);
                         c.DeptTitle = title.Join(",", a => titleName.GetValueOrDefault(a.TitleCode));
@@ -207,41 +207,41 @@ namespace Basic.HrService.lmpl
             });
             return list;
         }
-        public PagingResult<EmpBasicDatum> Query (EmpQuery query, IBasicPage paging)
+        public PagingResult<EmpBasicDatum> Query ( EmpQuery query, IBasicPage paging )
         {
             EmpDto[] emps = this._Service.Query<EmpDto>(query, paging, out int count);
-            if (emps.IsNull())
+            if ( emps.IsNull() )
             {
                 return new PagingResult<EmpBasicDatum>(count);
             }
             EmpBasicDatum[] list = this._Format(emps, query.CompanyId);
             return new PagingResult<EmpBasicDatum>(list, count);
         }
-        public void Delete (long id)
+        public void Delete ( long id )
         {
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
             this._Service.Delete(emp);
             new EmpLocalEvent(emp).Send("Delete");
         }
-        public long Add (EmpAdd add)
+        public long Add ( EmpAdd add )
         {
             add.UnitId = this._Dept.GetUnitId(add.DeptId);
             long empId = this._Service.Add(add);
-            if (add.FileId.HasValue)
+            if ( add.FileId.HasValue )
             {
                 this._FileService.Save(add.FileId.Value, empId);
             }
             return empId;
         }
-        public bool CheckIsRepeat (DataRepeatCheck check)
+        public bool CheckIsRepeat ( DataRepeatCheck check )
         {
             return this._Service.CheckIsRepeat(check);
         }
-        public void Set (long id, EmpSet set)
+        public void Set ( long id, EmpSet set )
         {
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
             EmpSetDto dto = set.ConvertMap<EmpSet, EmpSetDto>();
-            if (emp.DeptId != dto.DeptId)
+            if ( emp.DeptId != dto.DeptId )
             {
                 dto.UnitId = this._Dept.GetUnitId(set.DeptId);
             }
@@ -249,17 +249,17 @@ namespace Basic.HrService.lmpl
             {
                 dto.UnitId = emp.UnitId;
                 string[] codes = this._Title.GetTitle(id, emp.DeptId);
-                if (codes.IsEquals(set.Title))
+                if ( codes.IsEquals(set.Title) )
                 {
                     set.Title = null;
                 }
             }
             string head = emp.UserHead;
             string[] cols = this._Service.Set(emp, dto, set.Title);
-            if (!cols.IsNull())
+            if ( !cols.IsNull() )
             {
                 new EmpLocalEvent(emp, cols).AsyncSend("Update");
-                if (cols.Contains("UserHead"))
+                if ( cols.Contains("UserHead") )
                 {
                     this._FileService.Sync(set.FileId, id, head);
                 }
@@ -267,41 +267,41 @@ namespace Basic.HrService.lmpl
 
         }
 
-        public EmpBasic GetBasic (long id)
+        public EmpBasic GetBasic ( long id )
         {
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
             EmpBasic basic = emp.ConvertMap<DBEmpList, EmpBasic>();
             string[] title = this._Title.GetTitle(id, emp.DeptId);
-            if (!title.IsNull())
+            if ( !title.IsNull() )
             {
                 basic.TitleCode = title;
                 basic.Title = string.Join(',', this._Titles.GetTitleNames(title));
             }
             return basic;
         }
-        public EmpData Get (long id)
+        public EmpData Get ( long id )
         {
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
             EmpData data = emp.ConvertMap<DBEmpList, EmpData>();
-            if (emp.PostCode.IsNotNull())
+            if ( emp.PostCode.IsNotNull() )
             {
                 data.Post = this._Post.GetPostName(emp.PostCode);
             }
             data.Dept = this._Dept.GetDeptName(emp.UnitId) + " " + this._Dept.GetDeptName(emp.DeptId);
             data.Company = this._Company.GetName(data.CompanyId);
             string[] title = this._Title.GetTitle(id, emp.DeptId);
-            if (title != null)
+            if ( title != null )
             {
                 data.TitleCode = title;
                 data.Title = string.Join(',', this._Titles.GetTitleNames(title));
             }
             return data;
         }
-        public string GetEmpName (long id)
+        public string GetEmpName ( long id )
         {
             return this._Service.GetName(id);
         }
-        public EmpBasicDatum GetEmpBasic (long id, long companyId)
+        public EmpBasicDatum GetEmpBasic ( long id, long companyId )
         {
             EmpDto emp = this._Service.Get<EmpDto>(id);
             EmpTitleDto[] titles = this._Title.GetEmpTitle<EmpTitleDto>(emp.EmpId, companyId);
@@ -313,16 +313,16 @@ namespace Basic.HrService.lmpl
                 EmpName = emp.EmpName,
                 EmpNo = emp.EmpNo
             };
-            if (!datum.PostCode.IsNull())
+            if ( !datum.PostCode.IsNull() )
             {
                 datum.Post = this._Post.GetPostName(emp.PostCode);
             }
-            if (!titles.IsNull())
+            if ( !titles.IsNull() )
             {
                 Dictionary<string, string> titleName = this._Titles.GetTitleNames(titles.ConvertAll(a => a.TitleCode));
                 Dictionary<long, string> deptName = this._Dept.GetDeptName(titles.ConvertAll(a => a.DeptId));
                 EmpTitleDto[] title = titles.FindAll(a => a.EmpId == id && a.DeptId == emp.DeptId);
-                if (!title.IsNull())
+                if ( !title.IsNull() )
                 {
                     datum.DeptTitleId = title.ConvertAll(a => a.TitleCode);
                     datum.DeptTitle = title.Join(",", a => titleName.GetValueOrDefault(a.TitleCode));
@@ -337,18 +337,18 @@ namespace Basic.HrService.lmpl
             return datum;
         }
 
-        public void SetEmpStatus (long empId, HrEmpStatus status)
+        public void SetEmpStatus ( long empId, HrEmpStatus status )
         {
-            if (this._Service.SetStatus(empId, status) && status == HrEmpStatus.禁用)
+            if ( this._Service.SetStatus(empId, status) && status == HrEmpStatus.禁用 )
             {
                 new UserChangeEvent(empId).AsyncSend("EmpDisable");
             }
         }
 
-        public void SetEmpEntry (long id, EmpEntry datum)
+        public void SetEmpEntry ( long id, EmpEntry datum )
         {
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
-            if (emp.DeptId != datum.DeptId)
+            if ( emp.DeptId != datum.DeptId )
             {
                 datum.UnitId = this._Dept.GetUnitId(datum.DeptId);
             }
@@ -356,11 +356,11 @@ namespace Basic.HrService.lmpl
             {
                 datum.UnitId = emp.UnitId;
                 string[] titile = this._Title.GetTitle(id, emp.DeptId);
-                if (titile.IsEqual(datum.Title))
+                if ( titile.IsEqual(datum.Title) )
                 {
                     datum.Title = null;
                 }
-                if (emp.PostCode == datum.PostCode && datum.Title == null)
+                if ( emp.PostCode == datum.PostCode && datum.Title == null )
                 {
                     return;
                 }
@@ -369,7 +369,7 @@ namespace Basic.HrService.lmpl
             new EmpLocalEvent(emp, cols).AsyncSend("Update");
         }
 
-        public Dictionary<long, string> GetEmpName (long[] ids)
+        public Dictionary<long, string> GetEmpName ( long[] ids )
         {
             return this._Service.GetName(ids);
         }
