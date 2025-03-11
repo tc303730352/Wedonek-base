@@ -15,7 +15,7 @@ namespace Base.FileService.VisitEvent
     {
         private readonly IFileCollect _Service;
         private readonly IFileConfig _Config;
-        private static readonly string[] _FilePower = new string[] { "file.visit.power" };
+        private static readonly string[] _FilePower = new string[] { "file.visit.power", "all" };
         public FileVisitEvent ( IFileCollect service, IFileConfig config )
         {
             this._Config = config;
