@@ -19,7 +19,7 @@ namespace Base.FileService.Api
             this._ImgService = imgService;
         }
         [ApiPower(false)]
-        [ApiRouteName("/file/read/image/")]
+        [ApiRouteName("/file/user/read/image/")]
         public IResponse ReadImage ( bool isDown )
         {
             UserFileDto file = base.RequestState.Get<UserFileDto>("file");
