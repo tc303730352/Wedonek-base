@@ -71,5 +71,10 @@ namespace Base.FileDAL.Repository
         {
             return this._BasicDAL.Update(sourc, set);
         }
+
+        public Result[] GetAll<Result> () where Result : class, new()
+        {
+            return this._BasicDAL.GetAll<Result>();
+        }
     }
 }
