@@ -42,6 +42,18 @@
       :paging="paging"
       @load="load"
     >
+      <template slot="FileName" slot-scope="e">
+        <img v-if="e.row.FileType == 0" :src="e.row.FileUri | imageUri">
+      </template>
+      <template slot="FileType" slot-scope="e">
+        {{ FileType[e.row.FileType].text }}
+      </template>
+      <template slot="FileSize" slot-scope="e">
+        {{ formatFileSize(e.row.FileSize) }}
+      </template>
+      <template slot="SaveType" slot-scope="e">
+        {{ FileSaveType[e.row.SaveType].text }}
+      </template>
       <template slot="SaveTime" slot-scope="e">
         {{ moment(e.row.SaveTime).format("YYYY-MM-DD HH:mm") }}
       </template>
@@ -52,12 +64,14 @@
 <script>
 import moment from 'moment'
 import * as fileApi from '@/api/file/fileList'
-import { FileEnumDic } from '@/config/fileConfig'
+import { FileEnumDic, FileType, FileSaveType } from '@/config/fileConfig'
 export default {
   components: {
   },
   data() {
     return {
+      FileType,
+      FileSaveType,
       FileEnumDic,
       files: [],
       queryParam: {
@@ -72,6 +86,7 @@ export default {
           sortby: 'FileName',
           key: 'FileName',
           title: '文件名',
+          slotName: 'FileName',
           align: 'center',
           minWidth: 150,
           sortable: 'custom'
@@ -89,7 +104,7 @@ export default {
           title: '文件类型',
           align: 'center',
           slotName: 'FileType',
-          minWidth: 100,
+          width: 120,
           sortable: 'custom'
         },
         {
@@ -104,9 +119,9 @@ export default {
         {
           sortby: 'SaveType',
           key: 'SaveType',
-          title: '保存类型',
+          title: '保存方式',
           align: 'center',
-          width: 100,
+          width: 120,
           slotName: 'SaveType',
           sortable: 'custom'
         },
@@ -140,6 +155,32 @@ export default {
       this.queryParam.End = null
       this.paging.Index = 1
       this.load()
+    },
+    formatFileSize(size) {
+      size = parseInt(size)
+      let t = 1024 * 1024 * 1024
+      let num = Math.floor(size / t)
+      let str = ''
+      if (num !== 0) {
+        str = num + 'GB '
+        size = size % t
+      }
+      t = 1024 * 1024
+      num = Math.floor(size / t)
+      if (num !== 0) {
+        str = str + num + 'MB '
+        size = size % t
+      }
+      t = 1024
+      num = Math.floor(size / t)
+      if (num !== 0) {
+        str = str + num + 'KB '
+        size = size % t
+      }
+      if (size !== 0) {
+        str = str + size + 'B'
+      }
+      return str
     },
     async load() {
       const res = await fileApi.Query(this.queryParam, this.paging)

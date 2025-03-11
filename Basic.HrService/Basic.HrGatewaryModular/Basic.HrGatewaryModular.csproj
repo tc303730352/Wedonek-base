@@ -22,6 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Base.FileService\Base.FileRemoteModel\Base.FileRemoteModel.csproj" />
 	  <ProjectReference Include="..\Basic.HrRemoteModel\Basic.HrRemoteModel.csproj" />
 	</ItemGroup>
 </Project>

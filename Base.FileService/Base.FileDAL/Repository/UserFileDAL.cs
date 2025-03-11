@@ -110,7 +110,7 @@ namespace Base.FileDAL.Repository
             });
             if ( dto == null )
             {
-                throw new ErrorException("file.not.find");
+                return null;
             }
             UserFileDto file = dto.ConvertMap<TUserFileDto, UserFileDto>();
             file.FilePath = Path.Combine(dto.DirPath, dto.LocalPath);
