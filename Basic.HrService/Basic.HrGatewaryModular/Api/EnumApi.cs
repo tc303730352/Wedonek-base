@@ -1,5 +1,4 @@
-﻿using System.Collections.Frozen;
-using Basic.HrGatewaryModular.Interface;
+﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.EnumDic;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;

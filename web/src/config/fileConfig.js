@@ -7,5 +7,9 @@ module.exports = {
     'text/html': '.html',
     'text/plain': '.txt',
     'application/pdf': '.pdf'
+  },
+  FileEnumDic: {
+    fileType: 'FileType',
+    fileSaveType: 'FileSaveType'
   }
 }

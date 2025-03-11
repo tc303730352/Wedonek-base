@@ -5,10 +5,28 @@
     </div>
     <el-row>
       <el-form :inline="true" :model="queryParam">
-        <el-form-item label="角色名">
+        <el-form-item label="文件名">
           <el-input
             v-model="queryParam.QueryKey"
-            placeholder="角色名"
+            placeholder="文件名"
+            @change="load"
+          />
+        </el-form-item>
+        <el-form-item label="文件类型">
+          <enumItem
+            v-model="queryParam.FileType"
+            :dic-key="FileEnumDic.fileType"
+            placeholder="文件类型"
+            :multiple="true"
+            @change="load"
+          />
+        </el-form-item>
+        <el-form-item label="文件保存方式">
+          <enumItem
+            v-model="queryParam.SaveType"
+            :dic-key="FileEnumDic.fileSaveType"
+            placeholder="文件保存方式"
+            :multiple="true"
             @change="load"
           />
         </el-form-item>
@@ -34,11 +52,13 @@
 <script>
 import moment from 'moment'
 import * as fileApi from '@/api/file/fileList'
+import { FileEnumDic } from '@/config/fileConfig'
 export default {
   components: {
   },
   data() {
     return {
+      FileEnumDic,
       files: [],
       queryParam: {
         QueryKey: null,
@@ -61,8 +81,7 @@ export default {
           key: 'FileMd5',
           title: '文件MD5',
           align: 'center',
-          width: 120,
-          sortable: 'custom'
+          width: 320
         },
         {
           sortby: 'FileType',

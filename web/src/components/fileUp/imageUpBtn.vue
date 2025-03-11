@@ -71,7 +71,7 @@
 <script>
 import * as fileApi from '@/api/base/file'
 import sparkMD5 from 'spark-md5'
-import { fileType } from '@/config/fileUpConfig'
+import { fileType } from '@/config/fileConfig'
 export default {
   props: {
     fileKey: {

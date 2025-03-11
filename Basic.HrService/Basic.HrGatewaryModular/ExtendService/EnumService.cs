@@ -17,13 +17,13 @@ namespace Basic.HrGatewaryModular.ExtendService
         public static void Load ()
         {
             IConfigSection section = RpcClient.Config.GetSection("dic");
-            string[] names = section.GetValue<string[]>("enum", new string[] { "Basic.HrRemoteModel" });
-            if (names.IsNull())
+            string[] names = section.GetValue<string[]>("enum", new string[] { "Basic.HrRemoteModel", "Base.FileRemoteModel" });
+            if ( names.IsNull() )
             {
                 return;
             }
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies().FindAll(c => names.Contains(c.GetName().Name));
-            if (assemblies.IsNull())
+            if ( assemblies.IsNull() )
             {
                 return;
             }
@@ -31,7 +31,7 @@ namespace Basic.HrGatewaryModular.ExtendService
             assemblies.ForEach(c =>
             {
                 Type[] types = c.GetTypes().FindAll(a => a.IsEnum);
-                if (types.IsNull())
+                if ( types.IsNull() )
                 {
                     return;
                 }
@@ -43,7 +43,7 @@ namespace Basic.HrGatewaryModular.ExtendService
                         Text = c.ToString(),
                         Value = (int)c
                     });
-                    if (!enumDic.ContainsKey(a.Name))
+                    if ( !enumDic.ContainsKey(a.Name) )
                     {
                         enumDic.Add(a.Name, items);
                     }
@@ -51,14 +51,14 @@ namespace Basic.HrGatewaryModular.ExtendService
             });
             _EnumDic = enumDic.ToFrozenDictionary();
         }
-        public EnumItem[] GetItems (string name)
+        public EnumItem[] GetItems ( string name )
         {
             return _EnumDic.GetValueOrDefault(name);
         }
 
-        public Dictionary<string, EnumItem[]> GetItems (string[] name)
+        public Dictionary<string, EnumItem[]> GetItems ( string[] name )
         {
-            return name.Where(a => _EnumDic.ContainsKey(a)).ToDictionary(a => a, a => _EnumDic[a]);
+            return name.Where(_EnumDic.ContainsKey).ToDictionary(a => a, a => _EnumDic[a]);
         }
     }
 }
