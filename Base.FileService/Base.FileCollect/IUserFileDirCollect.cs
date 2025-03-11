@@ -4,7 +4,8 @@ namespace Base.FileCollect
 {
     public interface IUserFileDirCollect
     {
-        UserFileDirDto GetDir (string dirKey);
-        long[] GetDirId (string[] dirKey);
+        Result[] GetAll<Result> () where Result : class, new();
+        UserFileDirDto GetDir ( string dirKey );
+        long[] GetDirId ( string[] dirKey );
     }
 }

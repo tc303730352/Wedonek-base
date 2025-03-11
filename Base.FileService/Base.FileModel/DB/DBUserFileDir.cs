@@ -14,6 +14,11 @@ namespace Base.FileModel.DB
         public string DirKey { get; set; }
 
         /// <summary>
+        /// 目录名称
+        /// </summary>
+        public string DirName { get; set; }
+
+        /// <summary>
         /// 目录状态
         /// </summary>
         public FileDirStatus DirStatus { get; set; }
@@ -53,6 +58,5 @@ namespace Base.FileModel.DB
         /// 上传说明
         /// </summary>
         public string UpShow { get; set; }
-
     }
 }

@@ -11,19 +11,22 @@ namespace Base.FileCollect.lmpl
 
         private readonly IUserFileDirDAL _FileDir;
 
-        public UserFileDirCollect (ICacheController cache, IUserFileDirDAL fileDir)
+        public UserFileDirCollect ( ICacheController cache, IUserFileDirDAL fileDir )
         {
             this._Cache = cache;
             this._FileDir = fileDir;
         }
-
-        public UserFileDirDto GetDir (string dirKey)
+        public Result[] GetAll<Result> () where Result : class, new()
+        {
+            return this._FileDir.GetAll<Result>();
+        }
+        public UserFileDirDto GetDir ( string dirKey )
         {
             string key = string.Concat("DirCache_", dirKey);
-            if (!this._Cache.TryGet(key, out UserFileDirDto dto))
+            if ( !this._Cache.TryGet(key, out UserFileDirDto dto) )
             {
                 dto = this._FileDir.GetByKey<UserFileDirDto>(dirKey);
-                if (dto == null)
+                if ( dto == null )
                 {
                     dto = new UserFileDirDto
                     {
@@ -37,13 +40,13 @@ namespace Base.FileCollect.lmpl
                 }
 
             }
-            if (dto.Id == 0)
+            if ( dto.Id == 0 )
             {
                 throw new ErrorException("file.dir.not.find");
             }
             return dto;
         }
-        public long[] GetDirId (string[] dirKey)
+        public long[] GetDirId ( string[] dirKey )
         {
             return this._FileDir.GetDirId(dirKey);
         }

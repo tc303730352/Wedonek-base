@@ -7,13 +7,13 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-const accreditError=[4714653491135125,509777198850181]
+const accreditError = [4714653491135125, 509777198850181]
 
 // request interceptor
 service.interceptors.request.use(
   config => {
     var uri = config.url
-    if (uri.indexOf('http:') ==-1 && uri.indexOf('https:') == -1) {
+    if (uri.indexOf('http:') === -1 && uri.indexOf('https:') === -1) {
       config.url = getRequestUri(uri)
     }
     config.headers['content-Type'] = 'application/json'
@@ -80,7 +80,7 @@ service.interceptors.response.use(
       type: 'error',
       duration: 5 * 1000
     })
-    console.log(error);
+    console.log(error)
     return Promise.reject(error)
   }
 )

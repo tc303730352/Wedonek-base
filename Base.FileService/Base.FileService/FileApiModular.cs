@@ -11,9 +11,9 @@ namespace Base.FileService
         }
         protected override void Init ()
         {
-            this.Config.ApiRouteFormat = "/api/{controller}/{name}";
+            this.Config.ApiRouteFormat = "/file/{controller}/{name}";
         }
-        protected override void Load (IHttpGatewayOption option, IModularConfig config)
+        protected override void Load ( IHttpGatewayOption option, IModularConfig config )
         {
             option.AddFileDir(new FileDirConfig
             {
