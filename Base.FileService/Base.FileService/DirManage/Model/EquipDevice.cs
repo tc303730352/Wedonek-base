@@ -6,29 +6,33 @@
         private volatile bool _IsReady = false;
         private long _Surplus = 0;
 
-        public bool IsReady { get => _IsReady; }
+        public bool IsReady => this._IsReady;
 
-        public EquipDevice(string name)
+        public EquipDevice ( string name )
         {
-            _Drive = new DriveInfo(name);
-            _IsReady = _Drive.IsReady;
-            if (_Drive.IsReady)
+            this._Drive = new DriveInfo(name);
+            this._IsReady = this._Drive.IsReady;
+            if ( this._Drive.IsReady )
             {
-                _Surplus = _Drive.AvailableFreeSpace;
+                this._Surplus = this._Drive.AvailableFreeSpace;
             }
         }
-        public void Refresh()
+        public void Refresh ()
         {
-            _IsReady = _Drive.IsReady;
-            if (_Drive.IsReady)
+            this._IsReady = this._Drive.IsReady;
+            if ( this._Drive.IsReady )
             {
-                Interlocked.Exchange(ref _Surplus, _Drive.AvailableFreeSpace);
+                _ = Interlocked.Exchange(ref this._Surplus, this._Drive.AvailableFreeSpace);
             }
         }
-        public bool CheckIsUse(long fileSize)
+        public bool CheckIsUse ( long fileSize )
         {
-            long sur = Interlocked.CompareExchange(ref _Surplus, 0, 0);
-            return _IsReady && fileSize <= sur;
+            long sur = Interlocked.CompareExchange(ref this._Surplus, 0, 0);
+            return this._IsReady && fileSize <= sur;
+        }
+        public bool CheckIsUse ()
+        {
+            return this._IsReady && Interlocked.Read(ref this._Surplus) > 0;
         }
     }
 }

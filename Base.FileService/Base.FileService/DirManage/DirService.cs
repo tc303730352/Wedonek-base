@@ -23,50 +23,57 @@ namespace Base.FileService.DirManage
 
         private Timer _RefreshDir;
 
-        public DirService (IIocService ioc, IFileConfig config)
+        public DirService ( IIocService ioc, IFileConfig config )
         {
             this._Config = config;
             this._Dirs = new IDirState[0];
             this._Ioc = ioc;
         }
 
-        public void Init (long serverId)
+        public void Init ( long serverId )
         {
             this._ServerId = serverId;
             DirEquipService.Init(this._Config.EquipRefreshInterval);
             this._RefreshDir = new Timer(this._Init, null, 200, this._Config.DirRefreshInterval);
         }
-
-        private void _Init (object? state)
+        public IDirState GetDir ( long id )
         {
-            using (IocScope scope = this._Ioc.CreateTempScore())
+            if ( !_Dir.TryGetValue(id, out IDirState state) )
+            {
+                throw new ErrorException("file.dir.not.find");
+            }
+            return state;
+        }
+        private void _Init ( object? state )
+        {
+            using ( IocScope scope = this._Ioc.CreateTempScore() )
             {
                 this._Load(scope);
             }
         }
 
-        private void _Load (IocScope scope)
+        private void _Load ( IocScope scope )
         {
             IPhysicalDirCollect dir = scope.Resolve<IPhysicalDirCollect>();
             PhysicalDirDto[] dirs = dir.Gets(this._ServerId);
-            if (dirs.IsNull())
+            if ( dirs.IsNull() )
             {
-                if (this._Dirs.Length != 0)
+                if ( this._Dirs.Length != 0 )
                 {
                     this._Dirs = new IDirState[0];
                     _Dir.Clear();
                 }
                 return;
             }
-            if (!_Dir.IsEmpty)
+            if ( !_Dir.IsEmpty )
             {
                 long[] keys = dirs.ConvertAll(c => c.Id);
                 keys = _Dir.Keys.Where(c => !keys.Contains(c)).ToArray();
-                if (keys.Length > 0)
+                if ( keys.Length > 0 )
                 {
                     keys.ForEach(c =>
                     {
-                        if (_Dir.TryRemove(c, out IDirState state))
+                        if ( _Dir.TryRemove(c, out IDirState state) )
                         {
                             state.Dispose();
                         }
@@ -76,7 +83,7 @@ namespace Base.FileService.DirManage
             List<IDirState> ids = [];
             dirs.ForEach(c =>
             {
-                if (_Dir.TryGetValue(c.Id, out IDirState state))
+                if ( _Dir.TryGetValue(c.Id, out IDirState state) )
                 {
                     state.Refresh(c);
                 }
@@ -84,7 +91,7 @@ namespace Base.FileService.DirManage
                 {
                     state = _Dir.GetOrAdd(c.Id, new DirStateMonitor(c));
                 }
-                if (!state.IsOnlyRead)
+                if ( !state.IsOnlyRead )
                 {
                     c.Weight.For(a =>
                     {
@@ -95,23 +102,44 @@ namespace Base.FileService.DirManage
             this._Dirs = ids.Random();
             this._MaxIndex = (uint)ids.Count;
         }
-
-        public IDirState GetDir (ref long fileSize)
+        public IDirState GetTempDir ()
+        {
+            uint size = this._MaxIndex;
+            return this._GetDir(this._Dirs, ref size);
+        }
+        public IDirState GetDir ( ref long fileSize )
         {
             uint size = this._MaxIndex;
             return this._GetDir(this._Dirs, ref size, ref fileSize);
         }
-        private IDirState _GetDir (IDirState[] dirs, ref uint size, ref long fileSize)
+        private IDirState _GetDir ( IDirState[] dirs, ref uint size )
         {
             uint index = Interlocked.Increment(ref this._Index) % size;
             IDirState dir = dirs[index];
-            if (dir.Distribution(fileSize))
+            if ( dir.CheckIsUse() )
             {
                 return dir;
             }
-            foreach (IDirState c in dirs)
+            foreach ( IDirState c in dirs )
             {
-                if (c.Id != dir.Id && c.Distribution(fileSize))
+                if ( c.Id != dir.Id && c.CheckIsUse() )
+                {
+                    return c;
+                }
+            }
+            throw new ErrorException("file.dir.no.config");
+        }
+        private IDirState _GetDir ( IDirState[] dirs, ref uint size, ref long fileSize )
+        {
+            uint index = Interlocked.Increment(ref this._Index) % size;
+            IDirState dir = dirs[index];
+            if ( dir.Distribution(fileSize) )
+            {
+                return dir;
+            }
+            foreach ( IDirState c in dirs )
+            {
+                if ( c.Id != dir.Id && c.Distribution(fileSize) )
                 {
                     return c;
                 }

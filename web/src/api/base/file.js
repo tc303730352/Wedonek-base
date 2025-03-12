@@ -64,3 +64,13 @@ export function getUpState(taskId) {
     }
   })
 }
+
+export function get(id) {
+  return request({
+    url: formatRequestUri('block/up/state'),
+    method: 'get',
+    params: {
+      taskId
+    }
+  })
+}

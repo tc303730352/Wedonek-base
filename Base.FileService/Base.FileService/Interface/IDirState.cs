@@ -11,6 +11,7 @@ namespace Base.FileService.Interface
         string DirPath { get; }
 
         bool Distribution ( long fileSize );
+        bool CheckIsUse ();
 
         string GetFullPath ( string basePath );
 

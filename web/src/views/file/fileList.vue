@@ -42,8 +42,11 @@
       :paging="paging"
       @load="load"
     >
+      <template slot="File" slot-scope="e">
+        <img v-if="e.row.FileType == 0" :src="e.row.FileUri | imageUri" style="max-width: 200px; max-height: 120px;">
+      </template>
       <template slot="FileName" slot-scope="e">
-        <img v-if="e.row.FileType == 0" :src="e.row.FileUri | imageUri">
+        {{ e.row.FileName }}
       </template>
       <template slot="FileType" slot-scope="e">
         {{ FileType[e.row.FileType].text }}
@@ -83,11 +86,19 @@ export default {
       },
       columns: [
         {
+          sortby: 'File',
+          key: 'File',
+          title: '文件',
+          slotName: 'File',
+          align: 'center',
+          width: 200
+        },
+        {
           sortby: 'FileName',
           key: 'FileName',
           title: '文件名',
           slotName: 'FileName',
-          align: 'center',
+          align: 'left',
           minWidth: 150,
           sortable: 'custom'
         },

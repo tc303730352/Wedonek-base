@@ -53,6 +53,13 @@ namespace Base.FileService.DirManage
             }
             return DirEquipService.CheckIsUse(this._RootName, fileSize);
         }
-
+        public bool CheckIsUse ()
+        {
+            if ( this.IsOnlyRead )
+            {
+                return false;
+            }
+            return DirEquipService.CheckIsUse(this._RootName);
+        }
     }
 }

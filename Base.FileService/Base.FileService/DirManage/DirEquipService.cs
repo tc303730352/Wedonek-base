@@ -10,13 +10,13 @@ namespace Base.FileService.DirManage
         private static Timer _refreshTimer;
         private readonly bool _IsInit = false;
 
-        public static void Init (int interval)
+        public static void Init ( int interval )
         {
             _refreshTimer = new Timer(new TimerCallback(_Refresh), null, interval, interval);
         }
-        private static EquipDevice _GetDevice (string name)
+        private static EquipDevice _GetDevice ( string name )
         {
-            if (_Devices.TryGetValue(name, out EquipDevice dev))
+            if ( _Devices.TryGetValue(name, out EquipDevice dev) )
             {
                 return dev;
             }
@@ -24,30 +24,33 @@ namespace Base.FileService.DirManage
             _ = _Devices.TryAdd(name, dev);
             return dev;
         }
-        private static void _Refresh (object state)
+        private static void _Refresh ( object state )
         {
-            if (_Devices.Count == 0)
+            if ( _Devices.Count == 0 )
             {
                 return;
             }
             string[] keys = _Devices.Keys.ToArray();
             keys.ForEach(c =>
             {
-                if (_Devices.TryGetValue(c, out EquipDevice dev))
+                if ( _Devices.TryGetValue(c, out EquipDevice dev) )
                 {
                     dev.Refresh();
                 }
             });
         }
 
-        public static bool CheckIsUse (string name, long fileSize)
+        public static bool CheckIsUse ( string name, long fileSize )
         {
             return _GetDevice(name).CheckIsUse(fileSize);
         }
-
+        public static bool CheckIsUse ( string name )
+        {
+            return _GetDevice(name).CheckIsUse();
+        }
         public void Dispose ()
         {
-            if (this._IsInit)
+            if ( this._IsInit )
             {
                 _refreshTimer.Dispose();
             }

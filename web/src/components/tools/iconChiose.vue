@@ -2,7 +2,11 @@
   <div>
     <el-input v-model="icon" :readonly="true">
       <div v-if="icon" slot="prepend">
-        <i v-if="icon.startsWith('el-icon')" style="font-size: 20px" :class="icon" />
+        <i
+          v-if="icon.startsWith('el-icon')"
+          style="font-size: 20px"
+          :class="icon"
+        />
         <svg-icon v-else style="font-size: 20px" :icon-class="icon" />
       </div>
       <el-button
@@ -73,6 +77,9 @@ export default {
         'email',
         'example',
         'excel',
+        'video',
+        'file',
+        'word',
         'exit-fullscreen',
         'eye-open',
         'eye',
