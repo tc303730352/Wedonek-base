@@ -23,6 +23,42 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\ApiClassInfo.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\ApiEnumInfo.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\ApiGroup.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\ApiInfo.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\css\bootstrap.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\ApiClassInfo.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\ApiEnumInfo.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\ApiGroup.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\ApiInfo.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\art-template.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\basic.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="C:\Users\tanch\.nuget\packages\wedonekrpc.httpapidoc\1.1.0\contentFiles\any\net8.0\ApiHtml\js\jquery.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="LocalConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
