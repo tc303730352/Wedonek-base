@@ -108,5 +108,10 @@ namespace Base.FileCollect.lmpl
             string key = "UserFile_" + id;
             _ = this._Cache.Remove(key);
         }
+
+        public Dictionary<long, int> GetFileNum ( long[] fileId )
+        {
+            return this._UserFile.GetFileNum(fileId);
+        }
     }
 }

@@ -43,7 +43,7 @@
       @load="load"
     >
       <template slot="File" slot-scope="e">
-        <img v-if="e.row.FileType == 0" :src="e.row.FileUri | imageUri" style="max-width: 200px; max-height: 120px;">
+        <fileShow :file-name="e.row.FileName" :file-uri="e.row.FileUri" style="max-width: 200px; max-height: 120px;" />
       </template>
       <template slot="FileName" slot-scope="e">
         {{ e.row.FileName }}
@@ -67,9 +67,11 @@
 <script>
 import moment from 'moment'
 import * as fileApi from '@/api/file/fileList'
+import fileShow from './components/fileShow.vue'
 import { FileEnumDic, FileType, FileSaveType } from '@/config/fileConfig'
 export default {
   components: {
+    fileShow
   },
   data() {
     return {

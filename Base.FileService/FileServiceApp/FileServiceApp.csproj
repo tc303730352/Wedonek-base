@@ -11,12 +11,15 @@
   <ItemGroup>
     <PackageReference Include="WeDonekRpc.ApiGateway" Version="1.1.0" />
     <PackageReference Include="WeDonekRpc.CacheClient" Version="1.1.0" />
+	  <PackageReference Include="WeDonekRpc.HttpApiDoc" Version="1.1.0" />
     <PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
     <PackageReference Include="WeDonekRpc.HttpApiGateway" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Base.FileGateway\Base.FileGateway.csproj" />
     <ProjectReference Include="..\Base.FileService\Base.FileService.csproj" />
+    <ProjectReference Include="..\Base.FileStoreGatewayModular\Base.FileStoreGatewayModular.csproj" />
   </ItemGroup>
 
   <ItemGroup>

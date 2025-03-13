@@ -3,13 +3,12 @@ using Base.FileModel.DB;
 using Base.FileModel.UserFile;
 using Base.FileRemoteModel;
 using Base.FileService.Interface;
-using Base.FileService.Model.File;
 using WeDonekRpc.Helper;
 using WeDonekRpc.HttpService.Interface;
 
 namespace Base.FileService.Helper
 {
-    internal static class FileLinq
+    public static class FileLinq
     {
         private static readonly string[] _videoFormat = new string[] { ".mp4", ".avi", ".mkv", ".mpeg", ".mov", ".wmv", ".rm", ".rmvb" };
         private static readonly string[] _audioFormat = new string[] { ".mp3", ".wma", ".wav", ".ape", ".flac", ".ogg", ".aac" };
@@ -20,11 +19,7 @@ namespace Base.FileService.Helper
             string relativeUri = string.Format("file/user/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);
             return new Uri(config.LocalUri, relativeUri);
         }
-        public static Uri GetFileUri ( this FileUIDto file, IFileConfig config )
-        {
-            string relativeUri = string.Format("file/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);
-            return new Uri(config.LocalUri, relativeUri);
-        }
+
         public static Uri GetFileUri ( this UserFileBasic file, IFileConfig config )
         {
             string relativeUri = string.Format("file/user/read/{0}/{1}{2}", file.FileType.ToString(), file.Id, file.Extension);

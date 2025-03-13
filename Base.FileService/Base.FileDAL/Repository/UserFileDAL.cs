@@ -2,6 +2,7 @@
 using Base.FileModel.DB;
 using Base.FileModel.UserFile;
 using Base.FileRemoteModel;
+using SqlSugar;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper;
 using WeDonekRpc.Helper.IdGenerator;
@@ -149,6 +150,15 @@ namespace Base.FileDAL.Repository
                 return this._BasicDAL.Gets(a => a.UserDirId == dirId && a.LinkBizPk == linkBizPk && a.FileStatus == UserFileStatus.正常, c => c.Id);
             }
             return this._BasicDAL.Gets(a => a.UserDirId == dirId && a.LinkBizPk == linkBizPk && a.Tag == tag && a.FileStatus == UserFileStatus.正常, c => c.Id);
+        }
+
+        public Dictionary<long, int> GetFileNum ( long[] fileId )
+        {
+            return this._BasicDAL.GroupBy(a => fileId.Contains(a.FileId), a => a.FileId, a => new
+            {
+                a.FileId,
+                num = SqlFunc.AggregateCount(a.FileId)
+            }).ToDictionary(a => a.FileId, a => a.num);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Base.FileService.lmpl
         {
             UserFileDto file = this._UserFile.GetFile(fileId);
             long empId = state.GetValue<long>("EmpId");
-            if ( file.UserId != empId || ( !file.OperatePower.IsNull() && !file.OperatePower.IsExists<string>(state.Power.IsExists) ) )
+            if ( file.UserId != empId || ( !file.OperatePower.IsNull() && !file.OperatePower.IsExists(state.Power.IsExists) ) )
             {
                 throw new ErrorException("file.delete.power.error");
             }

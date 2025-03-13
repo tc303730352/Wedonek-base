@@ -1,5 +1,4 @@
-﻿
-namespace Base.FileService.Interface
+﻿namespace Base.FileService.Interface
 {
     public interface IVideoConfig
     {

@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileServiceApp", "FileServiceApp\FileServiceApp.csproj", "{D3CF82E1-1608-49F3-A38C-BAB10FD0E42D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.FileStoreGatewayModular", "Base.FileStoreGatewayModular\Base.FileStoreGatewayModular.csproj", "{CD8DA664-6E65-4C4B-9121-516E9873B678}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base.FileGateway", "Base.FileGateway\Base.FileGateway.csproj", "{CEDDED52-A8E4-4B87-A8FE-5B13BF6292F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +54,14 @@ Global
 		{D3CF82E1-1608-49F3-A38C-BAB10FD0E42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3CF82E1-1608-49F3-A38C-BAB10FD0E42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3CF82E1-1608-49F3-A38C-BAB10FD0E42D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD8DA664-6E65-4C4B-9121-516E9873B678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD8DA664-6E65-4C4B-9121-516E9873B678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD8DA664-6E65-4C4B-9121-516E9873B678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD8DA664-6E65-4C4B-9121-516E9873B678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEDDED52-A8E4-4B87-A8FE-5B13BF6292F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEDDED52-A8E4-4B87-A8FE-5B13BF6292F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEDDED52-A8E4-4B87-A8FE-5B13BF6292F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEDDED52-A8E4-4B87-A8FE-5B13BF6292F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

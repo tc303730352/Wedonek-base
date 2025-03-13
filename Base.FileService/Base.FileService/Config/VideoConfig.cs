@@ -37,7 +37,7 @@ namespace Base.FileService.Config
                 }
                 this.ImgWidth = section.GetValue<int?>("ImgWidth", null);
                 this.ImgHeight = section.GetValue<int?>("ImgHeight", null);
-                int sec = section.GetValue<int>("skipSecond", 1);
+                int sec = section.GetValue("skipSecond", 1);
                 this.SkipTime = new TimeSpan(0, 0, sec);
             }
             this.EnableThumbnail = isEnable;

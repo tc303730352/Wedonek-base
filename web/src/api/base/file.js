@@ -65,12 +65,6 @@ export function getUpState(taskId) {
   })
 }
 
-export function get(id) {
-  return request({
-    url: formatRequestUri('block/up/state'),
-    method: 'get',
-    params: {
-      taskId
-    }
-  })
+export function getThumbnailUri(id) {
+  return apiUri['file'] + formatRequestUri('video/thumbnail/' + id + '.png')
 }

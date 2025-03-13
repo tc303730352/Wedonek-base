@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="WeDonekRpc.CacheClient" Version="1.1.0" />
     <PackageReference Include="WeDonekRpc.Helper" Version="1.1.0" />
+	  <PackageReference Include="WeDonekRpc.HttpService" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
