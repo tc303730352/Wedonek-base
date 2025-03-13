@@ -17,5 +17,8 @@ namespace Base.FileCollect
         void Delete ( long id );
         void Drop ( long id );
         Dictionary<long, int> GetFileNum ( long[] fileId );
+
+        Dictionary<long, int> GetDirFileNum ( long[] dirId );
+        bool CheckIsNullDir ( long dirId );
     }
 }

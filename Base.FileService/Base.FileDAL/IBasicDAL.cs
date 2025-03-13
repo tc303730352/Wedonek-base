@@ -4,6 +4,7 @@ namespace Base.FileDAL
 {
     public interface IBasicDAL<T, IdentityId> where T : class, new()
     {
+        bool IsExist ( Expression<Func<T, bool>> filter );
         Result[] GetAll<Result> () where Result : class, new();
         Result[] Gets<Result> ( Expression<Func<T, bool>> filter ) where Result : class, new();
         void Delete ( IdentityId id );

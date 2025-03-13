@@ -1,5 +1,5 @@
 ﻿using Base.FileModel.BaseFile;
-using Base.FileStoreGatewayModular.Interface;
+using Base.FileService.Interface;
 using Base.FileStoreGatewayModular.VisitEvent;
 using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.HttpApiGateway;

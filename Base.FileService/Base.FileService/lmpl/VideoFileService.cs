@@ -1,12 +1,11 @@
 ﻿using Base.FileModel.BaseFile;
 using Base.FileService.Helper;
 using Base.FileService.Interface;
-using Base.FileStoreGatewayModular.Interface;
 using WeDonekRpc.Helper;
 using WeDonekRpc.Helper.Img;
 using WeDonekRpc.Helper.Lock;
 
-namespace Base.FileStoreGatewayModular.Logic
+namespace Base.FileService.lmpl
 {
     internal class VideoFileService : IVideoFileService
     {

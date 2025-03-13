@@ -76,5 +76,10 @@ namespace Base.FileDAL.Repository
         {
             return this._BasicDAL.GetAll<Result>();
         }
+
+        public bool IsExist ( Expression<Func<T, bool>> filter )
+        {
+            return this._BasicDAL.IsExist(filter);
+        }
     }
 }

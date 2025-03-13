@@ -9,7 +9,7 @@ using WeDonekRpc.Client;
 using WeDonekRpc.Helper;
 using WeDonekRpc.HttpApiGateway.Model;
 
-namespace Base.FileStoreGatewayModular.Logic
+namespace Base.FileStoreGatewayModular.lmpl
 {
     internal class FileListService : IFileListService
     {

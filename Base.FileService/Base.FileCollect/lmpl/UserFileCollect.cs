@@ -113,5 +113,15 @@ namespace Base.FileCollect.lmpl
         {
             return this._UserFile.GetFileNum(fileId);
         }
+
+        public Dictionary<long, int> GetDirFileNum ( long[] dirId )
+        {
+            return this._UserFile.GetDirFileNum(dirId);
+        }
+
+        public bool CheckIsNullDir ( long dirId )
+        {
+            return this._UserFile.IsExist(c => c.UserDirId == dirId);
+        }
     }
 }

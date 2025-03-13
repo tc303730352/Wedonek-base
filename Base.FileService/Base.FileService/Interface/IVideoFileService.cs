@@ -1,6 +1,6 @@
 ﻿using Base.FileModel.BaseFile;
 
-namespace Base.FileStoreGatewayModular.Interface
+namespace Base.FileService.Interface
 {
     public interface IVideoFileService
     {

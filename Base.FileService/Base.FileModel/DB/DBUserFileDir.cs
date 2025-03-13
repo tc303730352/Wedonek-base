@@ -1,4 +1,5 @@
-﻿using Base.FileRemoteModel;
+﻿using Base.FileModel.UserFileDir;
+using Base.FileRemoteModel;
 using SqlSugar;
 
 namespace Base.FileModel.DB
@@ -54,6 +55,11 @@ namespace Base.FileModel.DB
         [SugarColumn(IsJson = true)]
         public string[] ReadPower { get; set; }
 
+        /// <summary>
+        /// 上传图片的设置
+        /// </summary>
+        [SugarColumn(IsJson = true)]
+        public UpImgSet UpImgSet { get; set; }
         /// <summary>
         /// 上传说明
         /// </summary>

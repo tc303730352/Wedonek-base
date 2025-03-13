@@ -6,6 +6,7 @@ using SqlSugar;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper;
 using WeDonekRpc.Helper.IdGenerator;
+using WeDonekRpc.Model;
 using WeDonekRpc.SqlSugar;
 
 namespace Base.FileDAL.Repository
@@ -14,6 +15,11 @@ namespace Base.FileDAL.Repository
     {
         public UserFileDAL ( IRepository<DBUserFileList> basicDAL ) : base(basicDAL)
         {
+        }
+        public Result[] Query<Result> ( UserFileQuery query, IBasicPage paging, out int count ) where Result : class, new()
+        {
+            paging.InitOrderBy("Id", true);
+            return this._BasicDAL.Query<Result>(query.ToWhere(), paging, out count);
         }
         public UserFileBasic[] GetFiles ( long dirId, long linkBizPk, string tag )
         {
@@ -159,6 +165,14 @@ namespace Base.FileDAL.Repository
                 a.FileId,
                 num = SqlFunc.AggregateCount(a.FileId)
             }).ToDictionary(a => a.FileId, a => a.num);
+        }
+        public Dictionary<long, int> GetDirFileNum ( long[] dirId )
+        {
+            return this._BasicDAL.GroupBy(a => dirId.Contains(a.UserDirId), a => a.UserDirId, a => new
+            {
+                a.UserDirId,
+                num = SqlFunc.AggregateCount(a.UserDirId)
+            }).ToDictionary(a => a.UserDirId, a => a.num);
         }
     }
 }
