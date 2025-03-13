@@ -88,7 +88,6 @@ export default {
       },
       columns: [
         {
-          sortby: 'File',
           key: 'File',
           title: '文件',
           slotName: 'File',
@@ -105,7 +104,6 @@ export default {
           sortable: 'custom'
         },
         {
-          sortby: 'FileMd5',
           key: 'FileMd5',
           title: '文件MD5',
           align: 'center',
@@ -130,7 +128,6 @@ export default {
           sortable: 'custom'
         },
         {
-          sortby: 'FileNum',
           key: 'FileNum',
           title: '文件引用数',
           align: 'right',

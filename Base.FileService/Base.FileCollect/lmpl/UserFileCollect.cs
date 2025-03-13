@@ -121,7 +121,7 @@ namespace Base.FileCollect.lmpl
 
         public bool CheckIsNullDir ( long dirId )
         {
-            return this._UserFile.IsExist(c => c.UserDirId == dirId);
+            return this._UserFile.IsExist(c => c.UserDirId == dirId) == false;
         }
     }
 }

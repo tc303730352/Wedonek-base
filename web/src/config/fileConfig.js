@@ -10,7 +10,41 @@ module.exports = {
   },
   FileEnumDic: {
     fileType: 'FileType',
-    fileSaveType: 'FileSaveType'
+    dirStatus: 'FileDirStatus',
+    fileSaveType: 'FileSaveType',
+    filePower: 'FilePower'
+  },
+  DirStatus: {
+    0: {
+      text: '启用',
+      value: 0
+    },
+    1: {
+      text: '只读',
+      value: 1
+    },
+    2: {
+      text: '禁用',
+      value: 2
+    }
+  },
+  FilePower: {
+    0: {
+      text: '公共',
+      value: 0
+    },
+    1: {
+      text: '私有',
+      value: 1
+    },
+    2: {
+      text: '指定权限',
+      value: 2
+    },
+    3: {
+      text: '共享',
+      value: 3
+    }
   },
   FileType: {
     0: {
