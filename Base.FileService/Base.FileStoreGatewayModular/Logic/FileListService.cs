@@ -17,9 +17,12 @@ namespace Base.FileStoreGatewayModular.Logic
         private readonly IUserFileCollect _UserFile;
         private readonly IFileConfig _Config;
 
-        public FileListService ( IFileCollect service, IFileConfig config )
+        public FileListService ( IFileCollect service,
+            IUserFileCollect userFile,
+            IFileConfig config )
         {
             this._Service = service;
+            this._UserFile = userFile;
             this._Config = config;
         }
 
