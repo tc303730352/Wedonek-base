@@ -187,10 +187,7 @@ export default {
         IsDesc: false,
         Total: 0
       },
-      visible: false,
-      empId: null,
       queryParam: {
-        CompanyId: null,
         QueryKey: null,
         IsEntry: true,
         DeptId: null,

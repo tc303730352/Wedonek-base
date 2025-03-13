@@ -19,7 +19,7 @@ namespace Base.FileService.Config
 
         private void _Refresh ( IConfigSection section, string name )
         {
-            bool isEnable = section.GetValue("IsEnable", false);
+            bool isEnable = section.GetValue("IsEnable", true);
             if ( isEnable )
             {
                 string path = section.GetValue("FFmpegPath");

@@ -130,6 +130,13 @@ export default {
           sortable: 'custom'
         },
         {
+          sortby: 'FileNum',
+          key: 'FileNum',
+          title: '文件引用数',
+          align: 'right',
+          width: 120
+        },
+        {
           sortby: 'SaveType',
           key: 'SaveType',
           title: '保存方式',
