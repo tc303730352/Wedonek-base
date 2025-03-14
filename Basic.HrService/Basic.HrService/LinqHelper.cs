@@ -9,7 +9,7 @@ namespace Basic.HrService
     {
         public static string[] ToSplit ( this string str )
         {
-            if ( str == null )
+            if ( str.IsNull() )
             {
                 return null;
             }
