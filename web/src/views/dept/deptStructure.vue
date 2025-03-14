@@ -29,55 +29,7 @@ import { HrDeptStatus } from '@/config/publicDic'
 export default {
   data() {
     return {
-      depts: {
-        id: 1,
-        label: 'Wedonek总公司',
-        type: 'company',
-        children: [
-          {
-            id: 2,
-            label: '四川省分公司',
-            type: 'unit',
-            children: [
-              {
-                id: 6,
-                label: '成都分公司',
-                type: 'unit'
-              },
-              {
-                id: 7,
-                label: '眉山市分公司'
-              }
-            ]
-          },
-          {
-            id: 3,
-            label: '北京市分公司',
-            children: [
-              {
-                id: 11,
-                pid: 3,
-                label: '客服一部'
-              },
-              {
-                id: 12,
-                pid: 3,
-                label: '客服二部'
-              }
-            ]
-          },
-          {
-            id: 4,
-            pid: 1,
-            label: '业务部'
-          },
-          {
-            id: 5,
-            pid: 1,
-            label: '人力资源中心'
-          }
-        ]
-      }
+      depts: {}
     }
   },
   computed: {
@@ -89,13 +41,42 @@ export default {
       return this.$store.getters.curComId
     }
   },
-  created() {
+  mounted() {
+    this.init()
   },
   methods: {
     async init() {
-      const res = await getTallyTrees({
+      const list = await getTallyTrees({
         CompanyId: this.comId,
         Status: [HrDeptStatus[1].value]
+      })
+      this.depts = {
+        id: this.comId,
+        label: this.comName,
+        type: 'company',
+        children: list.map(c => {
+          return {
+            id: c.Id,
+            label: c.Name,
+            type: c.IsUnit ? 'unit' : 'dept',
+            EmpNum: c.EmpNum,
+            children: this.getChilldren(c)
+          }
+        })
+      }
+    },
+    getChilldren(c) {
+      if (c.Children == null) {
+        return null
+      }
+      return c.Children.map(c => {
+        return {
+          id: c.Id,
+          label: c.Name,
+          type: c.IsUnit ? 'unit' : 'dept',
+          EmpNum: c.EmpNum,
+          children: this.getChilldren(c)
+        }
       })
     }
   }

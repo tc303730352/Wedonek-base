@@ -28,6 +28,39 @@
             set;
         }
         /// <summary>
+        /// 部门标签(部门类型)
+        /// </summary>
+        public string[] DeptTag
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 负责人
+        /// </summary>
+        public long? LeaderId
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 负责人名
+        /// </summary>
+        public string LeaderName
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 部门说明
+        /// </summary>
+        public string DeptShow
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 下级
         /// </summary>
         public DeptTallyTree[] Children

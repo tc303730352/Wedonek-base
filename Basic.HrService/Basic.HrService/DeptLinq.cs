@@ -31,7 +31,7 @@ namespace Basic.HrService
                 Children = _GetChildren(a, depts)
             });
         }
-        public static DeptTallyTree[] ToTree ( this DeptBaseDto[] depts, Dictionary<long, int> empNum )
+        public static DeptTallyTree[] ToTree ( this DeptBaseDto[] depts, Dictionary<long, int> empNum, Dictionary<long, string> empName )
         {
             int lvl = depts.Min(a => a.Lvl);
             return depts.Convert(a => a.Lvl == lvl, a =>
@@ -41,8 +41,15 @@ namespace Basic.HrService
                     Id = a.Id,
                     Name = a.ShortName.GetValueOrDefault(a.DeptName),
                     IsUnit = a.IsUnit,
-                    Children = _GetChildren(a, depts, empNum)
+                    LeaderId = a.LeaderId,
+                    DeptTag = a.DeptTag.ToSplit(),
+                    DeptShow = a.DeptShow,
+                    Children = _GetChildren(a, depts, empNum, empName)
                 };
+                if ( a.LeaderId.HasValue )
+                {
+                    tree.LeaderName = empName.GetValueOrDefault(a.LeaderId.Value);
+                }
                 if ( !a.IsUnit )
                 {
                     tree.EmpNum = empNum.GetValueOrDefault(a.Id);
@@ -54,7 +61,7 @@ namespace Basic.HrService
                 return tree;
             });
         }
-        private static DeptTallyTree[] _GetChildren ( DeptBaseDto parent, DeptBaseDto[] depts, Dictionary<long, int> empNum )
+        private static DeptTallyTree[] _GetChildren ( DeptBaseDto parent, DeptBaseDto[] depts, Dictionary<long, int> empNum, Dictionary<long, string> empName )
         {
             return depts.Convert(a => a.ParentId == parent.Id, a =>
             {
@@ -63,8 +70,15 @@ namespace Basic.HrService
                     Id = a.Id,
                     Name = a.ShortName.GetValueOrDefault(a.DeptName),
                     IsUnit = a.IsUnit,
-                    Children = _GetChildren(a, depts, empNum)
+                    LeaderId = a.LeaderId,
+                    DeptTag = a.DeptTag.ToSplit(),
+                    DeptShow = a.DeptShow,
+                    Children = _GetChildren(a, depts, empNum, empName)
                 };
+                if ( a.LeaderId.HasValue )
+                {
+                    tree.LeaderName = empName.GetValueOrDefault(a.LeaderId.Value);
+                }
                 if ( !a.IsUnit )
                 {
                     tree.EmpNum = empNum.GetValueOrDefault(a.Id);

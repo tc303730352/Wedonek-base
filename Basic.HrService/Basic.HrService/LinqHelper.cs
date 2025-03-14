@@ -7,15 +7,15 @@ namespace Basic.HrService
 {
     internal static class LinqHelper
     {
-        public static string[] ToSplit (this string str)
+        public static string[] ToSplit ( this string str )
         {
-            if (str == null)
+            if ( str == null )
             {
                 return null;
             }
             return str.Remove(0, 1).Remove(str.Length - 1, 1).Split('|');
         }
-        public static TreeItemBase[] ToTree (this TreeItem[] items, TreeItem parent)
+        public static TreeItemBase[] ToTree ( this TreeItem[] items, TreeItem parent )
         {
             return items.Convert(c => c.ParentId == parent.Id, c => new TreeItemBase
             {
@@ -25,7 +25,7 @@ namespace Basic.HrService
                 Children = items.ToTree(c)
             });
         }
-        public static TreeFullItem[] ToTree (this TreeItemTemp[] items, TreeItemTemp parent)
+        public static TreeFullItem[] ToTree ( this TreeItemTemp[] items, TreeItemTemp parent )
         {
             return items.Convert(c => c.ParentId == parent.Id, c => new TreeFullItem
             {
