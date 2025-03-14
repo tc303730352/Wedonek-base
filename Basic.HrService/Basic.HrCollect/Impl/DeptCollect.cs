@@ -184,7 +184,7 @@ namespace Basic.HrCollect.Impl
                 };
                 int plvl = 0;
                 string lvlCode;
-                if ( dept.ParentId == 0 )
+                if ( set.ParentId == 0 )
                 {
                     arg.LevelCode = "|" + set.ParentId + "|";
                     arg.Lvl = 1;

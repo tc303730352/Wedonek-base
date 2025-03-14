@@ -75,7 +75,7 @@ namespace Basic.HrDAL.Repository
             }
             ISqlQueue<DBEmpList> queue = this._BasicDAL.BeginQueue();
             queue.Insert(add);
-            queue.Insert<DBEmpTitle>(title.ConvertAll(a => new DBEmpTitle
+            queue.InsertBy<DBEmpTitle>(title.ConvertAll(a => new DBEmpTitle
             {
                 CompanyId = add.CompanyId,
                 DeptId = add.DeptId,
@@ -103,8 +103,8 @@ namespace Basic.HrDAL.Repository
             }
             if ( !title.IsNull() )
             {
-                queue.Delete<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
-                queue.Insert<DBEmpTitle>(title.ConvertAll(a => new DBEmpTitle
+                queue.DeleteBy<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+                queue.InsertBy<DBEmpTitle>(title.ConvertAll(a => new DBEmpTitle
                 {
                     Id = IdentityHelper.CreateId(),
                     CompanyId = soure.CompanyId,
@@ -116,7 +116,7 @@ namespace Basic.HrDAL.Repository
             }
             if ( soure.IsOpenAccount && deptId != set.DeptId )
             {
-                queue.Delete<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+                queue.DeleteBy<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }
             _ = queue.Submit();
             return cols;
@@ -173,8 +173,8 @@ namespace Basic.HrDAL.Repository
             }
             if ( !datum.Title.IsNull() )
             {
-                queue.Delete<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
-                queue.Insert<DBEmpTitle>(datum.Title.ConvertAll(a => new DBEmpTitle
+                queue.DeleteBy<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+                queue.InsertBy<DBEmpTitle>(datum.Title.ConvertAll(a => new DBEmpTitle
                 {
                     Id = IdentityHelper.CreateId(),
                     CompanyId = soure.CompanyId,
@@ -186,7 +186,7 @@ namespace Basic.HrDAL.Repository
             }
             if ( soure.IsOpenAccount && deptId != datum.DeptId )
             {
-                queue.Delete<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+                queue.DeleteBy<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }
             _ = queue.Submit();
             return cols;

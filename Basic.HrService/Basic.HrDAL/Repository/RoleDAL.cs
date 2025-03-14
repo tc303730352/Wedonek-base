@@ -22,7 +22,7 @@ namespace Basic.HrDAL.Repository
                 return;
             }
             ISqlQueue<DBRole> queue = this._BasicDAL.BeginQueue();
-            queue.Delete<DBRolePower>(a => rolePowerId.Contains(a.Id));
+            queue.DeleteBy<DBRolePower>(a => rolePowerId.Contains(a.Id));
             queue.Delete(a => a.Id == role.Id);
             if ( queue.Submit() <= 0 )
             {
@@ -35,11 +35,11 @@ namespace Basic.HrDAL.Repository
             _ = queue.Update(role, set);
             if ( !rolePowerId.IsNull() )
             {
-                queue.Delete<DBRolePower>(a => rolePowerId.Contains(a.Id));
+                queue.DeleteBy<DBRolePower>(a => rolePowerId.Contains(a.Id));
             }
             if ( !power.IsNull() )
             {
-                queue.Insert(power.ConvertAll(a => new DBRolePower
+                queue.InsertBy(power.ConvertAll(a => new DBRolePower
                 {
                     Id = IdentityHelper.CreateId(),
                     SubSystemId = a.SubSystemId,
@@ -65,7 +65,7 @@ namespace Basic.HrDAL.Repository
             {
                 ISqlQueue<DBRole> queue = this._BasicDAL.BeginQueue();
                 queue.Insert(add);
-                queue.Insert(power.ConvertAll(a => new DBRolePower
+                queue.InsertBy(power.ConvertAll(a => new DBRolePower
                 {
                     Id = IdentityHelper.CreateId(),
                     SubSystemId = a.SubSystemId,

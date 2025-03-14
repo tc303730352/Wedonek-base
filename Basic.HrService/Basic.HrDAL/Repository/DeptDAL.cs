@@ -162,10 +162,16 @@ namespace Basic.HrDAL.Repository
                 {
                     throw new ErrorException("hr.dept.set.fail");
                 }
+                return;
             }
             ISqlQueue<DBDept> queue = this._BasicDAL.BeginQueue();
             _ = queue.Update(dept, arg);
-            queue.Update(sets, "LevelCode", "Lvl");
+            queue.UpdateBy<DBDept>(sets.ConvertAll(a => new DBDept
+            {
+                Id = a.Id,
+                LevelCode = a.LevelCode,
+                Lvl = a.Lvl,
+            }), "LevelCode", "Lvl");
             _ = queue.Submit();
         }
         public void SetLeader ( DBDept dept, long? leaderId )
@@ -181,15 +187,15 @@ namespace Basic.HrDAL.Repository
             queue.UpdateOneColumn(a => a.IsToVoid == true, a => a.Id == merge.ToVoid.Id);
             if ( !subs.IsNull() )
             {
-                queue.Update(subs, "LevelCode", "Lvl", "ParentId");
+                queue.UpdateBy(subs, "LevelCode", "Lvl", "ParentId");
             }
             if ( !merge.DropPowerId.IsNull() )
             {
-                queue.Delete<DBEmpDeptPower>(a => merge.DropPowerId.Contains(a.Id));
+                queue.DeleteBy<DBEmpDeptPower>(a => merge.DropPowerId.Contains(a.Id));
             }
             if ( !merge.Emp.IsNull() )
             {
-                queue.Update<DBEmpList>(merge.Emp.ConvertAll(a => new DBEmpList
+                queue.UpdateBy<DBEmpList>(merge.Emp.ConvertAll(a => new DBEmpList
                 {
                     EmpId = a.EmpId,
                     DeptId = a.DeptId,
@@ -197,11 +203,11 @@ namespace Basic.HrDAL.Repository
                 }), "DeptId", "UnitId");
                 if ( !merge.EmpTitleId.IsNull() )
                 {
-                    queue.Delete<DBEmpTitle>(a => merge.EmpTitleId.Contains(a.Id));
+                    queue.DeleteBy<DBEmpTitle>(a => merge.EmpTitleId.Contains(a.Id));
                 }
                 if ( !merge.EmpTitle.IsNull() )
                 {
-                    queue.Insert<DBEmpTitle>(merge.EmpTitle.ConvertAll(a => new DBEmpTitle
+                    queue.InsertBy<DBEmpTitle>(merge.EmpTitle.ConvertAll(a => new DBEmpTitle
                     {
                         CompanyId = merge.ToDept.CompanyId,
                         Id = IdentityHelper.CreateId(),
@@ -247,7 +253,7 @@ namespace Basic.HrDAL.Repository
                 });
                 if ( adds.Count > 0 )
                 {
-                    queue.Insert<DBEmpDeptPower>(adds);
+                    queue.InsertBy<DBEmpDeptPower>(adds);
                 }
             }
             _ = queue.Submit();
@@ -257,7 +263,7 @@ namespace Basic.HrDAL.Repository
         {
             ISqlQueue<DBDept> queue = this._BasicDAL.BeginQueue();
             queue.UpdateOneColumn(a => a.IsToVoid == true, a => deptId.Contains(a.Id));
-            queue.Delete<DBEmpDeptPower>(a => deptId.Contains(a.Id));
+            queue.DeleteBy<DBEmpDeptPower>(a => deptId.Contains(a.Id));
             _ = queue.Submit();
         }
     }
