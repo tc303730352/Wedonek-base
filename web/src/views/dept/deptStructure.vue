@@ -11,12 +11,16 @@
         :data="depts"
       >
         <template slot-scope="{node}">
-          <el-card class="dept">
+          <div v-if="node.type == 'company'" class="comName">
+            {{ node.label }}
+          </div>
+          <el-card v-else :class="node.type =='unit' ? 'dept unit' : 'dept'">
             <div slot="header" class="header">
-              <svg-icon icon-class="tree" />
+              <svg-icon v-if="node.type == 'unit'" icon-class="tree" />
+              <svg-icon v-else-if="node.type == 'dept'" icon-class="peoples" />
               <span>{{ node.label }}</span>
             </div>
-            <p>员工数：10人</p>
+            <p>员工数：{{ node.EmpNum }}人</p>
           </el-card>
         </template>
       </zm-tree-org>
@@ -64,6 +68,7 @@ export default {
           }
         })
       }
+      console.log(this.depts)
     },
     getChilldren(c) {
       if (c.Children == null) {
@@ -93,20 +98,40 @@ export default {
     bottom: inherit !important;
     top: 0px;
 }
+.structure .zm-tree-org {
+    background-color: #b1b1b1;
+}
 .structure .zm-tree-org .zoom-container {
     overflow: auto;
 }
 .structure .el-card{
    width: 250px;
 }
-
+.structure .comName {
+    color: #fff;
+    background-color: #43AF2B;
+    min-width: 250px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+}
 .structure .dept .header{
     text-align: left;
+}
+.structure .dept .el-card__body {
+    padding: 5px;
+    text-align: left;
+}
+.structure .dept .el-card__header{
+   background-color: #999;
+   color: #fff;
+}
+.structure .unit .el-card__header{
+   background-color: #1890ff;
+   color: #fff;
 }
 .structure .dept .header span{
     padding-left: 10px;
 }
-.structure .dept .el-el-card__header{
-    text-align: left;
-}
+
 </style>

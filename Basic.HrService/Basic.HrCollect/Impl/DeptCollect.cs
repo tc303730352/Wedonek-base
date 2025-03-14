@@ -182,11 +182,11 @@ namespace Basic.HrCollect.Impl
                     LeaderId = set.LeaderId,
                     ParentId = set.ParentId
                 };
-                int plvl = 0;
+                int plvl = 1;
                 string lvlCode;
                 if ( set.ParentId == 0 )
                 {
-                    arg.LevelCode = "|" + set.ParentId + "|";
+                    arg.LevelCode = string.Empty;
                     arg.Lvl = 1;
                     lvlCode = "|";
                 }
