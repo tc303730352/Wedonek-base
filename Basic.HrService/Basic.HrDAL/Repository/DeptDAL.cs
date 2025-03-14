@@ -151,6 +151,7 @@ namespace Basic.HrDAL.Repository
                 DeptName = set.DeptName,
                 DeptShow = set.DeptShow,
                 ShortName = set.ShortName,
+                LeaderId = set.LeaderId,
                 DeptTag = set.DeptTag.Join('|', '|')
             });
         }
