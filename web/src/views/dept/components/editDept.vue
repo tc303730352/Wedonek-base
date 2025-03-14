@@ -118,9 +118,6 @@ export default {
             message: '部门/单位全称长度在 2 到 100 个字之间',
             trigger: 'blur'
           }
-        ],
-        ParentId: [
-          { required: true, message: '所属上级不能为空!', trigger: 'blur' }
         ]
       }
     }

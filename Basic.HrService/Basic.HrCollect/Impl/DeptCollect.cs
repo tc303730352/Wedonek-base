@@ -158,11 +158,11 @@ namespace Basic.HrCollect.Impl
 
         public bool Set ( DBDept dept, DeptSet set )
         {
-            if ( set.DeptName != dept.DeptName && this._Dept.CheckRepeat(dept.CompanyId, dept.ParentId, set.DeptName) )
+            if ( ( set.DeptName != dept.DeptName || dept.ParentId != set.ParentId ) && this._Dept.CheckRepeat(dept.CompanyId, set.ParentId, set.DeptName) )
             {
                 throw new ErrorException("hr.dept.name.repeat");
             }
-            else if ( set.ShortName.IsNotNull() && set.ShortName != dept.ShortName && this._Dept.CheckShortRepeat(dept.CompanyId, dept.ParentId, set.ShortName) )
+            else if ( set.ShortName.IsNotNull() && ( set.ShortName != dept.ShortName || dept.ParentId != set.ParentId ) && this._Dept.CheckShortRepeat(dept.CompanyId, set.ParentId, set.ShortName) )
             {
                 throw new ErrorException("hr.dept.short.name.repeat");
             }
@@ -172,29 +172,42 @@ namespace Basic.HrCollect.Impl
             }
             if ( set.ParentId != dept.ParentId )
             {
-                var prt = this._Dept.Get(set.ParentId, a => new
-                {
-                    a.UnitId,
-                    a.IsUnit,
-                    a.LevelCode,
-                    a.Lvl
-                });
-                if ( ( prt.IsUnit && set.ParentId != dept.UnitId ) || ( prt.IsUnit == false && prt.UnitId != dept.UnitId ) )
-                {
-                    throw new ErrorException("hr.dept.unit.id.not.agreement");
-                }
                 DeptSetArg arg = new DeptSetArg
                 {
                     DeptName = set.DeptName,
                     ShortName = set.ShortName,
                     DeptShow = set.DeptShow,
                     DeptTag = set.DeptTag.Join('|', '|'),
-                    LevelCode = prt.LevelCode + set.ParentId + "|",
                     Sort = this._Dept.GetMaxSort(dept.CompanyId, set.ParentId) + 1,
-                    Lvl = prt.Lvl + 1,
                     LeaderId = set.LeaderId,
                     ParentId = set.ParentId
                 };
+                int plvl = 0;
+                string lvlCode;
+                if ( dept.ParentId == 0 )
+                {
+                    arg.LevelCode = "|" + set.ParentId + "|";
+                    arg.Lvl = 1;
+                    lvlCode = "|";
+                }
+                else
+                {
+                    var prt = this._Dept.Get(set.ParentId, a => new
+                    {
+                        a.UnitId,
+                        a.IsUnit,
+                        a.LevelCode,
+                        a.Lvl
+                    });
+                    if ( ( prt.IsUnit && set.ParentId != dept.UnitId ) || ( prt.IsUnit == false && prt.UnitId != dept.UnitId ) )
+                    {
+                        throw new ErrorException("hr.dept.unit.id.not.agreement");
+                    }
+                    lvlCode = prt.LevelCode;
+                    arg.LevelCode = prt.LevelCode + set.ParentId + "|";
+                    arg.Lvl = prt.Lvl + 1;
+                    plvl = prt.Lvl;
+                }
                 string level = dept.LevelCode + dept.Id + "|";
                 var sub = this._Dept.Gets(a => a.LevelCode.StartsWith(level), a => new
                 {
@@ -205,13 +218,13 @@ namespace Basic.HrCollect.Impl
                 SubDeptSet[] sets = null;
                 if ( !sub.IsNull() )
                 {
-                    int lvl = prt.Lvl - dept.Lvl;
+                    int lvl = plvl - dept.Lvl;
                     sets = sub.ConvertAll(c =>
                     {
                         return new SubDeptSet
                         {
                             Id = c.Id,
-                            LevelCode = prt.LevelCode + c.LevelCode.Substring(dept.LevelCode.Length),
+                            LevelCode = lvlCode + c.LevelCode.Substring(dept.LevelCode.Length),
                             Lvl = c.Lvl + lvl,
                         };
                     });

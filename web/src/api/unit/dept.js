@@ -22,7 +22,7 @@ export function stop(id) {
     url: formatRequestUri('Stop'),
     method: 'get',
     params: {
-      deptId:id
+      deptId: id
     }
   })
 }
@@ -72,5 +72,13 @@ export function setLeader(id, leaderId) {
       Id: id,
       Value: leaderId
     }
+  })
+}
+
+export function getTallyTrees(data) {
+  return request({
+    url: formatRequestUri('GetTallyTrees'),
+    method: 'post',
+    data
   })
 }

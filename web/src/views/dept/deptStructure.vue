@@ -24,6 +24,8 @@
   </el-card>
 </template>
 <script>
+import { getTallyTrees } from '@/api/unit/dept'
+import { HrDeptStatus } from '@/config/publicDic'
 export default {
   data() {
     return {
@@ -78,9 +80,24 @@ export default {
       }
     }
   },
+  computed: {
+    comName() {
+      const comId = this.$store.getters.curComId
+      return this.$store.getters.company[comId]
+    },
+    comId() {
+      return this.$store.getters.curComId
+    }
+  },
   created() {
   },
   methods: {
+    async init() {
+      const res = await getTallyTrees({
+        CompanyId: this.comId,
+        Status: [HrDeptStatus[1].value]
+      })
+    }
   }
 }
 </script>

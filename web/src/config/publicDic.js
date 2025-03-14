@@ -48,16 +48,19 @@ module.exports = {
   HrDeptStatus: {
     1: {
       text: '启用',
+      value: 1,
       color: '#43AF2B',
       status: 'success'
     },
     2: {
       text: '停用',
+      value: 2,
       color: '#999',
       status: 'danger'
     },
     0: {
       text: '起草',
+      value: 0,
       color: '#1890ff',
       status: 'info'
     }
