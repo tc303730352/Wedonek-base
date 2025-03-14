@@ -13,7 +13,7 @@ namespace Basic.HrService
             {
                 return null;
             }
-            return str.Remove(0, 1).Remove(str.Length - 1, 1).Split('|');
+            return str.Substring(1, str.Length - 2).Split('|');
         }
         public static TreeItemBase[] ToTree ( this TreeItem[] items, TreeItem parent )
         {

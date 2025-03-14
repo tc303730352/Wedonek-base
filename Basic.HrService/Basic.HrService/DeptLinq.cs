@@ -10,6 +10,10 @@ namespace Basic.HrService
     {
         public static ChangeDeptTree[] ToTree ( this DeptBase[] depts, long parentId, Dictionary<long, int> empNum )
         {
+            if ( depts.IsNull() )
+            {
+                return Array.Empty<ChangeDeptTree>();
+            }
             return depts.Convert(a => a.ParentId == parentId, a => new ChangeDeptTree
             {
                 Id = a.Id,
@@ -20,6 +24,10 @@ namespace Basic.HrService
         }
         public static DeptTree[] ToTree ( this DeptBase[] depts )
         {
+            if ( depts.IsNull() )
+            {
+                return Array.Empty<DeptTree>();
+            }
             int lvl = depts.Min(a => a.Lvl);
             return depts.Convert(a => a.Lvl == lvl, a => new DeptTree
             {
@@ -33,6 +41,10 @@ namespace Basic.HrService
         }
         public static DeptTallyTree[] ToTree ( this DeptBaseDto[] depts, Dictionary<long, int> empNum, Dictionary<long, string> empName )
         {
+            if ( depts.IsNull() )
+            {
+                return Array.Empty<DeptTallyTree>();
+            }
             int lvl = depts.Min(a => a.Lvl);
             return depts.Convert(a => a.Lvl == lvl, a =>
             {
