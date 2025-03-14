@@ -10,11 +10,11 @@ namespace Basic.HrService.lmpl
     internal class UnitDeptService : IUnitDeptService
     {
         private readonly IDeptCollect _Dept;
-        public UnitDeptService (IDeptCollect dept)
+        public UnitDeptService ( IDeptCollect dept )
         {
             this._Dept = dept;
         }
-        public DeptTree[] GetTree (UnitGetArg arg)
+        public DeptTree[] GetTree ( UnitGetArg arg )
         {
             DeptBase[] depts = this._Dept.GetUnitDepts(new UnitGetParam
             {
@@ -28,7 +28,7 @@ namespace Basic.HrService.lmpl
             });
             return depts.ToTree();
         }
-        public DeptSelect[] GetDeptSelect (UnitGetArg arg)
+        public DeptSelect[] GetDeptSelect ( UnitGetArg arg )
         {
             DeptBase[] depts = this._Dept.GetUnitDepts(new UnitGetParam
             {
@@ -45,9 +45,9 @@ namespace Basic.HrService.lmpl
             });
         }
 
-        public UnitSelect[] GetUnitSelect (UnitQueryParam arg)
+        public UnitSelect[] GetUnitSelect ( UnitQueryParam arg )
         {
-            DeptBase[] depts = this._Dept.GetDepts(new DeptGetParam
+            DeptBase[] depts = this._Dept.GetDepts<DeptBase>(new DeptGetParam
             {
                 CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
@@ -63,9 +63,9 @@ namespace Basic.HrService.lmpl
             });
         }
 
-        public UnitTree[] GetUnitTree (UnitQueryParam arg)
+        public UnitTree[] GetUnitTree ( UnitQueryParam arg )
         {
-            DeptBase[] depts = this._Dept.GetDepts(new DeptGetParam
+            DeptBase[] depts = this._Dept.GetDepts<DeptBase>(new DeptGetParam
             {
                 CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,

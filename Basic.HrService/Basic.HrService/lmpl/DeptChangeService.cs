@@ -131,7 +131,7 @@ namespace Basic.HrService.lmpl
         public ChangeDeptTree GetDept ( long deptId, bool? isUnit )
         {
             DBDept dept = this._Dept.Get(deptId);
-            DeptBase[] depts = this._Dept.GetDepts(new DeptGetParam
+            DeptBase[] depts = this._Dept.GetDepts<DeptBase>(new DeptGetParam
             {
                 IsAllChildren = true,
                 Status = new HrDeptStatus[]

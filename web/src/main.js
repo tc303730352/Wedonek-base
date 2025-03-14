@@ -24,7 +24,10 @@ import table from '@/components/table/tableList'
 import leftRightSplit from '@/components/tools/leftRightSplit.vue'
 import * as filters from './filters' // global filters
 import moment from 'moment'
+import ZmTreeOrg from 'zm-tree-org'
+import 'zm-tree-org/lib/zm-tree-org.css'
 
+Vue.use(ZmTreeOrg)
 Vue.prototype.$moment = moment
 Vue.prototype.$erd = ElementResizeDetectorMaker()
 /**

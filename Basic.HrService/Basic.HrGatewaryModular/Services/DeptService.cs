@@ -6,15 +6,21 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class DeptService : IDeptService
     {
-        public long AddDept (DeptAdd datum)
+        public long AddDept ( DeptAdd datum )
         {
             return new AddDept
             {
                 Datum = datum,
             }.Send();
         }
-
-        public void DeleteDept (long id)
+        public DeptTallyTree[] GetTallyTrees ( DeptGetArg param )
+        {
+            return new GetTallyTrees
+            {
+                Param = param
+            }.Send();
+        }
+        public void DeleteDept ( long id )
         {
             new DeleteDept
             {
@@ -22,7 +28,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public bool EnableDept (long[] deptId)
+        public bool EnableDept ( long[] deptId )
         {
             return new EnableDept
             {
@@ -30,7 +36,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptDto GetDept (long id)
+        public DeptDto GetDept ( long id )
         {
             return new GetDept
             {
@@ -38,7 +44,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptSelect[] GetDeptSelect (DeptGetArg getParam)
+        public DeptSelect[] GetDeptSelect ( DeptGetArg getParam )
         {
             return new GetDeptSelect
             {
@@ -46,7 +52,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptTree[] GetDeptTree (DeptGetArg param)
+        public DeptTree[] GetDeptTree ( DeptGetArg param )
         {
             return new GetDeptTree
             {
@@ -54,7 +60,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptFullTree[] Gets (DeptQueryParam obj)
+        public DeptFullTree[] Gets ( DeptQueryParam obj )
         {
             return new GetDeptList
             {
@@ -62,7 +68,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetDept (long id, DeptSet dept)
+        public void SetDept ( long id, DeptSet dept )
         {
             new SetDept
             {
@@ -71,7 +77,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetLeader (long id, long? leaderId)
+        public void SetLeader ( long id, long? leaderId )
         {
             new SetDeptLeader
             {
@@ -80,7 +86,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public bool StopDept (long deptId)
+        public bool StopDept ( long deptId )
         {
             return new StopDept
             {

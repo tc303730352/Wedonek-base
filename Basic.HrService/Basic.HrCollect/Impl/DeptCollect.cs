@@ -14,63 +14,63 @@ namespace Basic.HrCollect.Impl
     {
         private readonly IDeptDAL _Dept;
 
-        public DeptCollect (IDeptDAL dept)
+        public DeptCollect ( IDeptDAL dept )
         {
             this._Dept = dept;
         }
-        public long[] GetEnableDeptId (long unitId)
+        public long[] GetEnableDeptId ( long unitId )
         {
             return this._Dept.GetEnableDeptId(unitId);
         }
-        public Result[] Gets<Result> (DeptQueryParam query) where Result : class, new()
+        public Result[] Gets<Result> ( DeptQueryParam query ) where Result : class, new()
         {
             return this._Dept.Gets<Result>(query);
         }
-        public string GetDeptName (long id)
+        public string GetDeptName ( long id )
         {
             return this._Dept.GetDeptName(id);
         }
-        public string GetUnitDeptName (long id)
+        public string GetUnitDeptName ( long id )
         {
             return this._Dept.GetUnitDeptName(id);
         }
-        public Dictionary<long, string> GetDeptName (long[] ids)
+        public Dictionary<long, string> GetDeptName ( long[] ids )
         {
             return this._Dept.GetDeptName(ids);
         }
-        public DBDept Get (long id)
+        public DBDept Get ( long id )
         {
             return this._Dept.Get(id);
         }
-        public DeptBase[] GetDepts (DeptGetParam param)
+        public Result[] GetDepts<Result> ( DeptGetParam param ) where Result : class, new()
         {
-            return this._Dept.GetDepts<DeptBase>(param);
+            return this._Dept.GetDepts<Result>(param);
         }
-        public long[] GetEnableSubId (DBDept dept)
+        public long[] GetEnableSubId ( DBDept dept )
         {
             return this._Dept.GetsSubId(dept, HrDeptStatus.启用);
         }
-        public long[] GetSubDeptId (long unitId, DBDept dept)
+        public long[] GetSubDeptId ( long unitId, DBDept dept )
         {
             return this._Dept.GetSubDeptId(unitId, dept);
         }
-        public DeptBase[] GetUnitDepts (UnitGetParam param)
+        public DeptBase[] GetUnitDepts ( UnitGetParam param )
         {
             return this._Dept.GetUnitDepts<DeptBase>(param);
         }
-        public long Add (DeptAdd add)
+        public long Add ( DeptAdd add )
         {
-            if (this._Dept.CheckRepeat(add.CompanyId, add.ParentId, add.DeptName))
+            if ( this._Dept.CheckRepeat(add.CompanyId, add.ParentId, add.DeptName) )
             {
                 throw new ErrorException("hr.dept.name.repeat");
             }
-            else if (!add.ShortName.IsNull() && this._Dept.CheckShortRepeat(add.CompanyId, add.ParentId, add.ShortName))
+            else if ( !add.ShortName.IsNull() && this._Dept.CheckShortRepeat(add.CompanyId, add.ParentId, add.ShortName) )
             {
                 throw new ErrorException("hr.dept.short.name.repeat");
             }
             DBDept dept = add.ConvertMap<DeptAdd, DBDept>();
             dept.Status = HrDeptStatus.起草;
-            if (add.ParentId != 0)
+            if ( add.ParentId != 0 )
             {
                 var prt = this._Dept.Get(add.ParentId, a => new
                 {
@@ -79,7 +79,7 @@ namespace Basic.HrCollect.Impl
                     a.UnitId,
                     a.IsUnit
                 });
-                if (prt.Lvl == 1)
+                if ( prt.Lvl == 1 )
                 {
                     dept.LevelCode = "|" + add.ParentId + "|";
                 }
@@ -88,7 +88,7 @@ namespace Basic.HrCollect.Impl
                     dept.LevelCode = prt.LevelCode + add.ParentId + "|";
                 }
                 dept.Lvl = prt.Lvl + 1;
-                if (!dept.IsUnit)
+                if ( !dept.IsUnit )
                 {
                     dept.UnitId = prt.IsUnit ? add.ParentId : prt.UnitId;
                 }
@@ -103,25 +103,25 @@ namespace Basic.HrCollect.Impl
             this._Dept.AddDept(dept);
             return dept.Id;
         }
-        public void Delete (DBDept dept)
+        public void Delete ( DBDept dept )
         {
-            if (dept.Status != HrDeptStatus.起草)
+            if ( dept.Status != HrDeptStatus.起草 )
             {
                 throw new ErrorException("hr.dept.not.allow.delete");
             }
             long[] subId = this._Dept.GetsSubId(dept);
             this._Dept.Delete(subId.Add(dept.Id));
         }
-        public bool Enable (DBDept dept)
+        public bool Enable ( DBDept dept )
         {
-            if (dept.Status == HrDeptStatus.启用)
+            if ( dept.Status == HrDeptStatus.启用 )
             {
                 return false;
             }
-            else if (dept.ParentId != 0)
+            else if ( dept.ParentId != 0 )
             {
                 HrDeptStatus status = this._Dept.Get(dept.ParentId, a => a.Status);
-                if (status != HrDeptStatus.启用)
+                if ( status != HrDeptStatus.启用 )
                 {
                     throw new ErrorException("hr.parent.dept.no.enable");
                 }
@@ -129,14 +129,14 @@ namespace Basic.HrCollect.Impl
             this._Dept.EnableDept(dept);
             return true;
         }
-        public bool Enable (long[] deptId)
+        public bool Enable ( long[] deptId )
         {
             var pdept = this._Dept.Gets(deptId, a => new
             {
                 a.ParentId,
                 a.Status
             });
-            if (!pdept.IsNull() && pdept.IsExists(a => !deptId.Contains(a.ParentId) && a.Status != HrDeptStatus.启用))
+            if ( !pdept.IsNull() && pdept.IsExists(a => !deptId.Contains(a.ParentId) && a.Status != HrDeptStatus.启用) )
             {
                 throw new ErrorException("hr.parent.dept.no.enable");
             }
@@ -145,9 +145,9 @@ namespace Basic.HrCollect.Impl
             this._Dept.EnableDept(deptId);
             return true;
         }
-        public bool Stop (DBDept dept)
+        public bool Stop ( DBDept dept )
         {
-            if (dept.Status == HrDeptStatus.停用)
+            if ( dept.Status == HrDeptStatus.停用 )
             {
                 return false;
             }
@@ -156,21 +156,21 @@ namespace Basic.HrCollect.Impl
             return true;
         }
 
-        public bool Set (DBDept dept, DeptSet set)
+        public bool Set ( DBDept dept, DeptSet set )
         {
-            if (set.DeptName != dept.DeptName && this._Dept.CheckRepeat(dept.CompanyId, dept.ParentId, set.DeptName))
+            if ( set.DeptName != dept.DeptName && this._Dept.CheckRepeat(dept.CompanyId, dept.ParentId, set.DeptName) )
             {
                 throw new ErrorException("hr.dept.name.repeat");
             }
-            else if (set.ShortName.IsNotNull() && set.ShortName != dept.ShortName && this._Dept.CheckShortRepeat(dept.CompanyId, dept.ParentId, set.ShortName))
+            else if ( set.ShortName.IsNotNull() && set.ShortName != dept.ShortName && this._Dept.CheckShortRepeat(dept.CompanyId, dept.ParentId, set.ShortName) )
             {
                 throw new ErrorException("hr.dept.short.name.repeat");
             }
-            else if (dept.IsUnit == false && set.ParentId == 0)
+            else if ( dept.IsUnit == false && set.ParentId == 0 )
             {
                 throw new ErrorException("hr.dept.parent.id.null");
             }
-            if (set.ParentId != dept.ParentId)
+            if ( set.ParentId != dept.ParentId )
             {
                 var prt = this._Dept.Get(set.ParentId, a => new
                 {
@@ -179,7 +179,7 @@ namespace Basic.HrCollect.Impl
                     a.LevelCode,
                     a.Lvl
                 });
-                if (( prt.IsUnit && set.ParentId != dept.UnitId ) || ( prt.IsUnit == false && prt.UnitId != dept.UnitId ))
+                if ( ( prt.IsUnit && set.ParentId != dept.UnitId ) || ( prt.IsUnit == false && prt.UnitId != dept.UnitId ) )
                 {
                     throw new ErrorException("hr.dept.unit.id.not.agreement");
                 }
@@ -203,7 +203,7 @@ namespace Basic.HrCollect.Impl
                     a.Lvl
                 });
                 SubDeptSet[] sets = null;
-                if (!sub.IsNull())
+                if ( !sub.IsNull() )
                 {
                     int lvl = prt.Lvl - dept.Lvl;
                     sets = sub.ConvertAll(c =>
@@ -225,9 +225,9 @@ namespace Basic.HrCollect.Impl
             }
         }
 
-        public Dictionary<long, string> GetDeptFullName (long[] ids)
+        public Dictionary<long, string> GetDeptFullName ( long[] ids )
         {
-            if (ids.IsNull())
+            if ( ids.IsNull() )
             {
                 return null;
             }
@@ -238,27 +238,27 @@ namespace Basic.HrCollect.Impl
                 ShortName = a.ShortName,
                 LevelCode = a.LevelCode
             });
-            if (depts.IsNull())
+            if ( depts.IsNull() )
             {
                 return null;
             }
             List<long> pid = [];
             depts.ForEach(a =>
             {
-                if (a.LevelCode != string.Empty)
+                if ( a.LevelCode != string.Empty )
                 {
                     a.Pid = a.LevelCode.Remove(a.LevelCode.Length - 1, 1).Remove(0, 3).Split('|').ConvertAll(a => long.Parse(a));
                     pid.AddRange(a.Pid);
                 }
             });
-            if (pid.Count == 0)
+            if ( pid.Count == 0 )
             {
                 return depts.ToDictionary(a => a.Id, a => a.ShortName.GetValueOrDefault(a.DeptName));
             }
             Dictionary<long, string> pName = this._Dept.GetDeptName(pid.Distinct().ToArray());
             return depts.ToDictionary(a => a.Id, a =>
             {
-                if (a.Pid == null)
+                if ( a.Pid == null )
                 {
                     return a.ShortName.GetValueOrDefault(a.DeptName);
                 }
@@ -272,19 +272,19 @@ namespace Basic.HrCollect.Impl
                 return str.ToString();
             });
         }
-        public long GetUnitId (long deptId)
+        public long GetUnitId ( long deptId )
         {
             return this._Dept.Get(deptId, a => a.UnitId);
         }
-        public void SetLeader (DBDept dept, long? leaderId)
+        public void SetLeader ( DBDept dept, long? leaderId )
         {
-            if (dept.LeaderId == leaderId)
+            if ( dept.LeaderId == leaderId )
             {
                 return;
             }
             this._Dept.SetLeader(dept, leaderId);
         }
-        public void Merge (MergeDept merge)
+        public void Merge ( MergeDept merge )
         {
             string level = merge.ToVoid.LevelCode + merge.ToVoid.Id + "|";
             var sub = this._Dept.Gets(a => a.LevelCode.StartsWith(level), a => new
@@ -295,7 +295,7 @@ namespace Basic.HrCollect.Impl
                 a.Lvl
             });
             MergeSubDeptSet[] subs = null;
-            if (!sub.IsNull())
+            if ( !sub.IsNull() )
             {
                 string newLevel = merge.ToDept.LevelCode + merge.ToDept.Id + "|";
                 subs = sub.ConvertAll(c =>
@@ -312,12 +312,12 @@ namespace Basic.HrCollect.Impl
             this._Dept.Merge(merge, subs);
         }
 
-        public void ToVoidDept (long[] deptId)
+        public void ToVoidDept ( long[] deptId )
         {
             this._Dept.ToVoidDept(deptId);
         }
 
-        public KeyValuePair<long, long>[] GetUnitId (long[] deptId)
+        public KeyValuePair<long, long>[] GetUnitId ( long[] deptId )
         {
             return this._Dept.Gets(a => deptId.Contains(a.Id), a => new
             {

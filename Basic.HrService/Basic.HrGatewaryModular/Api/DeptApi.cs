@@ -10,16 +10,20 @@ namespace Basic.HrGatewaryModular.Api
     internal class DeptApi : ApiController
     {
         private readonly IDeptService _Service;
-        public DeptApi (IDeptService service)
+        public DeptApi ( IDeptService service )
         {
             this._Service = service;
+        }
+        public DeptTallyTree[] GetTallyTrees ( DeptGetArg param )
+        {
+            return this._Service.GetTallyTrees(param);
         }
         /// <summary>
         /// 添加部门
         /// </summary>
         /// <param name="datum">部门资料</param>
         /// <returns></returns>
-        public long Add ([NullValidate("hr.dept.datum.null")] DeptAdd datum)
+        public long Add ( [NullValidate("hr.dept.datum.null")] DeptAdd datum )
         {
             return this._Service.AddDept(datum);
         }
@@ -28,7 +32,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除部门
         /// </summary>
         /// <param name="id">部门ID</param>
-        public void Delete ([NumValidate("hr.dept.id.error", 1)] long id)
+        public void Delete ( [NumValidate("hr.dept.id.error", 1)] long id )
         {
             this._Service.DeleteDept(id);
         }
@@ -38,7 +42,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="deptId">部门ID</param>
         /// <returns></returns>
-        public bool Enable ([NullValidate("hr.dept.deptId.null")] long[] deptId)
+        public bool Enable ( [NullValidate("hr.dept.deptId.null")] long[] deptId )
         {
             return this._Service.EnableDept(deptId);
         }
@@ -47,7 +51,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public DeptFullTree[] Gets (DeptQueryParam obj)
+        public DeptFullTree[] Gets ( DeptQueryParam obj )
         {
             return this._Service.Gets(obj);
         }
@@ -57,7 +61,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="id">部门ID</param>
         /// <returns>部门资料</returns>
-        public DeptDto Get ([NumValidate("hr.dept.id.error", 1)] long id)
+        public DeptDto Get ( [NumValidate("hr.dept.id.error", 1)] long id )
         {
             return this._Service.GetDept(id);
         }
@@ -67,7 +71,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="getParam">查询参数</param>
         /// <returns></returns>
-        public DeptSelect[] GetSelect ([NullValidate("hr.dept.getParam.null")] DeptGetArg getParam)
+        public DeptSelect[] GetSelect ( [NullValidate("hr.dept.getParam.null")] DeptGetArg getParam )
         {
             return this._Service.GetDeptSelect(getParam);
         }
@@ -77,7 +81,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">部门查询参数</param>
         /// <returns>部门树</returns>
-        public DeptTree[] GetTree ([NullValidate("hr.dept.param.null")] DeptGetArg param)
+        public DeptTree[] GetTree ( [NullValidate("hr.dept.param.null")] DeptGetArg param )
         {
             return this._Service.GetDeptTree(param);
         }
@@ -86,7 +90,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改部门资料
         /// </summary>
         /// <param name="param">参数</param>
-        public void Set ([NullValidate("hr.dept.param.null")] UI_SetDept param)
+        public void Set ( [NullValidate("hr.dept.param.null")] UI_SetDept param )
         {
             this._Service.SetDept(param.Id, param.Dept);
         }
@@ -94,7 +98,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 设置负载人
         /// </summary>
         /// <param name="leader"></param>
-        public void SetLeader (LongNullParam<long?> leader)
+        public void SetLeader ( LongNullParam<long?> leader )
         {
             this._Service.SetLeader(leader.Id, leader.Value);
         }
@@ -104,7 +108,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="deptId">部门ID</param>
         /// <returns></returns>
-        public bool Stop ([NumValidate("hr.dept.deptId.error", 1)] long deptId)
+        public bool Stop ( [NumValidate("hr.dept.deptId.error", 1)] long deptId )
         {
             return this._Service.StopDept(deptId);
         }

@@ -372,6 +372,9 @@ export default {
       this.chioseEmp = e.keys
     },
     async loadEmp() {
+      if (this.queryParam.IsNoOpen === false) {
+        this.queryParam.IsNoOpen = null
+      }
       const res = await empApi.queryEmp(this.queryParam, this.paging)
       if (res.List) {
         this.emps = res.List
