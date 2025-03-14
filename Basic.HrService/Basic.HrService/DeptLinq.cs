@@ -52,11 +52,13 @@ namespace Basic.HrService
                 }
                 if ( !a.IsUnit )
                 {
+                    int num = empNum.GetValueOrDefault(a.Id);
                     tree.EmpNum = empNum.GetValueOrDefault(a.Id);
+                    tree.EmpTotal = num;
                 }
-                else if ( tree.Children.Length > 0 )
+                if ( tree.Children.Length != 0 )
                 {
-                    tree.EmpNum = tree.Children.Sum(c => c.EmpNum);
+                    tree.EmpTotal = tree.Children.Sum(c => c.EmpTotal);
                 }
                 return tree;
             });
@@ -81,11 +83,13 @@ namespace Basic.HrService
                 }
                 if ( !a.IsUnit )
                 {
+                    int num = empNum.GetValueOrDefault(a.Id);
                     tree.EmpNum = empNum.GetValueOrDefault(a.Id);
+                    tree.EmpTotal = num;
                 }
-                else if ( tree.Children.Length > 0 )
+                if ( tree.Children.Length != 0 )
                 {
-                    tree.EmpNum = tree.Children.Sum(c => c.EmpNum);
+                    tree.EmpTotal = tree.Children.Sum(c => c.EmpTotal);
                 }
                 return tree;
             });

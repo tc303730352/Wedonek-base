@@ -72,5 +72,10 @@
         /// 人员数量
         /// </summary>
         public int EmpNum { get; set; }
+
+        /// <summary>
+        /// 员工总量
+        /// </summary>
+        public int EmpTotal { get; set; }
     }
 }

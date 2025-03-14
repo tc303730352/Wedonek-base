@@ -97,7 +97,7 @@ namespace Basic.HrService.lmpl
             }
             Dictionary<long, int> empNum = this._Emp.GetDeptEmpNum(depts.Convert(c => c.IsUnit == false, c => c.Id));
             Dictionary<long, string> empName = this._Emp.GetName(depts.Convert(c => c.LeaderId.HasValue, c => c.LeaderId.Value));
-            return depts.ToTree(empNum);
+            return depts.ToTree(empNum, empName);
         }
 
         public bool Stop ( long deptId )
