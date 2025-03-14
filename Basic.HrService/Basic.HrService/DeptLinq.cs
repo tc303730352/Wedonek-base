@@ -50,15 +50,15 @@ namespace Basic.HrService
                 {
                     tree.LeaderName = empName.GetValueOrDefault(a.LeaderId.Value);
                 }
+                if ( !tree.Children.IsNull() )
+                {
+                    tree.EmpTotal = tree.Children.Sum(c => c.EmpTotal);
+                }
                 if ( !a.IsUnit )
                 {
                     int num = empNum.GetValueOrDefault(a.Id);
-                    tree.EmpNum = empNum.GetValueOrDefault(a.Id);
-                    tree.EmpTotal = num;
-                }
-                if ( tree.Children.Length != 0 )
-                {
-                    tree.EmpTotal = tree.Children.Sum(c => c.EmpTotal);
+                    tree.EmpNum = num;
+                    tree.EmpTotal += num;
                 }
                 return tree;
             });
@@ -81,15 +81,15 @@ namespace Basic.HrService
                 {
                     tree.LeaderName = empName.GetValueOrDefault(a.LeaderId.Value);
                 }
+                if ( !tree.Children.IsNull() )
+                {
+                    tree.EmpTotal = tree.Children.Sum(c => c.EmpTotal);
+                }
                 if ( !a.IsUnit )
                 {
                     int num = empNum.GetValueOrDefault(a.Id);
-                    tree.EmpNum = empNum.GetValueOrDefault(a.Id);
-                    tree.EmpTotal = num;
-                }
-                if ( tree.Children.Length != 0 )
-                {
-                    tree.EmpTotal = tree.Children.Sum(c => c.EmpTotal);
+                    tree.EmpNum = num;
+                    tree.EmpTotal += num;
                 }
                 return tree;
             });
