@@ -1,12 +1,14 @@
 <template>
   <div style="width: 100%;">
-   首页
+    <vue2-org-tree :data="depts" />
   </div>
 </template>
 
 <script>
+import Vue2OrgTree from 'vue2-org-tree'
 export default {
   components: {
+    Vue2OrgTree
   },
   data() {
     return {
@@ -68,3 +70,6 @@ export default {
   }
 }
 </script>
+<style scoped>
+@import '/styles/Vue2OrgTree.css';
+</style>

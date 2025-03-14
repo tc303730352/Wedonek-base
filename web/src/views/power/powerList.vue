@@ -279,13 +279,15 @@ export default {
       this.loadPower()
     },
     chioseMenu(e) {
-      this.subSystem = e.label
       this.title = e.label + '菜单列表'
       if (e.type === 'isSubSystem' && (e.key !== this.queryParam.SubSystemId || this.queryParam.ParentId != null)) {
+        this.subSystem = e.label
         this.queryParam.SubSystemId = e.key
         this.queryParam.ParentId = null
       } else if (e.type === 1 && e.key !== this.queryParam.ParentId) {
-        this.queryParam.SubSystemId = e.sysId
+        const sub = this.menus.find(c => c.key === e.sysId)
+        this.queryParam.SubSystemId = sub.key
+        this.subSystem = sub.label
         this.queryParam.ParentId = e.key
       } else {
         return

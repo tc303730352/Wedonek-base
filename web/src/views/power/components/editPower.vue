@@ -299,7 +299,7 @@ export default {
       this.itemId = 1
       if (this.id == null) {
         this.power = {
-          ParentId: null,
+          ParentId: this.parentId,
           Name: null,
           Description: null,
           Icon: null,

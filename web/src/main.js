@@ -8,7 +8,6 @@ import Element from 'element-ui'
 
 import './styles/index.scss' // global css
 import './styles/element-variables.scss'
-
 import App from './App'
 import store from './store'
 import router from './router'
@@ -25,6 +24,7 @@ import table from '@/components/table/tableList'
 import leftRightSplit from '@/components/tools/leftRightSplit.vue'
 import * as filters from './filters' // global filters
 import moment from 'moment'
+
 Vue.prototype.$moment = moment
 Vue.prototype.$erd = ElementResizeDetectorMaker()
 /**

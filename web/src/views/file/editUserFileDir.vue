@@ -363,6 +363,7 @@ export default {
     async reset() {
       if (this.id == null) {
         this.title = '新增用户文件目录'
+        this.source = null
       } else {
         const data = await dirApi.get(this.id)
         this.title = '编辑' + data.DirName + '用户文件目录'
@@ -416,6 +417,14 @@ export default {
         this.extension = []
         this.upPower = []
         this.readPower = []
+        this.upImgSet = {
+          RatioWidth: null,
+          RatioHeight: null,
+          MinWidth: null,
+          MaxHeight: null,
+          MinHeight: null,
+          MaxWidth: null
+        }
       } else {
         const data = this.source
         this.userDir = data
@@ -456,6 +465,15 @@ export default {
           if (data.UpImgSet.Ratio && data.UpImgSet.Ratio.length > 0) {
             this.upImgSet.RatioWidth = data.UpImgSet.Ratio[0]
             this.upImgSet.RatioHeight = data.UpImgSet.Ratio[1]
+          }
+        } else {
+          this.upImgSet = {
+            RatioWidth: null,
+            RatioHeight: null,
+            MinWidth: null,
+            MaxHeight: null,
+            MinHeight: null,
+            MaxWidth: null
           }
         }
       }

@@ -128,8 +128,15 @@ namespace Basic.HrCollect.Impl
                     a.LevelCode,
                     a.LevelNum
                 });
-                db.LevelCode = prt.LevelCode + add.ParentId + "|";
-                db.LevelNum = prt.LevelNum;
+                if ( prt.LevelNum == 1 )
+                {
+                    db.LevelCode = "|" + add.ParentId + "|";
+                }
+                else
+                {
+                    db.LevelCode = prt.LevelCode + add.ParentId + "|";
+                }
+                db.LevelNum = prt.LevelNum + 1;
             }
             else
             {
