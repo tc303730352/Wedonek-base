@@ -46,8 +46,11 @@
                 <span>{{ node.EmpTotal }}</span>
               </el-col>
             </el-row>
-            <p class="row">
-              负责人: {{ node.LeaderName }}
+            <p v-if="node.LeaderName">
+              负责人:<el-button type="text">{{ node.LeaderName }}</el-button>
+            </p>
+            <p v-if="node.DeptTag">
+              <el-tag v-for="item in node.DeptTag" :key="item">{{ deptTag[item] }}</el-tag>
             </p>
           </el-card>
         </template>
@@ -58,10 +61,13 @@
 <script>
 import { getTallyTrees } from '@/api/unit/dept'
 import { HrDeptStatus } from '@/config/publicDic'
+import { HrItemDic } from '@/config/publicDic'
+import { GetItemName } from '@/api/base/dictItem'
 export default {
   data() {
     return {
-      depts: {}
+      depts: {},
+      deptTag: {}
     }
   },
   computed: {
@@ -74,9 +80,13 @@ export default {
     }
   },
   mounted() {
-    this.init()
+    this.initDic()
   },
   methods: {
+    async initDic() {
+      this.deptTag = await GetItemName(HrItemDic.deptTag)
+      this.init()
+    },
     async init() {
       const list = await getTallyTrees({
         CompanyId: this.comId,
@@ -96,6 +106,7 @@ export default {
             LeaderName: c.LeaderName,
             LeaderId: c.LeaderId,
             DeptShow: c.DeptShow,
+            DeptTag: c.DeptTag,
             children: this.getChilldren(c)
           }
         })
@@ -115,6 +126,7 @@ export default {
           LeaderName: c.LeaderName,
           LeaderId: c.LeaderId,
           DeptShow: c.DeptShow,
+          DeptTag: c.DeptTag,
           children: this.getChilldren(c)
         }
       })
@@ -194,9 +206,7 @@ export default {
   padding-left: 5px;
 }
 .structure .dept p {
-  height: 20px;
-  line-height: 20px;
-  margin: 0;
+  margin: 2px;
   font-size: 14px;
 }
 </style>

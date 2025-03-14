@@ -107,6 +107,14 @@ export default {
       },
       immediate: true
     },
+    unitId: {
+      handler(val) {
+        if (val != null) {
+          this.loadTree()
+        }
+      },
+      immediate: false
+    },
     selectKeys: {
       handler(val) {
         this.checkboxKey = val

@@ -270,6 +270,7 @@ export default {
         this.curKey = this.empId
         this.loadEmp()
       } else {
+        this.curEmp = []
         this.curKey = []
         this.chioseKey = []
       }

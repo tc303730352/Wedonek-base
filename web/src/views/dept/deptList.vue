@@ -115,7 +115,7 @@
       :visible="empVisible"
       :emp-id="empId"
       :title="empTitle"
-      :unit-id="this.queryParam.UnitId"
+      :unit-id="queryParam.UnitId"
       @save="setLeader"
       @close="closeChoice"
     />
