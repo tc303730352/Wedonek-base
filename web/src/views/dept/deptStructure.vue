@@ -3,12 +3,18 @@
     <div slot="header">
       <span>组织结构图</span>
     </div>
-    <div class="structure">
+    <div class="structure" :style="{ height: height }">
       <zm-tree-org
         ref="tree"
         :draggable="true"
+        :define-menus="initMenus"
         :node-draggable="false"
+        :collapsable="true"
+        :default-expand-level="5"
         :data="depts"
+        :node-add="add"
+        :node-edit="edit"
+        @on-contextmenu="clickMenu"
       >
         <template slot-scope="{ node }">
           <div v-if="node.type == 'company'" :title="node.DeptShow" class="comName">
@@ -56,6 +62,19 @@
         </template>
       </zm-tree-org>
     </div>
+    <editDept
+      :dept-id="id"
+      :is-unit="isUnit"
+      :unit-id="unitId"
+      :parent-id="parentId"
+      :visible="visible"
+      @close="closeDept"
+    />
+    <deptView
+      :id="id"
+      :visible="viewVisible"
+      @close="closeView"
+    />
   </el-card>
 </template>
 <script>
@@ -63,11 +82,24 @@ import { getTallyTrees } from '@/api/unit/dept'
 import { HrDeptStatus } from '@/config/publicDic'
 import { HrItemDic } from '@/config/publicDic'
 import { GetItemName } from '@/api/base/dictItem'
+import editDept from './components/editDept.vue'
+import deptView from './components/deptView.vue'
 export default {
+  components: {
+    editDept,
+    deptView
+  },
   data() {
     return {
       depts: {},
-      deptTag: {}
+      deptTag: {},
+      height: '800px',
+      id: null,
+      isUnit: false,
+      unitId: null,
+      visible: false,
+      viewVisible: false,
+      parentId: null
     }
   },
   computed: {
@@ -77,6 +109,19 @@ export default {
     },
     comId() {
       return this.$store.getters.curComId
+    },
+    mainHeight() {
+      return this.$store.getters.mainHeight
+    }
+  },
+  watch: {
+    mainHeight: {
+      handler(val) {
+        if (val != null) {
+          this.height = (val - 140) + 'px'
+        }
+      },
+      immediate: true
     }
   },
   mounted() {
@@ -86,6 +131,66 @@ export default {
     async initDic() {
       this.deptTag = await GetItemName(HrItemDic.deptTag)
       this.init()
+    },
+    initMenus(e, node) {
+      if (node.type === 'company') {
+        return [{ name: '查看公司信息', command: 'view' }]
+      } else if (node.type === 'unit') {
+        return [{ name: '查看单位信息', command: 'view' }, { name: '新增单位', command: 'add' }, { name: '新增部门', command: 'addDept' }, { name: '编辑单位信息', command: 'edit' }]
+      }
+      return [{ name: '查看部门信息', command: 'view' }, { name: '新增部门信息', command: 'add' }, { name: '编辑部门信息', command: 'edit' }]
+    },
+    closeDept(isRefresh) {
+      this.visible = false
+      if (isRefresh) {
+        this.init()
+      }
+    },
+    closeView() {
+      this.viewVisible = false
+    },
+    edit(node) {
+      if (node.type === 'unit') {
+        this.id = node.id
+        this.parentId = null
+        this.isUnit = true
+        this.unitId = node.unitId
+        this.visible = true
+      } else if (node.type === 'dept') {
+        this.id = node.id
+        this.parentId = null
+        this.isUnit = false
+        this.unitId = node.unitId
+        this.visible = true
+      }
+    },
+    add(node) {
+      if (node.type === 'unit') {
+        this.id = null
+        this.parentId = node.id
+        this.isUnit = true
+        this.unitId = node.id
+        this.visible = true
+      } else if (node.type === 'dept') {
+        this.id = null
+        this.parentId = node.id
+        this.isUnit = false
+        this.unitId = node.unitId
+        this.visible = true
+      }
+    },
+    clickMenu(e) {
+      const node = e.node
+      if (e.command === 'addDept') {
+        this.id = null
+        this.parentId = node.id
+        this.isUnit = false
+        this.unitId = node.unitId
+        this.visible = true
+      } else if (e.command === 'view') {
+        this.id = node.id
+        this.viewVisible = true
+      }
     },
     async init() {
       const list = await getTallyTrees({
@@ -99,8 +204,11 @@ export default {
         children: list.map((c) => {
           return {
             id: c.Id,
+            pid: null,
             label: c.Name,
             type: c.IsUnit ? 'unit' : 'dept',
+            unitId: c.UnitId,
+            expand: true,
             EmpNum: c.EmpNum,
             EmpTotal: c.EmpTotal,
             LeaderName: c.LeaderName,
@@ -112,15 +220,18 @@ export default {
         })
       }
     },
-    getChilldren(c) {
-      if (c.Children == null || c.Children.length === 0) {
+    getChilldren(a) {
+      if (a.Children == null || a.Children.length === 0) {
         return null
       }
-      return c.Children.map((c) => {
+      return a.Children.map((c) => {
         return {
           id: c.Id,
+          pid: a.Id,
           label: c.Name,
+          expand: true,
           type: c.IsUnit ? 'unit' : 'dept',
+          unitId: c.UnitId,
           EmpNum: c.EmpNum,
           EmpTotal: c.EmpTotal,
           LeaderName: c.LeaderName,
@@ -134,6 +245,7 @@ export default {
   }
 }
 </script>
+
 <style>
 .structure {
   text-align: center;
@@ -141,9 +253,17 @@ export default {
   min-height: 800px;
   display: inline-grid;
 }
-.structure .zm-tree-handle {
+.zm-tree-handle {
   bottom: inherit !important;
   top: 0px;
+}
+.zm-tree-contextmenu {
+  padding: 10px;
+}
+.zm-tree-menu-item {
+  line-height: 30px;
+  height:  30px;
+  font-size: 14px;
 }
 .structure .zm-tree-org {
   background-color: #b1b1b1;
@@ -208,5 +328,8 @@ export default {
 .structure .dept p {
   margin: 2px;
   font-size: 14px;
+}
+.structure .dept p .el-tag{
+ margin-right: 3px;
 }
 </style>

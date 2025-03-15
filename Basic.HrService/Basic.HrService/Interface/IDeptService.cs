@@ -15,5 +15,6 @@ namespace Basic.HrService.Interface
         bool Stop ( long deptId );
         DeptFullTree[] GetDeptList ( DeptQueryParam query );
         void SetLeader ( long id, long? leaderId );
+        string[] GetNameList ( long[] id );
     }
 }

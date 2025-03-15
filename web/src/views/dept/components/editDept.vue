@@ -45,12 +45,12 @@
           placeholder="负责人"
         />
       </el-form-item>
-      <el-form-item v-if="isUnit == false" label="管理类目" prop="DeptTag">
+      <el-form-item v-if="isUnit == false" label="部门分类" prop="DeptTag">
         <dictItem
           v-model="dept.DeptTag"
           :multiple="true"
           :dic-id="HrItemDic.deptTag"
-          placeholder="管理类目"
+          placeholder="部门分类"
         />
       </el-form-item>
     </el-form>

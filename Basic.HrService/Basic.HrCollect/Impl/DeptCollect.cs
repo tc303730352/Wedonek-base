@@ -38,6 +38,15 @@ namespace Basic.HrCollect.Impl
         {
             return this._Dept.GetDeptName(ids);
         }
+        public string[] GetDeptNameList ( long[] ids )
+        {
+            var list = this._Dept.Gets(a => ids.Contains(a.Id), a => new
+            {
+                a.DeptName,
+                a.ShortName
+            });
+            return list.ConvertAll(a => a.ShortName.IsNull() ? a.DeptName : a.ShortName);
+        }
         public DBDept Get ( long id )
         {
             return this._Dept.Get(id);

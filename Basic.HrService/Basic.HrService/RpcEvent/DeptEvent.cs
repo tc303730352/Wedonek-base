@@ -13,6 +13,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
+        public string GetDeptNameList ( GetDeptNameList obj )
+        {
+            return this._Service.GetNameList(obj.Id);
+        }
         public DeptFullTree[] GetDeptList ( GetDeptList obj )
         {
             return this._Service.GetDeptList(obj.Query);

@@ -56,6 +56,7 @@ namespace Basic.HrService
                     LeaderId = a.LeaderId,
                     DeptTag = a.DeptTag.ToSplit(),
                     DeptShow = a.DeptShow,
+                    UnitId = a.UnitId,
                     Children = _GetChildren(a, depts, empNum, empName)
                 };
                 if ( a.LeaderId.HasValue )
@@ -87,6 +88,7 @@ namespace Basic.HrService
                     LeaderId = a.LeaderId,
                     DeptTag = a.DeptTag.ToSplit(),
                     DeptShow = a.DeptShow,
+                    UnitId = a.UnitId,
                     Children = _GetChildren(a, depts, empNum, empName)
                 };
                 if ( a.LeaderId.HasValue )

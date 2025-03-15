@@ -171,5 +171,10 @@ namespace Basic.HrService.lmpl
             DBDept dept = this._Dept.Get(id);
             this._Dept.SetLeader(dept, leaderId);
         }
+
+        public string[] GetNameList ( long[] id )
+        {
+            return this._Dept.GetDeptNameList(id);
+        }
     }
 }

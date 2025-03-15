@@ -94,5 +94,12 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
+        public string[] GetName ( long[] id )
+        {
+            return new GetDeptNameList
+            {
+                Id = id
+            }.Send();
+        }
     }
 }

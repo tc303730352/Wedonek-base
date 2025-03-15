@@ -1,5 +1,9 @@
 <template>
+  <div v-if="readonly" class="deptNames">
+    <span v-for="i in deptName" :key="i">{{ i }}</span>
+  </div>
   <el-cascader
+    v-else
     v-model="chioseKey"
     :options="depts"
     :placeholder="placeholder"
@@ -12,7 +16,7 @@
 </template>
 
 <script>
-import { getDeptTree } from '@/api/unit/unit'
+import { getDeptTree, GetNameList } from '@/api/unit/unit'
 export default {
   name: 'Layout',
   props: {
@@ -23,6 +27,10 @@ export default {
     placeholder: {
       type: String,
       default: '选择部门'
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,
@@ -62,6 +70,7 @@ export default {
       depts: [],
       chioseKey: null,
       dept: {},
+      deptName: [],
       props: {
         multiple: false,
         emitPath: false,
@@ -104,6 +113,22 @@ export default {
     }
   },
   methods: {
+    reset() {
+      if (this.readonly) {
+        if (this.value == null) {
+          return
+        } else if (this.multiple && this.value.length !== 0) {
+          this.loadName(this.value)
+        } else if (this.multiple === false) {
+          this.loadName([this.value])
+        }
+      } else {
+        this.loadTree()
+      }
+    },
+    async loadName(ids) {
+      this.deptName = await GetNameList(ids)
+    },
     async loadTree() {
       const res = await getDeptTree({
         CompanyId: this.comId,
@@ -124,7 +149,7 @@ export default {
       if (row.IsUnit && !this.isChioseUnit) {
         row.disabled = true
       }
-      if (row.Children.length == 0) {
+      if (row.Children.length === 0) {
         row.Children = null
       } else {
         row.Children.forEach((c) => {
@@ -157,3 +182,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.deptNames {
+  display: list-item;
+}
+.deptNames span{
+  margin-right: 5px;
+}
+</style>

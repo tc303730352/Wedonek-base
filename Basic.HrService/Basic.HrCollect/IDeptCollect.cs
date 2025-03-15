@@ -10,6 +10,7 @@ namespace Basic.HrCollect
         DeptBase[] GetUnitDepts ( UnitGetParam param );
         string GetDeptName ( long id );
         Dictionary<long, string> GetDeptName ( long[] ids );
+        string[] GetDeptNameList ( long[] ids );
         long Add ( DeptAdd add );
         void Delete ( DBDept dept );
         bool Enable ( DBDept dept );

@@ -61,6 +61,14 @@
             set;
         }
         /// <summary>
+        /// 单位ID
+        /// </summary>
+        public long UnitId
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 下级
         /// </summary>
         public DeptTallyTree[] Children

@@ -172,7 +172,7 @@ export default {
         },
         {
           key: 'DeptTag',
-          title: '管理类目',
+          title: '部门分类',
           align: 'left'
         },
         {
@@ -229,8 +229,7 @@ export default {
     },
     editLeader(row) {
       this.dept = row
-      this.empId =
-        row.LeaderId == NaN || row.LeaderId == null ? null : [row.LeaderId]
+      this.empId = row.LeaderId == NaN || row.LeaderId == null ? null : [row.LeaderId]
       this.empTitle =
         '选择' + (row.IsUnit ? '单位' : '部门') + row.DeptName + '负责人'
       this.empVisible = true
@@ -239,18 +238,18 @@ export default {
       this.visible = false
       if (!isRefresh) {
         return
-      } else if (this.isUnit == false) {
+      } else if (this.isUnit === false) {
         this.loadDept()
       } else {
         this.$refs.deptTree.load()
       }
     },
     openAction(row, command) {
-      if (command == 'add') {
+      if (command === 'add') {
         this.addDept(row.Id)
-      } else if (command == 'delete') {
+      } else if (command === 'delete') {
         this.deleteDept(row)
-      } else if (command == 'edit') {
+      } else if (command === 'edit') {
         this.editDept(row)
       }
     },

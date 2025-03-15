@@ -14,6 +14,7 @@ const getters = {
   routes: state => state.user.routes[state.user.curSysId],
   curSysId: state => state.user.curSysId,
   errorLogs: state => state.errorLog.logs,
-  subSystem: state => state.user.subSystem
+  subSystem: state => state.user.subSystem,
+  mainHeight: state => state.app.mainHeight
 }
 export default getters

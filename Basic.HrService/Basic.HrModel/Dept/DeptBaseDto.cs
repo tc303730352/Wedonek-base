@@ -45,7 +45,19 @@
         }
         public int Lvl { get; set; }
 
+        /// <summary>
+        /// 是否为单位
+        /// </summary>
         public bool IsUnit { get; set; }
+
+        /// <summary>
+        /// 单位ID
+        /// </summary>
+        public long UnitId
+        {
+            get;
+            set;
+        }
 
         public long? LeaderId
         {
