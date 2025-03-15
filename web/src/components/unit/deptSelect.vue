@@ -108,7 +108,7 @@ export default {
     value: {
       handler(val) {
         this.chioseKey = val
-        if (this.readonly && val != null) {
+        if (this.readonly) {
           this.reset()
         }
       },
@@ -199,9 +199,10 @@ export default {
 </script>
 <style scoped>
 .deptNames {
-  display: list-item;
+  display: inline-block;
+  line-height: 20px;
 }
 .deptNames span{
-  margin-right: 5px;
+  padding: 5px;
 }
 </style>

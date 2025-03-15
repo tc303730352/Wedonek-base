@@ -79,7 +79,6 @@
 </template>
 <script>
 import { getTallyTrees } from '@/api/unit/dept'
-import { HrDeptStatus } from '@/config/publicDic'
 import { HrItemDic } from '@/config/publicDic'
 import { GetItemName } from '@/api/base/dictItem'
 import editDept from './components/editDept.vue'
@@ -99,6 +98,7 @@ export default {
       unitId: null,
       visible: false,
       viewVisible: false,
+      status: null,
       parentId: null
     }
   },
@@ -195,7 +195,7 @@ export default {
     async init() {
       const list = await getTallyTrees({
         CompanyId: this.comId,
-        Status: [HrDeptStatus[1].value]
+        Status: this.status
       })
       this.depts = {
         id: this.comId,
@@ -207,6 +207,7 @@ export default {
             pid: null,
             label: c.Name,
             type: c.IsUnit ? 'unit' : 'dept',
+            isEnable: c.Status === 1,
             unitId: c.UnitId,
             expand: true,
             EmpNum: c.EmpNum,

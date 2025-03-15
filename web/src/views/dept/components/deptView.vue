@@ -88,7 +88,6 @@ export default {
     async reset() {
       const data = await deptApi.get(this.id)
       this.dept = data
-      console.log(data)
       this.isUnit = data.IsUnit
       this.titleName = data.IsUnit ? '单位' : '部门'
       this.title = (data.IsUnit ? '查看单位:' : '查看部门:') + data.DeptName

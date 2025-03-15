@@ -56,6 +56,7 @@ namespace Basic.HrService
                     LeaderId = a.LeaderId,
                     DeptTag = a.DeptTag.ToSplit(),
                     DeptShow = a.DeptShow,
+                    Status = a.Status,
                     UnitId = a.UnitId,
                     Children = _GetChildren(a, depts, empNum, empName)
                 };
@@ -87,6 +88,7 @@ namespace Basic.HrService
                     IsUnit = a.IsUnit,
                     LeaderId = a.LeaderId,
                     DeptTag = a.DeptTag.ToSplit(),
+                    Status = a.Status,
                     DeptShow = a.DeptShow,
                     UnitId = a.UnitId,
                     Children = _GetChildren(a, depts, empNum, empName)

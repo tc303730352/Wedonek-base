@@ -111,7 +111,7 @@ export default {
     },
     value: {
       handler(val) {
-        if (val && this.readonly) {
+        if (this.readonly) {
           this.reset()
         }
       },
@@ -174,9 +174,10 @@ export default {
 
 <style scoped>
 .itemNames {
-  display: list-item;
+  display: inline-block;
+  line-height: 20px;
 }
 .itemNames span{
-  margin-right: 5px;
+  padding: 5px;
 }
 </style>

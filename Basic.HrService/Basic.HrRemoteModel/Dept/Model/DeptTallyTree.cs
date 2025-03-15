@@ -69,6 +69,10 @@
             set;
         }
         /// <summary>
+        /// 状态
+        /// </summary>
+        public HrDeptStatus Status { get; set; }
+        /// <summary>
         /// 下级
         /// </summary>
         public DeptTallyTree[] Children

@@ -190,6 +190,11 @@ export default {
         this.source = data
         this.dept = data
         this.isUnit = data.IsUnit
+        if (this.isUnit) {
+          this.unitId = data.ParentId === '0' ? null : data.ParentId
+        } else {
+          this.unitId = data.UnitId
+        }
         this.titleName = data.IsUnit ? '单位' : '部门'
         this.title = (data.IsUnit ? '编辑单位:' : '编辑部门:') + data.DeptName
         this.leader = data.LeaderId

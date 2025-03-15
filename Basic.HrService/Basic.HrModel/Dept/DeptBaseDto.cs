@@ -1,4 +1,6 @@
-﻿namespace Basic.HrModel.Dept
+﻿using Basic.HrRemoteModel;
+
+namespace Basic.HrModel.Dept
 {
     public class DeptBaseDto
     {
@@ -43,6 +45,7 @@
             get;
             set;
         }
+        public HrDeptStatus Status { get; set; }
         public int Lvl { get; set; }
 
         /// <summary>
