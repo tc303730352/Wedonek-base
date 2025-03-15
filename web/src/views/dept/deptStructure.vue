@@ -20,7 +20,7 @@
           <div v-if="node.type == 'company'" :title="node.DeptShow" class="comName">
             {{ node.label }}
           </div>
-          <div v-else-if="node.type == 'unit'" :title="node.DeptShow" :class="node.isEnable ? 'unit active' : 'unit'">
+          <div v-else-if="node.type == 'unit'" :title="node.DeptShow" :class="node.isEnable ? 'unit chiose' : 'unit'">
             <div class="name">
               <svg-icon icon-class="tree" />
               {{ node.label }}
@@ -30,7 +30,7 @@
               <span>{{ node.EmpTotal }}</span>
             </div>
           </div>
-          <el-card v-else :class="node.isEnable ? 'dept active' : 'dept'">
+          <el-card v-else :class="node.isEnable ? 'dept chiose' : 'dept'">
             <div slot="header" class="header">
               <svg-icon icon-class="peoples" />
               <span>{{ node.label }}</span>
@@ -303,13 +303,13 @@ export default {
   padding: 10px;
   font-size: 30px;
 }
-.structure .active{
+.structure .chiose{
   background-color: #1890ff !important;
 }
-.structure .active .el-card__header{
+.structure .chiose .el-card__header{
   background-color: #43af2b !important;
 }
-.structure .active .el-card__body {
+.structure .chiose .el-card__body {
   background-color: #fff !important;
 }
 .structure .unit {

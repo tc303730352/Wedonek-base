@@ -147,17 +147,26 @@ namespace Basic.HrCollect.Impl
         }
         public bool Enable ( long[] deptId )
         {
-            var pdept = this._Dept.Gets(deptId, a => new
+            string[] codes = this._Dept.Gets(deptId, a => a.LevelCode);
+            if ( !codes.IsNull() )
             {
-                a.ParentId,
-                a.Status
-            });
-            if ( !pdept.IsNull() && pdept.IsExists(a => !deptId.Contains(a.ParentId) && a.Status != HrDeptStatus.启用) )
-            {
-                throw new ErrorException("hr.parent.dept.no.enable");
+                List<long> ids = new List<long>();
+                codes.ForEach(a =>
+                {
+                    ids.AddRange(a.ToLongArray());
+                });
+                HrDeptStatus[] status = new HrDeptStatus[]
+                {
+                    HrDeptStatus.起草,
+                    HrDeptStatus.停用
+                };
+                long[] pid = ids.Distinct().ToArray();
+                pid = this._Dept.Gets(a => pid.Contains(a.Id) && status.Contains(a.Status), a => a.Id);
+                if ( !pid.IsNull() )
+                {
+                    deptId = deptId.Add(pid);
+                }
             }
-            long[] ids = pdept.ConvertAll(a => a.ParentId);
-            deptId = deptId.Remove(ids);
             this._Dept.EnableDept(deptId);
             return true;
         }
