@@ -7,7 +7,7 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class TreeDicService : ITreeDicService
     {
-        public long AddTreeDicItem (TreeDicItemAdd datum)
+        public long AddTreeDicItem ( TreeDicItemAdd datum )
         {
             return new AddTreeDicItem
             {
@@ -15,29 +15,37 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void DeleteTreeDicItem (long id)
+        public void DeleteTreeDicItem ( long id )
         {
             new DeleteTreeDicItem
             {
                 Id = id,
             }.Send();
         }
+        public string[] GetTreeNames ( long dicId, string[] vals )
+        {
+            return new GetTreeNames
+            {
+                DicId = dicId,
+                Values = vals
+            }.Send();
+        }
 
-        public bool EnableTreeDicItem (long id)
+        public bool EnableTreeDicItem ( long id )
         {
             return new EnableTreeDicItem
             {
                 Id = id,
             }.Send();
         }
-        public TreeFullItem[] GetTree (TreeItemQuery query)
+        public TreeFullItem[] GetTree ( TreeItemQuery query )
         {
             return new GetFullDicTree
             {
                 Query = query
             }.Send();
         }
-        public TreeItemBase[] GetDicTree (long dicId)
+        public TreeItemBase[] GetDicTree ( long dicId )
         {
             return new GetDicTree
             {
@@ -45,7 +53,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public TreeDicItemDto GetTreeDicItem (long id)
+        public TreeDicItemDto GetTreeDicItem ( long id )
         {
             return new GetTreeDicItem
             {
@@ -53,7 +61,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void MoveTreeDicItem (long fromId, long toId)
+        public void MoveTreeDicItem ( long fromId, long toId )
         {
             new MoveTreeDicItem
             {
@@ -62,7 +70,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public TreeDicItemDto[] QueryTreeDicItem (TreeItemQuery query, IBasicPage paging, out int count)
+        public TreeDicItemDto[] QueryTreeDicItem ( TreeItemQuery query, IBasicPage paging, out int count )
         {
             return new QueryTreeDicItem
             {
@@ -75,7 +83,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send(out count);
         }
 
-        public bool SetTreeDicItem (long id, TreeDicItemSet datum)
+        public bool SetTreeDicItem ( long id, TreeDicItemSet datum )
         {
             return new SetTreeDicItem
             {
@@ -84,7 +92,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public bool StopTreeDicItem (long id)
+        public bool StopTreeDicItem ( long id )
         {
             return new StopTreeDicItem
             {

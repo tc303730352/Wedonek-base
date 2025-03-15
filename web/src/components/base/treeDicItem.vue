@@ -1,5 +1,9 @@
 <template>
+  <div v-if="readonly" class="itemNames">
+    <span v-for="i in names" :key="i">{{ i }}</span>
+  </div>
   <el-cascader
+    v-else
     v-model="chioseKey"
     :options="treeItems"
     :placeholder="placeholder"
@@ -12,7 +16,7 @@
 </template>
 
 <script>
-import { getTrees } from '@/api/base/treeDicItem'
+import { getTrees, GetNames } from '@/api/base/treeDicItem'
 export default {
   name: 'TreeDicItem',
   props: {
@@ -25,6 +29,10 @@ export default {
       default: '选择字典'
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
       type: Boolean,
       default: false
     },
@@ -41,7 +49,6 @@ export default {
       default: null
     },
     value: {
-      type: String | Array,
       default: null
     }
   },
@@ -50,6 +57,7 @@ export default {
       treeItems: [],
       chioseKey: null,
       item: {},
+      names: [],
       props: {
         multiple: false,
         emitPath: false,
@@ -64,7 +72,7 @@ export default {
     dicId: {
       handler(val) {
         if (val != null) {
-          this.loadTree()
+          this.reset()
         }
       },
       immediate: true
@@ -72,14 +80,33 @@ export default {
     value: {
       handler(val) {
         this.chioseKey = val
+        if (this.readonly && val) {
+          this.reset()
+        }
       },
       immediate: true
     }
   },
   methods: {
+    reset() {
+      if (this.readonly) {
+        if (this.value == null) {
+          this.names = []
+          return
+        } else if (this.isMultiple && this.value.length !== 0) {
+          this.loadNames(this.value)
+        } else if (this.isMultiple === false) {
+          this.loadNames([this.value])
+        } else {
+          this.names = []
+        }
+      } else {
+        this.loadTree()
+      }
+    },
     async loadTree() {
       const res = await getTrees(this.dicId)
-      this.props.checkStrictly = this.isChoiceEnd == false
+      this.props.checkStrictly = this.isChoiceEnd === false
       this.props.multiple = this.isMultiple
       this.item = {}
       res.forEach((c) => {
@@ -88,9 +115,12 @@ export default {
       })
       this.treeItems = res
     },
+    async loadNames(ids) {
+      this.names = await GetNames(this.dicId, ids)
+    },
     format(row) {
       if (row.Children) {
-        if (row.Children.length == 0) {
+        if (row.Children.length === 0) {
           row.Children = null
         } else {
           row.Children.forEach((c) => {
@@ -121,3 +151,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.itemNames {
+  display: inline-block;
+  line-height: 20px;
+}
+.itemNames span{
+  padding: 5px;
+}
+</style>

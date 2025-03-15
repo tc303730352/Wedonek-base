@@ -23,5 +23,6 @@ namespace Basic.HrCollect
         Dictionary<long, int> GetItemNum (long[] dicId);
         void Clear (long dicId);
         Result[] Gets<Result> (TreeItemQuery query) where Result : class, new();
+        string[] GetItemNames ( long dicId, string[] values );
     }
 }

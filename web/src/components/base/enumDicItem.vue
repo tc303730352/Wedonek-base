@@ -1,6 +1,9 @@
 <template>
+  <div v-if="readonly" class="itemNames">
+    <span v-for="item in chioses" :key="item.Value">{{ item.Text }}</span>
+  </div>
   <el-select
-    v-if="mode == 'select'"
+    v-else-if="mode == 'select'"
     :disabled="disabled"
     :placeholder="place"
     :style="styleSet"
@@ -53,6 +56,10 @@ export default {
       type: Boolean,
       default: true
     },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -96,7 +103,8 @@ export default {
   data() {
     return {
       place: null,
-      items: []
+      items: [],
+      chioses: []
     }
   },
   watch: {
@@ -107,6 +115,12 @@ export default {
         }
       },
       immediate: true
+    },
+    value: {
+      handler(val) {
+        this.loadNames()
+      },
+      immediate: false
     },
     placeholder: {
       handler(val) {
@@ -126,6 +140,19 @@ export default {
       } else {
         this.items = res
       }
+      this.loadNames()
+    },
+    loadNames() {
+      if (this.value == null || this.readonly === false) {
+        this.chioses = []
+        return
+      } else if (this.multiple && this.value.length > 0) {
+        this.chioses = this.items.filter(c => this.value.includes(c.Value))
+      } else if (this.multiple === false) {
+        this.chioses = this.items.filter(c => c.Value === this.value)
+      } else {
+        this.chioses = []
+      }
     },
     chooseChange(value) {
       let item = null
@@ -133,7 +160,7 @@ export default {
         if (this.multiple) {
           item = this.items.filter((c) => value.includes(c.Value))
         } else {
-          item = this.items.find((c) => c.Value == value)
+          item = this.items.find((c) => c.Value === value)
         }
       }
       this.$emit('input', value)
@@ -142,3 +169,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.itemNames {
+  display: inline-block;
+  line-height: 20px;
+}
+.itemNames span{
+  padding: 5px;
+}
+</style>

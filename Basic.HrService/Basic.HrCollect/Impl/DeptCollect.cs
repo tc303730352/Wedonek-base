@@ -285,7 +285,7 @@ namespace Basic.HrCollect.Impl
             {
                 if ( a.LevelCode != string.Empty )
                 {
-                    a.Pid = a.LevelCode.Remove(a.LevelCode.Length - 1, 1).Remove(0, 3).Split('|').ConvertAll(a => long.Parse(a));
+                    a.Pid = a.LevelCode.ToLongArray();
                     pid.AddRange(a.Pid);
                 }
             });

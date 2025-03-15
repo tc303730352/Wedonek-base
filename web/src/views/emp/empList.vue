@@ -113,7 +113,7 @@
                     style="color: #f56c6c"
                     class="el-icon-female"
                   />
-                  {{ e.row.EmpName }}
+                  <el-link @click="showEmp(e.row)">{{ e.row.EmpName }}</el-link>
                 </div>
                 <div class="empNo">{{ e.row.EmpNo }}</div>
               </div>
@@ -342,6 +342,9 @@ export default {
     editEmpTitle(empId) {
       this.empId = empId
       this.visible = true
+    },
+    showEmp(row) {
+      this.$router.push({ name: 'showEmp', params: { id: row.EmpId }})
     },
     addEmp() {
       this.$router.push({ name: 'addEmp' })

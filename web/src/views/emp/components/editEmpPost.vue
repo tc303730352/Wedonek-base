@@ -6,13 +6,13 @@
     :before-close="closeForm"
     :close-on-click-modal="false"
   >
-    <el-form :model="empPost" ref="empPostEdit" :rules="rules">
+    <el-form ref="empPostEdit" :model="empPost" :rules="rules">
       <el-form-item label="岗位" prop="PostCode">
         <treeDicItem
-          :dicId="HrItemDic.post"
           v-model="empPost.PostCode"
+          :dic-id="HrItemDic.post"
           placeholder="岗位"
-        ></treeDicItem>
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="save">保存</el-button>
@@ -21,27 +21,12 @@
     </el-form>
   </el-dialog>
 </template>
-    
+
 <script>
-import { setEmpPost } from "@/api/emp/emp";
-import { HrItemDic } from "@/config/publicDic";
+import { setEmpPost } from '@/api/emp/emp'
+import { HrItemDic } from '@/config/publicDic'
 export default {
-  data() {
-    return {
-      HrItemDic,
-      title: "设置人员岗位",
-      empPost: {},
-      rules: {
-        PostCode: [
-          {
-            required: true,
-            message: "岗位不能为空！",
-            trigger: "blur",
-          },
-        ],
-      },
-    };
-  },
+  components: {},
   props: {
     emp: {
       type: Object,
@@ -49,53 +34,68 @@ export default {
         return {
           PostCode: null,
           EmpId: null,
-          EmpName: null,
-        };
-      },
+          EmpName: null
+        }
+      }
     },
     visible: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
+  },
+  data() {
+    return {
+      HrItemDic,
+      title: '设置人员岗位',
+      empPost: {},
+      rules: {
+        PostCode: [
+          {
+            required: true,
+            message: '岗位不能为空！',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
   },
   watch: {
     visible: {
       handler(val) {
         if (val) {
-          this.resetForm();
+          this.resetForm()
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {
     save() {
-      const that = this;
-      this.$refs["empPostEdit"].validate((valid) => {
+      const that = this
+      this.$refs['empPostEdit'].validate((valid) => {
         if (valid) {
-          that.set();
+          that.set()
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     async set() {
-      await setEmpPost(this.emp.EmpId, this.empPost.PostCode);
+      await setEmpPost(this.emp.EmpId, this.empPost.PostCode)
       this.$message({
-        message: "保存成功!",
-        type: "success",
-      });
-      this.$emit("close", true);
+        message: '保存成功!',
+        type: 'success'
+      })
+      this.$emit('close', true)
     },
     closeForm() {
-      this.$emit("close", false);
+      this.$emit('close', false)
     },
     resetForm() {
       this.empPost = {
-        PostCode: this.emp.PostCode,
-      };
-    },
-  },
-  components: {},
-};
+        PostCode: this.emp.PostCode
+      }
+    }
+  }
+}
 </script>

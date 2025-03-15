@@ -14,37 +14,37 @@ namespace Basic.HrService.lmpl
     {
         private readonly ITreeDicItemCollect _DicItem;
 
-        public TreeDicItemService (ITreeDicItemCollect dicItem)
+        public TreeDicItemService ( ITreeDicItemCollect dicItem )
         {
             this._DicItem = dicItem;
         }
 
-        public long Add (TreeDicItemAdd add)
+        public long Add ( TreeDicItemAdd add )
         {
             return this._DicItem.Add(add);
         }
-        public void Delete (long id)
+        public void Delete ( long id )
         {
             DBTreeDicItem item = this._DicItem.Get(id);
             this._DicItem.Delete(item);
         }
 
-        public TreeDicItemDto Get (long id)
+        public TreeDicItemDto Get ( long id )
         {
             DBTreeDicItem item = this._DicItem.Get(id);
             TreeDicItemDto dto = item.ConvertMap<DBTreeDicItem, TreeDicItemDto>();
-            if (item.ParentId != 0)
+            if ( item.ParentId != 0 )
             {
                 dto.ParentValue = this._DicItem.GetItemValue(item.ParentId);
             }
             return dto;
         }
-        public bool Set (long id, TreeDicItemSet set)
+        public bool Set ( long id, TreeDicItemSet set )
         {
             DBTreeDicItem item = this._DicItem.Get(id);
             return this._DicItem.Set(item, set);
         }
-        public TreeItemBase[] GetTrees (long dicId)
+        public TreeItemBase[] GetTrees ( long dicId )
         {
             TreeItem[] items = this._DicItem.GetEnableItems(dicId);
             return items.Convert(c => c.ParentId == 0, c => new TreeItemBase
@@ -55,10 +55,10 @@ namespace Basic.HrService.lmpl
                 Children = items.ToTree(c)
             });
         }
-        public TreeFullItem[] GetFullTree (TreeItemQuery query)
+        public TreeFullItem[] GetFullTree ( TreeItemQuery query )
         {
             TreeItemTemp[] items = this._DicItem.Gets<TreeItemTemp>(query);
-            if (items.IsNull())
+            if ( items.IsNull() )
             {
                 return null;
             }
@@ -75,27 +75,32 @@ namespace Basic.HrService.lmpl
                 Children = items.ToTree(c)
             });
         }
-        public void Move (long fromId, long toId)
+        public void Move ( long fromId, long toId )
         {
             DBTreeDicItem from = this._DicItem.Get(fromId);
             DBTreeDicItem to = this._DicItem.Get(toId);
             this._DicItem.Move(from, to);
         }
-        public PagingResult<TreeDicItemDto> Query (TreeItemQuery query, IBasicPage paging)
+        public PagingResult<TreeDicItemDto> Query ( TreeItemQuery query, IBasicPage paging )
         {
             DBTreeDicItem[] items = this._DicItem.Query(query, paging, out int count);
             return new PagingResultTo<DBTreeDicItem, TreeDicItemDto>(count, items);
         }
 
-        public bool Enable (long id)
+        public bool Enable ( long id )
         {
             DBTreeDicItem item = this._DicItem.Get(id);
             return this._DicItem.Enable(item);
         }
-        public bool Stop (long id)
+        public bool Stop ( long id )
         {
             DBTreeDicItem item = this._DicItem.Get(id);
             return this._DicItem.Stop(item);
+        }
+
+        public string[] GetTreeNames ( long dicId, string[] values )
+        {
+            return this._DicItem.GetItemNames(dicId, values);
         }
     }
 }

@@ -74,6 +74,13 @@ export const constantRoutes = [
         name: 'editEmp',
         hidden: true,
         meta: { title: '编辑员工资料', affix: false }
+      },
+      {
+        path: '/emp/info/:id',
+        component: () => import('@/views/emp/viewEmp'),
+        name: 'showEmp',
+        hidden: true,
+        meta: { title: '查看员工资料', affix: false }
       }
     ]
   },

@@ -16,5 +16,6 @@ namespace Basic.HrService.Interface
         PagingResult<TreeDicItemDto> Query (TreeItemQuery query, IBasicPage paging);
         bool Set (long id, TreeDicItemSet set);
         bool Stop (long id);
+        string[] GetTreeNames ( long dicId, string[] values );
     }
 }

@@ -65,7 +65,6 @@ export default {
       default: 'el-input'
     },
     value: {
-      type: String | Array,
       default: null
     },
     placeholder: {
@@ -134,9 +133,9 @@ export default {
         } else if (this.multiple && this.value.length !== 0) {
           this.loadItemText(this.value)
         } else if (this.multiple === false) {
-          this.loadName([this.value])
+          this.loadItemText([this.value])
         } else {
-          this.deptName = []
+          this.names = []
         }
       } else {
         this.loadDict()
