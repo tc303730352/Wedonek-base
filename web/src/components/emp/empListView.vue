@@ -202,6 +202,14 @@ export default {
         }
       },
       immediate: true
+    },
+    isEntry: {
+      handler(val) {
+        if (this.isLoad) {
+          this.reset()
+        }
+      },
+      immediate: false
     }
   },
   methods: {

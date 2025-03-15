@@ -53,9 +53,15 @@
       <el-col :span="18">
         <el-card>
           <div slot="header">
-            <span>{{ dept.DeptName }}入职员工列表</span>
+            <span>{{ dept.DeptName }}{{ isEntry? '入职': '' }}员工列表</span>
+            <el-switch
+              v-model="isEntry"
+              style="float:right"
+              active-text="只显示入职员工"
+              inactive-text="显示所有"
+            />
           </div>
-          <empListView :unit-id="unitId" :dept-id="deptId" :is-load="isLoad" />
+          <empListView :unit-id="unitId" :dept-id="deptId" :is-entry="isEntry" :is-load="isLoad" />
         </el-card>
       </el-col>
     </el-row>
@@ -97,6 +103,7 @@ export default {
       HrItemDic,
       title: '部门信息',
       titleName: '',
+      isEntry: true,
       empVisible: false,
       empId: null,
       dept: {},

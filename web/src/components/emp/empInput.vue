@@ -65,7 +65,7 @@ export default {
     },
     isEntry: {
       type: Boolean,
-      default: false
+      default: true
     },
     readonly: {
       type: Boolean,
