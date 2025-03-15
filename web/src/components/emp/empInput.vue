@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <span v-if="readonly">{{ empName }}</span>
+  <div v-else>
     <el-input
       v-model="empName"
       :readonly="true"
@@ -56,6 +57,10 @@ export default {
     deptId: {
       type: String,
       default: null
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -105,7 +110,7 @@ export default {
     },
     setEmp(e) {
       this.empVisible = false
-      const user = e.user.length == 0 ? null : e.user[0]
+      const user = e.user.length === 0 ? null : e.user[0]
       this.emp = user
       if (user == null) {
         this.empName = null

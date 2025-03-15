@@ -79,13 +79,6 @@
             <param name="id">部门ID</param>
             <returns>部门资料</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.DeptApi.GetNameList(System.Int64[])">
-            <summary>
-            获取部门或单位名
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
         <member name="M:Basic.HrGatewaryModular.Api.DeptApi.GetSelect(Basic.HrRemoteModel.Dept.Model.DeptGetArg)">
             <summary>
             获取部门选项
@@ -232,6 +225,13 @@
             启用字典项
             </summary>
             <param name="id">启用字典项ID</param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.GetDicTextList(WeDonekRpc.HttpApiGateway.Model.LongParam{System.String[]})">
+            <summary>
+            获取字典名
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.DicItemApi.Gets(System.Int64)">
             <summary>
@@ -681,6 +681,13 @@
             获取独立单位
             </summary>
             <param name="param">查询参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetNameList(System.Int64[])">
+            <summary>
+            获取部门或单位名
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetDeptTree(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">

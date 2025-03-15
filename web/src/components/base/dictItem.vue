@@ -1,6 +1,9 @@
 <template>
+  <div v-if="readonly" class="itemNames">
+    <span v-for="i in names" :key="i">{{ i }}</span>
+  </div>
   <el-select
-    v-if="mode == 'select'"
+    v-else-if="mode == 'select'"
     :disabled="disabled"
     :placeholder="place"
     :style="styleSet"
@@ -42,7 +45,7 @@
 </template>
 
 <script>
-import { gets } from '@/api/base/dictItem'
+import { gets, GetDicTextList } from '@/api/base/dictItem'
 export default {
   props: {
     dicId: {
@@ -62,7 +65,7 @@ export default {
       default: 'el-input'
     },
     value: {
-      type: String,
+      type: String | Array,
       default: null
     },
     placeholder: {
@@ -84,22 +87,35 @@ export default {
     styleSet: {
       type: Object,
       default: null
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       place: null,
-      items: []
+      items: [],
+      names: []
     }
   },
   watch: {
     dicId: {
       handler(val) {
         if (val) {
-          this.loadDict()
+          this.reset()
         }
       },
       immediate: true
+    },
+    value: {
+      handler(val) {
+        if (val && this.readonly) {
+          this.reset()
+        }
+      },
+      immediate: false
     },
     placeholder: {
       handler(val) {
@@ -110,6 +126,22 @@ export default {
   },
   mounted() {},
   methods: {
+    reset() {
+      if (this.readonly) {
+        if (this.value == null) {
+          this.names = []
+          return
+        } else if (this.multiple && this.value.length !== 0) {
+          this.loadItemText(this.value)
+        } else if (this.multiple === false) {
+          this.loadName([this.value])
+        } else {
+          this.deptName = []
+        }
+      } else {
+        this.loadDict()
+      }
+    },
     async loadDict() {
       const res = await gets(this.dicId)
       if (this.filterFunc) {
@@ -117,6 +149,9 @@ export default {
       } else {
         this.items = res
       }
+    },
+    async loadItemText(ids) {
+      this.names = await GetDicTextList(this.dicId, ids)
     },
     chooseChange(value) {
       if (value === '') {
@@ -136,3 +171,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.itemNames {
+  display: list-item;
+}
+.itemNames span{
+  margin-right: 5px;
+}
+</style>

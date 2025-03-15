@@ -6,7 +6,7 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class DicItemService : IDicItemService
     {
-        public long AddDicItem (DicItemAdd datum)
+        public long AddDicItem ( DicItemAdd datum )
         {
             return new AddDicItem
             {
@@ -14,7 +14,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void DeleteDicItem (long id)
+        public void DeleteDicItem ( long id )
         {
             new DeleteDicItem
             {
@@ -22,21 +22,21 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void EnableDicItem (long id)
+        public void EnableDicItem ( long id )
         {
             new EnableDicItem
             {
                 Id = id,
             }.Send();
         }
-        public Dictionary<string, string> GetItemName (long dicId)
+        public Dictionary<string, string> GetItemName ( long dicId )
         {
             return new GetDicItems
             {
                 DicId = dicId,
             }.Send().ToDictionary(a => a.DicValue, a => a.DicText);
         }
-        public DicItem[] GetDicItems (long dicId)
+        public DicItem[] GetDicItems ( long dicId )
         {
             return new GetDicItems
             {
@@ -44,7 +44,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DicItemDto[] Gets (DicItemQuery query)
+        public DicItemDto[] Gets ( DicItemQuery query )
         {
             return new GetAllDicItems
             {
@@ -52,7 +52,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public bool SetDicItem (long id, DicItemSet itemSet)
+        public bool SetDicItem ( long id, DicItemSet itemSet )
         {
             return new SetDicItem
             {
@@ -61,7 +61,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void StopDicItem (long id)
+        public void StopDicItem ( long id )
         {
             new StopDicItem
             {
@@ -69,7 +69,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void Move (long id, long toId)
+        public void Move ( long id, long toId )
         {
             new MoveDicItem
             {
@@ -78,11 +78,20 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DicItemDto GetDicItem (long id)
+        public DicItemDto GetDicItem ( long id )
         {
             return new GetDicItem
             {
                 Id = id
+            }.Send();
+        }
+
+        public string[] GetDicTextList ( long dicId, string[] values )
+        {
+            return new GetDicTextList
+            {
+                DicId = dicId,
+                Values = values
             }.Send();
         }
     }

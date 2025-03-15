@@ -120,20 +120,24 @@ export default {
           this.reset()
         }
       },
-      immediate: true
+      immediate: false
     }
   },
   methods: {
     reset() {
       if (this.readonly) {
         if (this.chioseKey == null) {
+          this.deptName = []
           return
         } else if (this.isMultiple && this.chioseKey.length !== 0) {
           this.loadName(this.chioseKey)
-        } else if (this.isMultiple === false) {
+        } else if (this.isMultiple === false && this.chioseKey !== '0') {
           this.loadName([this.chioseKey])
+        } else {
+          this.deptName = []
         }
       } else {
+        this.deptName = []
         this.loadTree()
       }
     },

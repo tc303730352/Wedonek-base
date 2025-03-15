@@ -4,7 +4,6 @@ function formatRequestUri(name) {
   return 'hr/DicItem/' + name
 }
 
-
 export function gets(dicId) {
   return request({
     url: formatRequestUri('Gets'),
@@ -85,13 +84,24 @@ export function Add(data) {
     data
   })
 }
-export function Set(id,data) {
+export function Set(id, data) {
   return request({
     url: formatRequestUri('Set'),
     method: 'post',
-    data:{
+    data: {
       Id: id,
       ItemSet: data
+    }
+  })
+}
+
+export function GetDicTextList(dicId, values) {
+  return request({
+    url: formatRequestUri('GetDicTextList'),
+    method: 'post',
+    data: {
+      Id: dicId,
+      Value: values
     }
   })
 }
