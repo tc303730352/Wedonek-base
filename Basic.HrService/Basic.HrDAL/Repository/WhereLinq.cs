@@ -194,7 +194,7 @@ namespace Basic.HrDAL.Repository
         public static Expression<Func<DBEmpList, bool>> ToWhere ( this SelectGetParam query )
         {
             ExpressionStarter<DBEmpList> where;
-            if ( query.IsEntry )
+            if ( !query.IsEntry )
             {
                 where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId && a.DeptId == query.DeptId);
             }
@@ -211,14 +211,25 @@ namespace Basic.HrDAL.Repository
         }
         public static Expression<Func<DBEmpList, bool>> ToWhere ( this EmpGetParam query )
         {
-            ExpressionStarter<DBEmpList> where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId);
-            if ( !query.DeptId.IsNull() && query.IsEntry )
+            ExpressionStarter<DBEmpList> where = null;
+            if ( query.IsEntry )
             {
-                where = where.And(a => query.DeptId.Contains(a.DeptId));
+                if ( !query.DeptId.IsNull() )
+                {
+                    where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && query.DeptId.Contains(b.DeptId) && b.EmpId == a.EmpId).Any());
+                }
+                else
+                {
+                    where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.EmpId == a.EmpId).Any());
+                }
             }
-            else if ( !query.DeptId.IsNull() )
+            else
             {
-                where = where.And(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && query.DeptId.Contains(b.DeptId) && b.EmpId == a.EmpId).Any());
+                where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId);
+                if ( !query.DeptId.IsNull() )
+                {
+                    where = where.And(a => query.DeptId.Contains(a.DeptId));
+                }
             }
             if ( !query.Status.IsNull() )
             {
@@ -237,7 +248,7 @@ namespace Basic.HrDAL.Repository
             {
                 where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.UnitId == query.UnitId.Value && query.Title.Contains(b.TitleCode) && b.EmpId == a.EmpId).Any());
             }
-            else if ( !query.IsEntry )
+            else if ( query.IsEntry )
             {
                 if ( !query.DeptId.IsNull() )
                 {
@@ -249,7 +260,7 @@ namespace Basic.HrDAL.Repository
                 }
                 else
                 {
-                    where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId);
+                    where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.EmpId == a.EmpId).Any());
                 }
             }
             else

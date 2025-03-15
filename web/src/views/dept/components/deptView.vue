@@ -2,7 +2,8 @@
   <el-dialog
     :title="title"
     :visible="visible"
-    width="1280px"
+    min-width="1280px"
+    width="80%"
     :before-close="closeForm"
     :modal-append-to-body="false"
     :append-to-body="true"
@@ -52,7 +53,7 @@
       <el-col :span="18">
         <el-card>
           <div slot="header">
-            <span>入职员工列表</span>
+            <span>{{ dept.DeptName }}入职员工列表</span>
           </div>
           <empListView :unit-id="unitId" :dept-id="deptId" :is-load="isLoad" />
         </el-card>
