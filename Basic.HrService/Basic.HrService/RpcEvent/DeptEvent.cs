@@ -13,7 +13,7 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
-        public string GetDeptNameList ( GetDeptNameList obj )
+        public string[] GetDeptNameList ( GetDeptNameList obj )
         {
             return this._Service.GetNameList(obj.Id);
         }
