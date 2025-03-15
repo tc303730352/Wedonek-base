@@ -42,12 +42,12 @@
         /// </summary>
         public string Telephone { get; set; }
         /// <summary>
-        /// 负责人
+        /// 管理员ID
         /// </summary>
         public long? LeaverId { get; set; }
 
         /// <summary>
-        /// 负责人
+        /// 管理员名
         /// </summary>
         public string Leaver { get; set; }
         /// <summary>

@@ -61,7 +61,7 @@ namespace Basic.HrService.lmpl
             {
                 CompanyId = dept.CompanyId,
                 DeptId = subDeptId,
-                IsEntry = true
+                IsEntry = false
             }, a => new
             {
                 a.EmpId,
@@ -201,7 +201,7 @@ namespace Basic.HrService.lmpl
                 {
                     arg.DeptId
                 },
-                IsEntry = true,
+                IsEntry = false,
             });
             long unitId = this._Dept.GetUnitId(arg.DeptId);
             string name = this._Dept.GetDeptName(unitId);

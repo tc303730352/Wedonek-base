@@ -140,6 +140,7 @@ export default {
       } else {
         this.items = res
       }
+      this.$emit('load', res)
       this.loadNames()
     },
     loadNames() {

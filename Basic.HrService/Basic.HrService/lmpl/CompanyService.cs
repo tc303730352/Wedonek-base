@@ -1,6 +1,4 @@
-﻿using System.Collections.Frozen;
-using Basic.HrCollect;
-using Basic.HrModel.Company;
+﻿using Basic.HrCollect;
 using Basic.HrModel.DB;
 using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Company.Model;
@@ -13,34 +11,34 @@ namespace Basic.HrService.lmpl
     {
         private readonly ICompanyCollect _Company;
         private readonly IEmpCollect _Emp;
-        public CompanyService (ICompanyCollect company, IEmpCollect emp)
+        public CompanyService ( ICompanyCollect company, IEmpCollect emp )
         {
             this._Company = company;
             this._Emp = emp;
         }
 
-        public long Add (CompanyAdd add)
+        public long Add ( CompanyAdd add )
         {
             return this._Company.Add(add);
         }
 
-        public void Delete (long id)
+        public void Delete ( long id )
         {
             DBCompany source = this._Company.Get(id);
             this._Company.Delete(source);
         }
 
-        public CompanyDto Get (long id)
+        public CompanyDto Get ( long id )
         {
             DBCompany source = this._Company.Get(id);
             CompanyDto dto = source.ConvertMap<DBCompany, CompanyDto>();
-            if (dto.LeaverId.HasValue)
+            if ( dto.LeaverId.HasValue )
             {
                 dto.Leaver = this._Emp.GetName(dto.LeaverId.Value);
             }
             return dto;
         }
-        public CompanyDto[] Gets (long? parentId, bool isAllChildren)
+        public CompanyDto[] Gets ( long? parentId, bool isAllChildren )
         {
             DBCompany[] source = this._Company.Gets<DBCompany>(new ComGetParam
             {
@@ -51,35 +49,36 @@ namespace Basic.HrService.lmpl
             Dictionary<long, string> empName = this._Emp.GetName(list.Convert(a => a.LeaverId.HasValue, a => a.LeaverId.Value));
             list.ForEach(c =>
             {
-                if (c.LeaverId.HasValue)
+                if ( c.LeaverId.HasValue )
                 {
                     c.Leaver = empName.GetValueOrDefault(c.LeaverId.Value);
                 }
             });
             return list;
         }
-        public CompanyTree[] GetTrees (long? parentId, HrCompanyStatus[] status)
+        public CompanyTree[] GetTrees ( long? parentId, HrCompanyStatus[] status )
         {
-            BasicCompany[] list = this._Company.Gets<BasicCompany>(new ComGetParam
+            DBCompany[] list = this._Company.Gets<DBCompany>(new ComGetParam
             {
                 Status = status,
                 ParentId = parentId,
                 IsAllChildren = true
             });
-            return this._GetChildren(parentId.GetValueOrDefault(), list);
-        }
-        private CompanyTree[] _GetChildren (long parentId, BasicCompany[] list)
-        {
-            return list.Convert<BasicCompany, CompanyTree>(a => a.ParentId == parentId, a => new CompanyTree
+            if ( list.IsNull() )
             {
-                Id = a.Id,
-                CompanyType = a.CompanyType,
-                LeaverId = a.LeaverId,
-                Name = a.ShortName.GetValueOrDefault(a.FullName),
-                Children = this._GetChildren(a.Id, list)
-            });
+                return Array.Empty<CompanyTree>();
+            }
+            Dictionary<long, string> names = this._Emp.GetName(list.Convert(a => a.LeaverId.HasValue, a => a.LeaverId.Value));
+            return list.ConvertTree<DBCompany, CompanyTree>(a => a.ParentId == 0, ( a, b ) =>
+            {
+                if ( a.LeaverId.HasValue )
+                {
+                    b.Leaver = names.GetValueOrDefault(a.LeaverId.Value);
+                }
+            }, ( a, b ) => a.ParentId == b.Id);
         }
-        public bool Set (long id, CompanySet set)
+
+        public bool Set ( long id, CompanySet set )
         {
             DBCompany source = this._Company.Get(id);
             return this._Company.Set(source, set);

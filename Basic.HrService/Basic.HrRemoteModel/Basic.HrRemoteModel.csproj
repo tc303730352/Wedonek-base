@@ -8,7 +8,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="WeDonekRpc.Client" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Client" Version="1.1.1" />
 		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.1" />
 		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
 	</ItemGroup>

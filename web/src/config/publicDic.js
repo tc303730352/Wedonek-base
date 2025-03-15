@@ -6,7 +6,20 @@ module.exports = {
     hrUserSex: 'HrUserSex',
     dicStatus: 'DicStatus',
     dicItemStatus: 'DicItemStatus',
+    companyStatus: 'HrCompanyStatus',
+    companyType: 'HrCompanyType',
     hrPowerType: 'PowerType'
+  },
+  hrCompanyType: {
+    0: {
+      text: '总公司'
+    },
+    1: {
+      text: '子公司'
+    },
+    2: {
+      text: '分公司'
+    }
   },
   HrItemDic: {
     deptTag: '3',

@@ -59,6 +59,13 @@
               />
             </el-form-item>
             <el-form-item>
+              <el-checkbox
+                v-model="queryParam.IsEntry"
+                label="只显示入职的员工"
+                @change="loadEmp"
+              />
+            </el-form-item>
+            <el-form-item>
               <el-button type="success" @click="addEmp">添加员工</el-button>
               <el-button @click="reset">重置</el-button>
             </el-form-item>
@@ -326,7 +333,7 @@ export default {
       queryParam: {
         CompanyId: null,
         QueryKey: null,
-        IsEntry: true,
+        IsEntry: false,
         DeptId: null,
         UnitId: null,
         Status: null,

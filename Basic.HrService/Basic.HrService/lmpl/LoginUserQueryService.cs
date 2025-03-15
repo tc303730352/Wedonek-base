@@ -40,7 +40,7 @@ namespace Basic.HrService.lmpl
                 CompanyId = query.CompanyId,
                 DeptId = query.DeptId,
                 UnitId = query.UnitId,
-                IsEntry = true,
+                IsEntry = false,
                 UserType = query.UserType,
                 RoleId = query.RoleId
             }, paging, out int count);
