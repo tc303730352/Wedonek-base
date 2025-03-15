@@ -94,20 +94,31 @@ export default {
     comId: {
       handler(val) {
         if (val != null) {
-          this.loadTree()
+          this.reset()
         }
       },
       immediate: true
     },
     unitId: {
       handler(val) {
-        this.loadTree()
+        this.reset()
       },
       immediate: false
     },
     value: {
       handler(val) {
         this.chioseKey = val
+        if (this.readonly && val != null) {
+          this.reset()
+        }
+      },
+      immediate: true
+    },
+    readonly: {
+      handler(val) {
+        if (val && this.value != null) {
+          this.reset()
+        }
       },
       immediate: true
     }
@@ -115,12 +126,12 @@ export default {
   methods: {
     reset() {
       if (this.readonly) {
-        if (this.value == null) {
+        if (this.chioseKey == null) {
           return
-        } else if (this.multiple && this.value.length !== 0) {
-          this.loadName(this.value)
-        } else if (this.multiple === false) {
-          this.loadName([this.value])
+        } else if (this.isMultiple && this.chioseKey.length !== 0) {
+          this.loadName(this.chioseKey)
+        } else if (this.isMultiple === false) {
+          this.loadName([this.chioseKey])
         }
       } else {
         this.loadTree()

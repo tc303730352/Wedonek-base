@@ -9,7 +9,7 @@ namespace Basic.HrGatewaryModular.Api
     internal class UnitApi : ApiController
     {
         private readonly IUnitService _Service;
-        public UnitApi (IUnitService service)
+        public UnitApi ( IUnitService service )
         {
             this._Service = service;
         }
@@ -18,17 +18,25 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns></returns>
-        public DeptSelect[] GetDeptSelect ([NullValidate("hr.unit.param.null")] UnitGetArg param)
+        public DeptSelect[] GetDeptSelect ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
             return this._Service.GetUnitDeptSelect(param);
         }
-
+        /// <summary>
+        /// 获取部门或单位名
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string[] GetNameList ( [NullValidate("hr.dept.id.null")] long[] id )
+        {
+            return this._Service.GetName(id);
+        }
         /// <summary>
         /// 获取独立机构树
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public DeptTree[] GetDeptTree ([NullValidate("hr.unit.param.null")] UnitGetArg param)
+        public DeptTree[] GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
             return this._Service.GetUnitDeptTree(param);
         }
@@ -38,7 +46,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
-        public DeptSelect[] GetSelect ([NullValidate("hr.unit.param.null")] UnitQueryParam param)
+        public DeptSelect[] GetSelect ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
         {
             return this._Service.GetUnitSelect(param);
         }
@@ -48,7 +56,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public DeptTree[] GetTree ([NullValidate("hr.unit.param.null")] UnitQueryParam param)
+        public DeptTree[] GetTree ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
         {
             return this._Service.GetUnitTree(param);
         }

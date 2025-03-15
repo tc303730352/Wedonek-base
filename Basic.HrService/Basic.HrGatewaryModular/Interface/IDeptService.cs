@@ -72,6 +72,5 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="id"></param>
         /// <param name="leaderId"></param>
         void SetLeader ( long id, long? leaderId );
-        string[] GetName ( long[] id );
     }
 }

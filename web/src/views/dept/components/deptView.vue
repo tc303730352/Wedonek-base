@@ -15,7 +15,7 @@
       </el-form-item>
       <el-form-item label="所属上级">
         <deptSelect
-          v-model="dept.ParentId"
+          :value="dept.ParentId"
           :readonly="true"
           placeholder="所属上级"
         />
@@ -88,6 +88,7 @@ export default {
     async reset() {
       const data = await deptApi.get(this.id)
       this.dept = data
+      console.log(data)
       this.isUnit = data.IsUnit
       this.titleName = data.IsUnit ? '单位' : '部门'
       this.title = (data.IsUnit ? '查看单位:' : '查看部门:') + data.DeptName

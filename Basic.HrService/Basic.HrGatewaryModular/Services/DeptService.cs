@@ -93,13 +93,5 @@ namespace Basic.HrGatewaryModular.Services
                 DeptId = deptId,
             }.Send();
         }
-
-        public string[] GetName ( long[] id )
-        {
-            return new GetDeptNameList
-            {
-                Id = id
-            }.Send();
-        }
     }
 }

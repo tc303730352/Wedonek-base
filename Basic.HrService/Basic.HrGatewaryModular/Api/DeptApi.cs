@@ -65,15 +65,7 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.GetDept(id);
         }
-        /// <summary>
-        /// 获取部门或单位名
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public string[] GetNameList ( [NullValidate("hr.dept.id.null")] long[] id )
-        {
-            return this._Service.GetName(id);
-        }
+
         /// <summary>
         /// 获取部门选项
         /// </summary>
