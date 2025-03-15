@@ -20,7 +20,7 @@
           <div v-if="node.type == 'company'" :title="node.DeptShow" class="comName">
             {{ node.label }}
           </div>
-          <div v-else-if="node.type == 'unit'" :title="node.DeptShow" class="unit">
+          <div v-else-if="node.type == 'unit'" :title="node.DeptShow" :class="node.isEnable ? 'unit active' : 'unit'">
             <div class="name">
               <svg-icon icon-class="tree" />
               {{ node.label }}
@@ -30,7 +30,7 @@
               <span>{{ node.EmpTotal }}</span>
             </div>
           </div>
-          <el-card v-else class="dept">
+          <el-card v-else :class="node.isEnable ? 'dept active' : 'dept'">
             <div slot="header" class="header">
               <svg-icon icon-class="peoples" />
               <span>{{ node.label }}</span>
@@ -78,7 +78,7 @@
   </el-card>
 </template>
 <script>
-import { getTallyTrees } from '@/api/unit/dept'
+import { getTallyTrees, stop, enable } from '@/api/unit/dept'
 import { HrItemDic } from '@/config/publicDic'
 import { GetItemName } from '@/api/base/dictItem'
 import editDept from './components/editDept.vue'
@@ -136,9 +136,15 @@ export default {
       if (node.type === 'company') {
         return [{ name: '查看公司信息', command: 'view' }]
       } else if (node.type === 'unit') {
-        return [{ name: '查看单位信息', command: 'view' }, { name: '新增单位', command: 'add' }, { name: '新增部门', command: 'addDept' }, { name: '编辑单位信息', command: 'edit' }]
+        if (node.isEnable) {
+          return [{ name: '查看单位信息', command: 'view' }, { name: '停用', command: 'stop' }, { name: '新增下级单位', command: 'add' }, { name: '新增下级部门', command: 'addDept' }, { name: '编辑单位资料', command: 'edit' }]
+        }
+        return [{ name: '查看单位信息', command: 'view' }, { name: '启用', command: 'enable' }, { name: '新增单位', command: 'add' }, { name: '新增部门', command: 'addDept' }, { name: '编辑单位信息', command: 'edit' }]
+      } else if (node.isEnable) {
+        return [{ name: '查看部门信息', command: 'view' }, { name: '停用', command: 'stop' }, { name: '新增部门信息', command: 'add' }, { name: '编辑部门信息', command: 'edit' }]
+      } else {
+        return [{ name: '查看部门信息', command: 'view' }, { name: '启用', command: 'enable' }, { name: '新增部门信息', command: 'add' }, { name: '编辑部门信息', command: 'edit' }]
       }
-      return [{ name: '查看部门信息', command: 'view' }, { name: '新增部门信息', command: 'add' }, { name: '编辑部门信息', command: 'edit' }]
     },
     closeDept(isRefresh) {
       this.visible = false
@@ -190,7 +196,19 @@ export default {
       } else if (e.command === 'view') {
         this.id = node.id
         this.viewVisible = true
+      } else if (e.command === 'enable') {
+        this.statusChange(node, true)
+      } else if (e.command === 'stop') {
+        this.statusChange(node, false)
       }
+    },
+    async statusChange(node, value) {
+      if (value) {
+        await enable([node.id])
+      } else {
+        await stop(node.id)
+      }
+      this.init()
     },
     async init() {
       const list = await getTallyTrees({
@@ -232,6 +250,7 @@ export default {
           label: c.Name,
           expand: true,
           type: c.IsUnit ? 'unit' : 'dept',
+          isEnable: c.Status === 1,
           unitId: c.UnitId,
           EmpNum: c.EmpNum,
           EmpTotal: c.EmpTotal,
@@ -277,16 +296,25 @@ export default {
 }
 .structure .comName {
   color: #fff;
-  background-color: #43af2b;
+  background-color: #ff0000;
   min-width: 250px;
   height: 50px;
   line-height: 35px;
   padding: 10px;
   font-size: 30px;
 }
+.structure .active{
+  background-color: #1890ff !important;
+}
+.structure .active .el-card__header{
+  background-color: #43af2b !important;
+}
+.structure .active .el-card__body {
+  background-color: #fff !important;
+}
 .structure .unit {
     color: #fff;
-    background-color: #1890ff;
+    background-color: #999;
     min-width: 250px;
     height: 50px;
     line-height: 32px;

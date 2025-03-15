@@ -302,7 +302,7 @@ export default {
       tags.forEach((c) => {
         tag = tag + ',' + this.deptTag[c]
       })
-      if (tag.length == 0) {
+      if (tag.length === 0) {
         return null
       }
       return tag.substring(1)
@@ -329,7 +329,7 @@ export default {
     },
     chioseDept(e) {
       this.queryParam.CompanyId = e.companyId
-      if (e.value.length == 0) {
+      if (e.value.length === 0) {
         this.queryParam.UnitId = null
         this.queryParam.IsUnit = true
         this.title = e.comName + '公司-单位列表'
@@ -341,7 +341,7 @@ export default {
       this.loadDept()
     },
     async statusChange(row, value) {
-      if (value == 1) {
+      if (value === 1) {
         await deptApi.enable([row.Id])
       } else {
         await deptApi.stop(row.Id)

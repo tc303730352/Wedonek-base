@@ -129,10 +129,17 @@ namespace Basic.HrCollect.Impl
             }
             else if ( dept.ParentId != 0 )
             {
-                HrDeptStatus status = this._Dept.Get(dept.ParentId, a => a.Status);
-                if ( status != HrDeptStatus.启用 )
+                long[] pid = dept.LevelCode.ToLongArray();
+                HrDeptStatus[] status = new HrDeptStatus[]
                 {
-                    throw new ErrorException("hr.parent.dept.no.enable");
+                    HrDeptStatus.起草,
+                    HrDeptStatus.停用
+                };
+                long[] ids = this._Dept.Gets(a => pid.Contains(a.Id) && status.Contains(a.Status), a => a.Id);
+                if ( !ids.IsNull() )
+                {
+                    this._Dept.EnableDept(ids.Add(dept.Id));
+                    return true;
                 }
             }
             this._Dept.EnableDept(dept);
