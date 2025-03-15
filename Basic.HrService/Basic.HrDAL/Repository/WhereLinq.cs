@@ -237,31 +237,34 @@ namespace Basic.HrDAL.Repository
             {
                 where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.UnitId == query.UnitId.Value && query.Title.Contains(b.TitleCode) && b.EmpId == a.EmpId).Any());
             }
-            else if ( query.UnitId.HasValue )
-            {
-                where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.UnitId == query.UnitId.Value && b.EmpId == a.EmpId).Any());
-            }
-            else if ( !query.Title.IsNull() )
-            {
-                where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && query.Title.Contains(b.TitleCode) && b.EmpId == a.EmpId).Any());
-            }
             else if ( !query.IsEntry )
             {
                 if ( !query.DeptId.IsNull() )
                 {
                     where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && query.DeptId.Contains(b.DeptId) && b.EmpId == a.EmpId).Any());
                 }
+                else if ( query.UnitId.HasValue )
+                {
+                    where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.UnitId == query.UnitId.Value && b.EmpId == a.EmpId).Any());
+                }
                 else
                 {
-                    where = PredicateBuilder.New<DBEmpList>(a => SqlFunc.Subqueryable<DBEmpTitle>().Where(b => b.CompanyId == query.CompanyId && b.EmpId == a.EmpId).Any());
+                    where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId);
                 }
             }
             else
             {
-                where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId);
                 if ( !query.DeptId.IsNull() )
                 {
-                    where = where.And(a => query.DeptId.Contains(a.DeptId));
+                    where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId && query.DeptId.Contains(a.DeptId));
+                }
+                else if ( query.UnitId.HasValue )
+                {
+                    where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId && a.UnitId == query.UnitId.Value);
+                }
+                else
+                {
+                    where = PredicateBuilder.New<DBEmpList>(a => a.CompanyId == query.CompanyId);
                 }
             }
             if ( !query.Status.IsNull() )

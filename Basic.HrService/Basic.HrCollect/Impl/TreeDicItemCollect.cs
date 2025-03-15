@@ -238,8 +238,11 @@ namespace Basic.HrCollect.Impl
                 StringBuilder str = new StringBuilder();
                 a.Pid.ForEach(c =>
                 {
-                    _ = str.Append(pName.GetValueOrDefault(c, string.Empty));
-                    _ = str.Append('/');
+                    if ( c != 0 )
+                    {
+                        _ = str.Append(pName.GetValueOrDefault(c, string.Empty));
+                        _ = str.Append('/');
+                    }
                 });
                 _ = str.Append(a.DicText);
                 return str.ToString();

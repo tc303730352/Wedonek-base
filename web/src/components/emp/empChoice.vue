@@ -140,6 +140,10 @@ export default {
     unitId: {
       type: String,
       default: null
+    },
+    isEntry: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -265,6 +269,8 @@ export default {
       this.minHeight = window.innerHeight * 0.6 + 'px'
       this.queryParam.UnitId = this.unitId
       this.queryParam.DeptId = null
+      this.queryParam.CompanyId = this.comId
+      this.queryParam.IsEntry = this.isEntry
       if (this.empId != null && this.empId.length !== 0) {
         this.chioseKey = this.empId
         this.curKey = this.empId
@@ -292,8 +298,6 @@ export default {
       })
     },
     async loadGrid() {
-      this.queryParam.CompanyId = this.comId
-      this.queryParam.IsEntry = false
       this.queryParam.Status = this.status
       const data = await query(this.queryParam, this.paging)
       this.paging.Total = data.Count

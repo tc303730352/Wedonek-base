@@ -10,7 +10,7 @@ namespace Basic.HrModel.Emp
         public long CompanyId { get; set; }
 
         /// <summary>
-        /// 是否只返回入职的员工
+        ///  IsEntry=true 只返回部门中的人员 IsEntry=false 返回在部门中拥有职务的人员
         /// </summary>
         public bool IsEntry { get; set; }
 

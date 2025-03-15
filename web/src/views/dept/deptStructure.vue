@@ -10,6 +10,7 @@
         :define-menus="initMenus"
         :node-draggable="false"
         :collapsable="true"
+        :horizontal="false"
         :default-expand-level="5"
         :data="depts"
         :node-add="add"
@@ -53,7 +54,7 @@
               </el-col>
             </el-row>
             <p v-if="node.LeaderName">
-              负责人:<el-button type="text">{{ node.LeaderName }}</el-button>
+              负责人:<el-button type="text" @click="showEmp(node.LeaderId)">{{ node.LeaderName }}</el-button>
             </p>
             <p v-if="node.DeptTag">
               <el-tag v-for="item in node.DeptTag" :key="item">{{ deptTag[item] }}</el-tag>
@@ -75,18 +76,25 @@
       :visible="viewVisible"
       @close="closeView"
     />
+    <empModel
+      :id="id"
+      :visible="empVisible"
+      @close="empVisible=false"
+    />
   </el-card>
 </template>
 <script>
 import { getTallyTrees, stop, enable } from '@/api/unit/dept'
 import { HrItemDic } from '@/config/publicDic'
+import empModel from '@/components/emp/empModel.vue'
 import { GetItemName } from '@/api/base/dictItem'
 import editDept from './components/editDept.vue'
 import deptView from './components/deptView.vue'
 export default {
   components: {
     editDept,
-    deptView
+    deptView,
+    empModel
   },
   data() {
     return {
@@ -98,6 +106,7 @@ export default {
       unitId: null,
       visible: false,
       viewVisible: false,
+      empVisible: false,
       status: null,
       parentId: null
     }
@@ -131,6 +140,10 @@ export default {
     async initDic() {
       this.deptTag = await GetItemName(HrItemDic.deptTag)
       this.init()
+    },
+    showEmp(empId) {
+      this.id = empId
+      this.empVisible = true
     },
     initMenus(e, node) {
       if (node.type === 'company') {
@@ -286,7 +299,7 @@ export default {
   font-size: 14px;
 }
 .structure .zm-tree-org {
-  background-color: #b1b1b1;
+  background-color: #bebebe;
 }
 .structure .zm-tree-org .zoom-container {
   overflow: auto;

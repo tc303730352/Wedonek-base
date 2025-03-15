@@ -216,7 +216,7 @@ export default {
     },
     async setLeader(e) {
       this.empVisible = false
-      const leader = e.user.length == 0 ? null : e.user[0]
+      const leader = e.user.length === 0 ? null : e.user[0]
       if (leader == null) {
         await deptApi.setLeader(this.dept.Id, null)
         this.dept.LeaderId = null

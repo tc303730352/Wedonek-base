@@ -1,5 +1,9 @@
 <template>
-  <span v-if="readonly">{{ empName }}</span>
+  <span v-if="readonly">
+    <slot name="empName" :emp="{EmpName: empName, EmpId: value}">
+      {{ empName }}
+    </slot>
+  </span>
   <div v-else>
     <el-input
       v-model="empName"
@@ -20,6 +24,7 @@
       :title="placeholder"
       :unit-id="unitId"
       :dept-id="deptId"
+      :is-entry="isEntry"
       @save="setEmp"
       @close="closeChoice"
     />
@@ -57,6 +62,10 @@ export default {
     deptId: {
       type: String,
       default: null
+    },
+    isEntry: {
+      type: Boolean,
+      default: false
     },
     readonly: {
       type: Boolean,
