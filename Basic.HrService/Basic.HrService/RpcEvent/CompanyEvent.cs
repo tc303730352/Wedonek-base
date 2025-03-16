@@ -9,33 +9,33 @@ namespace Basic.HrService.RpcEvent
     {
         private readonly ICompanyService _Service;
 
-        public CompanyEvent (ICompanyService service)
+        public CompanyEvent ( ICompanyService service )
         {
             this._Service = service;
         }
 
-        public long AddCompany (AddCompany add)
+        public long AddCompany ( AddCompany add )
         {
             return this._Service.Add(add.Datum);
         }
-        public void DeleteCompany (DeleteCompany obj)
+        public void DeleteCompany ( DeleteCompany obj )
         {
             this._Service.Delete(obj.Id);
         }
-        public CompanyDto GetCompany (GetCompany obj)
+        public CompanyDto GetCompany ( GetCompany obj )
         {
             return this._Service.Get(obj.Id);
         }
-        public CompanyDto[] GetCompanyList (GetCompanyList obj)
+        public CompanyDto[] GetCompanyList ( GetCompanyList obj )
         {
             return this._Service.Gets(obj.ParentId, obj.IsAllChildren);
         }
-        public CompanyTree[] GetCompanyTree (GetCompanyTree obj)
+        public CompanyTree[] GetCompanyTree ()
         {
-            return this._Service.GetTrees(obj.ParentId, obj.Status);
+            return this._Service.GetTrees();
         }
 
-        public bool SetCompany (SetCompany obj)
+        public bool SetCompany ( SetCompany obj )
         {
             return this._Service.Set(obj.Id, obj.Datum);
         }

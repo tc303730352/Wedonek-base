@@ -1,6 +1,5 @@
 ﻿using Basic.HrCollect;
 using Basic.HrModel.DB;
-using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Company.Model;
 using Basic.HrService.Interface;
 using WeDonekRpc.Client;
@@ -56,14 +55,9 @@ namespace Basic.HrService.lmpl
             });
             return list;
         }
-        public CompanyTree[] GetTrees ( long? parentId, HrCompanyStatus[] status )
+        public CompanyTree[] GetTrees ()
         {
-            DBCompany[] list = this._Company.Gets<DBCompany>(new ComGetParam
-            {
-                Status = status,
-                ParentId = parentId,
-                IsAllChildren = true
-            });
+            DBCompany[] list = this._Company.GetAll<DBCompany>();
             if ( list.IsNull() )
             {
                 return Array.Empty<CompanyTree>();

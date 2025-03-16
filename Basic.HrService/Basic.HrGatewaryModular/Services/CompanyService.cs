@@ -1,5 +1,4 @@
 ﻿using Basic.HrGatewaryModular.Interface;
-using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Company;
 using Basic.HrRemoteModel.Company.Model;
 
@@ -7,7 +6,7 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class CompanyService : ICompanyService
     {
-        public long AddCompany (CompanyAdd datum)
+        public long AddCompany ( CompanyAdd datum )
         {
             return new AddCompany
             {
@@ -15,7 +14,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void DeleteCompany (long id)
+        public void DeleteCompany ( long id )
         {
             new DeleteCompany
             {
@@ -23,7 +22,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public CompanyDto GetCompany (long id)
+        public CompanyDto GetCompany ( long id )
         {
             return new GetCompany
             {
@@ -31,7 +30,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public CompanyDto[] GetCompanyList (long? parentId, bool isAllChildren)
+        public CompanyDto[] GetCompanyList ( long? parentId, bool isAllChildren )
         {
             return new GetCompanyList
             {
@@ -40,16 +39,12 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public CompanyTree[] GetCompanyTree (long? parentId, HrCompanyStatus[] status)
+        public CompanyTree[] GetCompanyTree ()
         {
-            return new GetCompanyTree
-            {
-                ParentId = parentId,
-                Status = status,
-            }.Send();
+            return new GetCompanyTree().Send();
         }
 
-        public bool SetCompany (long id, CompanySet datum)
+        public bool SetCompany ( long id, CompanySet datum )
         {
             return new SetCompany
             {

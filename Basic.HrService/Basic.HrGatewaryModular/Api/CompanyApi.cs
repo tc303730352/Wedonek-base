@@ -4,6 +4,7 @@ using Basic.HrRemoteModel.Company.Model;
 using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
+using WeDonekRpc.HttpApiGateway.Model;
 
 namespace Basic.HrGatewaryModular.Api
 {
@@ -57,11 +58,10 @@ namespace Basic.HrGatewaryModular.Api
         /// <summary>
         /// 获取公司列表树形结构
         /// </summary>
-        /// <param name="param">参数</param>
         /// <returns></returns>
-        public CompanyTree[] GetTree ( [NullValidate("hr.company.param.null")] UI_GetCompanyTree param )
+        public CompanyTree[] GetTree ()
         {
-            return this._Service.GetCompanyTree(param.ParentId, param.Status);
+            return this._Service.GetCompanyTree();
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
-        public bool Set ( [NullValidate("hr.company.param.null")] UI_SetCompany param )
+        public bool Set ( [NullValidate("hr.company.param.null")] LongParam<CompanySet> param )
         {
-            return this._Service.SetCompany(param.Id, param.Datum);
+            return this._Service.SetCompany(param.Id, param.Value);
         }
 
     }

@@ -37,12 +37,18 @@
             @change="(value) => statusChange(e.row, value)"
           />
         </template>
+        <template slot="leaver" slot-scope="e">
+          <el-button v-if="e.row.LeaverId" type="text" @click="showEmp(e.row.LeaverId)">{{ e.row.Leaver }}</el-button>
+        </template>
         <template slot="CompanyType" slot-scope="e">
           {{ hrCompanyType[e.row.CompanyType].text }}
         </template>
+        <template slot="AddTime" slot-scope="e">
+          {{ moment(e.row.AddTime).format('YYYY-MM-DD') }}
+        </template>
         <template slot="Contacts" slot-scope="e">
           <span>{{ e.row.Contacts }}</span>
-          <span v-if="e.row.Telephone">{{ e.row.Telephone }}</span>
+          <span v-if="e.row.Telephone">{{ ' ' + e.row.Telephone }}</span>
         </template>
         <template slot="action" slot-scope="e">
           <el-button
@@ -75,6 +81,7 @@
 <script>
 import * as companyApi from '@/api/base/company'
 import { HrEnumDic, hrCompanyType } from '@/config/publicDic'
+import moment from 'moment'
 export default {
   components: {
   },
@@ -114,9 +121,10 @@ export default {
           slotName: 'Contacts'
         },
         {
-          key: 'LeaverName',
+          key: 'Leaver',
           title: '管理员',
-          align: 'center'
+          align: 'center',
+          slotName: 'leaver'
         },
         {
           key: 'Status',
@@ -146,6 +154,7 @@ export default {
     this.load()
   },
   methods: {
+    moment,
     async load() {
       const list = await companyApi.GetTree(this.queryParam)
       this.companys = list

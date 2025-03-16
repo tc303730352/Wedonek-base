@@ -96,7 +96,10 @@ namespace Basic.HrCollect.Impl
         {
             return this._Company.Gets<T>(param);
         }
-
+        public T[] GetAll<T> () where T : class, new()
+        {
+            return this._Company.GetAll<T>();
+        }
         public Dictionary<long, string> GetNames ( long[] ids )
         {
             return this._Company.GetNames(ids);
