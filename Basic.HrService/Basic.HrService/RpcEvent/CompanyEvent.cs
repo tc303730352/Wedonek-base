@@ -26,6 +26,10 @@ namespace Basic.HrService.RpcEvent
         {
             return this._Service.Get(obj.Id);
         }
+        public string GetCompanyName ( GetCompanyName obj )
+        {
+            return this._Service.GetName(obj.Id);
+        }
         public CompanyDto[] GetCompanyList ( GetCompanyList obj )
         {
             return this._Service.Gets(obj.ParentId, obj.IsAllChildren);

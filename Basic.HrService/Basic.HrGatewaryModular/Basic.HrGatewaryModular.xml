@@ -31,14 +31,13 @@
             <param name="param">参数</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetTree(Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree)">
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetTree">
             <summary>
             获取公司列表树形结构
             </summary>
-            <param name="param">参数</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Set(Basic.HrGatewaryModular.Model.Company.UI_SetCompany)">
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Set(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.Company.Model.CompanySet})">
             <summary>
             修改公司资料
             </summary>
@@ -746,12 +745,10 @@
             <param name="isAllChildren">是否包含所有下级</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.GetCompanyTree(System.Nullable{System.Int64},Basic.HrRemoteModel.HrCompanyStatus[])">
+        <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.GetCompanyTree">
             <summary>
             获取公司列表树形结构
             </summary>
-            <param name="parentId">父级公司ID</param>
-            <param name="status">公司状态</param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Interface.ICompanyService.SetCompany(System.Int64,Basic.HrRemoteModel.Company.Model.CompanySet)">
@@ -1263,21 +1260,6 @@
         <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyList.IsAllChildren">
             <summary>
             是否包含所有下级
-            </summary>
-        </member>
-        <member name="T:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree">
-            <summary>
-            获取公司列表树形结构 UI参数实体
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree.ParentId">
-            <summary>
-            父级公司ID
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.Company.UI_GetCompanyTree.Status">
-            <summary>
-            公司状态
             </summary>
         </member>
         <member name="T:Basic.HrGatewaryModular.Model.Company.UI_SetCompany">

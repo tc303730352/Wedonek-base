@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getDeptTree } from '@/api/unit/unit'
+import { getDeptTree, GetName } from '@/api/unit/unit'
 export default {
   name: 'Layout',
   props: {
@@ -55,6 +55,12 @@ export default {
     status: {
       type: Array,
       default: () => [1]
+    },
+    companyId: {
+      type: String,
+      default: () => {
+        return this.$store.getters.curComId
+      }
     },
     selectKeys: {
       type: Array,
@@ -83,6 +89,7 @@ export default {
       chioseKey: null,
       checkboxKey: [],
       deptDic: {},
+      name: null,
       props: {
         label: 'DeptName',
         children: 'Children'
@@ -99,9 +106,10 @@ export default {
     }
   },
   watch: {
-    comId: {
+    companyId: {
       handler(val) {
-        if (val != null) {
+        if (val !== this.comId || this.name == null) {
+          this.name = null
           this.loadTree()
         }
       },
@@ -142,9 +150,24 @@ export default {
         })
       }
     },
+    async GetComName() {
+      if (this.name !== null) {
+        return this.name
+      } else if (this.companyId === this.comId) {
+        this.name = this.comName
+      } else {
+        const name = this.$store.getters.company[this.companyId]
+        if (name) {
+          this.name = name
+        } else {
+          this.name = await GetName(this.companyId)
+        }
+      }
+      return this.name
+    },
     async load() {
       const res = await getDeptTree({
-        CompanyId: this.comId,
+        CompanyId: this.companyId,
         Status: this.status,
         ParentId: this.unitId,
         IsUnit: this.isUnit
@@ -155,10 +178,11 @@ export default {
           this.format(c)
         })
       }
+      const comName = await this.GetComName()
       this.units = [
         {
           DeptId: 'root',
-          DeptName: this.comName,
+          DeptName: comName,
           disabled: this.isMultiple,
           style: {
             icon: 'el-icon-s-flag',
@@ -172,7 +196,7 @@ export default {
       const res = await this.load()
       const e = {
         isMultiple: this.isMultiple,
-        companyId: this.comId,
+        companyId: this.companyId,
         comName: this.comName,
         value: []
       }
@@ -218,8 +242,8 @@ export default {
       }
       const e = {
         isMultiple: this.isMultiple,
-        companyId: this.comId,
-        comName: this.comName,
+        companyId: this.companyId,
+        comName: this.name,
         value: this.checkboxKey.map((c) => this.deptDic[c])
       }
       this.$emit('change', e)
@@ -228,8 +252,8 @@ export default {
       this.chioseKey = dept.DeptId
       const e = {
         isMultiple: this.isMultiple,
-        companyId: this.comId,
-        comName: this.comName,
+        companyId: this.companyId,
+        comName: this.name,
         value: []
       }
       if (dept != null && dept.DeptId !== 'root') {

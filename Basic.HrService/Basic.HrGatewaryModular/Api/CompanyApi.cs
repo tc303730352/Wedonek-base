@@ -25,7 +25,15 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.AddCompany(datum);
         }
-
+        /// <summary>
+        /// 获取树形字典项名
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string GetName ( [NumValidate("hr.company.id.error", 1)] long id )
+        {
+            return this._Service.GetName(id);
+        }
         /// <summary>
         /// 删除公司
         /// </summary>

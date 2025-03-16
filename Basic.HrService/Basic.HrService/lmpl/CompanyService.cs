@@ -15,6 +15,10 @@ namespace Basic.HrService.lmpl
             this._Company = company;
             this._Emp = emp;
         }
+        public string GetName ( long id )
+        {
+            return this._Company.GetName(id);
+        }
 
         public long Add ( CompanyAdd add )
         {

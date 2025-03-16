@@ -18,3 +18,13 @@ export function GetNameList(ids) {
     data: ids
   })
 }
+
+export function GetName(id) {
+  return request({
+    url: formatRequestUri('GetName'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

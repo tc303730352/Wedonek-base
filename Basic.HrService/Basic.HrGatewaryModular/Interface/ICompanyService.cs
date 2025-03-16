@@ -37,6 +37,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <returns></returns>
         CompanyTree[] GetCompanyTree ();
+        string GetName ( long id );
 
         /// <summary>
         /// 修改公司资料

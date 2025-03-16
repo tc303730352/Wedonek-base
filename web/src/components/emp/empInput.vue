@@ -24,6 +24,7 @@
       :title="placeholder"
       :unit-id="unitId"
       :dept-id="deptId"
+      :company-id="companyId"
       :is-entry="isEntry"
       @save="setEmp"
       @close="closeChoice"
@@ -46,6 +47,12 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    companyId: {
+      type: String,
+      default: () => {
+        return this.$store.getters.curComId
+      }
     },
     value: {
       type: String,
@@ -102,7 +109,7 @@ export default {
   methods: {
     async reset() {
       if (this.emp == null) {
-        this.emp = await getBasic(this.value, this.comId)
+        this.emp = await getBasic(this.value, this.companyId)
         this.empName = this.emp.EmpName
       }
     },

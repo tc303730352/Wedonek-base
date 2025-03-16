@@ -14,7 +14,7 @@
             <div slot="header" class="clearfix">
               <span>单位部门</span>
             </div>
-            <deptTree :unit-id="unitId" @change="chioceDept" />
+            <deptTree :unit-id="unitId" :company-id="companyId" @change="chioceDept" />
           </el-card>
         </el-col>
         <el-col :span="18">
@@ -125,6 +125,12 @@ export default {
       type: Array,
       default: null
     },
+    companyId: {
+      type: String,
+      default: () => {
+        return this.$store.getters.curComId
+      }
+    },
     status: {
       type: Array,
       default: () => [1]
@@ -212,10 +218,6 @@ export default {
     }
   },
   computed: {
-    comName() {
-      const comId = this.$store.getters.curComId
-      return this.$store.getters.company[comId]
-    },
     comId() {
       return this.$store.getters.curComId
     }
@@ -269,7 +271,7 @@ export default {
       this.minHeight = window.innerHeight * 0.6 + 'px'
       this.queryParam.UnitId = this.unitId
       this.queryParam.DeptId = null
-      this.queryParam.CompanyId = this.comId
+      this.queryParam.CompanyId = this.companyId
       this.queryParam.IsEntry = this.isEntry
       if (this.empId != null && this.empId.length !== 0) {
         this.chioseKey = this.empId

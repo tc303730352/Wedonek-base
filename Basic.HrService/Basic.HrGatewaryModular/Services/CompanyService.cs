@@ -44,6 +44,14 @@ namespace Basic.HrGatewaryModular.Services
             return new GetCompanyTree().Send();
         }
 
+        public string GetName ( long id )
+        {
+            return new GetCompanyName
+            {
+                Id = id,
+            }.Send();
+        }
+
         public bool SetCompany ( long id, CompanySet datum )
         {
             return new SetCompany

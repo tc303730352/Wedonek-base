@@ -4,6 +4,7 @@ namespace Basic.HrService.Interface
 {
     public interface ICompanyService
     {
+        string GetName ( long id );
         long Add ( CompanyAdd add );
         void Delete ( long id );
         CompanyDto Get ( long id );

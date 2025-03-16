@@ -28,6 +28,7 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.GetTreeNames(param.Id, param.Value);
         }
+
         /// <summary>
         /// 添加树形字典项
         /// </summary>

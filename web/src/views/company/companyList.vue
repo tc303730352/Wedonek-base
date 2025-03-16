@@ -4,25 +4,12 @@
       <span>公司列表</span>
     </div>
     <div class="app-container">
-      <el-form :inline="true" :model="queryParam">
-        <el-form-item label="公司状态">
-          <enumItem
-            v-model="queryParam.Status"
-            :dic-key="HrEnumDic.companyStatus"
-            placeholder="公司状态"
-            :multiple="true"
-            class-name="filter-item"
-            @change="load"
-            @load="initDict"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="success"
-            @click="addCompany"
-          >新增公司</el-button>
-        </el-form-item>
-      </el-form>
+      <div style="text-align: right; padding-bottom: 10px;">
+        <el-button
+          type="success"
+          @click="add"
+        >新增公司</el-button>
+      </div>
       <w-table
         :data="companys"
         :columns="columns"
@@ -52,46 +39,43 @@
         </template>
         <template slot="action" slot-scope="e">
           <el-button
-            icon="el-icon-plus"
-            size="mini"
-            circle
-            @click="addDept(e.row.Id)"
-          />
-          <el-button
             v-if="e.row.Status == 0"
             size="mini"
             icon="el-icon-delete"
             type="danger"
             circle
-            @click="deleteDept(e.row)"
+            @click="drop(e.row)"
           />
           <el-button
             icon="el-icon-edit"
             size="mini"
             type="primary"
             circle
-            @click="editDept(e.row)"
+            @click="edit(e.row)"
           />
         </template>
       </w-table>
     </div>
+    <editCompany :id="id" :visible="visible" :companys="companys" @close="close" />
   </el-card>
 </template>
 
 <script>
 import * as companyApi from '@/api/base/company'
 import { HrEnumDic, hrCompanyType } from '@/config/publicDic'
+import editCompany from './components/editCompany.vue'
 import moment from 'moment'
 export default {
   components: {
+    editCompany
   },
   data() {
     return {
       HrEnumDic,
       hrCompanyType,
-      depts: [],
       empId: null,
-      status: {},
+      visible: false,
+      id: null,
       title: '公司列表',
       columns: [
         {
@@ -155,14 +139,23 @@ export default {
   },
   methods: {
     moment,
+    add() {
+      this.id = null
+      this.visible = true
+    },
+    edit(row) {
+      this.id = row.Id
+      this.visible = true
+    },
+    close(isRefresh) {
+      this.visible = false
+      if (isRefresh) {
+        this.load()
+      }
+    },
     async load() {
       const list = await companyApi.GetTree(this.queryParam)
       this.companys = list
-    },
-    initDict(dict) {
-      dict.forEach(e => {
-        this.status[e.Value] = e.Text
-      })
     }
   }
 }
