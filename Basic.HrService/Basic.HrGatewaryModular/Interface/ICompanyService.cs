@@ -16,6 +16,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <param name="id">公司ID</param>
         void DeleteCompany ( long id );
+        bool Enable ( long id );
 
         /// <summary>
         /// 获取公司信息
@@ -46,6 +47,6 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="datum">公司资料</param>
         /// <returns></returns>
         bool SetCompany ( long id, CompanySet datum );
-
+        bool Stop ( long id );
     }
 }

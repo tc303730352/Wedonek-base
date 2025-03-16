@@ -1,5 +1,6 @@
 ﻿using Basic.HrCollect;
 using Basic.HrModel.DB;
+using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Company.Model;
 using Basic.HrService.Interface;
 using WeDonekRpc.Client;
@@ -80,6 +81,11 @@ namespace Basic.HrService.lmpl
         {
             DBCompany source = this._Company.Get(id);
             return this._Company.Set(source, set);
+        }
+        public bool SetStatus ( long id, HrCompanyStatus status )
+        {
+            DBCompany source = this._Company.Get(id);
+            return this._Company.SetStatus(source, status);
         }
     }
 }

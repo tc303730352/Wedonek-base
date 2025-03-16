@@ -147,6 +147,34 @@ export default {
       this.id = row.Id
       this.visible = true
     },
+    async statusChange(row, status) {
+      if (status === 1) {
+        await companyApi.Enable(row.Id)
+      } else {
+        await companyApi.Stop(row.Id)
+      }
+      row.Status = status
+    },
+    drop(row) {
+      const title =
+        '确认删除公司 ' + ((row.ShortName == null || row.ShortName === '') ? row.FullName : row.ShortName) + '?'
+      const that = this
+      this.$confirm(title, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        that.submitDrop(row.Id)
+      })
+    },
+    async submitDrop(id) {
+      await companyApi.Delete(id)
+      this.$message({
+        type: 'success',
+        message: '删除成功!'
+      })
+      this.load()
+    },
     close(isRefresh) {
       this.visible = false
       if (isRefresh) {

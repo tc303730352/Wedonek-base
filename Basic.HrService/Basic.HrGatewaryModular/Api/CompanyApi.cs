@@ -25,6 +25,16 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.AddCompany(datum);
         }
+        [ApiPower("all", "hr.company.set")]
+        public bool Enable ( [NumValidate("hr.company.id.error", 1)] long id )
+        {
+            return this._Service.Enable(id);
+        }
+        [ApiPower("all", "hr.company.set")]
+        public bool Stop ( [NumValidate("hr.company.id.error", 1)] long id )
+        {
+            return this._Service.Stop(id);
+        }
         /// <summary>
         /// 获取树形字典项名
         /// </summary>

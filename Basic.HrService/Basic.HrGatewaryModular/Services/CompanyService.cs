@@ -22,6 +22,15 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
+        public bool Enable ( long id )
+        {
+            return new SetCompanyStatus
+            {
+                Id = id,
+                Status = HrRemoteModel.HrCompanyStatus.启用
+            }.Send();
+        }
+
         public CompanyDto GetCompany ( long id )
         {
             return new GetCompany
@@ -61,5 +70,13 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
+        public bool Stop ( long id )
+        {
+            return new SetCompanyStatus
+            {
+                Id = id,
+                Status = HrRemoteModel.HrCompanyStatus.停用
+            }.Send();
+        }
     }
 }

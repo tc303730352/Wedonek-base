@@ -1,4 +1,5 @@
 ﻿using Basic.HrDAL;
+using Basic.HrModel.Company;
 using Basic.HrModel.DB;
 using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Company.Model;
@@ -15,7 +16,43 @@ namespace Basic.HrCollect.Impl
         {
             this._Company = company;
         }
-
+        public bool SetStatus ( DBCompany source, HrCompanyStatus status )
+        {
+            if ( source.Status == status )
+            {
+                return false;
+            }
+            else if ( status == HrCompanyStatus.启用 )
+            {
+                long[] ids = source.LevelCode.Split('|').Where(a => a != string.Empty && a != "root").Select(long.Parse).ToArray();
+                if ( ids.IsNull() )
+                {
+                    this._Company.SetStatus(source.Id, status);
+                    return true;
+                }
+                ids = this._Company.Gets(c => ids.Contains(c.Id) && c.Status == HrCompanyStatus.停用, c => c.Id);
+                ids = ids.Add(source.Id);
+                this._Company.SetStatus(ids, status);
+                return true;
+            }
+            else if ( status == HrCompanyStatus.停用 )
+            {
+                string code = source.LevelCode + source.Id + "|";
+                long[] ids = this._Company.Gets(c => c.LevelCode.StartsWith(code) && c.Status == HrCompanyStatus.启用, c => c.Id);
+                if ( ids.IsNull() )
+                {
+                    this._Company.SetStatus(source.Id, status);
+                    return true;
+                }
+                ids = ids.Add(source.Id);
+                this._Company.SetStatus(ids, status);
+                return true;
+            }
+            else
+            {
+                throw new ErrorException("hr.company.status.error");
+            }
+        }
         public long Add ( CompanyAdd add )
         {
             string levelCode;
@@ -56,20 +93,6 @@ namespace Basic.HrCollect.Impl
         }
         public bool Set ( DBCompany source, CompanySet set )
         {
-            if ( set.CompanyType != source.CompanyType )
-            {
-                HrCompanyType? type = this._Company.Get<HrCompanyType?>(source.ParentId, a => a.CompanyType);
-                if ( set.CompanyType == HrCompanyType.子公司 && type.Value == HrCompanyType.分公司 )
-                {
-                    //分公司不能开子公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-                else if ( set.CompanyType == HrCompanyType.分公司 && type.Value == HrCompanyType.分公司 )
-                {
-                    //分公司不能开分公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-            }
             if ( set.FullName != source.FullName && this._Company.CheckFullName(set.FullName) )
             {
                 throw new ErrorException("hr.company.name.repeat");
@@ -78,15 +101,91 @@ namespace Basic.HrCollect.Impl
             {
                 throw new ErrorException("hr.company.short.name.repeat");
             }
+            if ( set.ParentId == source.ParentId )
+            {
+                return this._Set(source, set);
+            }
+            CompSetArg arg = set.ConvertMap<CompanySet, CompSetArg>();
+            arg.LevelCode = source.LevelCode;
+            HrCompanyType type = HrCompanyType.总公司;
+            if ( set.ParentId == 0 )
+            {
+                arg.LevelCode = "|root|";
+            }
+            else
+            {
+                var prt = this._Company.Get(arg.ParentId, a => new
+                {
+                    a.CompanyType,
+                    a.LevelCode
+                });
+                type = prt.CompanyType;
+                arg.LevelCode = prt.LevelCode + set.ParentId + "|";
+            }
+            if ( set.CompanyType != source.CompanyType )
+            {
+                if ( set.CompanyType == HrCompanyType.子公司 && type == HrCompanyType.分公司 )
+                {
+                    //分公司不能开子公司
+                    throw new ErrorException("hr.company.parent.is.branch");
+                }
+                else if ( set.CompanyType == HrCompanyType.分公司 && type == HrCompanyType.分公司 )
+                {
+                    //分公司不能开分公司
+                    throw new ErrorException("hr.company.parent.is.branch");
+                }
+            }
+            string code = source.LevelCode + source.Id + "|";
+            var list = this._Company.Gets(a => a.LevelCode.StartsWith(code), a => new
+            {
+                a.LevelCode,
+                a.Id
+            });
+            if ( list.IsNull() )
+            {
+                return this._Company.Update(source, arg);
+            }
+            string nCode = arg.LevelCode + source.Id + "|";
+            return this._Company.Set(source, arg, list.ConvertAll(a => new KeyValuePair<long, string>(a.Id, a.LevelCode.Replace(code, nCode))));
+        }
+        private bool _Set ( DBCompany source, CompanySet set )
+        {
+            if ( set.CompanyType != source.CompanyType )
+            {
+                HrCompanyType type = HrCompanyType.总公司;
+                if ( source.ParentId != 0 )
+                {
+                    type = this._Company.Get(a => a.Id == source.ParentId, a => a.CompanyType);
+                }
+                if ( set.CompanyType == HrCompanyType.子公司 && type == HrCompanyType.分公司 )
+                {
+                    //分公司不能开子公司
+                    throw new ErrorException("hr.company.parent.is.branch");
+                }
+                else if ( set.CompanyType == HrCompanyType.分公司 && type == HrCompanyType.分公司 )
+                {
+                    //分公司不能开分公司
+                    throw new ErrorException("hr.company.parent.is.branch");
+                }
+            }
             return this._Company.Update(source, set);
         }
         public void Delete ( DBCompany source )
         {
-            if ( source.Status == HrCompanyStatus.启用 )
+            if ( source.Status != HrCompanyStatus.起草 )
             {
                 throw new ErrorException("hr.company.status.error");
             }
-            this._Company.Delete(source.Id);
+            string code = source.LevelCode + source.Id + "|";
+            long[] ids = this._Company.Gets(a => a.LevelCode.StartsWith(code), a => a.Id);
+            if ( ids.IsNull() )
+            {
+                this._Company.Delete(ids);
+            }
+            else
+            {
+                this._Company.Delete(source.Id);
+            }
         }
         public DBCompany Get ( long id )
         {

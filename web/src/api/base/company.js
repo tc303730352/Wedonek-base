@@ -31,6 +31,26 @@ export function Delete(id) {
   })
 }
 
+export function Enable(id) {
+  return request({
+    url: formatRequestUri('Enable'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+
+export function Stop(id) {
+  return request({
+    url: formatRequestUri('Stop'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+
 export function Add(data) {
   return request({
     url: formatRequestUri('Add'),
@@ -44,7 +64,7 @@ export function Set(id, data) {
     method: 'post',
     data: {
       Id: id,
-      Dept: data
+      Value: data
     }
   })
 }

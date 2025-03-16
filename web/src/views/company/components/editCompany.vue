@@ -40,6 +40,13 @@
           class="el-input"
         />
       </el-form-item>
+      <el-form-item label="地址" prop="Address">
+        <el-input
+          v-model="company.Address"
+          maxlength="50"
+          placeholder="地址"
+        />
+      </el-form-item>
       <el-form-item label="联系人" prop="Contacts">
         <el-input
           v-model="company.Contacts"
@@ -134,6 +141,9 @@ export default {
       const that = this
       this.$refs['companyEdit'].validate((valid) => {
         if (valid) {
+          if (that.company.CompanyType === 0) {
+            that.company.ParentId = null
+          }
           if (that.id) {
             that.set()
           } else {
