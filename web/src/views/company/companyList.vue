@@ -25,7 +25,7 @@
           />
         </template>
         <template slot="leaver" slot-scope="e">
-          <el-button v-if="e.row.LeaverId" type="text" @click="showEmp(e.row.LeaverId)">{{ e.row.Leaver }}</el-button>
+          <el-button v-if="e.row.LeaverId" type="text" @click="showEmp(e.row)">{{ e.row.Leaver }}</el-button>
         </template>
         <template slot="CompanyType" slot-scope="e">
           {{ hrCompanyType[e.row.CompanyType].text }}
@@ -57,6 +57,14 @@
       </w-table>
     </div>
     <editCompany :id="id" :visible="visible" :companys="companys" @close="close" />
+    <empChoice
+      :visible="empVisible"
+      :emp-id="empId"
+      :title="empTitle"
+      :company-id="id"
+      @save="setLeader"
+      @close="empVisible=false"
+    />
   </el-card>
 </template>
 
@@ -64,10 +72,12 @@
 import * as companyApi from '@/api/base/company'
 import { HrEnumDic, hrCompanyType } from '@/config/publicDic'
 import editCompany from './components/editCompany.vue'
+import empChoice from '@/components/emp/empChoice.vue'
 import moment from 'moment'
 export default {
   components: {
-    editCompany
+    editCompany,
+    empChoice
   },
   data() {
     return {
@@ -75,8 +85,11 @@ export default {
       hrCompanyType,
       empId: null,
       visible: false,
+      empVisible: false,
       id: null,
+      curRow: null,
       title: '公司列表',
+      empTitle: '',
       columns: [
         {
           key: 'FullName',
@@ -139,6 +152,26 @@ export default {
   },
   methods: {
     moment,
+    showEmp(row) {
+      this.curRow = row
+      this.id = row.Id
+      this.empId = row.LeaverId
+      this.empTitle = '选择' + row.FullName + '公司负责人'
+      this.empVisible = true
+    },
+    async setLeader(e) {
+      this.empVisible = false
+      const leader = e.user.length === 0 ? null : e.user[0]
+      if (leader == null) {
+        await companyApi.SetLeaverId(this.id, null)
+        this.curRow.LeaverId = null
+        this.curRow.Leaver = null
+      } else {
+        await companyApi.SetLeaverId(this.id, leader.EmpId)
+        this.curRow.LeaverId = leader.EmpId
+        this.curRow.Leaver = leader.EmpName
+      }
+    },
     add() {
       this.id = null
       this.visible = true

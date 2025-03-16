@@ -68,3 +68,22 @@ export function Set(id, data) {
     }
   })
 }
+export function SetLeaverId(id, empId) {
+  return request({
+    url: formatRequestUri('SetLeaverId'),
+    method: 'post',
+    data: {
+      Id: id,
+      Value: empId
+    }
+  })
+}
+export function GetName(id) {
+  return request({
+    url: formatRequestUri('GetName'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

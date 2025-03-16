@@ -86,7 +86,7 @@ namespace Basic.HrService.lmpl
             EmpTitleDto[] titles = this._Title.GetEmpTitle(empId, companyId);
             Dictionary<string, string> titleName = null;
             long[] ids;
-            if ( titles.Length > 0 )
+            if ( !titles.IsNull() )
             {
                 titleName = this._Titles.GetTitleNames(titles.Distinct(a => a.TitleCode));
                 titles.ForEach(c =>

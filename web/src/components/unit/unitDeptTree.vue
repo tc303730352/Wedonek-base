@@ -36,7 +36,8 @@
 </template>
 
 <script>
-import { getDeptTree, GetName } from '@/api/unit/unit'
+import { getDeptTree } from '@/api/unit/unit'
+import { GetName } from '@/api/base/company'
 export default {
   name: 'Layout',
   props: {
