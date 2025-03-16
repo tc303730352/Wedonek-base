@@ -70,6 +70,15 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
+        public bool SetLeaverId ( long id, long? empId )
+        {
+            return new SetCompanyLeaverId
+            {
+                Id = id,
+                LeaverId = empId,
+            }.Send();
+        }
+
         public bool Stop ( long id )
         {
             return new SetCompanyStatus

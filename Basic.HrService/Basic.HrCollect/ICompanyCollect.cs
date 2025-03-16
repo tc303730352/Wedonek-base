@@ -6,6 +6,7 @@ namespace Basic.HrCollect
 {
     public interface ICompanyCollect
     {
+        bool SetLeaverId ( DBCompany source, long? levelId );
         long Add ( CompanyAdd add );
         void Delete ( DBCompany source );
         DBCompany Get ( long id );

@@ -76,6 +76,11 @@ namespace Basic.HrService.lmpl
                 }
             }, ( a, b ) => a.ParentId == b.Id);
         }
+        public bool SetLeaverId ( long id, long? levelId )
+        {
+            DBCompany source = this._Company.Get(id);
+            return this._Company.SetLeaverId(source, levelId);
+        }
 
         public bool Set ( long id, CompanySet set )
         {

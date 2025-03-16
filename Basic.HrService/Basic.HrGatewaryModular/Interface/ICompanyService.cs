@@ -47,6 +47,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="datum">公司资料</param>
         /// <returns></returns>
         bool SetCompany ( long id, CompanySet datum );
+        bool SetLeaverId ( long id, long? value );
         bool Stop ( long id );
     }
 }

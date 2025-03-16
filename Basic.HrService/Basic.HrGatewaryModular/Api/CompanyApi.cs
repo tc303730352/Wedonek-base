@@ -16,6 +16,15 @@ namespace Basic.HrGatewaryModular.Api
             this._Service = service;
         }
         /// <summary>
+        /// 设置负责人
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public bool SetLeaverId ( LongParam<long?> param )
+        {
+            return this._Service.SetLeaverId(param.Id, param.Value);
+        }
+        /// <summary>
         /// 新增公司
         /// </summary>
         /// <param name="datum">公司资料</param>

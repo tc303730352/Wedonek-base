@@ -187,6 +187,15 @@ namespace Basic.HrCollect.Impl
                 this._Company.Delete(source.Id);
             }
         }
+        public bool SetLeaverId ( DBCompany source, long? levelId )
+        {
+            if ( source.LeaverId == levelId )
+            {
+                return false;
+            }
+            this._Company.SetLeaverId(source.Id, levelId);
+            return true;
+        }
         public DBCompany Get ( long id )
         {
             return this._Company.Get(id);

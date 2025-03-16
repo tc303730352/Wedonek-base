@@ -5,6 +5,7 @@ namespace Basic.HrService.Interface
 {
     public interface ICompanyService
     {
+        bool SetLeaverId ( long id, long? levelId );
         bool SetStatus ( long id, HrCompanyStatus status );
         string GetName ( long id );
         long Add ( CompanyAdd add );
