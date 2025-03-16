@@ -61,9 +61,9 @@
           placeholder="联系电话"
         />
       </el-form-item>
-      <el-form-item v-if="id != null" label="负责人" prop="LeaderId">
+      <el-form-item v-if="id != null" label="负责人" prop="LeaverId">
         <empInput
-          v-model="company.LeaderId"
+          v-model="company.LeaverId"
           :company-id="id"
           placeholder="负责人"
         />
@@ -81,7 +81,6 @@ import * as companyApi from '@/api/base/company'
 import { HrEnumDic } from '@/config/publicDic'
 import empInput from '@/components/emp/empInput.vue'
 export default {
-  name: 'EditDept',
   components: {
     empInput
   },

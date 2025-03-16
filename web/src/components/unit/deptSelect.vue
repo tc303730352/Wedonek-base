@@ -17,8 +17,9 @@
 
 <script>
 import { getDeptTree, GetNameList } from '@/api/unit/unit'
+import { GetName } from '@/api/base/company'
+import store from '@/store'
 export default {
-  name: 'Layout',
   props: {
     clearable: {
       type: Boolean,
@@ -43,6 +44,12 @@ export default {
     status: {
       type: Array,
       default: () => [1]
+    },
+    companyId: {
+      type: String,
+      default: () => {
+        return store.getters.curComId
+      }
     },
     isMultiple: {
       type: Boolean,
@@ -71,6 +78,7 @@ export default {
       chioseKey: null,
       dept: {},
       deptName: [],
+      name: null,
       props: {
         multiple: false,
         emitPath: false,
@@ -91,9 +99,9 @@ export default {
     }
   },
   watch: {
-    comId: {
+    companyId: {
       handler(val) {
-        if (val != null) {
+        if (val !== this.comId && this.readonly === false) {
           this.reset()
         }
       },
@@ -138,15 +146,31 @@ export default {
         }
       } else {
         this.deptName = []
+        this.name = null
         this.loadTree()
       }
+    },
+    async GetComName() {
+      if (this.name !== null) {
+        return this.name
+      } else if (this.companyId === this.comId) {
+        this.name = this.comName
+      } else {
+        const name = this.$store.getters.company[this.companyId]
+        if (name) {
+          this.name = name
+        } else {
+          this.name = await GetName(this.companyId)
+        }
+      }
+      return this.name
     },
     async loadName(ids) {
       this.deptName = await GetNameList(ids)
     },
     async loadTree() {
       const res = await getDeptTree({
-        CompanyId: this.comId,
+        CompanyId: this.companyId,
         Status: this.status,
         UnitId: this.unitId,
         IsUnit: this.isUnit,
@@ -174,10 +198,11 @@ export default {
       }
     },
     handleChange(val) {
+      const comName = this.GetComName()
       const e = {
         isMultiple: this.isMultiple,
-        companyId: this.comId,
-        comName: this.comName,
+        companyId: this.companyId,
+        comName: comName,
         value: null,
         dept: null
       }

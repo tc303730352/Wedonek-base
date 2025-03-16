@@ -38,8 +38,8 @@
 <script>
 import { getDeptTree } from '@/api/unit/unit'
 import { GetName } from '@/api/base/company'
+import store from '@/store'
 export default {
-  name: 'Layout',
   props: {
     isUnit: {
       type: Boolean,
@@ -60,7 +60,7 @@ export default {
     companyId: {
       type: String,
       default: () => {
-        return this.$store.getters.curComId
+        return store.getters.curComId
       }
     },
     selectKeys: {

@@ -39,9 +39,9 @@
         /// </summary>
         public bool IsAdmin { get; set; }
         /// <summary>
-        /// 部门权限
+        /// 部门权限数
         /// </summary>
-        public string[] Dept { get; set; }
+        public int DeptNum { get; set; }
 
         public string Phone { get; set; }
 

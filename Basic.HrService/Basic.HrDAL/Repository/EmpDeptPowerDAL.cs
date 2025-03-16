@@ -1,6 +1,7 @@
 ﻿using Basic.HrModel.DB;
 using Basic.HrModel.DeptPower;
 using LinqKit;
+using SqlSugar;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper;
 using WeDonekRpc.Helper.IdGenerator;
@@ -20,7 +21,14 @@ namespace Basic.HrDAL.Repository
             });
             this._BasicDAL.Insert(adds);
         }
-
+        public Dictionary<long, int> GetPowerNum ( long[] empId, long companyId )
+        {
+            return this._BasicDAL.GroupBy(a => empId.Contains(a.EmpId) && a.CompanyId == companyId, a => a.EmpId, a => new
+            {
+                a.EmpId,
+                num = SqlFunc.AggregateCount(a.EmpId)
+            }).ToDictionary(a => a.EmpId, a => a.num);
+        }
         public DeptPowerDto[] GetDepts ( long[] empId, long companyId )
         {
             return this._BasicDAL.Gets<DeptPowerDto>(a => empId.Contains(a.EmpId) && a.CompanyId == companyId);

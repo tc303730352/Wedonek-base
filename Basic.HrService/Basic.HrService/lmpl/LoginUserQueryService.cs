@@ -1,6 +1,5 @@
 ﻿using Basic.HrCollect;
 using Basic.HrModel.DB;
-using Basic.HrModel.DeptPower;
 using Basic.HrModel.Emp;
 using Basic.HrRemoteModel.Emp.Model;
 using Basic.HrRemoteModel.EmpRole.Model;
@@ -52,13 +51,7 @@ namespace Basic.HrService.lmpl
             DBLoginUser[] account = this._LoginUser.GetAccounts(empId);
             LoginUserDatum[] list = users.ConvertMap<EmpBaseDto, LoginUserDatum>();
             Dictionary<long, EmpRole[]> roles = this._EmpRole.GetRoles(empId);
-            DeptPowerDto[] depts = this._DeptPower.GetDepts(empId, query.CompanyId);
-            long[] deptId = depts.ConvertAll<DeptPowerDto, long>(( a, list ) =>
-            {
-                list.Add(a.DeptId);
-                list.Add(a.UnitId);
-            });
-            Dictionary<long, string> deptName = this._Dept.GetDeptName(deptId.Distinct());
+            Dictionary<long, int> powerNum = this._DeptPower.GetPowerNum(empId, query.CompanyId);
             list.ForEach(a =>
             {
                 a.Phone = account.Find(c => c.EmpId == a.EmpId && c.LoginType == HrRemoteModel.AccountType.手机号, c => c.LoginName);
@@ -70,10 +63,10 @@ namespace Basic.HrService.lmpl
                     a.IsAdmin = role.IsExists(c => c.IsAdmin);
                     a.Role = role.ConvertAll(a => a.RoleName);
                 }
-                a.Dept = depts.Convert(c => c.EmpId == a.EmpId, c =>
+                if ( !a.IsAdmin )
                 {
-                    return deptName.GetValueOrDefault(c.UnitId) + " " + deptName.GetValueOrDefault(c.DeptId);
-                });
+                    a.DeptNum = powerNum.GetValueOrDefault(a.EmpId);
+                }
             });
             return new PagingResult<LoginUserDatum>(list, count);
         }

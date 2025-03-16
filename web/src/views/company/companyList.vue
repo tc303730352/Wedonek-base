@@ -25,7 +25,13 @@
           />
         </template>
         <template slot="leaver" slot-scope="e">
-          <el-button v-if="e.row.LeaverId" type="text" @click="showEmp(e.row)">{{ e.row.Leaver }}</el-button>
+          <span v-if="e.row.LeaverId">{{ e.row.Leaver }}</span>
+          <el-button
+            class="el-icon-edit"
+            type="text"
+            style="margin-left: 5px; cursor: pointer"
+            @click="showEmp(e.row)"
+          />
         </template>
         <template slot="CompanyType" slot-scope="e">
           {{ hrCompanyType[e.row.CompanyType].text }}
@@ -155,7 +161,7 @@ export default {
     showEmp(row) {
       this.curRow = row
       this.id = row.Id
-      this.empId = row.LeaverId
+      this.empId = row.LeaverId == null ? [] : [row.LeaverId]
       this.empTitle = '选择' + row.FullName + '公司负责人'
       this.empVisible = true
     },

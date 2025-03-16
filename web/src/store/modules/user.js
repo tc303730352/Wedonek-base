@@ -29,11 +29,11 @@ const mutations = {
     state.token = tokenId
   },
   SET_CurSysId: (state, sysId) => {
-    state.curSysId = parseInt(sysId)
+    state.curSysId = sysId
     cache.setCurSysId(sysId)
   },
   SET_CurComId: (state, comId) => {
-    state.curComId = parseInt(comId)
+    state.curComId = comId
     cache.setCurComId(comId)
   },
   SET_IsLoadRoute(state, isLoad) {
@@ -51,7 +51,7 @@ const mutations = {
       state.home[a.Id] = a.Home
       state.loadRoute[a.Id] = a.LoginRouteName
     })
-    state.company = data.Company,
+    state.company = data.Company
     state.datum = {
       empId: data.Datum.EmpId,
       name: data.Datum.EmpName,
@@ -133,7 +133,7 @@ const actions = {
   async init({ commit }) {
     if (!isLogin()) {
       return false
-    } else if (await checkLoginState() == false) {
+    } else if (await checkLoginState() === false) {
       return false
     }
     const state = await loadState(commit)

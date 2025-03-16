@@ -27,6 +27,10 @@ namespace Basic.HrCollect.Impl
         {
             return this._DeptPower.GetDepts(empId, companyId);
         }
+        public Dictionary<long, int> GetPowerNum ( long[] empId, long companyId )
+        {
+            return this._DeptPower.GetPowerNum(empId, companyId);
+        }
         public long[] GetDeptId ( long empId, long companyId )
         {
             return this._DeptPower.Gets(a => a.EmpId == empId && a.CompanyId == companyId, a => a.DeptId);
