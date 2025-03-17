@@ -1,8 +1,8 @@
-﻿using Basic.HrRemoteModel;
+﻿using WeDonekRpc.Client.Interface;
 
-namespace Basic.HrModel.Company
+namespace Basic.HrRemoteModel.Company.Model
 {
-    public class BasicCompany
+    public class CompanyTreeItem : IMapperTree<CompanyTreeItem>
     {
         /// <summary>
         /// 公司ID
@@ -10,19 +10,9 @@ namespace Basic.HrModel.Company
         public long Id { get; set; }
 
         /// <summary>
-        /// 父公司ID
-        /// </summary>
-        public long ParentId { get; set; }
-
-        /// <summary>
         /// 全称
         /// </summary>
-        public string FullName { get; set; }
-
-        /// <summary>
-        /// 公司简称
-        /// </summary>
-        public string ShortName { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// 公司类型
         /// </summary>
@@ -31,6 +21,9 @@ namespace Basic.HrModel.Company
         /// 负责人
         /// </summary>
         public long? LeaverId { get; set; }
-
+        /// <summary>
+        /// 下级
+        /// </summary>
+        public CompanyTreeItem[] Children { get; set; }
     }
 }

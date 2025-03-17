@@ -4,6 +4,7 @@ namespace Basic.HrGatewaryModular.Interface
 {
     public interface ICompanyService
     {
+        CompanyTreeItem[] GetCompanyTreeItems ();
         /// <summary>
         /// 新增公司
         /// </summary>

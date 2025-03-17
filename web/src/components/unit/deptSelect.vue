@@ -101,7 +101,7 @@ export default {
   watch: {
     companyId: {
       handler(val) {
-        if (val !== this.comId && this.readonly === false) {
+        if (val != null && this.readonly === false) {
           this.reset()
         }
       },

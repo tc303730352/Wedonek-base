@@ -38,6 +38,10 @@ namespace Basic.HrService.RpcEvent
         {
             return this._Service.GetTrees();
         }
+        public CompanyTreeItem[] GetCompanyTreeItems ()
+        {
+            return this._Service.GetTreeItems();
+        }
         public bool SetCompanyLeaverId ( SetCompanyLeaverId obj )
         {
             return this._Service.SetLeaverId(obj.Id, obj.LeaverId);

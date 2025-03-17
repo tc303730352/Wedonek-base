@@ -8,6 +8,15 @@
         public long Id { get; set; }
 
         /// <summary>
+        /// 公司ID
+        /// </summary>
+        public long CompanyId { get; set; }
+
+        /// <summary>
+        /// 公司名
+        /// </summary>
+        public string CompanyName { get; set; }
+        /// <summary>
         /// 单位ID
         /// </summary>
         public long UnitId { get; set; }

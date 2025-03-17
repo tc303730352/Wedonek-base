@@ -38,7 +38,10 @@ namespace Basic.HrGatewaryModular.Services
                 Id = id,
             }.Send();
         }
-
+        public CompanyTreeItem[] GetCompanyTreeItems ()
+        {
+            return new GetCompanyTreeItems().Send();
+        }
         public CompanyDto[] GetCompanyList ( long? parentId, bool isAllChildren )
         {
             return new GetCompanyList

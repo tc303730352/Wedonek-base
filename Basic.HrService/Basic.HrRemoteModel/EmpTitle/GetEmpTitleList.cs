@@ -14,6 +14,9 @@ namespace Basic.HrRemoteModel.EmpTitle
         /// 人员ID
         /// </summary>
         public long EmpId { get; set; }
-        public long CompanyId { get; set; }
+        /// <summary>
+        /// 公司ID
+        /// </summary>
+        public long? CompanyId { get; set; }
     }
 }

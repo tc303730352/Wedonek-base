@@ -16,6 +16,14 @@ namespace Basic.HrGatewaryModular.Api
             this._Service = service;
         }
         /// <summary>
+        /// 获取树形选择项
+        /// </summary>
+        /// <returns></returns>
+        public CompanyTreeItem[] GetTreeItems ()
+        {
+            return this._Service.GetCompanyTreeItems();
+        }
+        /// <summary>
         /// 设置负责人
         /// </summary>
         /// <param name="param"></param>

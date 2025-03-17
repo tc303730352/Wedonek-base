@@ -6,7 +6,7 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class EmpTitleService : IEmpTitleService
     {
-        public long AddEmpTitle (EmpTitleAdd datum)
+        public long AddEmpTitle ( EmpTitleAdd datum )
         {
             return new AddEmpTitle
             {
@@ -14,7 +14,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void DeleteEmpTitle (long id)
+        public void DeleteEmpTitle ( long id )
         {
             new DeleteEmpTitle
             {
@@ -22,7 +22,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpTitleData GetEmpTitle (long id)
+        public EmpTitleData GetEmpTitle ( long id )
         {
             return new GetEmpTitle
             {
@@ -30,7 +30,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpTitleDatum[] GetEmpTitleList (long empId, long companyId)
+        public EmpTitleDatum[] GetEmpTitleList ( long empId, long? companyId )
         {
             return new GetEmpTitleList
             {
