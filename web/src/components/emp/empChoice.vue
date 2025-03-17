@@ -107,6 +107,7 @@
 import { HrItemDic, HrUserType } from '@/config/publicDic'
 import deptTree from '../unit/unitDeptTree.vue'
 import { query, getBasics } from '@/api/emp/emp'
+import store from '@/store'
 export default {
   name: 'EmpChoice',
   components: {
@@ -128,7 +129,7 @@ export default {
     companyId: {
       type: String,
       default: () => {
-        return this.$store.getters.curComId
+        return store.getters.curComId
       }
     },
     status: {

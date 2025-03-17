@@ -35,6 +35,7 @@
 <script>
 import empChoice from './empChoice.vue'
 import { getBasic } from '@/api/emp/emp'
+import store from '@/store'
 export default {
   components: {
     empChoice
@@ -51,7 +52,7 @@ export default {
     companyId: {
       type: String,
       default: () => {
-        return this.$store.getters.curComId
+        return store.getters.curComId
       }
     },
     value: {

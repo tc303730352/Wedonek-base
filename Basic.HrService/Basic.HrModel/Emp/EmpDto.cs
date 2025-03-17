@@ -13,7 +13,10 @@ namespace Basic.HrModel.Emp
         /// 人员编号
         /// </summary>
         public string EmpNo { get; set; }
-
+        /// <summary>
+        /// 入职的公司ID
+        /// </summary>
+        public long CompanyId { get; set; }
 
         /// <summary>
         /// 入职的部门ID

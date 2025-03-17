@@ -103,20 +103,19 @@
               v-if="e.row.IsAdmin"
               style="color: #409eff"
             >拥有所有部门权限</span>
-            <el-row v-else :gutter="24">
-              <el-link
-                style="margin-right: 10px; margin-left: 10px"
+            <div v-else>
+              <el-button
+                type="text"
                 icon="el-icon-edit"
                 @click="editDept(e.row)"
-              />
-              <span
-                v-if="e.row.Dept == null || e.row.Dept.length == 0"
-                style="color: #f56c6c"
-              >未设定部门权限</span>
-              <template v-else>
-                <span v-for="i in e.row.Dept" :key="i" style="margin-right: 5px;">{{ i }}</span>
-              </template>
-            </el-row>
+              >
+                <template v-if="e.row.DeptNum !== 0">拥有{{ e.row.DeptNum }}个部门权限</template>
+                <span
+                  v-else
+                  style="color: #f56c6c"
+                >未设定部门权限</span>
+              </el-button>
+            </div>
           </template>
           <template slot="action" slot-scope="e">
             <el-button
@@ -411,5 +410,8 @@ export default {
 }
 .userInfo .content i {
   font-weight: 600;
+}
+.deptNum {
+  margin-left: 5px;
 }
 </style>

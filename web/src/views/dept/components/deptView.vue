@@ -57,8 +57,8 @@
             <el-switch
               v-model="isEntry"
               style="float:right"
-              active-text="只显示入职员工"
-              inactive-text="显示所有"
+              active-text="显示入职员工"
+              :inactive-text="'显示本'+(isUnit? '单位': '部门')+'员工'"
             />
           </div>
           <empListView :unit-id="unitId" :dept-id="deptId" :is-entry="isEntry" :is-load="isLoad" />

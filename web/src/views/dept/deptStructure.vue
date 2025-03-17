@@ -207,8 +207,12 @@ export default {
         this.unitId = node.unitId
         this.visible = true
       } else if (e.command === 'view') {
-        this.id = node.id
-        this.viewVisible = true
+        if (e.type === 'company') {
+
+        } else {
+          this.id = node.id
+          this.viewVisible = true
+        }
       } else if (e.command === 'enable') {
         this.statusChange(node, true)
       } else if (e.command === 'stop') {

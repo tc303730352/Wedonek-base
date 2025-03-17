@@ -3,6 +3,10 @@
     public class EmpBasicDto : EmpBasicDatum
     {
         /// <summary>
+        /// 入职的公司ID
+        /// </summary>
+        public long CompanyId { get; set; }
+        /// <summary>
         /// 头像地址
         /// </summary>
         public string UserHead { get; set; }

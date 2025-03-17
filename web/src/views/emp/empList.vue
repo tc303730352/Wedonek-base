@@ -59,9 +59,11 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-checkbox
+              <el-switch
                 v-model="queryParam.IsEntry"
-                label="只显示入职的员工"
+                style="float:right"
+                active-text="显示入职员工"
+                inactive-text="显示本公司员工"
                 @change="loadEmp"
               />
             </el-form-item>
@@ -168,6 +170,7 @@
           </template>
           <template slot="action" slot-scope="e">
             <el-button
+              v-if="comId == e.row.CompanyId"
               size="mini"
               type="primary"
               title="编辑人员资料"
@@ -176,6 +179,7 @@
               @click="editEmp(e.row.EmpId)"
             />
             <el-button
+              v-if="comId == e.row.CompanyId"
               size="mini"
               type="default"
               title="编辑人员职务"
@@ -184,7 +188,7 @@
               @click="editEmpTitle(e.row.EmpId)"
             />
             <el-button
-              v-if="e.row.Status == 0"
+              v-if="e.row.Status == 0 && comId == e.row.CompanyId"
               size="mini"
               type="danger"
               title="删除员工"
@@ -221,6 +225,11 @@ export default {
   components: {
     unitDeptTree,
     empTitleEdit
+  },
+  computed: {
+    comId() {
+      return this.$store.getters.curComId
+    }
   },
   data() {
     return {

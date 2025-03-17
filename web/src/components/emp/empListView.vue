@@ -100,6 +100,7 @@
 import { HrItemDic, HrUserType } from '@/config/publicDic'
 import empModel from './empModel.vue'
 import { query } from '@/api/emp/emp'
+import store from '@/store'
 export default {
   components: {
     empModel
@@ -108,6 +109,12 @@ export default {
     status: {
       type: Array,
       default: () => [1]
+    },
+    companyId: {
+      type: String,
+      default: () => {
+        return store.getters.curComId
+      }
     },
     unitId: {
       type: String,
@@ -218,7 +225,7 @@ export default {
       this.empVisible = true
     },
     reset() {
-      this.queryParam.CompanyId = this.comId
+      this.queryParam.CompanyId = this.companyId
       this.queryParam.UnitId = this.unitId
       this.queryParam.DeptId = this.deptId
       this.queryParam.IsEntry = this.isEntry
