@@ -2,6 +2,7 @@
 using Basic.HrGatewaryModular.Model.EmpLogin;
 using Basic.HrRemoteModel.EmpLogin;
 using Basic.HrRemoteModel.EmpLogin.Model;
+using WeDonekRpc.Helper;
 using WeDonekRpc.Modular;
 using WeDonekRpc.Modular.Model;
 using WeDonekRpc.ModularModel.Accredit.Model;
@@ -21,24 +22,48 @@ namespace Basic.HrGatewaryModular.Services
             long empId = state.ToEmpId();
             EmpLoginDatum datum = new GetEmpLoginDatum
             {
-                EmpId = empId
+                EmpId = empId,
+                CompanyId = state.GetValue<long>("CompanyId"),
+                Company = state.GetValue<long[]>("Company")
             }.Send();
             return new LoginDatum
             {
-                Company = datum.Company,
                 CurSubSysId = datum.CurSubSysId,
                 Power = datum.Power,
                 SubSystem = datum.SubSystem,
                 Datum = new LoginUser
                 {
                     CompanyId = state.GetValue<long>("CompanyId"),
-                    UnitId = state.GetValue<long>("UnitId"),
-                    DeptId = state.GetValue<long>("DeptId"),
                     EmpId = empId,
-                    EmpName = datum.EmpName,
-                    HeadUri = datum.UserHead
+                    EmpName = state.GetValue<string>("Name"),
+                    HeadUri = state.GetValue<string>("Head")
                 }
             };
+        }
+        public LoginDatum Switch ( IUserState state, long companyId )
+        {
+            long[] comId = state.GetValue<long[]>("Company");
+            if ( comId.Contains(companyId) )
+            {
+                throw new ErrorException("hr.user.no.power");
+            }
+            long curId = state.GetValue<long>("CompanyId");
+            if ( curId == companyId )
+            {
+                return this.GetLoginDatum(state);
+            }
+            ComSwitchResult res = new EmpSwitchCompany
+            {
+                CompanyId = companyId,
+                EmpId = state.ToEmpId()
+            }.Send();
+            state.SetPower(res.Power);
+            state["IsAdmin"] = res.IsAdmin;
+            if ( !state.SaveState() )
+            {
+                throw new ErrorException("hr.user.state.save.fail");
+            }
+            return this.GetLoginDatum(state);
         }
         private EmpLoginRes _GetLoginResult ( LoginResult result )
         {
@@ -50,11 +75,9 @@ namespace Basic.HrGatewaryModular.Services
                 {
                     {"UserId",new StateParam(result.EmpId) },
                     {"UserType",new StateParam("emp") },
-                    {"UnitId",new StateParam(result.UnitId) },
                     {"CompanyId",new StateParam(result.CompanyId)},
-                    {"DeptId",new StateParam(result.DeptId) },
-                    {"Title",new StateParam(result.Title) },
-                    {"Post",new StateParam(result.Post) }
+                    {"IsAdmin",new StateParam(result.IsAdmin)},
+                    {"Company",new StateParam(result.Company) }
                 }
             };
             string accreditId = this._Accredit.AddAccredit(applyId, state);

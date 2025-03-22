@@ -103,9 +103,9 @@ namespace Basic.HrDAL.Repository
             return this._BasicDAL.Query<Result>(query.ToWhere(), paging, out count);
         }
 
-        public long GetDefRole ()
+        public long GetDefRole ( long companyId )
         {
-            return this._BasicDAL.Get(a => a.IsEnable && a.IsDefRole, a => a.Id);
+            return this._BasicDAL.Get(a => a.CompanyId == companyId && a.IsEnable && a.IsDefRole, a => a.Id);
         }
         public void SetIsDef ( DBRole role, long defId )
         {
@@ -114,9 +114,9 @@ namespace Basic.HrDAL.Repository
             queue.UpdateOneColumn(a => a.IsDefRole == false, a => a.Id == defId);
             _ = queue.Submit();
         }
-        public bool CheckIsAdmin ( long[] roleId )
+        public bool CheckIsAdmin ( long companyId, long[] roleId )
         {
-            return this._BasicDAL.IsExist(a => roleId.Contains(a.Id) && a.IsAdmin);
+            return this._BasicDAL.IsExist(a => a.CompanyId == companyId && roleId.Contains(a.Id) && a.IsAdmin);
         }
     }
 }

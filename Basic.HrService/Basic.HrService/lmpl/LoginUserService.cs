@@ -16,11 +16,11 @@ namespace Basic.HrService.lmpl
         private readonly IHrConfig _HrConfig;
         private readonly IRoleCollect _Role;
         private readonly IEmpTitleCollect _EmpTitle;
-        public LoginUserService (ILoginUserCollect loginUser,
+        public LoginUserService ( ILoginUserCollect loginUser,
             IEmpCollect emp,
             IEmpTitleCollect empTitle,
             IHrConfig config,
-            IRoleCollect role)
+            IRoleCollect role )
         {
             this._EmpTitle = empTitle;
             this._HrConfig = config;
@@ -29,14 +29,14 @@ namespace Basic.HrService.lmpl
             this._Emp = emp;
         }
 
-        public void Open (long[] empId, long companyId)
+        public void Open ( long[] empId, long companyId )
         {
             EmpLoginDatum[] emps = this._Emp.Gets<EmpLoginDatum>(empId).FindAll(c => c.CompanyId == companyId && c.DeptId != 0 && c.Status == HrEmpStatus.启用 && c.IsOpenAccount == false);
-            if (emps.Length == 0)
+            if ( emps.Length == 0 )
             {
                 return;
             }
-            long roleId = this._Role.GetDefRoleId();
+            long roleId = this._Role.GetDefRoleId(companyId);
             OpenAccountParam param = new OpenAccountParam
             {
                 CompanyId = companyId,
@@ -55,10 +55,10 @@ namespace Basic.HrService.lmpl
         }
 
 
-        public void Delete (long empId)
+        public void Delete ( long empId )
         {
             DBEmpList emp = this._Emp.Get<DBEmpList>(empId);
-            if (this._LoginUser.DeleteAccount(emp))
+            if ( this._LoginUser.DeleteAccount(emp) )
             {
                 new UserChangeEvent(empId).AsyncSend("Delete");
             }

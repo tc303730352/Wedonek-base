@@ -40,9 +40,9 @@ namespace Basic.HrCollect.Impl
             this._RoleDAL.Add(role, powers);
             return role.Id;
         }
-        public long GetDefRoleId ()
+        public long GetDefRoleId ( long companyId )
         {
-            return this._RoleDAL.GetDefRole();
+            return this._RoleDAL.GetDefRole(companyId);
         }
         public Result[] Query<Result> ( RoleGetParam param, IBasicPage paging, out int count ) where Result : class, new()
         {
@@ -99,9 +99,9 @@ namespace Basic.HrCollect.Impl
 
         public bool SetIsEnable ( DBRole role, bool enable )
         {
-            if ( role.IsDefRole )
+            if ( role.IsDefRole || role.IsLock )
             {
-                throw new ErrorException("hr.def.role.not.can.delete");
+                throw new ErrorException("hr.def.role.not.can.set");
             }
             else if ( role.IsEnable == enable )
             {
@@ -128,12 +128,12 @@ namespace Basic.HrCollect.Impl
             this._RoleDAL.SetIsAdmin(role, isAdmin, isEnable);
             return true;
         }
-        public bool CheckIsAdmin ( long[] roleId )
+        public bool CheckIsAdmin ( long companyId, long[] roleId )
         {
-            return this._RoleDAL.CheckIsAdmin(roleId);
+            return this._RoleDAL.CheckIsAdmin(companyId, roleId);
         }
 
-        public RoleSelectItem[] GetSelect ()
+        public RoleSelectItem[] GetSelect ( long companyId )
         {
             return this._RoleDAL.Gets<RoleSelectItem>(a => a.IsEnable);
         }

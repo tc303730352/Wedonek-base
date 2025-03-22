@@ -29,9 +29,13 @@ namespace Basic.HrCollect.Impl
         {
             return this._Power.Gets<PowerRouteDto>(a => a.SubSystemId == subSysId && a.PowerType == PowerType.menu && a.IsEnable).OrderBy(a => a.Sort).ToArray();
         }
-        public PowerRouteDto[] GetEnables ()
+        public PowerRouteDto[] GetEnables ( long[] ids )
         {
-            return this._Power.Gets<PowerRouteDto>(a => a.IsEnable).OrderBy(a => a.Sort).ToArray();
+            if ( ids.IsNull() )
+            {
+                return this._Power.Gets<PowerRouteDto>(a => a.IsEnable).OrderBy(a => a.Sort).ToArray();
+            }
+            return this._Power.Gets<PowerRouteDto>(a => ids.Contains(a.Id) && a.IsEnable).OrderBy(a => a.Sort).ToArray();
         }
         public PowerBasic[] Gets ( long[] ids )
         {

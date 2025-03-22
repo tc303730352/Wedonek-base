@@ -125,7 +125,7 @@ namespace Basic.HrDAL.Repository
         }
         public static Expression<Func<DBRole, bool>> ToWhere ( this RoleGetParam param )
         {
-            ExpressionStarter<DBRole> where = PredicateBuilder.New<DBRole>();
+            ExpressionStarter<DBRole> where = PredicateBuilder.New<DBRole>(a => a.CompanyId == param.CompanyId);
             if ( param.IsEnable.HasValue )
             {
                 where = where.And(a => a.IsEnable == param.IsEnable);
@@ -134,11 +134,7 @@ namespace Basic.HrDAL.Repository
             {
                 where = where.And(a => a.RoleName.Contains(param.QueryKey));
             }
-            if ( where.IsStarted )
-            {
-                return where;
-            }
-            return null;
+            return where;
         }
         public static Expression<Func<DBDicList, bool>> ToWhere ( this DicQuery query )
         {

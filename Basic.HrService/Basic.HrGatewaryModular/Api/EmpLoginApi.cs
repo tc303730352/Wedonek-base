@@ -22,6 +22,15 @@ namespace Basic.HrGatewaryModular.Api
             return this._Service.GetLoginDatum(base.UserState);
         }
         /// <summary>
+        /// 切换公司
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
+        public LoginDatum Switch ( [NumValidate("hr.company.id.error", 1)] long companyId )
+        {
+            return this._Service.Switch(base.UserState, companyId);
+        }
+        /// <summary>
         /// 人员密码登陆
         /// </summary>
         /// <param name="param">参数</param>

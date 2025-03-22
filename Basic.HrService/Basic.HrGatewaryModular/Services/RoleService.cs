@@ -8,18 +8,21 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class RoleService : IRoleService
     {
-        public long AddRole (RoleSet datum)
+        public long AddRole ( RoleSet datum )
         {
             return new AddRole
             {
                 Datum = datum,
             }.Send();
         }
-        public RoleSelectItem[] GetRoleSelect ()
+        public RoleSelectItem[] GetRoleSelect ( long companyId )
         {
-            return new GetRoleSelect().Send();
+            return new GetRoleSelect
+            {
+                CompanyId = companyId,
+            }.Send();
         }
-        public void DeleteRole (long id)
+        public void DeleteRole ( long id )
         {
             new DeleteRole
             {
@@ -28,7 +31,7 @@ namespace Basic.HrGatewaryModular.Services
         }
 
 
-        public RoleDetailed GetRoleDetailed (long id)
+        public RoleDetailed GetRoleDetailed ( long id )
         {
             return new GetRoleDetailed
             {
@@ -38,7 +41,7 @@ namespace Basic.HrGatewaryModular.Services
 
 
 
-        public bool SetRole (long id, RoleSet datum)
+        public bool SetRole ( long id, RoleSet datum )
         {
             return new SetRole
             {
@@ -47,7 +50,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public PagingResult<RoleDatum> Query (PagingParam<RoleGetParam> param)
+        public PagingResult<RoleDatum> Query ( PagingParam<RoleGetParam> param )
         {
             return new QueryRole
             {
@@ -60,7 +63,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetIsEnable (long id, bool isEnable)
+        public void SetIsEnable ( long id, bool isEnable )
         {
             new SetRoleIsEnable
             {
@@ -69,7 +72,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetIsDefRole (long id)
+        public void SetIsDefRole ( long id )
         {
             new SetIsDefRole
             {
@@ -77,7 +80,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetIsAdmin (long id, bool isAdmin)
+        public void SetIsAdmin ( long id, bool isAdmin )
         {
             new SetRoleIsAdmin
             {

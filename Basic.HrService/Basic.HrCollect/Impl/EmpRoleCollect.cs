@@ -1,4 +1,5 @@
 ﻿using Basic.HrDAL;
+using Basic.HrModel.Role;
 using Basic.HrRemoteModel.EmpRole.Model;
 using WeDonekRpc.Helper;
 
@@ -12,10 +13,13 @@ namespace Basic.HrCollect.Impl
         {
             this._EmpRole = empRole;
         }
-
         public void Clear ( long empId )
         {
             this._EmpRole.ClearByEmpId(empId);
+        }
+        public void Clear ( long companyId, long empId )
+        {
+            this._EmpRole.ClearByEmpId(companyId, empId);
         }
         public void ClearByRoleId ( long roleId )
         {
@@ -31,33 +35,40 @@ namespace Basic.HrCollect.Impl
             return this._EmpRole.Gets(a => a.RoleId == roleId, a => a.EmpId);
         }
 
-        public Dictionary<long, int> GetEmpNum ( long[] roleId )
+        public Dictionary<long, int> GetEmpNum ( long companyId, long[] roleId )
         {
-            return this._EmpRole.GetEmpNum(roleId);
+            return this._EmpRole.GetEmpNum(companyId, roleId);
         }
 
-        public long[] GetRoleId ( long empId )
+        public EmpRoleBase[] GetEmpRoles ( long empId )
         {
-            return this._EmpRole.GetRoleId(empId);
+            return this._EmpRole.GetEmpRoles(empId);
         }
-        public Dictionary<long, EmpRole[]> GetRoles ( long[] empId )
+
+        public long[] GetRoleId ( long companyId, long empId )
         {
-            return this._EmpRole.GetRoles(empId);
+            return this._EmpRole.GetRoleId(companyId, empId);
         }
-        public EmpRole[] GetRoles ( long empId )
+
+        public Dictionary<long, EmpRole[]> GetRoles ( long companyId, long[] empId )
         {
-            return this._EmpRole.GetRoles(empId);
+            return this._EmpRole.GetRoles(companyId, empId);
         }
-        public bool SetRole ( long empId, long[] roleId )
+        public EmpRole[] GetRoles ( long companyId, long empId )
         {
-            long[] rids = this.GetRoleId(empId);
+            return this._EmpRole.GetRoles(companyId, empId);
+        }
+
+        public bool SetRole ( long companyId, long empId, long[] roleId )
+        {
+            long[] rids = this._EmpRole.GetRoleId(companyId, empId);
             if ( rids.Length == roleId.Length && rids.IsEqual(roleId) )
             {
                 return false;
             }
             else if ( rids.IsNull() )
             {
-                this._EmpRole.Add(empId, roleId);
+                this._EmpRole.Add(empId, companyId, roleId);
             }
             else if ( roleId.IsNull() )
             {
@@ -65,7 +76,7 @@ namespace Basic.HrCollect.Impl
             }
             else
             {
-                this._EmpRole.Set(empId, roleId);
+                this._EmpRole.Set(empId, companyId, roleId);
             }
             return true;
         }

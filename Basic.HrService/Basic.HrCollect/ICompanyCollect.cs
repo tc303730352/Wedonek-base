@@ -12,6 +12,7 @@ namespace Basic.HrCollect
         DBCompany Get ( long id );
         string GetName ( long companyId );
         Dictionary<long, string> GetNames ( long[] ids );
+        Result[] Gets<Result> ( long[] ids ) where Result : class;
         T[] Gets<T> ( ComGetParam param ) where T : class, new();
         T[] GetAll<T> () where T : class, new();
         bool SetStatus ( DBCompany source, HrCompanyStatus status );

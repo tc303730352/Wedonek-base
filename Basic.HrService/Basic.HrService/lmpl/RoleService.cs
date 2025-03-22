@@ -97,9 +97,9 @@ namespace Basic.HrService.lmpl
             DBRole role = this._Role.Get(id);
             return role.ConvertMap<DBRole, RoleDatum>();
         }
-        public RoleSelectItem[] GetSelect ()
+        public RoleSelectItem[] GetSelect ( long companyId )
         {
-            return this._Role.GetSelect();
+            return this._Role.GetSelect(companyId);
         }
         public PagingResult<RoleDatum> Query ( RoleGetParam param, IBasicPage paging )
         {
@@ -109,7 +109,7 @@ namespace Basic.HrService.lmpl
                 return new PagingResult<RoleDatum>();
             }
             RoleDatum[] dtos = roles.ConvertMap<DBRole, RoleDatum>();
-            Dictionary<long, int> dic = this._EmpRole.GetEmpNum(dtos.ConvertAll(c => c.Id));
+            Dictionary<long, int> dic = this._EmpRole.GetEmpNum(param.CompanyId, dtos.ConvertAll(c => c.Id));
             dtos.ForEach(c =>
             {
                 c.EmpNum = dic.GetValueOrDefault(c.Id);
@@ -135,7 +135,7 @@ namespace Basic.HrService.lmpl
             {
                 throw new ErrorException("hr.def.role.must.enable");
             }
-            long defId = this._Role.GetDefRoleId();
+            long defId = this._Role.GetDefRoleId(role.CompanyId);
             this._Role.SetIsDef(role, defId);
         }
     }

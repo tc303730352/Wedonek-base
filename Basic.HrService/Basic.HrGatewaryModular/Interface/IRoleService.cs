@@ -6,26 +6,26 @@ namespace Basic.HrGatewaryModular.Interface
 {
     public interface IRoleService
     {
-        RoleSelectItem[] GetRoleSelect ();
+        RoleSelectItem[] GetRoleSelect ( long companyId );
         /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="datum">角色资料</param>
         /// <returns></returns>
-        long AddRole (RoleSet datum);
+        long AddRole ( RoleSet datum );
 
         /// <summary>
         /// 删除角色
         /// </summary>
         /// <param name="id">角色ID</param>
-        void DeleteRole (long id);
+        void DeleteRole ( long id );
 
         /// <summary>
         /// 获取角色详细
         /// </summary>
         /// <param name="id">角色ID</param>
         /// <returns>角色详细</returns>
-        RoleDetailed GetRoleDetailed (long id);
+        RoleDetailed GetRoleDetailed ( long id );
 
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="id">角色ID</param>
         /// <param name="datum">角色资料</param>
         /// <returns></returns>
-        bool SetRole (long id, RoleSet datum);
+        bool SetRole ( long id, RoleSet datum );
 
 
-        PagingResult<RoleDatum> Query (PagingParam<RoleGetParam> param);
-        void SetIsEnable (long id, bool isEnable);
-        void SetIsDefRole (long id);
-        void SetIsAdmin (long id, bool isAdmin);
+        PagingResult<RoleDatum> Query ( PagingParam<RoleGetParam> param );
+        void SetIsEnable ( long id, bool isEnable );
+        void SetIsDefRole ( long id );
+        void SetIsAdmin ( long id, bool isAdmin );
     }
 }

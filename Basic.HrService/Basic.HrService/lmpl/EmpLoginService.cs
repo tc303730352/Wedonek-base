@@ -1,7 +1,9 @@
 ﻿using Basic.HrCollect;
 using Basic.HrModel.DB;
+using Basic.HrModel.Role;
 using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.EmpLogin.Model;
+using Basic.HrRemoteModel.EmpRole.Model;
 using Basic.HrService.Interface;
 using WeDonekRpc.Helper;
 
@@ -13,30 +15,37 @@ namespace Basic.HrService.lmpl
         private readonly ILoginUserCollect _LoginUser;
         private readonly IEmpCollect _Emp;
         private readonly IHrConfig _Config;
-        private readonly IEmpTitleCollect _EmpTitle;
         private readonly IRoleOperatePowerCollect _RolePower;
         private readonly IEmpRoleCollect _EmpRole;
-        private readonly IRoleCollect _Role;
-        private readonly IDeptCollect _Dept;
         public EmpLoginService ( ILoginUserCollect loginUser,
             IEmpCollect emp,
             IHrConfig config,
             IEmpTitleCollect empTitle,
             IRoleOperatePowerCollect rolePower,
             IEmpRoleCollect empRole,
-            IRoleCollect role,
             IDeptCollect dept )
         {
             this._LoginUser = loginUser;
             this._Emp = emp;
             this._Config = config;
-            this._EmpTitle = empTitle;
             this._RolePower = rolePower;
             this._EmpRole = empRole;
-            this._Role = role;
-            this._Dept = dept;
         }
-
+        public ComSwitchResult Switch ( long empId, long companyId )
+        {
+            EmpRole[] roles = this._EmpRole.GetRoles(companyId, empId);
+            if ( roles.IsNull() )
+            {
+                throw new ErrorException("hr.user.no.config.role");
+            }
+            bool isAdmin = roles.IsExists(a => a.IsAdmin);
+            string[] power = isAdmin ? _AllPower : this._RolePower.GetOperateVal(roles.ConvertAll(a => a.RoleId));
+            return new ComSwitchResult
+            {
+                Power = power,
+                IsAdmin = isAdmin,
+            };
+        }
         public LoginResult Login ( long empId )
         {
             DBEmpList emp = this._Emp.Get<DBEmpList>(empId);
@@ -52,30 +61,20 @@ namespace Basic.HrService.lmpl
             {
                 throw new ErrorException("hr.user.no.set.dept");
             }
-            long[] roleId = this._EmpRole.GetRoleId(emp.EmpId);
-            if ( roleId.IsNull() )
+            EmpRoleBase[] roles = this._EmpRole.GetEmpRoles(emp.EmpId);
+            if ( roles.IsNull() )
             {
                 throw new ErrorException("hr.user.no.config.role");
             }
-            bool isAdmin = this._Role.CheckIsAdmin(roleId);
-            if ( roleId.IsNull() && isAdmin == false )
-            {
-                throw new ErrorException("hr.user.no.power");
-            }
-            DBDept dept = this._Dept.Get(emp.DeptId);
-            string[] title = this._EmpTitle.GetTitle(emp.EmpId, emp.DeptId);
-            string[] power = isAdmin ? _AllPower : this._RolePower.GetOperateVal(roleId);
+            bool isAdmin = roles.IsExists(a => a.IsAdmin && a.CompanyId == emp.CompanyId);
+            string[] power = isAdmin ? _AllPower : this._RolePower.GetOperateVal(roles.Convert(a => a.CompanyId == emp.CompanyId, a => a.RoleId));
             return new LoginResult
             {
                 EmpId = emp.EmpId,
-                DeptId = emp.DeptId,
                 CompanyId = emp.CompanyId,
-                Post = emp.PostCode,
-                Title = title,
-                UnitId = dept.UnitId,
                 Power = power,
-                EmpName = emp.EmpName,
-                IsAdmin = isAdmin
+                Company = roles.Distinct(a => a.CompanyId),
+                IsAdmin = isAdmin,
             };
         }
         public LoginResult PwdLogin ( string username, string password )

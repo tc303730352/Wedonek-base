@@ -1,5 +1,6 @@
 ﻿using Basic.HrDAL.Model;
 using Basic.HrModel.DB;
+using Basic.HrModel.Role;
 using Basic.HrRemoteModel.EmpRole.Model;
 using SqlSugar;
 using WeDonekRpc.Helper;
@@ -13,21 +14,26 @@ namespace Basic.HrDAL.Repository
         public EmpRoleDAL ( IRepository<DBEmpRole> basicDAL ) : base(basicDAL)
         {
         }
-        public Dictionary<long, int> GetEmpNum ( long[] roleId )
+        public Dictionary<long, int> GetEmpNum ( long companyId, long[] roleId )
         {
-            return this._BasicDAL.GroupBy(a => roleId.Contains(a.RoleId), a => a.RoleId, a => new
+            return this._BasicDAL.GroupBy(a => a.CompanyId == companyId && roleId.Contains(a.RoleId), a => a.RoleId, a => new
             {
                 a.RoleId,
                 num = SqlFunc.AggregateCount(a.RoleId)
             }).ToDictionary(a => a.RoleId, a => a.num);
         }
-        public long[] GetRoleId ( long empId )
+        public EmpRoleBase[] GetEmpRoles ( long empId )
         {
-            return this._BasicDAL.Join<DBRole, long>(( a, b ) => a.RoleId == b.Id && b.IsEnable && a.EmpId == empId, ( a, b ) => b.Id);
+            return this._BasicDAL.Join<DBRole, EmpRoleBase>(( a, b ) => a.RoleId == b.Id && b.IsEnable && a.EmpId == empId, ( a, b ) => new EmpRoleBase
+            {
+                CompanyId = b.CompanyId,
+                RoleId = a.RoleId,
+                IsAdmin = b.IsAdmin
+            });
         }
-        public Dictionary<long, EmpRole[]> GetRoles ( long[] empId )
+        public Dictionary<long, EmpRole[]> GetRoles ( long companyId, long[] empId )
         {
-            EmpRoleDto[] list = this._BasicDAL.Join<DBRole, EmpRoleDto>(( a, b ) => a.RoleId == b.Id && empId.Contains(a.EmpId) && b.IsEnable, ( a, b ) => new EmpRoleDto
+            EmpRoleDto[] list = this._BasicDAL.Join<DBRole, EmpRoleDto>(( a, b ) => a.RoleId == b.Id && a.CompanyId == companyId && empId.Contains(a.EmpId) && b.IsEnable, ( a, b ) => new EmpRoleDto
             {
                 RoleId = a.RoleId,
                 EmpId = a.EmpId,
@@ -38,17 +44,21 @@ namespace Basic.HrDAL.Repository
             {
                 RoleId = a.RoleId,
                 RoleName = a.RoleName,
-                IsAdmin = a.IsAdmin,
+                IsAdmin = a.IsAdmin
             }).ToArray());
         }
-        public EmpRole[] GetRoles ( long empId )
+        public EmpRole[] GetRoles ( long companyId, long empId )
         {
-            return this._BasicDAL.Join<DBRole, EmpRole>(( a, b ) => a.RoleId == b.Id && b.IsEnable && a.EmpId == empId, ( a, b ) => new EmpRole
+            return this._BasicDAL.Join<DBRole, EmpRole>(( a, b ) => a.RoleId == b.Id && a.CompanyId == companyId && b.IsEnable && a.EmpId == empId, ( a, b ) => new EmpRole
             {
                 RoleId = a.RoleId,
                 RoleName = b.RoleName,
-                IsAdmin = b.IsAdmin,
+                IsAdmin = b.IsAdmin
             });
+        }
+        public long[] GetRoleId ( long companyId, long empId )
+        {
+            return this._BasicDAL.Gets<long>(a => a.CompanyId == companyId && a.EmpId == empId, a => a.RoleId);
         }
         public void Clear ( long roleId )
         {
@@ -66,23 +76,33 @@ namespace Basic.HrDAL.Repository
                 throw new ErrorException("hr.emp.role.clear.fail");
             }
         }
+        public void ClearByEmpId ( long companyId, long empId )
+        {
+            long[] ids = this._BasicDAL.Gets(a => a.CompanyId == companyId && a.EmpId == empId, a => a.Id);
+            if ( !ids.IsNull() && !this._BasicDAL.Delete(a => ids.Contains(a.Id)) )
+            {
+                throw new ErrorException("hr.emp.role.clear.fail");
+            }
+        }
 
-        public void Add ( long empId, long[] roleId )
+        public void Add ( long empId, long companyId, long[] roleId )
         {
             this._BasicDAL.Insert(roleId.ConvertAll(c => new DBEmpRole
             {
                 EmpId = empId,
                 Id = IdentityHelper.CreateId(),
+                CompanyId = companyId,
                 RoleId = c
             }));
         }
-        public void Set ( long empId, long[] roleId )
+        public void Set ( long empId, long companyId, long[] roleId )
         {
             ISqlQueue<DBEmpRole> queue = this._BasicDAL.BeginQueue();
-            queue.Delete(a => a.EmpId == empId);
+            queue.Delete(a => a.CompanyId == companyId && a.EmpId == empId);
             queue.Insert(roleId.ConvertAll(a => new DBEmpRole
             {
                 Id = IdentityHelper.CreateId(),
+                CompanyId = companyId,
                 EmpId = empId,
                 RoleId = a
             }));

@@ -217,5 +217,10 @@ namespace Basic.HrCollect.Impl
         {
             return this._Company.GetName(companyId);
         }
+
+        public Result[] Gets<Result> ( long[] ids ) where Result : class
+        {
+            return this._Company.Gets<Result>(ids);
+        }
     }
 }

@@ -50,7 +50,7 @@ namespace Basic.HrService.lmpl
             long[] empId = users.ConvertAll(c => c.EmpId);
             DBLoginUser[] account = this._LoginUser.GetAccounts(empId);
             LoginUserDatum[] list = users.ConvertMap<EmpBaseDto, LoginUserDatum>();
-            Dictionary<long, EmpRole[]> roles = this._EmpRole.GetRoles(empId);
+            Dictionary<long, EmpRole[]> roles = this._EmpRole.GetRoles(query.CompanyId, empId);
             Dictionary<long, int> powerNum = this._DeptPower.GetPowerNum(empId, query.CompanyId);
             list.ForEach(a =>
             {

@@ -15,7 +15,7 @@ namespace Basic.HrCollect
         PowerDto[] GetDtos ( long subSystemId, PowerGetParam param );
         PowerDto[] GetDtos ( long subSystemId );
         PowerBasic[] Gets ( long[] ids );
-        PowerRouteDto[] GetEnables ();
+        PowerRouteDto[] GetEnables ( long[] ids );
         DBPowerList Get ( long id );
         PowerBasic[] GetFulls ( long[] ids );
         string GetHomeUri ( long subSysId );

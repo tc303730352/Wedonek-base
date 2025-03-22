@@ -8,18 +8,18 @@ namespace Basic.HrService.RpcEvent
     {
         private readonly IEmpRoleService _Service;
 
-        public EmpRoleEvent (IEmpRoleService service)
+        public EmpRoleEvent ( IEmpRoleService service )
         {
             this._Service = service;
         }
 
-        public long[] GetEmpRole (GetEmpRole obj)
+        public long[] GetEmpRole ( GetEmpRole obj )
         {
-            return this._Service.GetRoleId(obj.EmpId);
+            return this._Service.GetRoleId(obj.EmpId, obj.CompanyId);
         }
-        public void SetEmpRole (SetEmpRole obj)
+        public void SetEmpRole ( SetEmpRole obj )
         {
-            this._Service.SetRole(obj.EmpId, obj.RoleId);
+            this._Service.SetRole(obj.EmpId, obj.CompanyId, obj.RoleId);
         }
     }
 }

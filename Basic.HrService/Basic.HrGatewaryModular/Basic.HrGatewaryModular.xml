@@ -4,11 +4,31 @@
         <name>Basic.HrGatewaryModular</name>
     </assembly>
     <members>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetTreeItems">
+            <summary>
+            获取树形选择项
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.SetLeaverId(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Nullable{System.Int64}})">
+            <summary>
+            设置负责人
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
         <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Add(Basic.HrRemoteModel.Company.Model.CompanyAdd)">
             <summary>
             新增公司
             </summary>
             <param name="datum">公司资料</param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetName(System.Int64)">
+            <summary>
+            获取树形字典项名
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Delete(System.Int64)">
@@ -365,6 +385,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpLoginApi.Switch(System.Int64)">
+            <summary>
+            切换公司
+            </summary>
+            <param name="companyId"></param>
+            <returns></returns>
+        </member>
         <member name="M:Basic.HrGatewaryModular.Api.EmpLoginApi.EmpPwdLogin(Basic.HrGatewaryModular.Model.EmpLogin.UI_EmpPwdLogin)">
             <summary>
             人员密码登陆
@@ -405,7 +432,7 @@
             <param name="id">职务ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.GetList(System.Int64,System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.GetList(System.Int64,System.Nullable{System.Int64})">
             <summary>
             获取职务列表
             </summary>
@@ -940,6 +967,14 @@
             <param name="id">字典ID</param>
             <returns></returns>
         </member>
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpLoginService.Switch(WeDonekRpc.Modular.IUserState,System.Int64)">
+            <summary>
+            切换公司
+            </summary>
+            <param name="state"></param>
+            <param name="companyId"></param>
+            <returns></returns>
+        </member>
         <member name="M:Basic.HrGatewaryModular.Interface.IEmpLoginService.EmpPwdLogin(System.String,System.String)">
             <summary>
             人员密码登陆
@@ -948,14 +983,14 @@
             <param name="password">登陆密码</param>
             <returns>登陆结果</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IEmpRoleService.GetEmpRole(System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpRoleService.GetEmpRole(System.Int64,System.Int64)">
             <summary>
             获取人员角色列表
             </summary>
             <param name="empId">人员ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IEmpRoleService.SetEmpRole(System.Int64,System.Int64[])">
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpRoleService.SetEmpRole(System.Int64,System.Int64,System.Int64[])">
             <summary>
             修改人员角色
             </summary>
@@ -1039,7 +1074,7 @@
             <param name="id">职务ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.GetEmpTitleList(System.Int64,System.Int64)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.GetEmpTitleList(System.Int64,System.Nullable{System.Int64})">
             <summary>
             获取职务列表
             </summary>
@@ -1397,14 +1432,9 @@
             当前选择的子系统
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.UnitId">
-            <summary>
-            所在单位ID
-            </summary>
-        </member>
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.CompanyId">
             <summary>
-            入职部门
+            当前公司ID
             </summary>
         </member>
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.EmpId">
@@ -1415,11 +1445,6 @@
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.EmpName">
             <summary>
             员工名
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.DeptId">
-            <summary>
-            部门ID
             </summary>
         </member>
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.HeadUri">

@@ -12,5 +12,11 @@ namespace Basic.HrRemoteModel.EmpLogin
             get;
             set;
         }
+        public long CompanyId
+        {
+            get;
+            set;
+        }
+        public long[] Company { get; set; }
     }
 }

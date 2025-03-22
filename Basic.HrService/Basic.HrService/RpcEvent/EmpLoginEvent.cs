@@ -9,15 +9,19 @@ namespace Basic.HrService.RpcEvent
     {
         private readonly IEmpLoginService _Service;
 
-        public EmpLoginEvent (IEmpLoginService service)
+        public EmpLoginEvent ( IEmpLoginService service )
         {
             this._Service = service;
         }
-        public LoginResult EmpLogin (EmpLogin obj)
+        public ComSwitchResult EmpSwitchCompany ( EmpSwitchCompany obj )
+        {
+            return this._Service.Switch(obj.EmpId, obj.CompanyId);
+        }
+        public LoginResult EmpLogin ( EmpLogin obj )
         {
             return this._Service.Login(obj.EmpId);
         }
-        public LoginResult EmpPwdLogin (EmpPwdLogin obj)
+        public LoginResult EmpPwdLogin ( EmpPwdLogin obj )
         {
             return this._Service.PwdLogin(obj.LoginName, obj.Password);
         }

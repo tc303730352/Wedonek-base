@@ -11,7 +11,7 @@ namespace Basic.HrGatewaryModular.Api
     internal class RoleApi : ApiController
     {
         private readonly IRoleService _Service;
-        public RoleApi (IRoleService service)
+        public RoleApi ( IRoleService service )
         {
             this._Service = service;
         }
@@ -20,7 +20,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">角色资料</param>
         /// <returns></returns>
-        public long Add ([NullValidate("hr.role.datum.null")] RoleSet datum)
+        public long Add ( [NullValidate("hr.role.datum.null")] RoleSet datum )
         {
             return this._Service.AddRole(datum);
         }
@@ -29,7 +29,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除角色
         /// </summary>
         /// <param name="id">角色ID</param>
-        public void Delete ([NumValidate("hr.role.id.error", 1)] long id)
+        public void Delete ( [NumValidate("hr.role.id.error", 1)] long id )
         {
             this._Service.DeleteRole(id);
         }
@@ -38,7 +38,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="id">角色ID</param>
         /// <returns>角色详细</returns>
-        public RoleDetailed GetDetailed ([NumValidate("hr.role.id.error", 1)] long id)
+        public RoleDetailed GetDetailed ( [NumValidate("hr.role.id.error", 1)] long id )
         {
             return this._Service.GetRoleDetailed(id);
         }
@@ -48,27 +48,27 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns></returns>
         public RoleSelectItem[] GetSelect ()
         {
-            return this._Service.GetRoleSelect();
+            return this._Service.GetRoleSelect(base.UserState.ToCompanyId());
         }
         /// <summary>
         /// 获取角色列表
         /// </summary>
         /// <param name="param">角色查询参数</param>
         /// <returns>角色资料</returns>
-        public PagingResult<RoleDatum> Query (PagingParam<RoleGetParam> param)
+        public PagingResult<RoleDatum> Query ( PagingParam<RoleGetParam> param )
         {
             return this._Service.Query(param);
         }
-        public void SetIsEnable (LongParam<bool> set)
+        public void SetIsEnable ( LongParam<bool> set )
         {
             this._Service.SetIsEnable(set.Id, set.Value);
         }
 
-        public void SetIsDefRole ([NumValidate("hr.role.id.error", 1)] long id)
+        public void SetIsDefRole ( [NumValidate("hr.role.id.error", 1)] long id )
         {
             this._Service.SetIsDefRole(id);
         }
-        public void SetIsAdmin (LongParam<bool> set)
+        public void SetIsAdmin ( LongParam<bool> set )
         {
             this._Service.SetIsAdmin(set.Id, set.Value);
         }
@@ -77,7 +77,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
-        public bool Set ([NullValidate("hr.role.param.null")] UI_SetRole param)
+        public bool Set ( [NullValidate("hr.role.param.null")] UI_SetRole param )
         {
             return this._Service.SetRole(param.Id, param.Datum);
         }

@@ -8,7 +8,10 @@ namespace Basic.HrModel.DB
         [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }
 
+        public long CompanyId { get; set; }
+
         public long EmpId { get; set; }
+
 
         public long RoleId { get; set; }
     }

@@ -2,7 +2,7 @@
 {
     public interface IEmpRoleService
     {
-        long[] GetRoleId (long empId);
-        void SetRole (long empId, long[] roleId);
+        long[] GetRoleId ( long empId, long companyId );
+        void SetRole ( long empId, long companyId, long[] roleId );
     }
 }

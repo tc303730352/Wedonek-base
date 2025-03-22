@@ -9,14 +9,14 @@ namespace Basic.HrService.RpcEvent
     {
         private readonly IEmpLoginDatumService _Service;
 
-        public EmpLoginDatumEvent (IEmpLoginDatumService service)
+        public EmpLoginDatumEvent ( IEmpLoginDatumService service )
         {
             this._Service = service;
         }
 
-        public EmpLoginDatum GetEmpLoginDatum (GetEmpLoginDatum obj)
+        public EmpLoginDatum GetEmpLoginDatum ( GetEmpLoginDatum obj )
         {
-            return this._Service.Get(obj.EmpId);
+            return this._Service.Get(obj.EmpId, obj.CompanyId, obj.Company);
         }
     }
 }

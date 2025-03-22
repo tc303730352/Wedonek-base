@@ -19,7 +19,7 @@ namespace Basic.HrCollect
 
         DBRole Get ( long roleId );
 
-        long GetDefRoleId ();
+        long GetDefRoleId ( long companyId );
 
         RoleBase[] GetBases ( long[] ids );
 
@@ -28,8 +28,8 @@ namespace Basic.HrCollect
 
         bool SetIsEnable ( DBRole role, bool enable );
 
-        bool CheckIsAdmin ( long[] roleId );
-        RoleSelectItem[] GetSelect ();
+        bool CheckIsAdmin ( long companyId, long[] roleId );
+        RoleSelectItem[] GetSelect ( long companyId );
         Result[] Query<Result> ( RoleGetParam param, IBasicPage paging, out int count ) where Result : class, new();
         void SetIsDef ( DBRole role, long defId );
     }

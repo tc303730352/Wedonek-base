@@ -13,5 +13,7 @@ namespace Basic.HrRemoteModel.EmpRole
         /// 人员ID
         /// </summary>
         public long EmpId { get; set; }
+
+        public long CompanyId { get; set; }
     }
 }
