@@ -8,7 +8,7 @@
   >
     <unitDeptTree
       ref="deptTree"
-      :select-keys.sync="chioseId"
+      :select-keys="chioseId"
       :is-multiple="true"
       :checkstrictly="true"
     />

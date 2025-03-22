@@ -41,11 +41,18 @@ namespace Basic.HrCollect.Impl
             List<long> dirId = new List<long>(menu.Length * 2);
             menu.ForEach(c =>
             {
-                string code = c.LevelCode.Remove(c.LevelCode.Length - 1, 1).Remove(0, 1);
-                code.SplitWriteLong('|', dirId);
+                if ( c.LevelCode != string.Empty )
+                {
+                    string code = c.LevelCode.Remove(c.LevelCode.Length - 1, 1).Remove(0, 1);
+                    code.SplitWriteLong('|', dirId);
+                }
             });
+            if ( dirId.Count == 0 )
+            {
+                return menu;
+            }
             PowerRouteDto[] dir = this._Power.Gets<PowerRouteDto>(dirId.Distinct().ToArray());
-            return dir.Add(menu);
+            return dir.Concat(menu).OrderBy(a => a.Sort).ToArray();
         }
         public string GetHomeUri ( long systemId, long[] roleId )
         {

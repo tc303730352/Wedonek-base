@@ -357,7 +357,7 @@ namespace Basic.HrCollect.Impl
 
         public KeyValuePair<long, long>[] GetUnitId ( long[] deptId )
         {
-            return this._Dept.Gets(a => deptId.Contains(a.Id), a => new
+            return this._Dept.Gets(a => deptId.Contains(a.Id) && a.IsUnit == false, a => new
             {
                 a.Id,
                 a.UnitId

@@ -210,7 +210,7 @@ export default {
       this.$emit('load', e)
     },
     autoChiose(data) {
-      if (data.Children && data.Children.length != 0) {
+      if (data.Children && data.Children.length !== 0) {
         let isSet = false
         data.Children.forEach((c) => {
           if (c.IsUnit) {
@@ -227,7 +227,7 @@ export default {
       return false
     },
     checkChange(data, checked, indeterminate) {
-      const index = this.checkboxKey.findIndex((c) => c == data.DeptId)
+      const index = this.checkboxKey.findIndex((c) => c === data.DeptId)
       if (checked) {
         if (index !== -1) {
           return

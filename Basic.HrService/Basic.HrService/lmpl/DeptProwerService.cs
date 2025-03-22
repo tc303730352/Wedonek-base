@@ -21,6 +21,7 @@ namespace Basic.HrService.lmpl
         public void SetPower ( long empId, long companyId, long[] deptId )
         {
             KeyValuePair<long, long>[] depts = this._Dept.GetUnitId(deptId);
+
             if ( this._DeptPower.SetDeptId(empId, companyId, depts) )
             {
                 new UserChangeEvent(empId).AsyncSend("DeptPowerChange");
