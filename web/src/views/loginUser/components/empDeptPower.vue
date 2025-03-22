@@ -8,7 +8,7 @@
   >
     <unitDeptTree
       ref="deptTree"
-      :select-keys="chioseId"
+      :select-keys.sync="chioseId"
       :is-multiple="true"
       :checkstrictly="true"
     />
@@ -70,7 +70,12 @@ export default {
   },
   methods: {
     async load() {
-      this.chioseId = await deptPowerApi.get(this.empId, this.comId)
+      const list = await deptPowerApi.get(this.empId, this.comId)
+      if (list) {
+        this.chioseId = list
+      } else {
+        this.chioseId = []
+      }
     },
     async save() {
       if (this.chioseId.length === 0) {

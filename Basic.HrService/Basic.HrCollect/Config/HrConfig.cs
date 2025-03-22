@@ -8,13 +8,13 @@ namespace Basic.HrCollect.Config
     internal class HrConfig : IHrConfig
     {
         private string _WebPwdSign;
-        public HrConfig (IConfigCollect config)
+        public HrConfig ( IConfigCollect config )
         {
             IConfigSection section = config.GetSection("Dict");
             section.AddRefreshEvent(this._Init);
         }
 
-        private void _Init (IConfigSection section, string name)
+        private void _Init ( IConfigSection section, string name )
         {
             this.TitleDicId = section.GetValue<long>("TitleDicId", 1);
             this.PostDicId = section.GetValue<long>("PostDicId", 2);
@@ -23,13 +23,13 @@ namespace Basic.HrCollect.Config
             this.PwdSign = section.GetValue("PwdSign", "6xy^#5a%acde");
         }
 
-        public string EncryptionPwd (string pwd, long empId)
+        public string EncryptionPwd ( string pwd, long empId )
         {
             return string.Join("_", pwd, this.PwdSign, empId).GetMd5();
         }
-        public string EncryptionFullPwd (string pwd, long empId)
+        public string EncryptionFullPwd ( string pwd, long empId )
         {
-            pwd = string.Concat(pwd, this._WebPwdSign);
+            pwd = string.Concat(pwd, this._WebPwdSign).GetMd5().ToLower();
             return this.EncryptionPwd(pwd, empId);
         }
         /// <summary>

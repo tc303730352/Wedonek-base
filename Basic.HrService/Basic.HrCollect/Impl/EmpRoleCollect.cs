@@ -59,7 +59,7 @@ namespace Basic.HrCollect.Impl
             return this._EmpRole.GetRoles(companyId, empId);
         }
 
-        public bool SetRole ( long companyId, long empId, long[] roleId )
+        public bool SetRole ( long empId, long companyId, long[] roleId )
         {
             long[] rids = this._EmpRole.GetRoleId(companyId, empId);
             if ( rids.Length == roleId.Length && rids.IsEqual(roleId) )
