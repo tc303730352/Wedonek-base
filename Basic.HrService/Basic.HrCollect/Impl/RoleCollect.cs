@@ -99,7 +99,7 @@ namespace Basic.HrCollect.Impl
 
         public bool SetIsEnable ( DBRole role, bool enable )
         {
-            if ( role.IsDefRole || role.IsLock )
+            if ( role.IsDefRole )
             {
                 throw new ErrorException("hr.def.role.not.can.set");
             }

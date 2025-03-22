@@ -22,11 +22,6 @@ namespace Basic.HrModel.DB
         public bool IsEnable { get; set; }
         public bool IsAdmin { get; set; }
 
-        /// <summary>
-        /// 是否锁定(锁定的无法修改删除)
-        /// </summary>
-        public bool IsLock { get; set; }
-
         public DateTime AddTime { get; set; }
     }
 }
