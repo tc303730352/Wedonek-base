@@ -40,10 +40,11 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public PowerSubSystem[] GetTrees ( PowerGetParam param )
+        public PowerSubSystem[] GetTrees ( PowerGetParam param, long companyId )
         {
             return new GetPowerTreeBySystem
             {
+                CompanyId = companyId,
                 Param = param
             }.Send();
         }

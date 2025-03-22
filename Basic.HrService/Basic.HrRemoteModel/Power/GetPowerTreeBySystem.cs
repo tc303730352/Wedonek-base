@@ -14,5 +14,6 @@ namespace Basic.HrRemoteModel.Power
         /// 权限类型
         /// </summary>
         public PowerGetParam Param { get; set; }
+        public long CompanyId { get; set; }
     }
 }

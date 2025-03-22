@@ -40,7 +40,7 @@ namespace Basic.HrService.RpcEvent
         }
         public PowerSubSystem[] GetPowerTreeBySystem ( GetPowerTreeBySystem obj )
         {
-            return this._Service.GetTrees(obj.Param);
+            return this._Service.GetTrees(obj.Param, obj.CompanyId);
         }
         public bool SetPower ( SetPower obj )
         {

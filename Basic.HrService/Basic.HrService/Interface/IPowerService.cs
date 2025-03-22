@@ -11,7 +11,7 @@ namespace Basic.HrService.Interface
         PowerTree[] GetPowerTree ( long subSysId, PowerGetParam param );
         long Add ( PowerAdd add );
         PowerData Get ( long id );
-        PowerSubSystem[] GetTrees ( PowerGetParam param );
+        PowerSubSystem[] GetTrees ( PowerGetParam param, long companyId );
         PagingResult<PowerBase> Query ( PowerQuery queryParam, IBasicPage basicPage );
         bool Set ( long id, PowerSet datum );
         void Delete ( long id );

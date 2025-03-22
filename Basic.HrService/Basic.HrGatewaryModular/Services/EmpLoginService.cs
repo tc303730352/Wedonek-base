@@ -36,8 +36,8 @@ namespace Basic.HrGatewaryModular.Services
                 Datum = new LoginUser
                 {
                     EmpId = empId,
-                    EmpName = state.GetValue<string>("Name"),
-                    HeadUri = state.GetValue<string>("Head")
+                    EmpName = datum.Name,
+                    HeadUri = datum.Head
                 }
             };
         }

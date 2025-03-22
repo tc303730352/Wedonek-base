@@ -78,7 +78,7 @@ async function loadState(commit) {
     }
     const comId = cache.getCurComId(tokenId)
     if (comId == null) {
-      commit('SET_CurComId', cahce.Datum.CompanyId)
+      commit('SET_CurComId', cahce.CompanyId)
     } else {
       commit('SET_CurComId', comId)
     }
@@ -87,7 +87,7 @@ async function loadState(commit) {
   const res = await GetLoginDatum()
   commit('SET_User', res)
   commit('SET_CurSysId', res.CurSubSysId)
-  commit('SET_CurComId', res.Datum.CompanyId)
+  commit('SET_CurComId', res.CompanyId)
   cache.setCache(tokenId, res)
   return state
 }

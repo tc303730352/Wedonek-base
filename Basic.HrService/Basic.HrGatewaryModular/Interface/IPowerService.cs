@@ -38,7 +38,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// 获取目录权限树含子系统
         /// </summary>
         /// <returns>目录权限子系统</returns>
-        PowerSubSystem[] GetTrees ( PowerGetParam param );
+        PowerSubSystem[] GetTrees ( PowerGetParam param, long companyId );
 
         /// <summary>
         /// 查询目录权限

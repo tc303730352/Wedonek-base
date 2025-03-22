@@ -11,30 +11,52 @@
 
     <div class="right-menu">
       <div
-        class="right-menu-item"
         v-if="subSystem != null && subSystem.length > 0"
+        class="right-menu-item"
       >
-        <el-dropdown
-          trigger="click"
-          @command="chioseSubSystem"
-        >
-        <el-button class="btn" title="切换系统" icon="el-icon-s-tools" circle></el-button>
+        <el-dropdown trigger="click" @command="chioseSubSystem">
+          <el-button
+            class="btn"
+            title="切换系统"
+            icon="el-icon-s-tools"
+            circle
+          />
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item v-for="(item) in this.subSystem" :icon="item.icon" :command="item.Id" :key="item.Id" >{{ item.Name }}</el-dropdown-item>
+            <el-dropdown-item
+              v-for="item in subSystem"
+              :key="item.Id"
+              :icon="item.icon"
+              :command="item.Id"
+            >{{ item.Name }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
       <template v-if="device !== 'mobile'">
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
       </template>
+      <div class="avatar-wrapper right-menu-item">
+        <img :src="user.head | imageUri" class="user-avatar">
+        <div class="user">
+          <span>{{ user.name }}</span>
+          <el-dropdown trigger="click" @command="chioseSubSystem">
+            <el-button title="切换系统" type="text" circle>{{
+              comName
+            }}<i class="el-icon-caret-bottom" /></el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item
+                v-for="item in company"
+                :key="item.key"
+                :command="item.key"
+              >{{ item.name }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </div>
       <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
+        class="right-menu-item hover-effect"
         trigger="click"
       >
-        <div class="avatar-wrapper">
-          <img :src="user.head" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
-        </div>
+        <i class="el-icon-caret-bottom" />
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item divided @click.native="logout">
             <span style="display: block">退出登陆</span>
@@ -46,49 +68,61 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import Screenfull from "@/components/Screenfull";
+import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
+import Hamburger from '@/components/Hamburger'
+import Screenfull from '@/components/Screenfull'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    Screenfull,
+    Screenfull
   },
   data() {
     return {
       regionId: null,
       region: null,
+      curComId: null,
+      comName: null,
+      company: [],
       user: {
         head: null,
-        name: null,
-      },
-    };
+        name: null
+      }
+    }
   },
   computed: {
-    ...mapGetters(["sidebar", "device", "subSystem","curSysId"]),
+    ...mapGetters(['sidebar', 'device', 'subSystem', 'curSysId'])
   },
   mounted() {
-    this.user = this.$store.getters.user;
+    this.user = this.$store.getters.user
+    this.curComId = this.$store.getters.curComId
+    const data = this.$store.getters.company
+    this.comName = data[this.curComId]
+    for (const i in data) {
+      this.company.push({
+        key: i,
+        name: data[i]
+      })
+    }
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      this.$store.dispatch('app/toggleSideBar')
     },
     chioseSubSystem(value) {
-      if(this.curSysId != value) {
-        this.$store.dispatch("user/switchSubSys", value);
+      if (this.curSysId !== value) {
+        this.$store.dispatch('user/switchSubSys', value)
         this.$router.push({ name: this.$store.getters.loadRoute })
       }
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-    },
-  },
-};
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -150,28 +184,43 @@ export default {
         }
       }
     }
-
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
+    .avatar-wrapper {
+      margin-top: 5px;
+      position: relative;
+      width: 200px;
+      .user-avatar {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+      }
+      .user {
+        padding-left: 5px;
+        display: inline-block;
+        vertical-align: top;
+        height: 40px;
+        width: 140px;
+      }
+      .user span {
+        font-size: 1rem;
+        line-height: 20px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        float: left;
+      }
+      .user .el-dropdown {
+        float: left;
+        padding: 0;
+        height: 20px;
+        line-height: 20px;
+      }
+      .user .el-dropdown .el-button {
+        padding: 0px;
+      }
+      .user .el-dropdown .el-button .el-icon-caret-bottom {
+        margin-top: 2px;
       }
     }
   }

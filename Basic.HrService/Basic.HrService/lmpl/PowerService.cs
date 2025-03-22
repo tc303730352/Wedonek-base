@@ -15,12 +15,14 @@ namespace Basic.HrService.lmpl
     {
         private readonly ISubSystemCollect _SubSystem;
         private readonly IPowerCollect _Power;
-
+        private readonly ICompanyPowerCollect _ComPower;
         public PowerService ( ISubSystemCollect subSystem,
+            ICompanyPowerCollect comPower,
             IPowerCollect power )
         {
             this._SubSystem = subSystem;
             this._Power = power;
+            this._ComPower = comPower;
         }
         public long Add ( PowerAdd add )
         {
@@ -53,7 +55,7 @@ namespace Basic.HrService.lmpl
                 return tree;
             });
         }
-        public PowerSubSystem[] GetTrees ( PowerGetParam param )
+        public PowerSubSystem[] GetTrees ( PowerGetParam param, long companyId )
         {
             SubSystemDto[] subs = this._SubSystem.Gets(param.IsEnable);
             if ( subs.IsNull() )
@@ -61,6 +63,12 @@ namespace Basic.HrService.lmpl
                 return null;
             }
             PowerDto[] dtos = this._Power.GetDtos(subs.ConvertAll(a => a.Id), param);
+            long[] powerId = this._ComPower.GetPowerIds(companyId);
+            if ( !powerId.IsNull() )
+            {
+                dtos = dtos.Remove(a => a.PowerType == HrRemoteModel.PowerType.menu && !powerId.Contains(a.Id));
+                subs = subs.Remove(c => !dtos.IsExists(a => a.SubSystemId == c.Id));
+            }
             return subs.ConvertAll(a => new PowerSubSystem
             {
                 SubSysId = a.Id,

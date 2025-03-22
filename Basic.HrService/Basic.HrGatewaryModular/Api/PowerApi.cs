@@ -55,7 +55,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns>目录权限子系统</returns>
         public PowerSubSystem[] GetTrees ( PowerGetParam param )
         {
-            return this._Service.GetTrees(param);
+            return this._Service.GetTrees(param, base.UserState.ToCompanyId());
         }
         /// <summary>
         /// 查询目录权限
