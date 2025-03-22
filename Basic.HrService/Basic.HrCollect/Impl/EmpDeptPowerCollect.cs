@@ -33,7 +33,18 @@ namespace Basic.HrCollect.Impl
         }
         public long[] GetDeptId ( long empId, long companyId )
         {
-            return this._DeptPower.Gets(a => a.EmpId == empId && a.CompanyId == companyId, a => a.DeptId);
+            var list = this._DeptPower.Gets(a => a.EmpId == empId && a.CompanyId == companyId, a => new
+            {
+                a.DeptId,
+                a.UnitId
+            });
+            List<long> ids = new List<long>(list.Length * 2);
+            list.ForEach(c =>
+            {
+                ids.Add(c.DeptId);
+                ids.Add(c.UnitId);
+            });
+            return ids.Distinct().ToArray();
         }
 
         public bool SetDeptId ( long empId, long companyId, KeyValuePair<long, long>[] depts )

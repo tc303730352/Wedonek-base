@@ -24,7 +24,8 @@ namespace Basic.HrService.lmpl
                 UnitId = arg.UnitId,
                 IsDept = arg.IsDept,
                 IsUnit = arg.IsUnit,
-                Status = arg.Status
+                Status = arg.Status,
+                DeptId = arg.DeptId,
             });
             return depts.ToTree();
         }
