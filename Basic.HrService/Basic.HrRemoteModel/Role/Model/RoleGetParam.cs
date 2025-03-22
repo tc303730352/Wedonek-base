@@ -6,7 +6,7 @@ namespace Basic.HrRemoteModel.Role.Model
         /// <summary>
         /// 公司ID
         /// </summary>
-        [NumValidate("hr.compant.id.error", 1)]
+        [NumValidate("hr.company.id.error", 1)]
         public long CompanyId { get; set; }
         /// <summary>
         /// 查询键

@@ -101,6 +101,11 @@ export default {
     editRole,
     roleView
   },
+  computed: {
+    comId() {
+      return this.$store.getters.curComId
+    }
+  },
   data() {
     return {
       roles: [],
@@ -257,6 +262,7 @@ export default {
       this.load()
     },
     async load() {
+      this.queryParam.CompanyId = this.comId
       const res = await roleApi.query(this.queryParam, this.paging)
       this.roles = res.List
       this.paging.Total = res.Count

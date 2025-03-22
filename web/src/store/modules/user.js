@@ -16,10 +16,7 @@ const state = {
   datum: {
     empId: null,
     name: null,
-    head: null,
-    unitId: null,
-    deptId: null,
-    companyId: null
+    head: null
   },
   isLoadRoute: false
 }

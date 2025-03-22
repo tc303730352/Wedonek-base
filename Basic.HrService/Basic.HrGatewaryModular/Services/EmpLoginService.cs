@@ -28,6 +28,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
             return new LoginDatum
             {
+                CompanyId = state.ToCompanyId(),
                 Company = datum.Company,
                 CurSubSysId = datum.CurSubSysId,
                 Power = datum.Power,

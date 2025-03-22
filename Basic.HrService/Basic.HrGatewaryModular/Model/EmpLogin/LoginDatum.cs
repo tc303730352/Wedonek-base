@@ -5,6 +5,7 @@ namespace Basic.HrGatewaryModular.Model.EmpLogin
 {
     public class LoginDatum
     {
+        public long CompanyId { get; set; }
         /// <summary>
         /// 子系统
         /// </summary>
