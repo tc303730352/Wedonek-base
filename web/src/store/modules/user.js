@@ -55,10 +55,7 @@ const mutations = {
     state.datum = {
       empId: data.Datum.EmpId,
       name: data.Datum.EmpName,
-      head: data.Datum.UserHead ?? '/image/defhead.png',
-      unitId: data.Datum.UnitId,
-      deptId: data.Datum.DeptId,
-      companyId: data.Datum.CompanyId
+      head: data.Datum.HeadUri ?? '/image/defhead.png'
     }
   }
 }

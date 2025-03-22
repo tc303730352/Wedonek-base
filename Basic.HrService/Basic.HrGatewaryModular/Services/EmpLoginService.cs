@@ -28,12 +28,12 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
             return new LoginDatum
             {
+                Company = datum.Company,
                 CurSubSysId = datum.CurSubSysId,
                 Power = datum.Power,
                 SubSystem = datum.SubSystem,
                 Datum = new LoginUser
                 {
-                    CompanyId = state.GetValue<long>("CompanyId"),
                     EmpId = empId,
                     EmpName = state.GetValue<string>("Name"),
                     HeadUri = state.GetValue<string>("Head")
