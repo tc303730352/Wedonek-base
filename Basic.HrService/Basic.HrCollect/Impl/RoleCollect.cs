@@ -30,13 +30,14 @@ namespace Basic.HrCollect.Impl
                 throw new ErrorException("hr.role.no.enable");
             }
         }
-        public long Add ( RoleSetDatum add, RolePower[] powers )
+        public long Add ( long companyId, RoleSetDatum add, RolePower[] powers )
         {
-            if ( this._RoleDAL.IsExists(a => a.RoleName == add.RoleName) )
+            if ( this._RoleDAL.IsExists(a => a.CompanyId == companyId && a.RoleName == add.RoleName) )
             {
                 throw new ErrorException("hr.role.name.repeat");
             }
             DBRole role = add.ConvertMap<RoleSetDatum, DBRole>();
+            role.CompanyId = companyId;
             this._RoleDAL.Add(role, powers);
             return role.Id;
         }
@@ -66,7 +67,7 @@ namespace Basic.HrCollect.Impl
             {
                 throw new ErrorException("hr.def.role.not.can.update");
             }
-            else if ( set.RoleName != role.RoleName && this._RoleDAL.IsExists(a => a.RoleName == set.RoleName) )
+            else if ( set.RoleName != role.RoleName && this._RoleDAL.IsExists(a => a.CompanyId == role.CompanyId && a.RoleName == set.RoleName) )
             {
                 throw new ErrorException("hr.role.name.repeat");
             }

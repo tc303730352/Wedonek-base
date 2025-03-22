@@ -6,7 +6,7 @@ namespace Basic.HrService.Interface
 {
     public interface IRoleService
     {
-        long Add ( RoleSet add );
+        long Add ( long companyId, RoleSet add );
         void Delete ( long id );
         RoleDetailed GetDetailed ( long id );
         void SetIsAdmin ( long id, bool isAdmin );

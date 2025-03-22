@@ -12,7 +12,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <param name="datum">角色资料</param>
         /// <returns></returns>
-        long AddRole ( RoleSet datum );
+        long AddRole ( RoleSet datum, long companyId );
 
         /// <summary>
         /// 删除角色

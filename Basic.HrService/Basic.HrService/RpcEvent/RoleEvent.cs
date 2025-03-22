@@ -20,7 +20,7 @@ namespace Basic.HrService.RpcEvent
         }
         public long AddRole ( AddRole add )
         {
-            return this._Service.Add(add.Datum);
+            return this._Service.Add(add.CompanyId, add.Datum);
         }
         public bool SetRole ( SetRole obj )
         {

@@ -8,10 +8,11 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class RoleService : IRoleService
     {
-        public long AddRole ( RoleSet datum )
+        public long AddRole ( RoleSet datum, long companyId )
         {
             return new AddRole
             {
+                CompanyId = companyId,
                 Datum = datum,
             }.Send();
         }

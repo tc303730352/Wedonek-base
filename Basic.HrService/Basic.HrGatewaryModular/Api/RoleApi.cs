@@ -22,7 +22,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns></returns>
         public long Add ( [NullValidate("hr.role.datum.null")] RoleSet datum )
         {
-            return this._Service.AddRole(datum);
+            return this._Service.AddRole(datum, base.UserState.ToCompanyId());
         }
 
         /// <summary>

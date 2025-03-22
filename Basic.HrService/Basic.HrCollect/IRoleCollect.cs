@@ -13,7 +13,7 @@ namespace Basic.HrCollect
 
         RoleDto GetRole ( long roleId );
 
-        long Add ( RoleSetDatum add, RolePower[] powers );
+        long Add ( long companyId, RoleSetDatum add, RolePower[] powers );
 
         void Delete ( DBRole role );
 

@@ -33,7 +33,7 @@ namespace Basic.HrService.lmpl
                 new RoleEvent(role).AsyncPublic("SetIsEnable");
             }
         }
-        public long Add ( RoleSet add )
+        public long Add ( long companyId, RoleSet add )
         {
             RolePower[] powers = null;
             if ( !add.PowerId.IsNull() )
@@ -51,7 +51,7 @@ namespace Basic.HrService.lmpl
                 });
             }
             RoleSetDatum datum = add.ConvertMap<RoleSet, RoleSetDatum>();
-            return this._Role.Add(datum, powers);
+            return this._Role.Add(companyId, datum, powers);
         }
         public bool Set ( long roleId, RoleSet set )
         {

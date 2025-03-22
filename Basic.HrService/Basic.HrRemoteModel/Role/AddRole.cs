@@ -11,6 +11,10 @@ namespace Basic.HrRemoteModel.Role
     public class AddRole : RpcRemote<long>
     {
         /// <summary>
+        /// 公司ID
+        /// </summary>
+        public long CompanyId { get; set; }
+        /// <summary>
         /// 角色资料
         /// </summary>
         public RoleSet Datum { get; set; }
