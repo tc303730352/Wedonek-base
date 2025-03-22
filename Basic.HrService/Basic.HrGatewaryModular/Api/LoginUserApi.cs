@@ -11,7 +11,7 @@ namespace Basic.HrGatewaryModular.Api
     internal class LoginUserApi : ApiController
     {
         private readonly ILoginUserService _Service;
-        public LoginUserApi (ILoginUserService service)
+        public LoginUserApi ( ILoginUserService service )
         {
             this._Service = service;
         }
@@ -19,7 +19,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除账户
         /// </summary>
         /// <param name="empId">人员ID</param>
-        public void DeleteAccount ([NumValidate("hr.loginuser.empId.error", 1)] long empId)
+        public void DeleteAccount ( [NumValidate("hr.loginuser.empId.error", 1)] long empId )
         {
             this._Service.DeleteAccount(empId);
         }
@@ -27,7 +27,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 重置密码
         /// </summary>
         /// <param name="empId"></param>
-        public void ResetPwd ([NumValidate("hr.loginuser.empId.error", 1)] long empId)
+        public void ResetPwd ( [NumValidate("hr.loginuser.empId.error", 1)] long empId )
         {
             this._Service.ResetPwd(empId);
         }
@@ -35,7 +35,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改密码
         /// </summary>
         /// <param name="set"></param>
-        public void UpdatePwd (PwdSetArg set)
+        public void UpdatePwd ( PwdSetArg set )
         {
             this._Service.UpdatePwd(base.UserState.ToEmpId(), set);
         }
@@ -43,7 +43,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 开通账号
         /// </summary>
         /// <param name="set">人员ID</param>
-        public void OpenAccount (LongParam<long[]> set)
+        public void OpenAccount ( LongParam<long[]> set )
         {
             this._Service.OpenAccount(set.Value, set.Id);
         }
@@ -52,10 +52,10 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns>登陆用户资料</returns>
-        public PagingResult<LoginUserDatum> Query ([NullValidate("hr.loginuser.param.null")] UI_QueryLoginUser param)
+        public PagingResult<LoginUserDatum> Query ( [NullValidate("hr.loginuser.param.null")] UI_QueryLoginUser param )
         {
-            LoginUserDatum[] results = this._Service.QueryLoginUser(param.Query, param, out int count);
-            return new PagingResult<LoginUserDatum>(count, results);
+            param.Query.DeptId = base.UserState.PowerDeptId(param.Query.DeptId);
+            return this._Service.QueryLoginUser(param.Query, param);
         }
 
     }

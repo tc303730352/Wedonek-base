@@ -23,5 +23,10 @@ namespace Basic.HrRemoteModel.Dept.Model
         /// </summary>
         public HrDeptStatus[] Status { get; set; }
 
+        /// <summary>
+        /// 部门ID
+        /// </summary>
+        public long[] DeptId { get; set; }
+
     }
 }

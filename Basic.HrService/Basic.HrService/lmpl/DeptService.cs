@@ -51,7 +51,8 @@ namespace Basic.HrService.lmpl
                 CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
                 IsAllChildren = false,
-                Status = arg.Status
+                Status = arg.Status,
+                DeptId = arg.DeptId,
             });
             return depts.ConvertAll(a => new DeptSelect
             {
@@ -78,7 +79,8 @@ namespace Basic.HrService.lmpl
                 CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
-                Status = arg.Status
+                Status = arg.Status,
+                DeptId = arg.DeptId,
             });
             return depts.ToTree();
         }
@@ -89,7 +91,8 @@ namespace Basic.HrService.lmpl
                 CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
-                Status = arg.Status
+                Status = arg.Status,
+                DeptId = arg.DeptId,
             });
             if ( depts.IsNull() )
             {

@@ -54,5 +54,10 @@ namespace Basic.HrRemoteModel.Dept.Model
             get;
             set;
         }
+        public long[] DeptId
+        {
+            get;
+            set;
+        }
     }
 }

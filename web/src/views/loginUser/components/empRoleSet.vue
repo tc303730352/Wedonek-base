@@ -100,7 +100,7 @@ export default {
       this.loadEmpRole()
     },
     async save() {
-      if (this.roleId.length == 0) {
+      if (this.roleId.length === 0) {
         return
       }
       await empRoleApi.set(this.empId, this.roleId)
@@ -115,7 +115,10 @@ export default {
     },
     async loadEmpRole() {
       this.roleId = await empRoleApi.get(this.empId)
-      if (this.roleId.length != 0) {
+      if (this.roleId == null) {
+        this.roleId = []
+      }
+      if (this.roleId.length !== 0) {
         this.roles.forEach((row) => {
           if (this.roleId.includes(row.Id)) {
             this.$refs.roleTable.toggleRowSelection(row)

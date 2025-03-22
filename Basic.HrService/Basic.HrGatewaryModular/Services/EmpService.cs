@@ -4,19 +4,23 @@ using Basic.HrRemoteModel.Emp;
 using Basic.HrRemoteModel.Emp.Model;
 using WeDonekRpc.Client;
 using WeDonekRpc.Model;
+using WeDonekRpc.Modular;
 
 namespace Basic.HrGatewaryModular.Services
 {
     internal class EmpService : IEmpService
     {
-        public long AddEmp (EmpAdd datum)
+        public EmpService ( IUserState state )
+        {
+        }
+        public long AddEmp ( EmpAdd datum )
         {
             return new AddEmp
             {
                 Datum = datum,
             }.Send();
         }
-        public EmpBasicDatum[] GetBasics (long[] empId, long companyId)
+        public EmpBasicDatum[] GetBasics ( long[] empId, long companyId )
         {
             return new GetEmpBasics
             {
@@ -24,14 +28,14 @@ namespace Basic.HrGatewaryModular.Services
                 CompanyId = companyId
             }.Send();
         }
-        public bool CheckIsRepeat (DataRepeatCheck obj)
+        public bool CheckIsRepeat ( DataRepeatCheck obj )
         {
             return new CheckEmpRepeat
             {
                 Check = obj
             }.Send();
         }
-        public void DeleteEmp (long id)
+        public void DeleteEmp ( long id )
         {
             new DeleteEmp
             {
@@ -39,7 +43,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpBasic GetEmp (long id)
+        public EmpBasic GetEmp ( long id )
         {
             return new GetEmp
             {
@@ -47,7 +51,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpData GetEmpData (long id)
+        public EmpData GetEmpData ( long id )
         {
             return new GetEmpData
             {
@@ -55,7 +59,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpSelectItem[] GetEmpSelectItem (SelectGetParam param)
+        public EmpSelectItem[] GetEmpSelectItem ( SelectGetParam param )
         {
             return new GetEmpSelectItem
             {
@@ -63,9 +67,13 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpBasicDatum[] QueryEmp (EmpQuery query, IBasicPage paging, out int count)
+        public PagingResult<EmpBasicDatum> QueryEmp ( EmpQuery query, IBasicPage paging )
         {
-            return new QueryEmp
+            if ( query.DeptId != null && query.DeptId.Length == 0 )
+            {
+                return new PagingResult<EmpBasicDatum>();
+            }
+            EmpBasicDatum[] list = new QueryEmp
             {
                 Query = query,
                 Index = paging.Index,
@@ -73,10 +81,11 @@ namespace Basic.HrGatewaryModular.Services
                 NextId = paging.NextId,
                 SortName = paging.SortName,
                 IsDesc = paging.IsDesc
-            }.Send(out count);
+            }.Send(out int count);
+            return new PagingResult<EmpBasicDatum>(list, count);
         }
 
-        public void SetEmp (long id, EmpSet datum)
+        public void SetEmp ( long id, EmpSet datum )
         {
             new SetEmp
             {
@@ -85,7 +94,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpBasicDatum GetBasic (long empId, long companyId)
+        public EmpBasicDatum GetBasic ( long empId, long companyId )
         {
             return new GetEmpBasic
             {
@@ -93,7 +102,7 @@ namespace Basic.HrGatewaryModular.Services
                 CompanyId = companyId
             }.Send();
         }
-        public void SetStatus (long id, HrEmpStatus status)
+        public void SetStatus ( long id, HrEmpStatus status )
         {
             new SetEmpStatus
             {
@@ -101,8 +110,12 @@ namespace Basic.HrGatewaryModular.Services
                 Id = id,
             }.Send();
         }
-        public PagingResult<EmpBasicDto> Query (EmpQuery query, IBasicPage paging)
+        public PagingResult<EmpBasicDto> Query ( EmpQuery query, IBasicPage paging )
         {
+            if ( query.DeptId != null && query.DeptId.Length == 0 )
+            {
+                return new PagingResult<EmpBasicDto>();
+            }
             return new QueryEmpList
             {
                 Query = query,
@@ -114,7 +127,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetEmpHead (long id, string headUrl, long fileId)
+        public void SetEmpHead ( long id, string headUrl, long fileId )
         {
             new SaveEmpHead
             {
@@ -124,7 +137,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetEmpPost (long id, string post)
+        public void SetEmpPost ( long id, string post )
         {
             new SetEmpPost
             {
@@ -133,7 +146,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public void SetEmpEntry (long id, EmpEntry value)
+        public void SetEmpEntry ( long id, EmpEntry value )
         {
             new SetEmpEntry
             {

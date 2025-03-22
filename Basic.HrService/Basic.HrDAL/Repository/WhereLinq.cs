@@ -65,6 +65,10 @@ namespace Basic.HrDAL.Repository
             {
                 where = where.And(a => a.DeptName.Contains(query.QueryKey));
             }
+            if ( query.DeptId != null )
+            {
+                where = where.And(a => query.DeptId.Contains(a.Id));
+            }
             return where.And(a => a.IsToVoid == false);
         }
         public static Expression<Func<DBDept, bool>> ToWhere ( this UnitGetParam query, IRepository<DBDept> repository )
@@ -98,6 +102,10 @@ namespace Basic.HrDAL.Repository
             if ( !query.Status.IsNull() )
             {
                 where = where.And(a => query.Status.Contains(a.Status));
+            }
+            if ( query.DeptId != null )
+            {
+                where = where.And(a => query.DeptId.Contains(a.Id));
             }
             return where.And(a => a.IsToVoid == false);
         }
@@ -347,6 +355,10 @@ namespace Basic.HrDAL.Repository
             if ( !query.Status.IsNull() )
             {
                 where = where.And(a => query.Status.Contains(a.Status));
+            }
+            if ( query.DeptId != null )
+            {
+                where = where.And(a => query.DeptId.Contains(a.Id));
             }
             return where.And(a => a.IsToVoid == false);
         }

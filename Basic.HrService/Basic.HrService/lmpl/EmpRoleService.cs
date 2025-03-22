@@ -25,7 +25,7 @@ namespace Basic.HrService.lmpl
         }
         public long[] GetRoleId ( long empId, long companyId )
         {
-            return this._EmpRole.GetRoleId(empId, companyId);
+            return this._EmpRole.GetRoleId(companyId, empId);
         }
     }
 }

@@ -1,27 +1,28 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrRemoteModel.LoginUser;
 using Basic.HrRemoteModel.LoginUser.Model;
+using WeDonekRpc.Client;
 using WeDonekRpc.Model;
 
 namespace Basic.HrGatewaryModular.Services
 {
     internal class LoginUserService : ILoginUserService
     {
-        public void DeleteAccount (long empId)
+        public void DeleteAccount ( long empId )
         {
             new DeleteAccount
             {
                 EmpId = empId,
             }.Send();
         }
-        public void ResetPwd (long empId)
+        public void ResetPwd ( long empId )
         {
             new ResetUserPwd
             {
                 EmpId = empId
             }.Send();
         }
-        public void UpdatePwd (long empId, PwdSetArg set)
+        public void UpdatePwd ( long empId, PwdSetArg set )
         {
             new UpdateUserPwd
             {
@@ -29,7 +30,7 @@ namespace Basic.HrGatewaryModular.Services
                 SetArg = set
             }.Send();
         }
-        public void OpenAccount (long[] empId, long companyId)
+        public void OpenAccount ( long[] empId, long companyId )
         {
             new OpenAccount
             {
@@ -38,9 +39,13 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public LoginUserDatum[] QueryLoginUser (LoginUserQuery query, IBasicPage paging, out int count)
+        public PagingResult<LoginUserDatum> QueryLoginUser ( LoginUserQuery query, IBasicPage paging )
         {
-            return new QueryLoginUser
+            if ( query.DeptId != null && query.DeptId.Length == 0 )
+            {
+                return new PagingResult<LoginUserDatum>();
+            }
+            LoginUserDatum[] list = new QueryLoginUser
             {
                 Query = query,
                 Index = paging.Index,
@@ -48,7 +53,8 @@ namespace Basic.HrGatewaryModular.Services
                 NextId = paging.NextId,
                 SortName = paging.SortName,
                 IsDesc = paging.IsDesc
-            }.Send(out count);
+            }.Send(out int count);
+            return new PagingResult<LoginUserDatum>(list, count);
         }
 
     }

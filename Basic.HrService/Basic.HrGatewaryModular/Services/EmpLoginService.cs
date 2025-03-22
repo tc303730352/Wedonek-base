@@ -60,6 +60,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
             state.SetPower(res.Power);
             state["IsAdmin"] = res.IsAdmin;
+            state["DeptId"] = res.DeptId;
             if ( !state.SaveState() )
             {
                 throw new ErrorException("hr.user.state.save.fail");
@@ -77,6 +78,7 @@ namespace Basic.HrGatewaryModular.Services
                     {"UserId",new StateParam(result.EmpId) },
                     {"UserType",new StateParam("emp") },
                     {"CompanyId",new StateParam(result.CompanyId)},
+                    {"DeptId",new StateParam(result.DeptId)},
                     {"IsAdmin",new StateParam(result.IsAdmin)},
                     {"Company",new StateParam(result.Company) }
                 }

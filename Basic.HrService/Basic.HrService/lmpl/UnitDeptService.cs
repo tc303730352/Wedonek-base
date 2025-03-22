@@ -35,7 +35,8 @@ namespace Basic.HrService.lmpl
                 CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
                 IsAllChildren = false,
-                Status = arg.Status
+                Status = arg.Status,
+                DeptId = arg.DeptId,
             });
             return depts.ConvertAll(a => new DeptSelect
             {
@@ -53,7 +54,8 @@ namespace Basic.HrService.lmpl
                 ParentId = arg.ParentId,
                 Status = arg.Status,
                 IsAllChildren = false,
-                IsUnit = true
+                IsUnit = true,
+                DeptId = arg.DeptId,
             });
             return depts.ConvertAll(a => new UnitSelect
             {
@@ -71,7 +73,8 @@ namespace Basic.HrService.lmpl
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
                 Status = arg.Status,
-                IsUnit = true
+                IsUnit = true,
+                DeptId = arg.DeptId,
             });
             return depts.ToUnitTree(arg.ParentId.GetValueOrDefault());
         }

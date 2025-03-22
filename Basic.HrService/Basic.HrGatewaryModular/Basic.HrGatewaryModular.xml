@@ -102,7 +102,7 @@
             <summary>
             获取部门选项
             </summary>
-            <param name="getParam">查询参数</param>
+            <param name="obj">查询参数</param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.DeptApi.GetTree(Basic.HrRemoteModel.Dept.Model.DeptGetArg)">
@@ -1038,13 +1038,12 @@
             <param name="param">选择项资料</param>
             <returns>人员信息</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.QueryEmp(Basic.HrRemoteModel.Emp.Model.EmpQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.QueryEmp(Basic.HrRemoteModel.Emp.Model.EmpQuery,WeDonekRpc.Model.IBasicPage)">
             <summary>
             查询人员信息
             </summary>
             <param name="query">人员查询参数</param>
             <param name="paging">分页参数</param>
-            <param name="count">数据总数</param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Interface.IEmpService.SetEmp(System.Int64,Basic.HrRemoteModel.Emp.Model.EmpSet)">
@@ -1092,13 +1091,12 @@
             开通账号
             </summary>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.ILoginUserService.QueryLoginUser(Basic.HrRemoteModel.LoginUser.Model.LoginUserQuery,WeDonekRpc.Model.IBasicPage,System.Int32@)">
+        <member name="M:Basic.HrGatewaryModular.Interface.ILoginUserService.QueryLoginUser(Basic.HrRemoteModel.LoginUser.Model.LoginUserQuery,WeDonekRpc.Model.IBasicPage)">
             <summary>
             查询登陆账号信息
             </summary>
             <param name="query">查询参数</param>
             <param name="paging">分页参数</param>
-            <param name="count">数据总数</param>
             <returns>登陆用户资料</returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.AddPower(Basic.HrRemoteModel.Power.Model.PowerAdd)">
@@ -1130,7 +1128,7 @@
             <param name="param">查询参数</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetTrees(Basic.HrRemoteModel.Power.Model.PowerGetParam)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.GetTrees(Basic.HrRemoteModel.Power.Model.PowerGetParam,System.Int64)">
             <summary>
             获取目录权限树含子系统
             </summary>
@@ -1153,7 +1151,7 @@
             <param name="datum">目录权限资料</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IRoleService.AddRole(Basic.HrRemoteModel.Role.Model.RoleSet)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IRoleService.AddRole(Basic.HrRemoteModel.Role.Model.RoleSet,System.Int64)">
             <summary>
             添加角色
             </summary>
@@ -1430,11 +1428,6 @@
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.CurSubSysId">
             <summary>
             当前选择的子系统
-            </summary>
-        </member>
-        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.CompanyId">
-            <summary>
-            当前公司ID
             </summary>
         </member>
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.EmpId">

@@ -19,5 +19,7 @@ namespace Basic.HrRemoteModel.Unit.Model
         /// </summary>
         [NumValidate("hr.dept.id.error", 1)]
         public long? ParentId { get; set; }
+
+        public long[] DeptId { get; set; }
     }
 }

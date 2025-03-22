@@ -16,6 +16,7 @@ namespace Basic.HrGatewaryModular.Api
         }
         public DeptTallyTree[] GetTallyTrees ( DeptGetArg param )
         {
+            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetTallyTrees(param);
         }
         /// <summary>
@@ -53,6 +54,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns></returns>
         public DeptFullTree[] Gets ( DeptQueryParam obj )
         {
+            obj.DeptId = base.UserState.PowerDeptId(obj.DeptId);
             return this._Service.Gets(obj);
         }
 
@@ -69,11 +71,12 @@ namespace Basic.HrGatewaryModular.Api
         /// <summary>
         /// 获取部门选项
         /// </summary>
-        /// <param name="getParam">查询参数</param>
+        /// <param name="obj">查询参数</param>
         /// <returns></returns>
-        public DeptSelect[] GetSelect ( [NullValidate("hr.dept.getParam.null")] DeptGetArg getParam )
+        public DeptSelect[] GetSelect ( [NullValidate("hr.dept.getParam.null")] DeptGetArg obj )
         {
-            return this._Service.GetDeptSelect(getParam);
+            obj.DeptId = base.UserState.PowerDeptId(obj.DeptId);
+            return this._Service.GetDeptSelect(obj);
         }
 
         /// <summary>
@@ -83,6 +86,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns>部门树</returns>
         public DeptTree[] GetTree ( [NullValidate("hr.dept.param.null")] DeptGetArg param )
         {
+            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetDeptTree(param);
         }
 

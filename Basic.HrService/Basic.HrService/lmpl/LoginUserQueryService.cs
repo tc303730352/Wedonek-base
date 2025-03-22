@@ -17,14 +17,11 @@ namespace Basic.HrService.lmpl
         private readonly IEmpCollect _Emp;
         private readonly IEmpRoleCollect _EmpRole;
         private readonly IEmpDeptPowerCollect _DeptPower;
-        private readonly IDeptCollect _Dept;
         public LoginUserQueryService ( ILoginUserCollect loginUser,
             IEmpCollect emp,
             IEmpRoleCollect role,
-            IDeptCollect dept,
             IEmpDeptPowerCollect deptPower )
         {
-            this._Dept = dept;
             this._DeptPower = deptPower;
             this._EmpRole = role;
             this._LoginUser = loginUser;

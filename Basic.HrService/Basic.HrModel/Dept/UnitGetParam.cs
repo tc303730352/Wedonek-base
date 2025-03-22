@@ -25,5 +25,6 @@ namespace Basic.HrModel.Dept
         public bool? IsUnit { get; set; }
         public bool? IsDept { get; set; }
         public long? UnitId { get; set; }
+        public long[] DeptId { get; set; }
     }
 }

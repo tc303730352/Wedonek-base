@@ -15,6 +15,10 @@ namespace Basic.HrGatewaryModular.Services
         }
         public DeptTallyTree[] GetTallyTrees ( DeptGetArg param )
         {
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
+            {
+                return Array.Empty<DeptTallyTree>();
+            }
             return new GetTallyTrees
             {
                 Param = param
@@ -44,27 +48,39 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptSelect[] GetDeptSelect ( DeptGetArg getParam )
+        public DeptSelect[] GetDeptSelect ( DeptGetArg param )
         {
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
+            {
+                return Array.Empty<DeptSelect>();
+            }
             return new GetDeptSelect
             {
-                GetParam = getParam,
+                GetParam = param,
             }.Send();
         }
 
         public DeptTree[] GetDeptTree ( DeptGetArg param )
         {
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
+            {
+                return Array.Empty<DeptTree>();
+            }
             return new GetDeptTree
             {
                 Param = param,
             }.Send();
         }
 
-        public DeptFullTree[] Gets ( DeptQueryParam obj )
+        public DeptFullTree[] Gets ( DeptQueryParam param )
         {
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
+            {
+                return Array.Empty<DeptFullTree>();
+            }
             return new GetDeptList
             {
-                Query = obj
+                Query = param
             }.Send();
         }
 

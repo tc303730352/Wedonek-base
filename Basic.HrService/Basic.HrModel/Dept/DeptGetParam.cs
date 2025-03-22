@@ -30,5 +30,7 @@ namespace Basic.HrModel.Dept
         /// 是否所有下级
         /// </summary>
         public bool IsAllChildren { get; set; }
+
+        public long[] DeptId { get; set; }
     }
 }

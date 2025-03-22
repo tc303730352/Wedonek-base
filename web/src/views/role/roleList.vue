@@ -178,7 +178,7 @@ export default {
           title: '操作',
           align: 'left',
           fixed: 'right',
-          width: '100px',
+          width: '150px',
           slotName: 'action'
         }
       ],

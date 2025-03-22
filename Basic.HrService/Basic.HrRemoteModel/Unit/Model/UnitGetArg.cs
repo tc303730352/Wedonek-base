@@ -32,5 +32,9 @@ namespace Basic.HrRemoteModel.Unit.Model
         /// 单位ID
         /// </summary>
         public long? UnitId { get; set; }
+        /// <summary>
+        /// 部门单位ID
+        /// </summary>
+        public long[] DeptId { get; set; }
     }
 }

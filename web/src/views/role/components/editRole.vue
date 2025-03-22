@@ -290,6 +290,7 @@ export default {
     },
     async reset() {
       if (this.roleId == null) {
+        this.title = '新增角色'
         this.role = {
           IsAdmin: false
         }
@@ -299,6 +300,7 @@ export default {
         this.$refs.powerTree.setCheckedKeys([], false)
       } else {
         const res = await roleApi.get(this.roleId)
+        this.title = '编辑角色：' + res.RoleName
         this.role = res
         this.source = res
         this.powerId = res.PowerId

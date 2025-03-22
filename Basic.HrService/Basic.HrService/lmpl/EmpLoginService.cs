@@ -17,14 +17,17 @@ namespace Basic.HrService.lmpl
         private readonly IHrConfig _Config;
         private readonly IRoleOperatePowerCollect _RolePower;
         private readonly IEmpRoleCollect _EmpRole;
+        private readonly IEmpDeptPowerCollect _DeptPower;
         public EmpLoginService ( ILoginUserCollect loginUser,
             IEmpCollect emp,
             IHrConfig config,
             IEmpTitleCollect empTitle,
             IRoleOperatePowerCollect rolePower,
+            IEmpDeptPowerCollect deptPower,
             IEmpRoleCollect empRole,
             IDeptCollect dept )
         {
+            this._DeptPower = deptPower;
             this._LoginUser = loginUser;
             this._Emp = emp;
             this._Config = config;
@@ -39,10 +42,17 @@ namespace Basic.HrService.lmpl
                 throw new ErrorException("hr.user.no.config.role");
             }
             bool isAdmin = roles.IsExists(a => a.IsAdmin);
-            string[] power = isAdmin ? _AllPower : this._RolePower.GetOperateVal(roles.ConvertAll(a => a.RoleId));
+            string[] power = _AllPower;
+            long[] deptId = null;
+            if ( !isAdmin )
+            {
+                power = this._RolePower.GetOperateVal(roles.ConvertAll(a => a.RoleId));
+                deptId = this._DeptPower.GetDeptId(empId, companyId);
+            }
             return new ComSwitchResult
             {
                 Power = power,
+                DeptId = deptId,
                 IsAdmin = isAdmin,
             };
         }
@@ -67,12 +77,19 @@ namespace Basic.HrService.lmpl
                 throw new ErrorException("hr.user.no.config.role");
             }
             bool isAdmin = roles.IsExists(a => a.IsAdmin && a.CompanyId == emp.CompanyId);
-            string[] power = isAdmin ? _AllPower : this._RolePower.GetOperateVal(roles.Convert(a => a.CompanyId == emp.CompanyId, a => a.RoleId));
+            string[] power = _AllPower;
+            long[] deptId = null;
+            if ( !isAdmin )
+            {
+                power = this._RolePower.GetOperateVal(roles.Convert(a => a.CompanyId == emp.CompanyId, a => a.RoleId).Distinct());
+                deptId = this._DeptPower.GetDeptId(emp.EmpId, emp.CompanyId);
+            }
             return new LoginResult
             {
                 EmpId = emp.EmpId,
                 CompanyId = emp.CompanyId,
                 Power = power,
+                DeptId = deptId,
                 Company = roles.Distinct(a => a.CompanyId),
                 IsAdmin = isAdmin,
             };

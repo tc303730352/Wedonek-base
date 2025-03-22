@@ -20,6 +20,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns></returns>
         public DeptSelect[] GetDeptSelect ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
+            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitDeptSelect(param);
         }
         /// <summary>
@@ -38,6 +39,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns>部门树</returns>
         public DeptTree[] GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
+            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitDeptTree(param);
         }
 
@@ -48,6 +50,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns></returns>
         public DeptSelect[] GetSelect ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
         {
+            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitSelect(param);
         }
 
@@ -58,6 +61,7 @@ namespace Basic.HrGatewaryModular.Api
         /// <returns>部门树</returns>
         public DeptTree[] GetTree ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
         {
+            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitTree(param);
         }
 
