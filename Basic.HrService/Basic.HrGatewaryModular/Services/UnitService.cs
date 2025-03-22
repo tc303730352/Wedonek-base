@@ -10,7 +10,7 @@ namespace Basic.HrGatewaryModular.Services
     {
         public DeptSelect[] GetUnitDeptSelect ( UnitGetArg param )
         {
-            if ( param.DeptId == null || param.DeptId.Length == 0 )
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
                 return Array.Empty<DeptSelect>();
             }
@@ -22,7 +22,7 @@ namespace Basic.HrGatewaryModular.Services
 
         public DeptTree[] GetUnitDeptTree ( UnitGetArg param )
         {
-            if ( param.DeptId == null || param.DeptId.Length == 0 )
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
                 return Array.Empty<DeptTree>();
             }
@@ -40,7 +40,7 @@ namespace Basic.HrGatewaryModular.Services
         }
         public DeptSelect[] GetUnitSelect ( UnitQueryParam param )
         {
-            if ( param.DeptId == null || param.DeptId.Length == 0 )
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
                 return Array.Empty<DeptSelect>();
             }
@@ -52,7 +52,7 @@ namespace Basic.HrGatewaryModular.Services
 
         public DeptTree[] GetUnitTree ( UnitQueryParam param )
         {
-            if ( param.DeptId == null || param.DeptId.Length == 0 )
+            if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
                 return Array.Empty<DeptTree>();
             }
