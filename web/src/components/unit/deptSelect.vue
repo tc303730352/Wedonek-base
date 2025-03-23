@@ -59,6 +59,10 @@ export default {
       type: Boolean,
       default: true
     },
+    isSubCompany: {
+      type: Boolean,
+      default: false
+    },
     unitId: {
       type: String,
       default: null
@@ -174,7 +178,8 @@ export default {
         Status: this.status,
         UnitId: this.unitId,
         IsUnit: this.isUnit,
-        IsDept: this.isDept
+        IsDept: this.isDept,
+        IsSubCompany: this.isSubCompany
       })
       this.props.multiple = this.isMultiple
       this.dept = {}

@@ -5,12 +5,12 @@
         /// <summary>
         /// 部门ID
         /// </summary>
-        public long DeptId { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// 部门名称
         /// </summary>
-        public string DeptName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 负责人

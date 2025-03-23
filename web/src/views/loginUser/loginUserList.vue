@@ -349,10 +349,10 @@ export default {
     },
     chioseDept(e) {
       this.queryParam.CompanyId = e.companyId
-      if (e.value.length == 0) {
+      if (e.value.length === 0) {
         this.queryParam.UnitId = null
         this.queryParam.DeptId = null
-        this.title = e.comName + '公司-用户列表'
+        this.title = e.comName[e.companyId] + '公司-用户列表'
       } else {
         const dept = e.value[0]
         if (dept.IsUnit) {

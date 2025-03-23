@@ -31,8 +31,8 @@ namespace Basic.HrService
             int lvl = depts.Min(a => a.Lvl);
             return depts.Convert(a => a.Lvl == lvl, a => new DeptTree
             {
-                DeptId = a.Id,
-                DeptName = a.ShortName.GetValueOrDefault(a.DeptName),
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.DeptName),
                 LeaderId = a.LeaderId,
                 IsUnit = a.IsUnit,
                 UnitId = a.UnitId,
@@ -114,8 +114,8 @@ namespace Basic.HrService
         {
             return depts.Convert(a => a.ParentId == parent.Id, a => new DeptTree
             {
-                DeptId = a.Id,
-                DeptName = a.ShortName.GetValueOrDefault(a.DeptName),
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.DeptName),
                 LeaderId = a.LeaderId,
                 IsUnit = a.IsUnit,
                 UnitId = a.UnitId,
@@ -126,8 +126,8 @@ namespace Basic.HrService
         {
             return depts.Convert(a => a.ParentId == parentId, a => new UnitTree
             {
-                DeptId = a.Id,
-                DeptName = a.ShortName.GetValueOrDefault(a.DeptName),
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.DeptName),
                 LeaderId = a.LeaderId,
                 Children = _GetUnitChildren(a, depts)
             });
@@ -136,8 +136,8 @@ namespace Basic.HrService
         {
             return depts.Convert(a => a.ParentId == parent.Id, a => new UnitTree
             {
-                DeptId = a.Id,
-                DeptName = a.ShortName.GetValueOrDefault(a.DeptName),
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.DeptName),
                 LeaderId = a.LeaderId,
                 Children = _GetUnitChildren(a, depts)
             });
