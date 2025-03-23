@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getDeptTree } from '@/api/unit/unit'
+import { getTree } from '@/api/unit/unit'
 import { GetName } from '@/api/base/company'
 import store from '@/store'
 export default {
@@ -173,7 +173,7 @@ export default {
       return this.units
     },
     async load() {
-      const res = await getDeptTree({
+      const res = await getTree({
         CompanyId: this.companyId,
         Status: this.status,
         ParentId: this.unitId,

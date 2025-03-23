@@ -348,6 +348,10 @@ namespace Basic.HrDAL.Repository
                     where = where.And(a => a.ParentId == query.ParentId.Value);
                 }
             }
+            if ( query.UnitId.HasValue )
+            {
+                where = where.And(a => a.UnitId == query.UnitId.Value);
+            }
             if ( query.IsDept.GetValueOrDefault() )
             {
                 where = where.And(a => a.IsUnit == false);

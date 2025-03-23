@@ -11,6 +11,13 @@ export function getDeptTree(data) {
   })
 }
 
+export function getTree(data) {
+  return request({
+    url: formatRequestUri('getTree'),
+    method: 'post',
+    data
+  })
+}
 export function GetNameList(ids) {
   return request({
     url: formatRequestUri('GetNameList'),
