@@ -47,5 +47,10 @@ namespace Base.FileModel.UserFileDir
         [SugarColumn(IsJson = true)]
         public string[] ReadPower { get; set; }
 
+        /// <summary>
+        /// 上传图片的设置
+        /// </summary>
+        [SugarColumn(IsJson = true)]
+        public UpImgSet UpImgSet { get; set; }
     }
 }

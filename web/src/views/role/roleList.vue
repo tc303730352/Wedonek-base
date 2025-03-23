@@ -235,7 +235,8 @@ export default {
       }
       await roleApi.setIsDefRole(row.Id)
       const def = this.roles.find((c) => c.IsDefRole)
-      def.IsDefRole = def
+      def.IsDefRole = !isDef
+      row.IsDefRole = isDef
     },
     dropRole(row) {
       const title = '确认删除角色 ' + row.RoleName + '?'

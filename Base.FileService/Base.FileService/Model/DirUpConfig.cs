@@ -1,4 +1,6 @@
-﻿namespace Base.FileService.Model
+﻿using Base.FileModel.UserFileDir;
+
+namespace Base.FileService.Model
 {
     public class DirUpConfig
     {
@@ -20,5 +22,10 @@
         /// 允许扩展名
         /// </summary>
         public string[] Extension { get; set; }
+
+        /// <summary>
+        /// 上传图片的设置
+        /// </summary>
+        public UpImgSet UpImgSet { get; set; }
     }
 }

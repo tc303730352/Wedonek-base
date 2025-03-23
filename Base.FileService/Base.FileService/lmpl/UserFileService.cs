@@ -67,7 +67,8 @@ namespace Base.FileService.lmpl
                 {
                     UpShow = dir.UpShow,
                     Extension = dir.AllowExtension,
-                    UpFileSize = dir.AllowUpFileSize
+                    UpFileSize = dir.AllowUpFileSize,
+                    UpImgSet = dir.UpImgSet
                 };
             }
             UserFileBasic[] files = this._UserFile.GetFiles(dir.Id, arg.LinkBizPk.Value, arg.Tag);
