@@ -53,27 +53,13 @@ namespace Basic.HrCollect.Impl
                 throw new ErrorException("hr.company.status.error");
             }
         }
-        public long Add ( CompanyAdd add )
+        public DBCompany Add ( CompanyAdd add )
         {
             string levelCode;
             if ( add.CompanyType != HrCompanyType.总公司 )
             {
-                var prt = this._Company.Get(add.ParentId, a => new
-                {
-                    a.CompanyType,
-                    a.LevelCode
-                });
-                if ( add.CompanyType == HrCompanyType.子公司 && prt.CompanyType == HrCompanyType.分公司 )
-                {
-                    //分公司不能开子公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-                else if ( add.CompanyType == HrCompanyType.分公司 && prt.CompanyType == HrCompanyType.分公司 )
-                {
-                    //分公司不能开分公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-                levelCode = prt.LevelCode + add.ParentId + "|";
+                string code = this._Company.Get(add.ParentId, a => a.LevelCode);
+                levelCode = code + add.ParentId + "|";
             }
             else
             {
@@ -89,7 +75,9 @@ namespace Basic.HrCollect.Impl
             }
             DBCompany com = add.ConvertMap<CompanyAdd, DBCompany>();
             com.LevelCode = levelCode;
-            return this._Company.Add(com);
+            com.Status = HrCompanyStatus.起草;
+            com.Id = this._Company.Add(com);
+            return com;
         }
         public bool Set ( DBCompany source, CompanySet set )
         {
@@ -107,33 +95,14 @@ namespace Basic.HrCollect.Impl
             }
             CompSetArg arg = set.ConvertMap<CompanySet, CompSetArg>();
             arg.LevelCode = source.LevelCode;
-            HrCompanyType type = HrCompanyType.总公司;
             if ( set.ParentId == 0 )
             {
                 arg.LevelCode = "|root|";
             }
             else
             {
-                var prt = this._Company.Get(arg.ParentId, a => new
-                {
-                    a.CompanyType,
-                    a.LevelCode
-                });
-                type = prt.CompanyType;
-                arg.LevelCode = prt.LevelCode + set.ParentId + "|";
-            }
-            if ( set.CompanyType != source.CompanyType )
-            {
-                if ( set.CompanyType == HrCompanyType.子公司 && type == HrCompanyType.分公司 )
-                {
-                    //分公司不能开子公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-                else if ( set.CompanyType == HrCompanyType.分公司 && type == HrCompanyType.分公司 )
-                {
-                    //分公司不能开分公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
+                string prtCode = this._Company.Get(arg.ParentId, a => a.LevelCode);
+                arg.LevelCode = prtCode + set.ParentId + "|";
             }
             string code = source.LevelCode + source.Id + "|";
             var list = this._Company.Gets(a => a.LevelCode.StartsWith(code), a => new
@@ -150,24 +119,6 @@ namespace Basic.HrCollect.Impl
         }
         private bool _Set ( DBCompany source, CompanySet set )
         {
-            if ( set.CompanyType != source.CompanyType )
-            {
-                HrCompanyType type = HrCompanyType.总公司;
-                if ( source.ParentId != 0 )
-                {
-                    type = this._Company.Get(a => a.Id == source.ParentId, a => a.CompanyType);
-                }
-                if ( set.CompanyType == HrCompanyType.子公司 && type == HrCompanyType.分公司 )
-                {
-                    //分公司不能开子公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-                else if ( set.CompanyType == HrCompanyType.分公司 && type == HrCompanyType.分公司 )
-                {
-                    //分公司不能开分公司
-                    throw new ErrorException("hr.company.parent.is.branch");
-                }
-            }
             return this._Company.Update(source, set);
         }
         public void Delete ( DBCompany source )

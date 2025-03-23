@@ -14,7 +14,7 @@ namespace Basic.HrCollect
         RoleDto GetRole ( long roleId );
 
         long Add ( long companyId, RoleSetDatum add, RolePower[] powers );
-
+        void AddDefRole ( long companyId );
         void Delete ( DBRole role );
 
         DBRole Get ( long roleId );
@@ -32,5 +32,6 @@ namespace Basic.HrCollect
         RoleSelectItem[] GetSelect ( long companyId );
         Result[] Query<Result> ( RoleGetParam param, IBasicPage paging, out int count ) where Result : class, new();
         void SetIsDef ( DBRole role, long defId );
+        void Clear ( long companyId );
     }
 }

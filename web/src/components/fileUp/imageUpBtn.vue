@@ -276,7 +276,7 @@ export default {
       })
     },
     setSort(file, type) {
-      const index = this.files.findIndex((c) => c.FileId == file.FileId)
+      const index = this.files.findIndex((c) => c.FileId === file.FileId)
       if (type === 'up') {
         if (index <= 0) {
           return
@@ -333,6 +333,9 @@ export default {
       )
       if (config.Extension == null) {
         config.Extension = []
+      }
+      if (config.UpImgSet !== null && this.imgSet == null) {
+        this.imgSet = config.UpImgSet
       }
       this.accept = config.Extension.join(',')
       this.upConfig = config

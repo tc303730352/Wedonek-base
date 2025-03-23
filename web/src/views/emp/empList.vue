@@ -61,7 +61,6 @@
             <el-form-item>
               <el-switch
                 v-model="queryParam.IsEntry"
-                style="float:right"
                 active-text="显示入职员工"
                 inactive-text="显示本公司员工"
                 @change="loadEmp"

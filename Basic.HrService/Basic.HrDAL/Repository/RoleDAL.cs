@@ -118,5 +118,11 @@ namespace Basic.HrDAL.Repository
         {
             return this._BasicDAL.IsExist(a => a.CompanyId == companyId && roleId.Contains(a.Id) && a.IsAdmin);
         }
+
+        public void Add ( DBRole role )
+        {
+            role.Id = IdentityHelper.CreateId();
+            this._BasicDAL.Insert(role);
+        }
     }
 }

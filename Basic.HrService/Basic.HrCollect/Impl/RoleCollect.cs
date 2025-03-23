@@ -41,6 +41,23 @@ namespace Basic.HrCollect.Impl
             this._RoleDAL.Add(role, powers);
             return role.Id;
         }
+        public void AddDefRole ( long companyId )
+        {
+            if ( this._RoleDAL.IsExists(a => a.CompanyId == companyId && a.IsDefRole) )
+            {
+                return;
+            }
+            DBRole role = new DBRole
+            {
+                AddTime = DateTime.Now,
+                IsAdmin = true,
+                CompanyId = companyId,
+                IsDefRole = true,
+                IsEnable = true,
+                RoleName = "默认角色"
+            };
+            this._RoleDAL.Add(role);
+        }
         public long GetDefRoleId ( long companyId )
         {
             return this._RoleDAL.GetDefRole(companyId);
@@ -138,7 +155,15 @@ namespace Basic.HrCollect.Impl
         {
             return this._RoleDAL.Gets<RoleSelectItem>(a => a.IsEnable);
         }
-
+        public void Clear ( long companyId )
+        {
+            long[] ids = this._RoleDAL.Gets(a => a.CompanyId == companyId, a => a.Id);
+            if ( ids.IsNull() )
+            {
+                return;
+            }
+            this._RoleDAL.Delete(ids);
+        }
         public void SetIsDef ( DBRole role, long defId )
         {
             this._RoleDAL.SetIsDef(role, defId);

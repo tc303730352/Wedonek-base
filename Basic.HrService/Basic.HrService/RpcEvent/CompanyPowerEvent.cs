@@ -1,9 +1,10 @@
 ﻿using Basic.HrRemoteModel.CompanyPower;
 using Basic.HrService.Interface;
+using WeDonekRpc.Client.Interface;
 
 namespace Basic.HrService.RpcEvent
 {
-    internal class CompanyPowerEvent
+    internal class CompanyPowerEvent : IRpcApiService
     {
         private readonly ICompanyPowerService _Service;
 

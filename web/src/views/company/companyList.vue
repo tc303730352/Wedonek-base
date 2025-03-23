@@ -53,6 +53,13 @@
             @click="drop(e.row)"
           />
           <el-button
+            icon="el-icon-setting"
+            size="mini"
+            type="primary"
+            circle
+            @click="editPower(e.row)"
+          />
+          <el-button
             icon="el-icon-edit"
             size="mini"
             type="primary"
@@ -71,6 +78,7 @@
       @save="setLeader"
       @close="empVisible=false"
     />
+    <editCompanyPower :visible="powerVisible" :company-id="id" @close="powerVisible=false" />
   </el-card>
 </template>
 
@@ -78,12 +86,14 @@
 import * as companyApi from '@/api/base/company'
 import { HrEnumDic, hrCompanyType } from '@/config/publicDic'
 import editCompany from './components/editCompany.vue'
+import editCompanyPower from './components/editCompanyPower.vue'
 import empChoice from '@/components/emp/empChoice.vue'
 import moment from 'moment'
 export default {
   components: {
     editCompany,
-    empChoice
+    empChoice,
+    editCompanyPower
   },
   data() {
     return {
@@ -92,6 +102,7 @@ export default {
       empId: null,
       visible: false,
       empVisible: false,
+      powerVisible: false,
       id: null,
       curRow: null,
       title: '公司列表',
@@ -185,6 +196,10 @@ export default {
     edit(row) {
       this.id = row.Id
       this.visible = true
+    },
+    editPower(row) {
+      this.id = row.Id
+      this.powerVisible = true
     },
     async statusChange(row, status) {
       if (status === 1) {

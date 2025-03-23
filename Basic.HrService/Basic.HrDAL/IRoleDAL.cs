@@ -17,5 +17,6 @@ namespace Basic.HrDAL
         Result[] Query<Result> ( RoleGetParam param, IBasicPage paging, out int count ) where Result : class, new();
         void SetIsDef ( DBRole role, long defId );
         void SetIsAdmin ( DBRole role, bool isAdmin, bool isEnable );
+        void Add ( DBRole role );
     }
 }

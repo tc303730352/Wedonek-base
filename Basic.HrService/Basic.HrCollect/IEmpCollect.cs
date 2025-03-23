@@ -31,5 +31,6 @@ namespace Basic.HrCollect
         bool CheckDeptIsExists ( long[] deptId );
         void SetEmpPost ( long empId, string post );
         string[] SetEmpEntry ( DBEmpList emp, EmpEntry datum );
+        bool CheckIsNull ( long id );
     }
 }

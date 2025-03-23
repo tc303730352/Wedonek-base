@@ -40,8 +40,7 @@
     public enum HrCompanyType
     {
         总公司 = 0,
-        子公司 = 1,
-        分公司 = 2
+        子公司 = 1
     }
     /// <summary>
     /// 人员类型

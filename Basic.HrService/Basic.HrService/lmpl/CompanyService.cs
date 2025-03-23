@@ -1,4 +1,5 @@
 ﻿using Basic.HrCollect;
+using Basic.HrLocalEvent.Model;
 using Basic.HrModel.Company;
 using Basic.HrModel.DB;
 using Basic.HrRemoteModel;
@@ -38,13 +39,20 @@ namespace Basic.HrService.lmpl
         }
         public long Add ( CompanyAdd add )
         {
-            return this._Company.Add(add);
+            DBCompany com = this._Company.Add(add);
+            new CompanyEvent(com).AsyncSend("Add");
+            return com.Id;
         }
 
         public void Delete ( long id )
         {
             DBCompany source = this._Company.Get(id);
+            if ( !this._Emp.CheckIsNull(id) )
+            {
+                throw new ErrorException("hr.company.not.null");
+            }
             this._Company.Delete(source);
+            new CompanyEvent(source).AsyncSend("Delete");
         }
 
         public CompanyDto Get ( long id )
@@ -100,7 +108,12 @@ namespace Basic.HrService.lmpl
         public bool Set ( long id, CompanySet set )
         {
             DBCompany source = this._Company.Get(id);
-            return this._Company.Set(source, set);
+            if ( this._Company.Set(source, set) )
+            {
+                new CompanyEvent(source).AsyncSend("Update");
+                return true;
+            }
+            return false;
         }
         public bool SetStatus ( long id, HrCompanyStatus status )
         {
