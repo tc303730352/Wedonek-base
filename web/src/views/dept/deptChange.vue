@@ -14,7 +14,7 @@
           <deptSelect
             v-model="change.DeptId"
             placeholder="变动的部门"
-            @change="deptSelect"
+            @change="deptSelectChange"
           />
         </el-form-item>
         <el-form-item label="变动方式" prop="ChangeType" required>
@@ -156,7 +156,7 @@ export default {
         }
       })
     },
-    deptSelect(e) {
+    deptSelectChange(e) {
       if (e.value == null) {
         this.change.IsUnit = false
         this.change.UnitId = null

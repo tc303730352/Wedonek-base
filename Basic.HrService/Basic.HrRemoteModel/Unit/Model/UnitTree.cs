@@ -20,7 +20,14 @@
             get;
             set;
         }
-
+        /// <summary>
+        /// 是否为独立单位
+        /// </summary>
+        public bool IsUnit { get; set; }
+        /// <summary>
+        /// 单位ID
+        /// </summary>
+        public long UnitId { get; set; }
         /// <summary>
         /// 下级部门
         /// </summary>

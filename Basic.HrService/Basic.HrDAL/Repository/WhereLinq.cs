@@ -73,7 +73,7 @@ namespace Basic.HrDAL.Repository
         }
         public static Expression<Func<DBDept, bool>> ToWhere ( this UnitGetParam query, IRepository<DBDept> repository )
         {
-            ExpressionStarter<DBDept> where = PredicateBuilder.New<DBDept>(a => query.CompanyId.Contains(a.CompanyId));
+            ExpressionStarter<DBDept> where = PredicateBuilder.New<DBDept>(a => a.CompanyId == query.CompanyId);
             if ( query.ParentId.HasValue )
             {
                 if ( query.IsAllChildren )
@@ -348,9 +348,13 @@ namespace Basic.HrDAL.Repository
                     where = where.And(a => a.ParentId == query.ParentId.Value);
                 }
             }
-            if ( query.IsUnit.HasValue )
+            if ( query.IsDept.GetValueOrDefault() )
             {
-                where = where.And(a => a.IsUnit == query.IsUnit.Value);
+                where = where.And(a => a.IsUnit == false);
+            }
+            else if ( query.IsUnit.GetValueOrDefault() )
+            {
+                where = where.And(a => a.IsUnit == true);
             }
             if ( !query.Status.IsNull() )
             {

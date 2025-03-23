@@ -129,6 +129,8 @@ namespace Basic.HrService
                 Id = a.Id,
                 Name = a.ShortName.GetValueOrDefault(a.DeptName),
                 LeaderId = a.LeaderId,
+                IsUnit = a.IsUnit,
+                UnitId = a.UnitId,
                 Children = _GetUnitChildren(a, depts)
             });
         }
@@ -139,6 +141,8 @@ namespace Basic.HrService
                 Id = a.Id,
                 Name = a.ShortName.GetValueOrDefault(a.DeptName),
                 LeaderId = a.LeaderId,
+                IsUnit = a.IsUnit,
+                UnitId = a.UnitId,
                 Children = _GetUnitChildren(a, depts)
             });
         }

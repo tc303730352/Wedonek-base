@@ -32,5 +32,7 @@ namespace Basic.HrModel.Dept
         public bool IsAllChildren { get; set; }
 
         public long[] DeptId { get; set; }
+
+        public bool? IsDept { get; set; }
     }
 }

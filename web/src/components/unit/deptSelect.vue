@@ -59,10 +59,6 @@ export default {
       type: Boolean,
       default: true
     },
-    isSubCompany: {
-      type: Boolean,
-      default: false
-    },
     unitId: {
       type: String,
       default: null
@@ -178,13 +174,12 @@ export default {
         Status: this.status,
         UnitId: this.unitId,
         IsUnit: this.isUnit,
-        IsDept: this.isDept,
-        IsSubCompany: this.isSubCompany
+        IsDept: this.isDept
       })
       this.props.multiple = this.isMultiple
       this.dept = {}
       res.forEach((c) => {
-        this.dept[c.DeptId] = c
+        this.dept[c.Id] = c
         this.format(c)
       })
       this.depts = res
@@ -200,7 +195,7 @@ export default {
         row.Children = null
       } else {
         row.Children.forEach((c) => {
-          this.dept[c.DeptId] = c
+          this.dept[c.Id] = c
           this.format(c)
         })
       }

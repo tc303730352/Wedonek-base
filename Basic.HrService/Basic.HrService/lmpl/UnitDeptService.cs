@@ -35,7 +35,7 @@ namespace Basic.HrService.lmpl
         {
             DeptBase[] depts = this._Dept.GetUnitDepts(new UnitGetParam
             {
-                CompanyId = [arg.CompanyId],
+                CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
                 UnitId = arg.UnitId,
@@ -60,7 +60,7 @@ namespace Basic.HrService.lmpl
         {
             DeptBase[] depts = this._Dept.GetUnitDepts(new UnitGetParam
             {
-                CompanyId = new long[] { arg.CompanyId },
+                CompanyId = arg.CompanyId,
                 ParentId = arg.ParentId,
                 IsAllChildren = false,
                 Status = arg.Status,
@@ -101,8 +101,10 @@ namespace Basic.HrService.lmpl
                 CompanyId = coms.ConvertAll(a => a.Id),
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
+                UnitId = arg.UnitId,
+                IsDept = arg.IsDept,
+                IsUnit = arg.IsUnit,
                 Status = arg.Status,
-                IsUnit = true,
                 DeptId = arg.DeptId,
             });
             CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
