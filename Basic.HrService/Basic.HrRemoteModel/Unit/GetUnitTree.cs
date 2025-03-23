@@ -1,5 +1,4 @@
-﻿using Basic.HrRemoteModel.Dept.Model;
-using Basic.HrRemoteModel.Unit.Model;
+﻿using Basic.HrRemoteModel.Unit.Model;
 using WeDonekRpc.Client;
 using WeDonekRpc.Model;
 
@@ -9,7 +8,7 @@ namespace Basic.HrRemoteModel.Unit
     /// 选项单位树形
     /// </summary>
     [IRemoteConfig("basic.hr.service")]
-    public class GetUnitTree : RpcRemoteArray<DeptTree>
+    public class GetUnitTree : RpcRemoteArray<CompanyTree<UnitTree>>
     {
         /// <summary>
         /// 查询参数

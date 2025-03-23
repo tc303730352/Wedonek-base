@@ -14,6 +14,6 @@ namespace Basic.HrRemoteModel.Unit
         /// <summary>
         /// 参数
         /// </summary>
-        public UnitQueryParam Param { get; set; }
+        public UnitSelectGetParam Param { get; set; }
     }
 }

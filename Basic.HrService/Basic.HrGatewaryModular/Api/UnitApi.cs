@@ -18,7 +18,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns></returns>
-        public DeptSelect[] GetDeptSelect ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
+        public DeptSelect[] GetDeptSelect ( [NullValidate("hr.unit.param.null")] DeptSelectGetArg param )
         {
             param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitDeptSelect(param);
@@ -37,8 +37,12 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public DeptTree[] GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
+        public CompanyTree<DeptTree>[] GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
+            if ( param.IsSubCompany && param.ParentId.HasValue )
+            {
+                param.IsSubCompany = false;
+            }
             param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitDeptTree(param);
         }
@@ -48,7 +52,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
-        public DeptSelect[] GetSelect ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
+        public DeptSelect[] GetSelect ( [NullValidate("hr.unit.param.null")] UnitSelectGetParam param )
         {
             param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitSelect(param);
@@ -59,8 +63,12 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public DeptTree[] GetTree ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
+        public CompanyTree<UnitTree>[] GetTree ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
         {
+            if ( param.IsSubCompany && param.ParentId.HasValue )
+            {
+                param.IsSubCompany = false;
+            }
             param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitTree(param);
         }

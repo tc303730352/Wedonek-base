@@ -1,4 +1,5 @@
-﻿using Basic.HrDAL;
+﻿using System.Linq.Expressions;
+using Basic.HrDAL;
 using Basic.HrModel.Company;
 using Basic.HrModel.DB;
 using Basic.HrRemoteModel;
@@ -63,7 +64,7 @@ namespace Basic.HrCollect.Impl
             }
             else
             {
-                levelCode = "|root|";
+                levelCode = string.Empty;
             }
             if ( this._Company.CheckFullName(add.FullName) )
             {
@@ -94,17 +95,23 @@ namespace Basic.HrCollect.Impl
                 return this._Set(source, set);
             }
             CompSetArg arg = set.ConvertMap<CompanySet, CompSetArg>();
-            arg.LevelCode = source.LevelCode;
             if ( set.ParentId == 0 )
             {
-                arg.LevelCode = "|root|";
+                arg.LevelCode = string.Empty;
             }
             else
             {
                 string prtCode = this._Company.Get(arg.ParentId, a => a.LevelCode);
-                arg.LevelCode = prtCode + set.ParentId + "|";
+                if ( prtCode == string.Empty )
+                {
+                    arg.LevelCode = "|" + set.ParentId + "|";
+                }
+                else
+                {
+                    arg.LevelCode = prtCode + set.ParentId + "|";
+                }
             }
-            string code = source.LevelCode + source.Id + "|";
+            string code = ( source.LevelCode == string.Empty ? "|" : source.LevelCode ) + source.Id + "|";
             var list = this._Company.Gets(a => a.LevelCode.StartsWith(code), a => new
             {
                 a.LevelCode,
@@ -114,7 +121,7 @@ namespace Basic.HrCollect.Impl
             {
                 return this._Company.Update(source, arg);
             }
-            string nCode = arg.LevelCode + source.Id + "|";
+            string nCode = ( arg.LevelCode == string.Empty ? "|" : arg.LevelCode ) + source.Id + "|";
             return this._Company.Set(source, arg, list.ConvertAll(a => new KeyValuePair<long, string>(a.Id, a.LevelCode.Replace(code, nCode))));
         }
         private bool _Set ( DBCompany source, CompanySet set )
@@ -151,6 +158,14 @@ namespace Basic.HrCollect.Impl
         {
             return this._Company.Get(id);
         }
+        public Result Get<Result> ( long id ) where Result : class
+        {
+            return this._Company.Get<Result>(id);
+        }
+        public Result Get<Result> ( long id, Expression<Func<DBCompany, Result>> selector )
+        {
+            return this._Company.Get(id, selector);
+        }
         public T[] Gets<T> ( ComGetParam param ) where T : class, new()
         {
             return this._Company.Gets<T>(param);
@@ -168,7 +183,10 @@ namespace Basic.HrCollect.Impl
         {
             return this._Company.GetName(companyId);
         }
-
+        public CompanyName[] GetSubs ( string levelCode )
+        {
+            return this._Company.Gets<CompanyName>(a => a.LevelCode.StartsWith(levelCode) && a.Status == HrCompanyStatus.启用);
+        }
         public Result[] Gets<Result> ( long[] ids ) where Result : class
         {
             return this._Company.Gets<Result>(ids);

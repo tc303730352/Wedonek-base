@@ -48,7 +48,7 @@ namespace Basic.HrService.lmpl
         {
             DeptBase[] depts = this._Dept.GetDepts<DeptBase>(new DeptGetParam
             {
-                CompanyId = arg.CompanyId,
+                CompanyId = [arg.CompanyId],
                 ParentId = arg.ParentId,
                 IsAllChildren = false,
                 Status = arg.Status,
@@ -76,7 +76,7 @@ namespace Basic.HrService.lmpl
         {
             DeptBase[] depts = this._Dept.GetDepts<DeptBase>(new DeptGetParam
             {
-                CompanyId = arg.CompanyId,
+                CompanyId = [arg.CompanyId],
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
                 Status = arg.Status,
@@ -88,7 +88,7 @@ namespace Basic.HrService.lmpl
         {
             DeptBaseDto[] depts = this._Dept.GetDepts<DeptBaseDto>(new DeptGetParam
             {
-                CompanyId = arg.CompanyId,
+                CompanyId = [arg.CompanyId],
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
                 Status = arg.Status,

@@ -7,7 +7,11 @@
             get;
             set;
         }
-
+        public long CompanyId
+        {
+            get;
+            set;
+        }
         public long ParentId
         {
             get;

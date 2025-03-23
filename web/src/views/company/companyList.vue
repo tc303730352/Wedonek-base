@@ -55,7 +55,7 @@
           <el-button
             icon="el-icon-setting"
             size="mini"
-            type="primary"
+            type="info"
             circle
             @click="editPower(e.row)"
           />
@@ -136,7 +136,7 @@ export default {
         },
         {
           key: 'Leaver',
-          title: '管理员',
+          title: '负责人',
           align: 'center',
           slotName: 'leaver'
         },

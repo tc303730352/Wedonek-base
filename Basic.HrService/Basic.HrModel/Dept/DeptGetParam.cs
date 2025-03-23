@@ -7,7 +7,7 @@ namespace Basic.HrModel.Dept
         /// <summary>
         /// 公司ID
         /// </summary>
-        public long CompanyId { get; set; }
+        public long[] CompanyId { get; set; }
 
         /// <summary>
         /// 状态

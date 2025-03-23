@@ -10,27 +10,27 @@ namespace Basic.HrService.RpcEvent
     {
         private readonly IUnitDeptService _Service;
 
-        public UnitDeptEvent (IUnitDeptService service)
+        public UnitDeptEvent ( IUnitDeptService service )
         {
             this._Service = service;
         }
 
-        public DeptSelect[] GetUnitDeptSelect (GetUnitDeptSelect arg)
+        public DeptSelect[] GetUnitDeptSelect ( GetUnitDeptSelect arg )
         {
             return this._Service.GetDeptSelect(arg.Param);
         }
 
-        public DeptTree[] GetUnitDeptTree (GetUnitDeptTree obj)
+        public CompanyTree<DeptTree>[] GetUnitDeptTree ( GetUnitDeptTree obj )
         {
             return this._Service.GetTree(obj.Param);
         }
 
-        public UnitSelect[] GetUnitSelect (GetUnitSelect obj)
+        public UnitSelect[] GetUnitSelect ( GetUnitSelect obj )
         {
             return this._Service.GetUnitSelect(obj.Param);
         }
 
-        public UnitTree[] GetUnitTree (GetUnitTree obj)
+        public CompanyTree<UnitTree>[] GetUnitTree ( GetUnitTree obj )
         {
             return this._Service.GetUnitTree(obj.Param);
         }

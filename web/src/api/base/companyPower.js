@@ -15,7 +15,7 @@ export function Gets(companyId) {
 
 export function Sync(id, data) {
   return request({
-    url: formatRequestUri('Add'),
+    url: formatRequestUri('Sync'),
     method: 'post',
     data: {
       Id: id,

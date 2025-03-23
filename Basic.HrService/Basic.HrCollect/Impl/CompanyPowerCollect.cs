@@ -30,7 +30,16 @@ namespace Basic.HrCollect.Impl
                 a.Id,
                 a.PowerId
             });
-            if ( list.IsNull() )
+            if ( list.IsNull() && powerId.IsNull() )
+            {
+                return false;
+            }
+            else if ( powerId.IsNull() )
+            {
+                this._BasicDAL.Delete(list.ConvertAll(a => a.Id));
+                return true;
+            }
+            else if ( list.IsNull() )
             {
                 this._BasicDAL.Add(companyId, powerId);
                 return true;

@@ -8,7 +8,7 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class UnitService : IUnitService
     {
-        public DeptSelect[] GetUnitDeptSelect ( UnitGetArg param )
+        public DeptSelect[] GetUnitDeptSelect ( DeptSelectGetArg param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
@@ -20,11 +20,11 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptTree[] GetUnitDeptTree ( UnitGetArg param )
+        public CompanyTree<DeptTree>[] GetUnitDeptTree ( UnitGetArg param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
-                return Array.Empty<DeptTree>();
+                return Array.Empty<CompanyTree<DeptTree>>();
             }
             return new GetUnitDeptTree
             {
@@ -38,7 +38,7 @@ namespace Basic.HrGatewaryModular.Services
                 Id = id
             }.Send();
         }
-        public DeptSelect[] GetUnitSelect ( UnitQueryParam param )
+        public DeptSelect[] GetUnitSelect ( UnitSelectGetParam param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
@@ -50,11 +50,11 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public DeptTree[] GetUnitTree ( UnitQueryParam param )
+        public CompanyTree<UnitTree>[] GetUnitTree ( UnitQueryParam param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
-                return Array.Empty<DeptTree>();
+                return Array.Empty<CompanyTree<UnitTree>>();
             }
             return new GetUnitTree
             {

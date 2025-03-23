@@ -5,9 +5,9 @@ namespace Basic.HrService.Interface
 {
     public interface IUnitDeptService
     {
-        DeptSelect[] GetDeptSelect (UnitGetArg arg);
-        DeptTree[] GetTree (UnitGetArg arg);
-        UnitSelect[] GetUnitSelect (UnitQueryParam param);
-        UnitTree[] GetUnitTree (UnitQueryParam param);
+        DeptSelect[] GetDeptSelect ( DeptSelectGetArg arg );
+        CompanyTree<DeptTree>[] GetTree ( UnitGetArg arg );
+        UnitSelect[] GetUnitSelect ( UnitSelectGetParam param );
+        CompanyTree<UnitTree>[] GetUnitTree ( UnitQueryParam param );
     }
 }

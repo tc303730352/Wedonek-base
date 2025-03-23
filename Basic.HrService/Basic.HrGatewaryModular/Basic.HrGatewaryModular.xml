@@ -709,7 +709,7 @@
             <param name="id">树形字典ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetDeptSelect(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetDeptSelect(Basic.HrRemoteModel.Unit.Model.DeptSelectGetArg)">
             <summary>
             获取独立单位
             </summary>
@@ -730,7 +730,7 @@
             <param name="param">查询参数</param>
             <returns>部门树</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetSelect(Basic.HrRemoteModel.Unit.Model.UnitQueryParam)">
+        <member name="M:Basic.HrGatewaryModular.Api.UnitApi.GetSelect(Basic.HrRemoteModel.Unit.Model.UnitSelectGetParam)">
             <summary>
             获取单位选项数据
             </summary>
@@ -1252,7 +1252,7 @@
             <param name="id">树形字典ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitDeptSelect(Basic.HrRemoteModel.Unit.Model.UnitGetArg)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitDeptSelect(Basic.HrRemoteModel.Unit.Model.DeptSelectGetArg)">
             <summary>
             获取独立单位
             </summary>
@@ -1266,7 +1266,7 @@
             <param name="param">查询参数</param>
             <returns>部门树</returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitSelect(Basic.HrRemoteModel.Unit.Model.UnitQueryParam)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IUnitService.GetUnitSelect(Basic.HrRemoteModel.Unit.Model.UnitSelectGetParam)">
             <summary>
             获取单位选项数据
             </summary>

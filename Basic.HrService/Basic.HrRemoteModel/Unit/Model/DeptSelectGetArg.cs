@@ -2,7 +2,7 @@
 
 namespace Basic.HrRemoteModel.Unit.Model
 {
-    public class UnitGetArg
+    public class DeptSelectGetArg
     {
         /// <summary>
         /// 公司ID
@@ -10,10 +10,6 @@ namespace Basic.HrRemoteModel.Unit.Model
         [NumValidate("hr.company.id.error", 1)]
         public long CompanyId { get; set; }
 
-        /// <summary>
-        /// 是否返回下级公司
-        /// </summary>
-        public bool IsSubCompany { get; set; }
         /// <summary>
         /// 状态
         /// </summary>

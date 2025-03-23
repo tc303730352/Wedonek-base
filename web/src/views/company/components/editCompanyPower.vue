@@ -69,6 +69,7 @@ export default {
       title: '编辑公司菜单目录',
       trees: [],
       chioseKeys: [],
+      powerId: [],
       source: []
     }
   },
@@ -143,7 +144,7 @@ export default {
       })
     },
     async save() {
-      await comPowerApi.Sync(this.companyId, this.chioseKeys)
+      await comPowerApi.Sync(this.companyId, this.powerId)
       this.$message({
         type: 'success',
         message: '保存成功!'
@@ -153,15 +154,20 @@ export default {
     async reset() {
       const list = await comPowerApi.Gets(this.companyId)
       if (list != null) {
+        const datas = [...list]
         this.source = list
-        this.chioseKeys = list.concat()
+        this.chioseKeys = datas
+        this.powerId = datas
       } else {
         this.chioseKeys = []
         this.source = []
+        this.powerId = []
       }
     },
     resetForm() {
-      this.chioseKeys = this.source.concat()
+      const list = [...this.source]
+      this.powerId = list
+      this.$refs.powerTree.setCheckedKeys(list)
     },
     closeForm() {
       this.$emit('close')

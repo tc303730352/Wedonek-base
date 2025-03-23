@@ -138,7 +138,7 @@ namespace Basic.HrService.lmpl
                 {
                     HrDeptStatus.启用
                 },
-                CompanyId = dept.CompanyId,
+                CompanyId = [dept.CompanyId],
                 IsUnit = isUnit,
                 ParentId = deptId
             });

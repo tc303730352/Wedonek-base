@@ -14,6 +14,6 @@ namespace Basic.HrRemoteModel.Unit
         /// <summary>
         /// 查询参数
         /// </summary>
-        public UnitGetArg Param { get; set; }
+        public DeptSelectGetArg Param { get; set; }
     }
 }
