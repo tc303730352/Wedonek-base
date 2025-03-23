@@ -37,12 +37,8 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public CompanyTree<DeptTree> GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
+        public DeptTree[] GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
-            if ( param.IsSubCompany && param.ParentId.HasValue )
-            {
-                param.IsSubCompany = false;
-            }
             param.DeptId = base.UserState.PowerDeptId(param.DeptId);
             return this._Service.GetUnitDeptTree(param);
         }

@@ -20,7 +20,7 @@
         <el-col :span="18">
           <el-card>
             <div slot="header" class="clearfix">
-              <span>人员信息</span>
+              <span>{{ subTitle }}</span>
             </div>
             <el-form :inline="true" :model="queryParam">
               <el-form-item label="关键字">
@@ -157,7 +157,7 @@ export default {
     return {
       HrUserType,
       HrItemDic,
-      subTitle: '选择人',
+      subTitle: '用户列表',
       minHeight: '500px',
       emps: [],
       columns: [
@@ -268,6 +268,7 @@ export default {
       this.curEmp = emps
     },
     reset() {
+      this.subTitle = '用户列表'
       this.empCache = {}
       this.minHeight = window.innerHeight * 0.6 + 'px'
       this.queryParam.UnitId = this.unitId
@@ -308,14 +309,17 @@ export default {
     },
     chioceDept(e) {
       if (e.value.length === 0) {
+        this.subTitle = e.comName[e.companyId] + '公司-用户列表'
         this.queryParam.UnitId = this.unitId
         this.queryParam.DeptId = null
-      } else if (e.value[0].IsUnit) {
-        this.queryParam.UnitId = e.value[0].DeptId
+      } else if (e.value[0].type === 'unit') {
+        this.subTitle = e.value[0].Name + '单位-用户列表'
+        this.queryParam.UnitId = e.value[0].Id
         this.queryParam.DeptId = null
       } else {
+        this.subTitle = e.value[0].Name + '部门-用户列表'
         this.queryParam.UnitId = e.value[0].UnitId
-        this.queryParam.DeptId = [e.value[0].DeptId]
+        this.queryParam.DeptId = [e.value[0].Id]
       }
       this.loadGrid()
     },

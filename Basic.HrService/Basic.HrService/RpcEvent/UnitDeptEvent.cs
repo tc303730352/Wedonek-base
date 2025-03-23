@@ -20,7 +20,7 @@ namespace Basic.HrService.RpcEvent
             return this._Service.GetDeptSelect(arg.Param);
         }
 
-        public CompanyTree<DeptTree> GetUnitDeptTree ( GetUnitDeptTree obj )
+        public DeptTree[] GetUnitDeptTree ( GetUnitDeptTree obj )
         {
             return this._Service.GetTree(obj.Param);
         }

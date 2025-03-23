@@ -31,12 +31,11 @@ namespace Basic.HrService.lmpl
                 return new CompanyName[] { name };
             }
         }
-        public CompanyTree<DeptTree> GetTree ( UnitGetArg arg )
+        public DeptTree[] GetTree ( UnitGetArg arg )
         {
-            CompanyName[] coms = this._GetCompanys(arg.CompanyId, arg.IsSubCompany);
             DeptBase[] depts = this._Dept.GetUnitDepts(new UnitGetParam
             {
-                CompanyId = coms.ConvertAll(a => a.Id),
+                CompanyId = [arg.CompanyId],
                 ParentId = arg.ParentId,
                 IsAllChildren = true,
                 UnitId = arg.UnitId,
@@ -45,19 +44,7 @@ namespace Basic.HrService.lmpl
                 Status = arg.Status,
                 DeptId = arg.DeptId,
             });
-            CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
-            CompanyTree<DeptTree> obj = new CompanyTree<DeptTree>
-            {
-                Id = com.Id,
-                Name = com.ShortName.GetValueOrDefault(com.FullName),
-                Dept = depts.FindAll(a => a.CompanyId == com.Id).ToTree()
-            };
-            if ( coms.Length == 1 )
-            {
-                return obj;
-            }
-            obj.Children = this._GetChildren(com, coms, depts);
-            return obj;
+            return depts.ToTree();
         }
         private CompanyTree<DeptTree>[] _GetChildren ( CompanyName prt, CompanyName[] coms, DeptBase[] depts )
         {

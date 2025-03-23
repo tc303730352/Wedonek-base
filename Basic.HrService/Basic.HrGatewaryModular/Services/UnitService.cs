@@ -20,7 +20,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public CompanyTree<DeptTree> GetUnitDeptTree ( UnitGetArg param )
+        public DeptTree[] GetUnitDeptTree ( UnitGetArg param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {

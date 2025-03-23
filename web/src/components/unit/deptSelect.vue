@@ -87,8 +87,8 @@ export default {
         multiple: false,
         emitPath: false,
         checkStrictly: true,
-        value: 'DeptId',
-        label: 'DeptName',
+        value: 'Id',
+        label: 'Name',
         children: 'Children'
       }
     }
@@ -188,6 +188,9 @@ export default {
         this.format(c)
       })
       this.depts = res
+    },
+    initTrees() {
+
     },
     format(row) {
       if (row.IsUnit && !this.isChioseUnit) {

@@ -448,14 +448,14 @@ export default {
         this.title = e.comName[e.companyId] + '公司-人员列表'
       } else {
         const dept = e.value[0]
-        if (dept.IsUnit) {
-          this.title = dept.DeptName + '单位-人员列表'
-          this.queryParam.UnitId = dept.DeptId
+        if (dept.type === 'unit') {
+          this.title = dept.Name + '单位-人员列表'
+          this.queryParam.UnitId = dept.Id
           this.queryParam.DeptId = null
         } else {
-          this.title = dept.DeptName + '部门-人员列表'
+          this.title = dept.Name + '部门-人员列表'
           this.queryParam.UnitId = null
-          this.queryParam.DeptId = [dept.DeptId]
+          this.queryParam.DeptId = [dept.Id]
         }
       }
       this.loadEmp()

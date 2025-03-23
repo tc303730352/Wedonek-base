@@ -193,7 +193,7 @@ export default {
         Name: res.Name,
         type: 'com',
         disabled: this.isMultiple,
-        comId: res.Id,
+        CompanyId: res.Id,
         style: {
           icon: 'el-icon-s-flag',
           color: '#409eff'
@@ -203,8 +203,8 @@ export default {
       this.initChildren(data, res)
       this.units = [data]
     },
-    format(data, sour) {
-      if (sour.IsUnit) {
+    format(data) {
+      if (data.IsUnit) {
         data.type = 'unit'
         data.style = {
           icon: 'tree-table',
@@ -217,17 +217,11 @@ export default {
           color: '#000'
         }
       }
-      if (sour.Children && sour.Children.length > 0) {
-        data.Children = sour.Children.map((c) => {
-          c.CompanyId = data.comId
-          this.deptDic[c.DeptId] = c
-          const t = {
-            Id: c.DeptId,
-            Name: c.DeptName,
-            comId: data.comId
-          }
-          this.format(t, c)
-          return t
+      if (data.Children && data.Children.length > 0) {
+        data.Children.forEach((c) => {
+          c.CompanyId = data.CompanyId
+          this.deptDic[c.Id] = c
+          this.format(c)
         })
       }
     },
@@ -239,14 +233,9 @@ export default {
       if (!this.isNull(res.Dept)) {
         res.Dept.forEach((c) => {
           c.CompanyId = res.Id
-          this.deptDic[c.DeptId] = c
-          const data = {
-            Id: c.DeptId,
-            Name: c.DeptName,
-            comId: res.Id
-          }
-          this.format(data, c)
-          list.push(data)
+          this.deptDic[c.Id] = c
+          this.format(c)
+          list.push(c)
         })
       }
       if (!this.isNull(res.Children)) {
@@ -257,7 +246,7 @@ export default {
             Name: c.Name,
             disabled: this.isMultiple,
             type: 'com',
-            comId: c.Id,
+            CompanyId: c.Id,
             style: {
               icon: 'el-icon-s-flag',
               color: '#409eff'
@@ -348,7 +337,7 @@ export default {
       this.chioseKey = dept.Id
       const e = {
         isMultiple: this.isMultiple,
-        companyId: dept.comId,
+        companyId: dept.CompanyId,
         comName: this.comNameCache,
         value: []
       }

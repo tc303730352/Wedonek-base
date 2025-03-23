@@ -332,11 +332,11 @@ export default {
       if (e.value.length === 0) {
         this.queryParam.UnitId = null
         this.queryParam.IsUnit = true
-        this.title = e.comName + '公司-单位列表'
+        this.title = e.comName[e.companyId] + '公司-单位列表'
       } else {
-        this.title = e.value[0].DeptName + '-部门列表'
+        this.title = e.value[0].Name + '-部门列表'
         this.queryParam.IsUnit = false
-        this.queryParam.UnitId = e.value[0].DeptId
+        this.queryParam.UnitId = e.value[0].Id
       }
       this.loadDept()
     },

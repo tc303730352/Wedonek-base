@@ -11,10 +11,6 @@ namespace Basic.HrRemoteModel.Unit.Model
         public long CompanyId { get; set; }
 
         /// <summary>
-        /// 是否返回下级公司
-        /// </summary>
-        public bool IsSubCompany { get; set; }
-        /// <summary>
         /// 状态
         /// </summary>
         public HrDeptStatus[] Status { get; set; }
