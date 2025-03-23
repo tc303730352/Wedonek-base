@@ -31,7 +31,7 @@ namespace Basic.HrService.lmpl
                 return new CompanyName[] { name };
             }
         }
-        public CompanyTree<DeptTree>[] GetTree ( UnitGetArg arg )
+        public CompanyTree<DeptTree> GetTree ( UnitGetArg arg )
         {
             CompanyName[] coms = this._GetCompanys(arg.CompanyId, arg.IsSubCompany);
             DeptBase[] depts = this._Dept.GetUnitDepts(new UnitGetParam
@@ -45,19 +45,28 @@ namespace Basic.HrService.lmpl
                 Status = arg.Status,
                 DeptId = arg.DeptId,
             });
-            return coms.Convert<CompanyName, CompanyTree<DeptTree>>(a =>
+            CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
+            CompanyTree<DeptTree> obj = new CompanyTree<DeptTree>
             {
-                DeptTree[] list = depts.FindAll(a => a.CompanyId == a.Id).ToTree();
-                if ( list.Length == 0 )
-                {
-                    return null;
-                }
-                return new CompanyTree<DeptTree>
-                {
-                    Id = a.Id,
-                    Name = a.ShortName.GetValueOrDefault(a.FullName),
-                    Children = list,
-                };
+                Id = com.Id,
+                Name = com.ShortName.GetValueOrDefault(com.FullName),
+                Dept = depts.FindAll(a => a.CompanyId == com.Id).ToTree()
+            };
+            if ( coms.Length == 1 )
+            {
+                return obj;
+            }
+            obj.Children = this._GetChildren(com, coms, depts);
+            return obj;
+        }
+        private CompanyTree<DeptTree>[] _GetChildren ( CompanyName prt, CompanyName[] coms, DeptBase[] depts )
+        {
+            return coms.Convert(a => a.ParentId == prt.Id, a => new CompanyTree<DeptTree>
+            {
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.FullName),
+                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToTree(),
+                Children = this._GetChildren(a, coms, depts)
             });
         }
         public DeptSelect[] GetDeptSelect ( DeptSelectGetArg arg )
@@ -97,7 +106,7 @@ namespace Basic.HrService.lmpl
             });
         }
 
-        public CompanyTree<UnitTree>[] GetUnitTree ( UnitQueryParam arg )
+        public CompanyTree<UnitTree> GetUnitTree ( UnitQueryParam arg )
         {
             CompanyName[] coms = this._GetCompanys(arg.CompanyId, arg.IsSubCompany);
             DeptBase[] depts = this._Dept.GetDepts<DeptBase>(new DeptGetParam
@@ -109,19 +118,28 @@ namespace Basic.HrService.lmpl
                 IsUnit = true,
                 DeptId = arg.DeptId,
             });
-            return coms.Convert<CompanyName, CompanyTree<UnitTree>>(a =>
+            CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
+            CompanyTree<UnitTree> obj = new CompanyTree<UnitTree>
             {
-                UnitTree[] list = depts.FindAll(a => a.CompanyId == a.Id).ToUnitTree(arg.ParentId.GetValueOrDefault());
-                if ( list.Length == 0 )
-                {
-                    return null;
-                }
-                return new CompanyTree<UnitTree>
-                {
-                    Id = a.Id,
-                    Name = a.ShortName.GetValueOrDefault(a.FullName),
-                    Children = list,
-                };
+                Id = com.Id,
+                Name = com.ShortName.GetValueOrDefault(com.FullName),
+                Dept = depts.FindAll(a => a.CompanyId == com.Id).ToUnitTree(arg.ParentId.GetValueOrDefault())
+            };
+            if ( coms.Length == 1 )
+            {
+                return obj;
+            }
+            obj.Children = this._GetUnitChildren(com, coms, depts);
+            return obj;
+        }
+        private CompanyTree<UnitTree>[] _GetUnitChildren ( CompanyName prt, CompanyName[] coms, DeptBase[] depts )
+        {
+            return coms.Convert(a => a.ParentId == prt.Id, a => new CompanyTree<UnitTree>
+            {
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.FullName),
+                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToUnitTree(0),
+                Children = this._GetUnitChildren(a, coms, depts)
             });
         }
     }

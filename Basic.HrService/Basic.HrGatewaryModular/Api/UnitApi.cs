@@ -37,7 +37,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public CompanyTree<DeptTree>[] GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
+        public CompanyTree<DeptTree> GetDeptTree ( [NullValidate("hr.unit.param.null")] UnitGetArg param )
         {
             if ( param.IsSubCompany && param.ParentId.HasValue )
             {
@@ -63,7 +63,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        public CompanyTree<UnitTree>[] GetTree ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
+        public CompanyTree<UnitTree> GetTree ( [NullValidate("hr.unit.param.null")] UnitQueryParam param )
         {
             if ( param.IsSubCompany && param.ParentId.HasValue )
             {

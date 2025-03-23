@@ -8,7 +8,7 @@ namespace Basic.HrRemoteModel.Unit
     /// 选项单位树形
     /// </summary>
     [IRemoteConfig("basic.hr.service")]
-    public class GetUnitTree : RpcRemoteArray<CompanyTree<UnitTree>>
+    public class GetUnitTree : RpcRemote<CompanyTree<UnitTree>>
     {
         /// <summary>
         /// 查询参数

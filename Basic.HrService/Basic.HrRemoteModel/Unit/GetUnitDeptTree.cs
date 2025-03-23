@@ -9,7 +9,7 @@ namespace Basic.HrRemoteModel.Unit
     /// 获取独立机构树
     /// </summary>
     [IRemoteConfig("basic.hr.service")]
-    public class GetUnitDeptTree : RpcRemoteArray<CompanyTree<DeptTree>>
+    public class GetUnitDeptTree : RpcRemote<CompanyTree<DeptTree>>
     {
         /// <summary>
         /// 查询参数

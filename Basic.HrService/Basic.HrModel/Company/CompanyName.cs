@@ -4,6 +4,7 @@
     {
         public long Id { get; set; }
 
+        public long ParentId { get; set; }
         /// <summary>
         /// 全称
         /// </summary>

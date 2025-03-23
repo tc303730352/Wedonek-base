@@ -98,10 +98,6 @@ export default {
     }
   },
   computed: {
-    comName() {
-      const comId = this.$store.getters.curComId
-      return this.$store.getters.company[comId]
-    },
     comId() {
       return this.$store.getters.curComId
     }

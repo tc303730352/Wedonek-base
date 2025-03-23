@@ -20,11 +20,11 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public CompanyTree<DeptTree>[] GetUnitDeptTree ( UnitGetArg param )
+        public CompanyTree<DeptTree> GetUnitDeptTree ( UnitGetArg param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
-                return Array.Empty<CompanyTree<DeptTree>>();
+                return null;
             }
             return new GetUnitDeptTree
             {
@@ -50,11 +50,11 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public CompanyTree<UnitTree>[] GetUnitTree ( UnitQueryParam param )
+        public CompanyTree<UnitTree> GetUnitTree ( UnitQueryParam param )
         {
             if ( param.DeptId != null && param.DeptId.Length == 0 )
             {
-                return Array.Empty<CompanyTree<UnitTree>>();
+                return null;
             }
             return new GetUnitTree
             {

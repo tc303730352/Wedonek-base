@@ -18,7 +18,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        CompanyTree<DeptTree>[] GetUnitDeptTree ( UnitGetArg param );
+        CompanyTree<DeptTree> GetUnitDeptTree ( UnitGetArg param );
 
         /// <summary>
         /// 获取单位选项数据
@@ -32,7 +32,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <param name="param">查询参数</param>
         /// <returns>部门树</returns>
-        CompanyTree<UnitTree>[] GetUnitTree ( UnitQueryParam param );
+        CompanyTree<UnitTree> GetUnitTree ( UnitQueryParam param );
 
     }
 }

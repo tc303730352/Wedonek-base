@@ -9,6 +9,8 @@
         }
         public string Name { get; set; }
 
-        public T[] Children { get; set; }
+        public CompanyTree<T>[] Children { get; set; }
+
+        public T[] Dept { get; set; }
     }
 }
