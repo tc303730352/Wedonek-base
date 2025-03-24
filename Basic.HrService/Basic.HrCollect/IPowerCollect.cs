@@ -1,5 +1,6 @@
 ﻿using Basic.HrModel.DB;
 using Basic.HrModel.Power;
+using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Power.Model;
 using WeDonekRpc.Model;
 
@@ -10,6 +11,7 @@ namespace Basic.HrCollect
         Result[] Query<Result> ( PowerQuery query, IBasicPage paging, out int count ) where Result : class, new();
         PowerRouteDto[] GetRoutes ( long subSysId );
         bool Set ( DBPowerList sour, PowerSet set );
+        long[] Filters ( long[] ids, PowerType powerType );
         long Add ( PowerAdd add );
         PowerDto[] GetDtos ( long[] subSystemId, PowerGetParam getParam );
         PowerDto[] GetDtos ( long subSystemId, PowerGetParam param );

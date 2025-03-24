@@ -23,9 +23,19 @@ export function GetLoginDatum() {
     method: 'get'
   })
 }
-export function CheckIsLogin(){
+export function CheckIsLogin() {
   return request({
     url: formatRequestUri('CheckIsLogin'),
     method: 'get'
+  })
+}
+
+export function Switch(companyId) {
+  return request({
+    url: formatRequestUri('Switch'),
+    method: 'get',
+    params: {
+      companyId
+    }
   })
 }

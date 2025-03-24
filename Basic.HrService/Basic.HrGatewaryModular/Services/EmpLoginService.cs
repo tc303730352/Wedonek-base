@@ -44,7 +44,7 @@ namespace Basic.HrGatewaryModular.Services
         public LoginDatum Switch ( IUserState state, long companyId )
         {
             long[] comId = state.GetValue<long[]>("Company");
-            if ( comId.Contains(companyId) )
+            if ( !comId.Contains(companyId) )
             {
                 throw new ErrorException("hr.user.no.power");
             }
@@ -59,6 +59,7 @@ namespace Basic.HrGatewaryModular.Services
                 EmpId = state.ToEmpId()
             }.Send();
             state.SetPower(res.Power);
+            state["CompanyId"] = companyId;
             state["IsAdmin"] = res.IsAdmin;
             state["DeptId"] = res.DeptId;
             if ( !state.SaveState() )

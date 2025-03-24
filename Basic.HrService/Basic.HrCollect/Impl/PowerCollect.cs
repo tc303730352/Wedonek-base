@@ -31,11 +31,26 @@ namespace Basic.HrCollect.Impl
         }
         public PowerRouteDto[] GetEnables ( long[] ids )
         {
+            PowerRouteDto[] list;
             if ( ids.IsNull() )
             {
-                return this._Power.Gets<PowerRouteDto>(a => a.IsEnable).OrderBy(a => a.Sort).ToArray();
+                list = this._Power.Gets<PowerRouteDto>(a => a.IsEnable);
             }
-            return this._Power.Gets<PowerRouteDto>(a => ids.Contains(a.Id) && a.IsEnable).OrderBy(a => a.Sort).ToArray();
+            else
+            {
+                list = this._Power.Gets<PowerRouteDto>(a => ids.Contains(a.Id) && a.IsEnable);
+            }
+            List<long> prtId = new List<long>();
+            list.ForEach(c =>
+            {
+                if ( c.LevelCode != string.Empty )
+                {
+                    c.LevelCode.SplitWriteLong('|', prtId);
+                }
+            });
+            long[] pids = prtId.Distinct().ToArray();
+            PowerRouteDto[] menus = this._Power.Gets<PowerRouteDto>(a => pids.Contains(a.Id) && a.PowerType == PowerType.dir);
+            return list.Add(menus).OrderBy(a => a.Sort).ToArray();
         }
         public PowerBasic[] Gets ( long[] ids )
         {
@@ -95,6 +110,10 @@ namespace Basic.HrCollect.Impl
         public PowerDto[] GetDtos ( long[] subSystemId, PowerGetParam param )
         {
             return this._Power.Gets<PowerDto>(subSystemId, param).OrderBy(a => a.Sort).ToArray();
+        }
+        public long[] Filters ( long[] ids, PowerType powerType )
+        {
+            return this._Power.Gets(a => ids.Contains(a.Id) && a.PowerType == powerType, a => a.Id);
         }
         public PowerDto[] GetDtos ( long subSystemId, PowerGetParam param )
         {

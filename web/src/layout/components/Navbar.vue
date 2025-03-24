@@ -38,7 +38,7 @@
         <img :src="user.head | imageUri" class="user-avatar">
         <div class="user">
           <span>{{ user.name }}</span>
-          <el-dropdown trigger="click" @command="chioseSubSystem">
+          <el-dropdown trigger="click" @command="switchCom">
             <el-button title="切换系统" type="text" circle>{{
               comName
             }}<i class="el-icon-caret-bottom" /></el-button>
@@ -110,6 +110,14 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
+    },
+    async switchCom(value) {
+      if (this.curComId !== value) {
+        const res = await this.$store.dispatch('user/switchCompany', value)
+        if (res) {
+          this.$router.replace({ name: 'loading' })
+        }
+      }
     },
     chioseSubSystem(value) {
       if (this.curSysId !== value) {

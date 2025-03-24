@@ -6,9 +6,10 @@ namespace Basic.HrService.lmpl
     internal class CompanyPowerService : ICompanyPowerService
     {
         private readonly ICompanyPowerCollect _ComPower;
-
-        public CompanyPowerService ( ICompanyPowerCollect comPower )
+        private readonly IPowerCollect _Power;
+        public CompanyPowerService ( ICompanyPowerCollect comPower, IPowerCollect power )
         {
+            this._Power = power;
             this._ComPower = comPower;
         }
 
@@ -19,6 +20,7 @@ namespace Basic.HrService.lmpl
 
         public bool Sync ( long companyId, long[] powerId )
         {
+            powerId = this._Power.Filters(powerId, HrRemoteModel.PowerType.menu);
             return this._ComPower.Sync(companyId, powerId);
         }
     }

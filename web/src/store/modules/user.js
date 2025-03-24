@@ -1,4 +1,4 @@
-import { login, loginOut, GetLoginDatum, CheckIsLogin } from '@/api/login/empLogin'
+import { login, loginOut, GetLoginDatum, CheckIsLogin, Switch } from '@/api/login/empLogin'
 import { setToken, removeToken, isLogin, getToken } from '@/utils/auth'
 import * as cache from '@/utils/localCache'
 import settings from '@/settings'
@@ -64,6 +64,19 @@ async function checkLoginState() {
     return false
   }
 }
+async function switchCom(commit, companyId) {
+  const comId = cache.getCurComId()
+  if (comId === companyId) {
+    return false
+  }
+  const tokenId = getToken()
+  const res = await Switch(companyId)
+  commit('SET_User', res)
+  commit('SET_CurSysId', res.CurSubSysId)
+  commit('SET_CurComId', res.CompanyId)
+  cache.setCache(tokenId, res)
+  return true
+}
 async function loadState(commit) {
   const tokenId = getToken()
   commit('SET_TOKEN', tokenId)
@@ -108,6 +121,10 @@ const actions = {
   },
   switchSubSys({ commit }, sysId) {
     commit('SET_CurSysId', sysId)
+  },
+  async switchCompany({ commit }, companyId) {
+    console.log(companyId)
+    return await switchCom(commit, companyId)
   },
   // user logout
   logout({ dispatch, commit }) {
