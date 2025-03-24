@@ -48,6 +48,12 @@ namespace Basic.HrRemoteModel.Company.Model
         /// 管理员名
         /// </summary>
         public string Leaver { get; set; }
+
+        /// <summary>
+        /// 管理员名
+        /// </summary>
+        public string Admin { get; set; }
+
         /// <summary>
         /// 添加时间
         /// </summary>

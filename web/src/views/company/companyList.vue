@@ -141,6 +141,12 @@ export default {
           slotName: 'leaver'
         },
         {
+          key: 'Admin',
+          title: '管理员',
+          align: 'center',
+          slotName: 'admin'
+        },
+        {
           key: 'Status',
           title: '状态',
           slotName: 'Status'

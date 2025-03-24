@@ -61,13 +61,6 @@
           placeholder="联系电话"
         />
       </el-form-item>
-      <el-form-item v-if="id != null" label="负责人" prop="LeaverId">
-        <empInput
-          v-model="company.LeaverId"
-          :company-id="id"
-          placeholder="负责人"
-        />
-      </el-form-item>
     </el-form>
     <div slot="footer" style="text-align: center">
       <el-button type="primary" @click="save">保存</el-button>
@@ -79,10 +72,8 @@
 <script>
 import * as companyApi from '@/api/base/company'
 import { HrEnumDic } from '@/config/publicDic'
-import empInput from '@/components/emp/empInput.vue'
 export default {
   components: {
-    empInput
   },
   props: {
     visible: {

@@ -90,12 +90,28 @@ namespace Basic.HrService.lmpl
             {
                 return Array.Empty<CompanyTree>();
             }
-            Dictionary<long, string> names = this._Emp.GetName(list.Convert(a => a.LeaverId.HasValue, a => a.LeaverId.Value));
+            List<long> empId = new List<long>();
+            list.ForEach(c =>
+            {
+                if ( c.LeaverId.HasValue )
+                {
+                    empId.Add(c.LeaverId.Value);
+                }
+                if ( c.AdminId.HasValue )
+                {
+                    empId.Add(c.AdminId.Value);
+                }
+            });
+            Dictionary<long, string> names = this._Emp.GetName(empId.Distinct().ToArray());
             return list.ConvertTree<DBCompany, CompanyTree>(a => a.ParentId == 0, ( a, b ) =>
             {
                 if ( a.LeaverId.HasValue )
                 {
                     b.Leaver = names.GetValueOrDefault(a.LeaverId.Value);
+                }
+                if ( a.AdminId.HasValue )
+                {
+                    b.Admin = names.GetValueOrDefault(a.AdminId.Value);
                 }
             }, ( a, b ) => a.ParentId == b.Id);
         }
