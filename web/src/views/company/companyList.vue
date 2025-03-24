@@ -221,26 +221,20 @@ export default {
     async setAdmin(e) {
       const leader = e.user.length === 0 ? null : e.user[0]
       if (leader == null) {
-        await companyApi.SetAdminId(this.id, null)
-        this.curRow.AdminId = null
-        this.curRow.Admin = null
+        await companyApi.SetAdminId(this.curRow.Id, null)
       } else {
-        await companyApi.SetAdminId(this.id, leader.EmpId)
-        this.curRow.AdminId = leader.EmpId
-        this.curRow.Admin = leader.EmpName
+        await companyApi.SetAdminId(this.curRow.Id, leader.EmpId)
       }
+      this.load()
     },
     async setLeader(e) {
       const leader = e.user.length === 0 ? null : e.user[0]
       if (leader == null) {
         await companyApi.SetLeaverId(this.id, null)
-        this.curRow.LeaverId = null
-        this.curRow.Leaver = null
       } else {
         await companyApi.SetLeaverId(this.id, leader.EmpId)
-        this.curRow.LeaverId = leader.EmpId
-        this.curRow.Leaver = leader.EmpName
       }
+      this.load()
     },
     add() {
       this.id = null

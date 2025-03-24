@@ -15,7 +15,7 @@ namespace Basic.HrGatewaryModular.Api
         {
             this._Service = service;
         }
-        public bool SetAdminId ( LongParam<long?> param )
+        public bool SetAdminId ( LongNullParam<long?> param )
         {
             return this._Service.SetAdminId(param.Id, param.Value);
         }
@@ -32,7 +32,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public bool SetLeaverId ( LongParam<long?> param )
+        public bool SetLeaverId ( LongNullParam<long?> param )
         {
             return this._Service.SetLeaverId(param.Id, param.Value);
         }
