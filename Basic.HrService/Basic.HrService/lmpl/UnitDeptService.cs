@@ -127,7 +127,7 @@ namespace Basic.HrService.lmpl
             {
                 Id = a.Id,
                 Name = a.ShortName.GetValueOrDefault(a.FullName),
-                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToUnitTree(0),
+                Dept = depts.FindAll(c => c.CompanyId == a.Id).ToUnitTree(0),
                 Children = this._GetUnitChildren(a, coms, depts)
             });
         }

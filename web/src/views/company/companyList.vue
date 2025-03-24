@@ -84,7 +84,8 @@
       :emp-id="empId"
       :title="empTitle"
       :company-id="id"
-      @save="setLeader"
+      :is-sub-company="isSubCompany"
+      @save="saveEmp"
       @close="empVisible=false"
     />
     <editCompanyPower :visible="powerVisible" :company-id="id" @close="powerVisible=false" />
@@ -104,6 +105,11 @@ export default {
     empChoice,
     editCompanyPower
   },
+  computed: {
+    comId() {
+      return this.$store.getters.curComId
+    }
+  },
   data() {
     return {
       HrEnumDic,
@@ -112,6 +118,7 @@ export default {
       visible: false,
       empVisible: false,
       powerVisible: false,
+      isSubCompany: false,
       op: null,
       id: null,
       curRow: null,
@@ -187,6 +194,7 @@ export default {
     moment,
     showEmp(row) {
       this.curRow = row
+      this.isSubCompany = false
       this.op = 'leaver'
       this.id = row.Id
       this.empId = row.LeaverId == null ? [] : [row.LeaverId]
@@ -196,7 +204,8 @@ export default {
     showAdmin(row) {
       this.curRow = row
       this.op = 'admin'
-      this.id = row.Id
+      this.isSubCompany = true
+      this.id = this.comId
       this.empId = row.AdminId == null ? [] : [row.AdminId]
       this.empTitle = '选择' + row.FullName + '公司管理员'
       this.empVisible = true

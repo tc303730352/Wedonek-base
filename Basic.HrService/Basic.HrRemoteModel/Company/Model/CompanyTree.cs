@@ -49,6 +49,7 @@ namespace Basic.HrRemoteModel.Company.Model
         /// </summary>
         public string Leaver { get; set; }
 
+        public long? AdminId { get; set; }
         /// <summary>
         /// 管理员名
         /// </summary>

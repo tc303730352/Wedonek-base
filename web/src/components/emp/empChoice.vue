@@ -14,7 +14,7 @@
             <div slot="header" class="clearfix">
               <span>单位部门</span>
             </div>
-            <deptTree :unit-id="unitId" :company-id="companyId" @change="chioceDept" />
+            <deptTree :unit-id="unitId" :is-sub-company="isSubCompany" :company-id="companyId" @change="chioceDept" />
           </el-card>
         </el-col>
         <el-col :span="18">
@@ -143,6 +143,10 @@ export default {
     isAllowNull: {
       type: Boolean,
       default: true
+    },
+    isSubCompany: {
+      type: Boolean,
+      default: false
     },
     unitId: {
       type: String,
