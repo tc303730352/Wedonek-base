@@ -83,5 +83,9 @@ namespace Basic.HrCollect.Impl
             return this._EmpTitle.Gets<EmpTitleDto>(a => empId.Contains(a.EmpId) && a.CompanyId == companyId);
         }
 
+        public bool CheckIsExists ( long empId, long comId )
+        {
+            return this._EmpTitle.IsExists(c => c.EmpId == empId && c.CompanyId == comId);
+        }
     }
 }

@@ -51,12 +51,12 @@
         />
       </slot>
       <div v-if="isShowTip" slot="tip">
-        <slot name="upTip" :show="imgSet ? imgSet.Show : null" :UpShow="upConfig.UpShow" :error="error">
+        <slot name="upTip" :show="imgLimit ? imgLimit.Show : null" :UpShow="upConfig.UpShow" :error="error">
           <div class="el-upload__tip">
             <span v-if="error" style="color: red">{{ error }}</span>
             <template v-else>
               <div style="height: 30px;line-height: 30px;">{{ upConfig.UpShow }}</div>
-              <div v-if="imgSet && imgSet.Show" style="height: 30px;line-height: 30px;">{{ imgSet.Show }}</div>
+              <div v-if="imgLimit && imgLimit.Show" style="height: 30px;line-height: 30px;">{{ imgLimit.Show }}</div>
             </template>
           </div>
         </slot>
@@ -131,6 +131,7 @@ export default {
       oldPk: null,
       accept: null,
       imgSrc: null,
+      imgLimit: null,
       header: {
         accreditId: this.$store.getters.token
       }
@@ -154,6 +155,12 @@ export default {
         }
       },
       immediate: false
+    },
+    imgSet: {
+      handler(val) {
+        this.imgLimit = val
+      },
+      immediate: true
     },
     value: {
       handler(val) {
@@ -190,25 +197,25 @@ export default {
       this.changeEvent('change')
     },
     checkImgSize(img) {
-      if (this.imgSet.Ratio != null) {
+      if (this.imgLimit.Ratio != null) {
         const sRatio = Math.round(
-          (this.imgSet.Ratio[0] / this.imgSet.Ratio[1]) * 100
+          (this.imgLimit.Ratio[0] / this.imgLimit.Ratio[1]) * 100
         )
         const ratio = Math.round((img.width / img.height) * 100)
         if (sRatio !== ratio) {
           return false
         }
       }
-      if (this.imgSet.MinWidth != null && img.width < this.imgSet.MinWidth) {
+      if (this.imgLimit.MinWidth != null && img.width < this.imgLimit.MinWidth) {
         return false
       }
-      if (this.imgSet.MinHeight != null && img.height < this.imgSet.MinHeight) {
+      if (this.imgLimit.MinHeight != null && img.height < this.imgLimit.MinHeight) {
         return false
       }
-      if (this.imgSet.MaxHeight != null && img.height > this.imgSet.MaxHeight) {
+      if (this.imgLimit.MaxHeight != null && img.height > this.imgLimit.MaxHeight) {
         return false
       }
-      if (this.imgSet.MaxWidth != null && img.width > this.imgSet.MaxWidth) {
+      if (this.imgLimit.MaxWidth != null && img.width > this.imgLimit.MaxWidth) {
         return false
       }
       return true
@@ -222,7 +229,7 @@ export default {
     async checkImg(file) {
       const that = this
       return new Promise((resolve) => {
-        if (that.imgSet == null) {
+        if (that.imgLimit == null) {
           resolve(true)
           return
         }
@@ -231,7 +238,7 @@ export default {
           const img = new Image()
           img.onload = function() {
             if (!that.checkImgSize(img)) {
-              that.upFail(that.imgSet.Show)
+              that.upFail(that.imgLimit.Show)
               resolve(false)
             } else {
               resolve(true)
@@ -335,7 +342,7 @@ export default {
         config.Extension = []
       }
       if (config.UpImgSet !== null && this.imgSet == null) {
-        this.imgSet = config.UpImgSet
+        this.imgLimit = config.UpImgSet
       }
       this.accept = config.Extension.join(',')
       this.upConfig = config

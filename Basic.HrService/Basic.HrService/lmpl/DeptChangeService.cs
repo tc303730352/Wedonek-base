@@ -235,7 +235,7 @@ namespace Basic.HrService.lmpl
                 if ( titles.TryGetValue(c.EmpId, out string[] title) )
                 {
                     c.TitleId = title;
-                    c.Title = title.ConvertAll(a => titleName.GetValueOrDefault(a));
+                    c.Title = title.ConvertAll<string, string>(a => titleName.GetValueOrDefault(a));
                 }
                 if ( toTitle.TryGetValue(c.EmpId, out title) )
                 {

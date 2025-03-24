@@ -15,6 +15,10 @@ namespace Basic.HrGatewaryModular.Api
         {
             this._Service = service;
         }
+        public bool SetAdminId ( LongParam<long?> param )
+        {
+            return this._Service.SetAdminId(param.Id, param.Value);
+        }
         /// <summary>
         /// 获取树形选择项
         /// </summary>

@@ -34,5 +34,11 @@ namespace Base.FileModel.UserFileDir
         /// </summary>
         [NumValidate("file.up.image.max.height.error", 1)]
         public int? MaxHeight { get; set; }
+
+        /// <summary>
+        /// 错误说明
+        /// </summary>
+        [LenValidate("file.up.error.show.len", 0, 150)]
+        public string Show { get; set; }
     }
 }

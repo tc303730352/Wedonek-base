@@ -13,6 +13,14 @@ namespace Basic.HrGatewaryModular.Services
                 Datum = datum,
             }.Send();
         }
+        public bool SetAdminId ( long id, long? empId )
+        {
+            return new SetCompanyAdminId
+            {
+                Id = id,
+                AdminId = empId,
+            }.Send();
+        }
 
         public void DeleteCompany ( long id )
         {

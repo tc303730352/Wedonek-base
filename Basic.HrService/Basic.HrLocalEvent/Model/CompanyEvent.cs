@@ -9,6 +9,13 @@ namespace Basic.HrLocalEvent.Model
         {
             this.Company = comp;
         }
-        public DBCompany Company { get; set; }
+        public CompanyEvent ( DBCompany comp, long? adminId )
+        {
+            this.OldAdminId = adminId;
+            this.Company = comp;
+        }
+        public DBCompany Company { get; }
+
+        public long? OldAdminId { get; }
     }
 }

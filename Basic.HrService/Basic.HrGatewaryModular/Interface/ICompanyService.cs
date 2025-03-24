@@ -4,6 +4,7 @@ namespace Basic.HrGatewaryModular.Interface
 {
     public interface ICompanyService
     {
+        bool SetAdminId ( long id, long? empId );
         CompanyTreeItem[] GetCompanyTreeItems ();
         /// <summary>
         /// 新增公司

@@ -8,7 +8,8 @@ namespace Basic.HrCollect
 {
     public interface ICompanyCollect
     {
-        bool SetLeaverId ( DBCompany source, long? levelId );
+        bool SetLeaverId ( DBCompany source, long? empId );
+        bool SetAdminId ( DBCompany source, long? empId );
         DBCompany Add ( CompanyAdd add );
         void Delete ( DBCompany source );
         DBCompany Get ( long id );

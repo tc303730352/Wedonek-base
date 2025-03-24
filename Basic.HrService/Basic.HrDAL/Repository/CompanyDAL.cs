@@ -40,9 +40,9 @@ namespace Basic.HrDAL.Repository
             }
         }
 
-        public void SetLeaverId ( long id, long? leaverId )
+        public void SetLeaverId ( long id, long? empId )
         {
-            if ( !this._BasicDAL.Update(a => a.LeaverId == leaverId, a => a.Id == id) )
+            if ( !this._BasicDAL.Update(a => a.LeaverId == empId, a => a.Id == id) )
             {
                 throw new ErrorException("hr.company.set.fail");
             }
@@ -85,6 +85,14 @@ namespace Basic.HrDAL.Repository
         public void SetStatus ( long[] ids, HrCompanyStatus status )
         {
             if ( !this._BasicDAL.Update(a => a.Status == status, a => ids.Contains(a.Id)) )
+            {
+                throw new ErrorException("hr.company.set.fail");
+            }
+        }
+
+        public void SetAdminId ( long id, long? empId )
+        {
+            if ( !this._BasicDAL.Update(a => a.AdminId == empId, a => a.Id == id) )
             {
                 throw new ErrorException("hr.company.set.fail");
             }

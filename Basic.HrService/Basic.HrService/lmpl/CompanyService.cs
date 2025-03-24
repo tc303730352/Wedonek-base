@@ -99,10 +99,21 @@ namespace Basic.HrService.lmpl
                 }
             }, ( a, b ) => a.ParentId == b.Id);
         }
-        public bool SetLeaverId ( long id, long? levelId )
+        public bool SetAdminId ( long id, long? empId )
         {
             DBCompany source = this._Company.Get(id);
-            return this._Company.SetLeaverId(source, levelId);
+            long? old = source.AdminId;
+            if ( this._Company.SetAdminId(source, empId) )
+            {
+                new CompanyEvent(source, old).AsyncSend("SetAdmin");
+                return true;
+            }
+            return false;
+        }
+        public bool SetLeaverId ( long id, long? empId )
+        {
+            DBCompany source = this._Company.Get(id);
+            return this._Company.SetLeaverId(source, empId);
         }
 
         public bool Set ( long id, CompanySet set )

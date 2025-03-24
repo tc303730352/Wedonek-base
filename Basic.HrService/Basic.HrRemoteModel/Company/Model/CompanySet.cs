@@ -45,11 +45,6 @@ namespace Basic.HrRemoteModel.Company.Model
         [FormatValidate("hr.company.telephone.error", ValidateFormat.联系电话)]
         public string Telephone { get; set; }
 
-        /// <summary>
-        /// 负责人
-        /// </summary>
-        public long? LeaverId { get; set; }
-
         [MethodImpl(MethodImplOptions.NoOptimization)]
         private void _Check ()
         {

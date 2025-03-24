@@ -32,5 +32,10 @@ namespace Basic.HrModel.Company
         /// </summary>
         public long? LeaverId { get; set; }
 
+        /// <summary>
+        /// 管理员ID
+        /// </summary>
+        public long? AdminId { get; set; }
+
     }
 }

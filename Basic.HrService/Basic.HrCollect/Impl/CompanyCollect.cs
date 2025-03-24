@@ -145,13 +145,22 @@ namespace Basic.HrCollect.Impl
                 this._Company.Delete(source.Id);
             }
         }
-        public bool SetLeaverId ( DBCompany source, long? levelId )
+        public bool SetLeaverId ( DBCompany source, long? empId )
         {
-            if ( source.LeaverId == levelId )
+            if ( source.LeaverId == empId )
             {
                 return false;
             }
-            this._Company.SetLeaverId(source.Id, levelId);
+            this._Company.SetLeaverId(source.Id, empId);
+            return true;
+        }
+        public bool SetAdminId ( DBCompany source, long? empId )
+        {
+            if ( source.AdminId == empId )
+            {
+                return false;
+            }
+            this._Company.SetAdminId(source.Id, empId);
             return true;
         }
         public DBCompany Get ( long id )

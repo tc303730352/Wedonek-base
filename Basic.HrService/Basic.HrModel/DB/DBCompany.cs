@@ -58,6 +58,10 @@ namespace Basic.HrModel.DB
         public long? LeaverId { get; set; }
 
         /// <summary>
+        /// 管理员ID
+        /// </summary>
+        public long? AdminId { get; set; }
+        /// <summary>
         /// 添加时间
         /// </summary>
         public DateTime AddTime { get; set; }

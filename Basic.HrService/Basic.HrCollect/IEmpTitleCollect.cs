@@ -19,5 +19,6 @@ namespace Basic.HrCollect
         Dictionary<long, string[]> GetEmpTitle ( KeyValuePair<long, long>[] empAndDept );
         Result[] GetEmpTitle<Result> ( long empId ) where Result : class, new();
         Result[] GetEmpTitle<Result> ( long empId, long? companyId ) where Result : class, new();
+        bool CheckIsExists ( long empId, long comId );
     }
 }

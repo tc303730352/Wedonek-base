@@ -13,6 +13,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
+        public bool SetCompanyAdminId ( SetCompanyAdminId obj )
+        {
+            return this._Service.SetAdminId(obj.Id, obj.AdminId);
+        }
         public bool SetCompanyStatus ( SetCompanyStatus obj )
         {
             return this._Service.SetStatus(obj.Id, obj.Status);
