@@ -10,7 +10,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.SetLeaverId(WeDonekRpc.HttpApiGateway.Model.LongParam{System.Nullable{System.Int64}})">
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.SetLeaverId(WeDonekRpc.HttpApiGateway.Model.LongNullParam{System.Nullable{System.Int64}})">
             <summary>
             设置负责人
             </summary>

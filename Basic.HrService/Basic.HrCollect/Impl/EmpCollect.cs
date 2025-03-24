@@ -196,9 +196,9 @@ namespace Basic.HrCollect.Impl
             return this._Emp.SetEmpEntry(emp, datum);
         }
 
-        public bool CheckIsNull ( long id )
+        public bool CheckIsNull ( long companyId )
         {
-            throw new NotImplementedException();
+            return !this._Emp.IsExists(c => c.CompanyId == companyId);
         }
     }
 }
