@@ -136,9 +136,9 @@ namespace Basic.HrCollect.Impl
             }
             string code = source.LevelCode + source.Id + "|";
             long[] ids = this._Company.Gets(a => a.LevelCode.StartsWith(code), a => a.Id);
-            if ( ids.IsNull() )
+            if ( !ids.IsNull() )
             {
-                this._Company.Delete(ids);
+                this._Company.Delete(ids.Add(source.Id));
             }
             else
             {
@@ -152,6 +152,7 @@ namespace Basic.HrCollect.Impl
                 return false;
             }
             this._Company.SetLeaverId(source.Id, empId);
+            source.LeaverId = empId;
             return true;
         }
         public bool SetAdminId ( DBCompany source, long? empId )
@@ -161,6 +162,7 @@ namespace Basic.HrCollect.Impl
                 return false;
             }
             this._Company.SetAdminId(source.Id, empId);
+            source.AdminId = empId;
             return true;
         }
         public DBCompany Get ( long id )

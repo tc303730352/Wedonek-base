@@ -2,7 +2,7 @@
 using WeDonekRpc.Client.Interface;
 namespace Basic.HrLocalEvent
 {
-    internal class HrLocalEventModular : IRpcInitModular
+    public class HrLocalEventModular : IRpcInitModular
     {
         public void Init ( IIocService ioc )
         {

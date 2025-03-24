@@ -1,4 +1,5 @@
-﻿using WeDonekRpc.Client;
+﻿using Basic.HrLocalEvent;
+using WeDonekRpc.Client;
 using WeDonekRpc.Modular;
 
 namespace Basic.HrService
@@ -7,8 +8,9 @@ namespace Basic.HrService
     {
         public static void InitService ()
         {
-            RpcClient.Start((option) =>
+            RpcClient.Start(( option ) =>
             {
+                option.LoadModular<HrLocalEventModular>();
                 option.LoadModular<ExtendModular>();
                 option.Load("Basic.HrService");
             });

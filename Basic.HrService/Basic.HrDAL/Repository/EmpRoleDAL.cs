@@ -79,7 +79,11 @@ namespace Basic.HrDAL.Repository
         public void ClearByEmpId ( long companyId, long empId )
         {
             long[] ids = this._BasicDAL.Gets(a => a.CompanyId == companyId && a.EmpId == empId, a => a.Id);
-            if ( !ids.IsNull() && !this._BasicDAL.Delete(a => ids.Contains(a.Id)) )
+            if ( ids.IsNull() )
+            {
+                return;
+            }
+            else if ( !this._BasicDAL.Delete(a => ids.Contains(a.Id)) )
             {
                 throw new ErrorException("hr.emp.role.clear.fail");
             }
