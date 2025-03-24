@@ -33,6 +33,15 @@
             @click="showEmp(e.row)"
           />
         </template>
+        <template slot="admin" slot-scope="e">
+          <span v-if="e.row.AdminId">{{ e.row.Admin }}</span>
+          <el-button
+            class="el-icon-edit"
+            type="text"
+            style="margin-left: 5px; cursor: pointer"
+            @click="showAdmin(e.row)"
+          />
+        </template>
         <template slot="CompanyType" slot-scope="e">
           {{ hrCompanyType[e.row.CompanyType].text }}
         </template>
@@ -103,6 +112,7 @@ export default {
       visible: false,
       empVisible: false,
       powerVisible: false,
+      op: null,
       id: null,
       curRow: null,
       title: '公司列表',
@@ -177,13 +187,41 @@ export default {
     moment,
     showEmp(row) {
       this.curRow = row
+      this.op = 'leaver'
       this.id = row.Id
       this.empId = row.LeaverId == null ? [] : [row.LeaverId]
       this.empTitle = '选择' + row.FullName + '公司负责人'
       this.empVisible = true
     },
-    async setLeader(e) {
+    showAdmin(row) {
+      this.curRow = row
+      this.op = 'admin'
+      this.id = row.Id
+      this.empId = row.AdminId == null ? [] : [row.AdminId]
+      this.empTitle = '选择' + row.FullName + '公司管理员'
+      this.empVisible = true
+    },
+    saveEmp(e) {
       this.empVisible = false
+      if (this.type === 'leaver') {
+        this.SetLeaver(e)
+      } else {
+        this.setAdmin(e)
+      }
+    },
+    async setAdmin(e) {
+      const leader = e.user.length === 0 ? null : e.user[0]
+      if (leader == null) {
+        await companyApi.SetAdminId(this.id, null)
+        this.curRow.AdminId = null
+        this.curRow.Admin = null
+      } else {
+        await companyApi.SetAdminId(this.id, leader.EmpId)
+        this.curRow.AdminId = leader.EmpId
+        this.curRow.Admin = leader.EmpName
+      }
+    },
+    async setLeader(e) {
       const leader = e.user.length === 0 ? null : e.user[0]
       if (leader == null) {
         await companyApi.SetLeaverId(this.id, null)

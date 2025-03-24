@@ -87,3 +87,13 @@ export function GetName(id) {
     }
   })
 }
+export function SetAdminId(id, empId) {
+  return request({
+    url: formatRequestUri('SetAdminId'),
+    method: 'post',
+    data: {
+      Id: id,
+      Value: empId
+    }
+  })
+}

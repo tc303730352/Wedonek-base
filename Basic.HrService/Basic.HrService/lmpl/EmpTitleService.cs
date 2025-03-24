@@ -59,7 +59,7 @@ namespace Basic.HrService.lmpl
             Dictionary<string, string> titleName = this._TitleDic.GetTitleNames(dtos.ConvertAll(c => c.TitleCode));
             dtos.ForEach(c =>
             {
-                c.CompanyName = comNames[c.Id];
+                c.CompanyName = comNames.GetValueOrDefault(c.CompanyId);
                 c.DeptName = deptName.GetValueOrDefault(c.DeptId);
                 c.UnitName = deptName.GetValueOrDefault(c.UnitId);
                 c.Title = titleName.GetValueOrDefault(c.TitleCode);
