@@ -202,5 +202,15 @@ namespace Basic.HrCollect.Impl
         {
             return this._Company.Gets<Result>(ids);
         }
+
+        public string[] GetNameList ( long[] ids )
+        {
+            var list = this._Company.Gets(ids, a => new
+            {
+                a.FullName,
+                a.ShortName
+            });
+            return list.ConvertAll(c => c.FullName.GetValueOrDefault(c.FullName));
+        }
     }
 }

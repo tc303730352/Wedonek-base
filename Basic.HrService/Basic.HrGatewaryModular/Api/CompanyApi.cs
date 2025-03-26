@@ -23,9 +23,9 @@ namespace Basic.HrGatewaryModular.Api
         /// 获取树形选择项
         /// </summary>
         /// <returns></returns>
-        public CompanyTreeItem[] GetTreeItems ()
+        public CompanyTreeItem[] GetTreeItems ( [NumValidate("hr.company.id.error", 1)] long? parentId )
         {
-            return this._Service.GetCompanyTreeItems();
+            return this._Service.GetCompanyTreeItems(parentId);
         }
         /// <summary>
         /// 设置负责人
@@ -64,6 +64,15 @@ namespace Basic.HrGatewaryModular.Api
         public string GetName ( [NumValidate("hr.company.id.error", 1)] long id )
         {
             return this._Service.GetName(id);
+        }
+        /// <summary>
+        /// 获取树形字典项名
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public string[] GetNameList ( [NullValidate("hr.company.id.null")] long[] ids )
+        {
+            return this._Service.GetNameList(ids);
         }
         /// <summary>
         /// 删除公司

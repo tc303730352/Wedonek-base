@@ -23,5 +23,6 @@ namespace Basic.HrCollect
         bool SetStatus ( DBCompany source, HrCompanyStatus status );
         bool Set ( DBCompany source, CompanySet set );
         CompanyName[] GetSubs ( string levelCode );
+        string[] GetNameList ( long[] ids );
     }
 }

@@ -3,12 +3,12 @@
     :title="title"
     :visible="visible"
     class="empTitleDialog"
-    width="900px"
+    width="1000px"
     :before-close="closeForm"
     :close-on-click-modal="false"
   >
     <div style="text-align: right; padding-bottom: 10px">
-      <el-switch v-model="isShowAll" active-text="只显示本公司职务" inactive-text="显示所有" @change="load" />
+      <el-switch v-model="isShowAll" active-text="只显示本公司职务" inactive-text="显示所有" @change="load" style="margin-right: 20px;" />
       <el-button
         type="primary"
         size="mini"
@@ -79,7 +79,7 @@ export default {
       titles: [],
       title: '人员职务',
       isRefresh: false,
-      isShowAll: false,
+      isShowAll: true,
       addVisible: false
     }
   },

@@ -46,9 +46,12 @@ namespace Basic.HrGatewaryModular.Services
                 Id = id,
             }.Send();
         }
-        public CompanyTreeItem[] GetCompanyTreeItems ()
+        public CompanyTreeItem[] GetCompanyTreeItems ( long? parentId )
         {
-            return new GetCompanyTreeItems().Send();
+            return new GetCompanyTreeItems
+            {
+                ParentId = parentId
+            }.Send();
         }
         public CompanyDto[] GetCompanyList ( long? parentId, bool isAllChildren )
         {
@@ -96,6 +99,14 @@ namespace Basic.HrGatewaryModular.Services
             {
                 Id = id,
                 Status = HrRemoteModel.HrCompanyStatus.停用
+            }.Send();
+        }
+
+        public string[] GetNameList ( long[] ids )
+        {
+            return new GetCompanyNameList
+            {
+                Ids = ids
             }.Send();
         }
     }

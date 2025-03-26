@@ -4,7 +4,7 @@
         <name>Basic.HrGatewaryModular</name>
     </assembly>
     <members>
-        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetTreeItems">
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetTreeItems(System.Nullable{System.Int64})">
             <summary>
             获取树形选择项
             </summary>
@@ -29,6 +29,13 @@
             获取树形字典项名
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.GetNameList(System.Int64[])">
+            <summary>
+            获取树形字典项名
+            </summary>
+            <param name="ids"></param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.CompanyApi.Delete(System.Int64)">

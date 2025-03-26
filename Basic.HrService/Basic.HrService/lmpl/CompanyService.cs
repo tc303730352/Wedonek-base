@@ -22,10 +22,15 @@ namespace Basic.HrService.lmpl
         {
             return this._Company.GetName(id);
         }
-        public CompanyTreeItem[] GetTreeItems ()
+        public string[] GetNameList ( long[] ids )
+        {
+            return this._Company.GetNameList(ids);
+        }
+        public CompanyTreeItem[] GetTreeItems ( long? parentId )
         {
             BasicCompany[] items = this._Company.Gets<BasicCompany>(new ComGetParam
             {
+                ParentId = parentId,
                 Status = new HrCompanyStatus[]
                 {
                     HrCompanyStatus.启用
@@ -35,7 +40,8 @@ namespace Basic.HrService.lmpl
             {
                 return Array.Empty<CompanyTreeItem>();
             }
-            return items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == 0, ( a, b ) => a.ParentId == b.Id);
+            long pid = parentId.GetValueOrDefault(0);
+            return items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == pid, ( a, b ) => a.ParentId == b.Id);
         }
         public long Add ( CompanyAdd add )
         {

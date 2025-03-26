@@ -97,3 +97,21 @@ export function SetAdminId(id, empId) {
     }
   })
 }
+
+export function GetNameList(ids) {
+  return request({
+    url: formatRequestUri('GetNameList'),
+    method: 'post',
+    data: ids
+  })
+}
+
+export function GetTreeItems(parentId) {
+  return request({
+    url: formatRequestUri('GetTreeItems'),
+    method: 'get',
+    params: {
+      parentId
+    }
+  })
+}

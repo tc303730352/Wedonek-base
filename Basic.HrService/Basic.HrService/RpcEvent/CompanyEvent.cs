@@ -45,9 +45,13 @@ namespace Basic.HrService.RpcEvent
         {
             return this._Service.GetTrees();
         }
-        public CompanyTreeItem[] GetCompanyTreeItems ()
+        public CompanyTreeItem[] GetCompanyTreeItems ( GetCompanyTreeItems obj )
         {
-            return this._Service.GetTreeItems();
+            return this._Service.GetTreeItems(obj.ParentId);
+        }
+        public string[] GetCompanyNameList ( GetCompanyNameList obj )
+        {
+            return this._Service.GetNameList(obj.Ids);
         }
         public bool SetCompanyLeaverId ( SetCompanyLeaverId obj )
         {

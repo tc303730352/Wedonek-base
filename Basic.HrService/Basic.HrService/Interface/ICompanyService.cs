@@ -5,10 +5,11 @@ namespace Basic.HrService.Interface
 {
     public interface ICompanyService
     {
-        CompanyTreeItem[] GetTreeItems ();
+        CompanyTreeItem[] GetTreeItems ( long? parentId );
         bool SetLeaverId ( long id, long? empId );
         bool SetAdminId ( long id, long? empId );
         bool SetStatus ( long id, HrCompanyStatus status );
+        string[] GetNameList ( long[] ids );
         string GetName ( long id );
         long Add ( CompanyAdd add );
         void Delete ( long id );
