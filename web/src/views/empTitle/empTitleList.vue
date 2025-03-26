@@ -3,11 +3,12 @@
     :title="title"
     :visible="visible"
     class="empTitleDialog"
-    width="800px"
+    width="900px"
     :before-close="closeForm"
     :close-on-click-modal="false"
   >
     <div style="text-align: right; padding-bottom: 10px">
+      <el-switch v-model="isShowAll" active-text="只显示本公司职务" inactive-text="显示所有" @change="load" />
       <el-button
         type="primary"
         size="mini"
@@ -17,15 +18,21 @@
     <el-table :data="titles" style="width: 100%">
       <el-table-column type="index" label="序号" width="50" />
       <el-table-column
+        prop="CompanyName"
+        align="center"
+        label="公司名"
+        min-width="200"
+      />
+      <el-table-column
         prop="UnitName"
         align="center"
-        label="任职单位"
+        label="单位"
         min-width="200"
       />
       <el-table-column
         prop="DeptName"
         align="center"
-        label="任职部门"
+        label="部门"
         min-width="200"
       />
       <el-table-column prop="Title" label="职务" align="center" min-width="200" />
@@ -72,6 +79,7 @@ export default {
       titles: [],
       title: '人员职务',
       isRefresh: false,
+      isShowAll: false,
       addVisible: false
     }
   },
@@ -96,7 +104,7 @@ export default {
       this.addVisible = true
     },
     dropTitle(row) {
-      const title = '确认删除职务 ' + row.Title + '?'
+      const title = '确认删除职务 ' + row.CompanyName + '-' + row.Title + '?'
       const that = this
       this.$confirm(title, '提示', {
         confirmButtonText: '确定',
@@ -113,7 +121,7 @@ export default {
         message: '删除成功!'
       })
       this.isRefresh = true
-      this.titles = this.titles.filter((c) => c.Id != id)
+      this.titles = this.titles.filter((c) => c.Id !== id)
     },
     closeAdd(isRefresh) {
       this.addVisible = false
@@ -126,7 +134,11 @@ export default {
       this.$emit('cancel', this.isRefresh)
     },
     async load() {
-      this.titles = await empTitleApi.gets(this.empId, this.comId)
+      let comId = null
+      if (!this.isShowAll) {
+        comId = this.comId
+      }
+      this.titles = await empTitleApi.gets(this.empId, comId)
     }
   }
 }

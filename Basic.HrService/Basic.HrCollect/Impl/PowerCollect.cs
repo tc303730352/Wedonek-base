@@ -31,26 +31,25 @@ namespace Basic.HrCollect.Impl
         }
         public PowerRouteDto[] GetEnables ( long[] ids )
         {
-            PowerRouteDto[] list;
             if ( ids.IsNull() )
             {
-                list = this._Power.Gets<PowerRouteDto>(a => a.IsEnable);
+                return this._Power.Gets<PowerRouteDto>(a => a.IsEnable).OrderBy(a => a.Sort).ToArray();
             }
             else
             {
-                list = this._Power.Gets<PowerRouteDto>(a => ids.Contains(a.Id) && a.IsEnable);
-            }
-            List<long> prtId = new List<long>();
-            list.ForEach(c =>
-            {
-                if ( c.LevelCode != string.Empty )
+                PowerRouteDto[] list = this._Power.Gets<PowerRouteDto>(a => ids.Contains(a.Id) && a.IsEnable);
+                List<long> prtId = new List<long>();
+                list.ForEach(c =>
                 {
-                    c.LevelCode.SplitWriteLong('|', prtId);
-                }
-            });
-            long[] pids = prtId.Distinct().ToArray();
-            PowerRouteDto[] menus = this._Power.Gets<PowerRouteDto>(a => pids.Contains(a.Id) && a.PowerType == PowerType.dir);
-            return list.Add(menus).OrderBy(a => a.Sort).ToArray();
+                    if ( c.LevelCode != string.Empty )
+                    {
+                        c.LevelCode.SplitWriteLong('|', prtId);
+                    }
+                });
+                long[] pids = prtId.Distinct().ToArray();
+                PowerRouteDto[] menus = this._Power.Gets<PowerRouteDto>(a => pids.Contains(a.Id) && a.PowerType == PowerType.dir);
+                return list.Add(menus).OrderBy(a => a.Sort).ToArray();
+            }
         }
         public PowerBasic[] Gets ( long[] ids )
         {
