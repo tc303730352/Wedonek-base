@@ -41,7 +41,10 @@ namespace Basic.HrService.lmpl
                 return Array.Empty<CompanyTreeItem>();
             }
             long pid = parentId.GetValueOrDefault(0);
-            return items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == pid, ( a, b ) => a.ParentId == b.Id);
+            return items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == pid, ( a, b ) =>
+            {
+                b.Name = a.ShortName.GetValueOrDefault(a.FullName);
+            }, ( a, b ) => a.ParentId == b.Id,);
         }
         public long Add ( CompanyAdd add )
         {

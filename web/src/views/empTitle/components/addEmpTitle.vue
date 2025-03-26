@@ -8,6 +8,12 @@
     :close-on-click-modal="false"
   >
     <el-form ref="empTitleEdit" :model="empTitle" :rules="rules">
+      <el-form-item label="任职公司" prop="CompanyId">
+        <companySelect
+          v-model="empTitle.CompanyId"
+          placeholder="选择任职公司"
+        />
+      </el-form-item>
       <el-form-item label="任职部门" prop="DeptId">
         <deptSelect
           v-model="empTitle.DeptId"
@@ -34,11 +40,13 @@
 <script>
 import { add } from '@/api/emp/empTitle'
 import deptSelect from '@/components/unit/deptSelect.vue'
+import companySelect from '@/components/company/companySelect.vue'
 import { HrItemDic } from '@/config/publicDic'
 export default {
   name: 'AddEmpTitle',
   components: {
-    deptSelect
+    deptSelect,
+    companySelect
   },
   props: {
     empId: {
@@ -86,7 +94,9 @@ export default {
   },
   methods: {
     reset() {
-      this.empTitle = {}
+      this.empTitle = {
+        CompanyId: this.comId
+      }
     },
     save() {
       const that = this
@@ -99,7 +109,6 @@ export default {
       })
     },
     async add() {
-      this.empTitle.CompanyId = this.comId
       this.empTitle.EmpId = this.empId
       await add(this.empTitle)
       this.$message({
