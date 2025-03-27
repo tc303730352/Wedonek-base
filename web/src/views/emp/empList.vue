@@ -3,10 +3,15 @@
     <leftRightSplit :left-span="4">
       <el-card slot="left">
         <div slot="header">
-          <span>所在单位部门</span>
+          <span>所在公司部门</span>
+          <el-checkbox
+            v-model="isShowChildren"
+            style="float: right"
+          >显示子公司</el-checkbox>
         </div>
         <unitDeptTree
           ref="deptTree"
+          :is-sub-company="isShowChildren"
           @load="chioseDept"
           @change="chioseDept"
         />
@@ -178,13 +183,21 @@
               @click="editEmp(e.row.EmpId)"
             />
             <el-button
-              v-if="comId == e.row.CompanyId"
               size="mini"
               type="default"
               title="编辑人员职务"
               icon="el-icon-postcard"
               circle
               @click="editEmpTitle(e.row.EmpId)"
+            />
+            <el-button
+              v-if="e.row.Status == 1"
+              size="mini"
+              type="default"
+              title="人员调任"
+              icon="el-icon-share"
+              circle
+              @click="empEntry(e.row)"
             />
             <el-button
               v-if="e.row.Status == 0 && comId == e.row.CompanyId"
@@ -204,6 +217,12 @@
       :visible="visible"
       @cancel="() => (visible = false)"
     />
+    <editEmpEntry
+      :emp="emp"
+      :company-id="queryParam.CompanyId"
+      :visible="entryVisible"
+      @close="entryVisible = false"
+    />
   </div>
 </template>
 
@@ -219,16 +238,13 @@ import {
   HrEmpStatus
 } from '@/config/publicDic'
 import unitDeptTree from '@/components/unit/unitDeptTree.vue'
+import editEmpEntry from './components/editEmpEntry.vue'
 export default {
   name: 'DeptList',
   components: {
     unitDeptTree,
-    empTitleEdit
-  },
-  computed: {
-    comId() {
-      return this.$store.getters.curComId
-    }
+    empTitleEdit,
+    editEmpEntry
   },
   data() {
     return {
@@ -236,9 +252,16 @@ export default {
       HrItemDic,
       HrUserType,
       HrEmpStatus,
+      entryVisible: false,
+      emp: {
+        CompanyId: null,
+        EmpId: null,
+        EmpName: null
+      },
       emps: [],
       chioseEmp: [],
       status: [],
+      isShowChildren: false,
       title: '员工列表',
       columns: [
         {
@@ -325,7 +348,7 @@ export default {
           title: '操作',
           align: 'left',
           fixed: 'right',
-          width: '100px',
+          width: '150px',
           slotName: 'action'
         }
       ],
@@ -351,9 +374,20 @@ export default {
       }
     }
   },
+  computed: {
+    comId() {
+      return this.$store.getters.curComId
+    }
+  },
   mounted() {},
   methods: {
     moment,
+    empEntry(emp) {
+      this.emp.CompanyId = this.queryParam.CompanyId
+      this.emp.EmpId = emp.EmpId
+      this.emp.EmpName = emp.EmpName
+      this.entryVisible = true
+    },
     editEmpTitle(empId) {
       this.empId = empId
       this.visible = true
@@ -365,7 +399,9 @@ export default {
       this.$router.push({ name: 'addEmp' })
     },
     checkIsSelect(row) {
-      return row.IsOpenAccount === false && row.Status === 1 && row.DeptId !== 0
+      return (
+        row.IsOpenAccount === false && row.Status === 1 && row.DeptId !== 0
+      )
     },
     async setStatus(row, status) {
       await empApi.setStatus(row.EmpId, status)

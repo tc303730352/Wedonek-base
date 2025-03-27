@@ -23,7 +23,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service.Delete(obj.Id);
         }
-
+        public string[] GetEmpDeptTitle ( GetEmpDeptTitle obj )
+        {
+            return this._Service.GetDeptTitle(obj.EmpId, obj.DeptId);
+        }
         public EmpTitleData GetEmpTitle ( GetEmpTitle obj )
         {
             return this._Service.Get(obj.Id);

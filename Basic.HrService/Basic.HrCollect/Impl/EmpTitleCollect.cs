@@ -74,6 +74,10 @@ namespace Basic.HrCollect.Impl
                 a.TitleCode
             }).GroupBy(a => a.EmpId).ToDictionary(a => a.Key, a => a.Select(c => c.TitleCode).ToArray());
         }
+        public Result[] GetEmpDeptTitle<Result> ( long empId, long deptId, Expression<Func<DBEmpTitle, Result>> selector )
+        {
+            return this._EmpTitle.Gets<Result>(a => a.EmpId == empId && a.DeptId == deptId, selector);
+        }
         public Result[] GetEmpDeptTitle<Result> ( long[] empId, long[] deptId, Expression<Func<DBEmpTitle, Result>> selector )
         {
             return this._EmpTitle.Gets<Result>(a => empId.Contains(a.EmpId) && deptId.Contains(a.DeptId), selector);

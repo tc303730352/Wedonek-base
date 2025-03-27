@@ -30,7 +30,7 @@ namespace Basic.HrCollect
         Dictionary<long, int> GetDeptEmpNum ( long[] deptId );
         bool CheckDeptIsExists ( long[] deptId );
         void SetEmpPost ( long empId, string post );
-        string[] SetEmpEntry ( DBEmpList emp, EmpEntry datum );
+        string[] SetEmpEntry ( DBEmpList emp, EmpEntrySet datum );
         bool CheckIsNull ( long companyId );
     }
 }

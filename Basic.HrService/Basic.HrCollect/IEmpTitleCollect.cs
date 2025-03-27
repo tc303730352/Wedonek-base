@@ -13,6 +13,7 @@ namespace Basic.HrCollect
         void Delete ( DBEmpTitle obj );
         DBEmpTitle Get ( long id );
         long[] GetCompanyIds ( long empId );
+        Result[] GetEmpDeptTitle<Result> ( long empId, long deptId, Expression<Func<DBEmpTitle, Result>> selector );
         string[] GetTitle ( long empId, long deptId );
         EmpTitleDto[] GetEmpTitle ( long[] empId, long companyId );
         Dictionary<long, string[]> GetEmpDeptTitle ( long[] empId, long deptId );

@@ -348,24 +348,25 @@ namespace Basic.HrService.lmpl
         public void SetEmpEntry ( long id, EmpEntry datum )
         {
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
-            if ( emp.DeptId != datum.DeptId )
+            EmpEntrySet set = new EmpEntrySet
             {
-                datum.UnitId = this._Dept.GetUnitId(datum.DeptId);
-            }
-            else
+                CompanyId = emp.CompanyId,
+                DeptId = datum.DeptId,
+                IsRetainTitle = datum.IsRetainTitle,
+                PostCode = datum.PostCode,
+                Title = datum.Title
+            };
+            set.UnitId = this._Dept.GetUnitId(datum.DeptId);
+            var titles = this._Title.GetEmpDeptTitle(id, datum.DeptId, a => new
             {
-                datum.UnitId = emp.UnitId;
-                string[] titile = this._Title.GetTitle(id, emp.DeptId);
-                if ( titile.IsEqual(datum.Title) )
-                {
-                    datum.Title = null;
-                }
-                if ( emp.PostCode == datum.PostCode && datum.Title == null )
-                {
-                    return;
-                }
+                a.Id,
+                a.TitleCode
+            });
+            if ( !titles.IsNull() )
+            {
+                set.DropTitleId = titles.Convert(c => !datum.Title.Contains(c.TitleCode), c => c.Id);
             }
-            string[] cols = this._Service.SetEmpEntry(emp, datum);
+            string[] cols = this._Service.SetEmpEntry(emp, set);
             new EmpLocalEvent(emp, cols).AsyncSend("Update");
         }
 

@@ -135,6 +135,12 @@ export default {
         this.checkboxKey = val
       },
       immediate: true
+    },
+    isSubCompany: {
+      handler(val) {
+        this.loadTree()
+      },
+      immediate: false
     }
   },
   methods: {

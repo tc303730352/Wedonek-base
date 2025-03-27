@@ -191,7 +191,7 @@ namespace Basic.HrCollect.Impl
             this._Emp.SetEmpPost(empId, post);
         }
 
-        public string[] SetEmpEntry ( DBEmpList emp, EmpEntry datum )
+        public string[] SetEmpEntry ( DBEmpList emp, EmpEntrySet datum )
         {
             return this._Emp.SetEmpEntry(emp, datum);
         }

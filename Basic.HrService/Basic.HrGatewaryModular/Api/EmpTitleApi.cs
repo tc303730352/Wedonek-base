@@ -21,7 +21,16 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.AddEmpTitle(datum);
         }
-
+        /// <summary>
+        /// 获取部门职务
+        /// </summary>
+        /// <param name="empId"></param>
+        /// <param name="deptId"></param>
+        /// <returns></returns>
+        public string[] GetTitles ( [NumValidate("hr.emp.id.error", 1)] long empId, [NumValidate("hr.dept.id.error", 1)] long deptId )
+        {
+            return this._Service.GetTitles(empId, deptId);
+        }
         /// <summary>
         /// 删除人员职务
         /// </summary>

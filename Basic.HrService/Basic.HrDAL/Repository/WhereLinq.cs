@@ -378,7 +378,14 @@ namespace Basic.HrDAL.Repository
                 if ( query.IsAllChildren )
                 {
                     string code = repository.Get(a => a.Id == query.ParentId.Value, a => a.LevelCode);
-                    code = code + query.ParentId.Value + "|";
+                    if ( code == string.Empty )
+                    {
+                        code = "|" + query.ParentId.Value + "|";
+                    }
+                    else
+                    {
+                        code = code + query.ParentId.Value + "|";
+                    }
                     where = where.And(a => a.LevelCode.StartsWith(code));
                 }
                 else

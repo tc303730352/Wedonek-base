@@ -7,6 +7,7 @@ namespace Basic.HrService.Interface
         long Add ( EmpTitleAdd add );
         void Delete ( long id );
         EmpTitleData Get ( long id );
+        string[] GetDeptTitle ( long empId, long deptId );
         EmpTitleDatum[] Gets ( long empId, long companyId );
     }
 }

@@ -36,6 +36,10 @@ namespace Basic.HrService.lmpl
             DBEmpTitle title = this._Service.Get(id);
             this._Service.Delete(title);
         }
+        public string[] GetDeptTitle ( long empId, long deptId )
+        {
+            return this._Service.GetEmpDeptTitle(empId, deptId, a => a.TitleCode);
+        }
 
         public EmpTitleData Get ( long id )
         {

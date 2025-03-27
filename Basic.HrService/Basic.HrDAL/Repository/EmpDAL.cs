@@ -158,35 +158,39 @@ namespace Basic.HrDAL.Repository
             }
         }
 
-        public string[] SetEmpEntry ( DBEmpList soure, EmpEntry datum )
+        public string[] SetEmpEntry ( DBEmpList soure, EmpEntrySet datum )
         {
+            long companyId = soure.CompanyId;
             long deptId = soure.DeptId;
             string[] cols = soure.Merge(datum);
-            if ( cols.IsNull() && datum.Title.IsNull() )
-            {
-                return cols;
-            }
             ISqlQueue<DBEmpList> queue = this._BasicDAL.BeginQueue();
             if ( !cols.IsNull() )
             {
                 queue.Update(soure, cols);
             }
+            if ( soure.IsOpenAccount )
+            {
+                queue.DeleteBy<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
+            }
+            if ( !datum.IsRetainTitle )
+            {
+                queue.DeleteBy<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.CompanyId == companyId);
+            }
+            if ( !datum.DropTitleId.IsNull() )
+            {
+                queue.DeleteBy<DBEmpTitle>(a => datum.DropTitleId.Contains(a.Id));
+            }
             if ( !datum.Title.IsNull() )
             {
-                queue.DeleteBy<DBEmpTitle>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
                 queue.InsertBy<DBEmpTitle>(datum.Title.ConvertAll(a => new DBEmpTitle
                 {
                     Id = IdentityHelper.CreateId(),
-                    CompanyId = soure.CompanyId,
+                    CompanyId = datum.CompanyId,
                     DeptId = datum.DeptId,
                     EmpId = soure.EmpId,
                     TitleCode = a,
                     UnitId = datum.UnitId
                 }));
-            }
-            if ( soure.IsOpenAccount && deptId != datum.DeptId )
-            {
-                queue.DeleteBy<DBEmpDeptPower>(a => a.EmpId == soure.EmpId && a.DeptId == deptId);
             }
             _ = queue.Submit();
             return cols;

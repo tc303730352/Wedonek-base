@@ -178,15 +178,17 @@ export default {
       })
       this.props.multiple = this.isMultiple
       this.dept = {}
-      res.forEach((c) => {
-        this.dept[c.Id] = c
-        this.format(c)
-      })
-      this.depts = res
+      if (res && res.length > 0) {
+        res.forEach((c) => {
+          this.dept[c.Id] = c
+          this.format(c)
+        })
+        this.depts = res
+      } else {
+        this.depts = []
+      }
     },
-    initTrees() {
-
-    },
+    initTrees() {},
     format(row) {
       if (row.IsUnit && !this.isChioseUnit) {
         row.disabled = true
@@ -211,7 +213,7 @@ export default {
       }
       if (this.isMultiple) {
         e.value = val
-        e.dept = val.map(c => this.dept[c])
+        e.dept = val.map((c) => this.dept[c])
       } else if (val) {
         e.value = [val]
         e.dept = [this.dept[val]]
@@ -230,7 +232,7 @@ export default {
   display: inline-block;
   line-height: 20px;
 }
-.deptNames span{
+.deptNames span {
   padding: 5px;
 }
 </style>

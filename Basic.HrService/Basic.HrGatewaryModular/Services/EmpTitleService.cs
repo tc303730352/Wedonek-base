@@ -39,5 +39,13 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
+        public string[] GetTitles ( long empId, long deptId )
+        {
+            return new GetEmpDeptTitle
+            {
+                EmpId = empId,
+                DeptId = deptId
+            }.Send();
+        }
     }
 }
