@@ -15,6 +15,7 @@ namespace Basic.HrGatewaryModular.Api
         {
             this._Service = service;
         }
+        [ApiPower("all", "hr.company.set")]
         public bool SetAdminId ( LongNullParam<long?> param )
         {
             return this._Service.SetAdminId(param.Id, param.Value);
@@ -32,6 +33,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
+        [ApiPower("all", "hr.company.set")]
         public bool SetLeaverId ( LongNullParam<long?> param )
         {
             return this._Service.SetLeaverId(param.Id, param.Value);
@@ -78,6 +80,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除公司
         /// </summary>
         /// <param name="id">公司ID</param>
+        [ApiPower("all", "hr.company.delete")]
         public void Delete ( [NumValidate("hr.company.id.error", 1)] long id )
         {
             this._Service.DeleteCompany(id);
@@ -117,6 +120,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.company.set")]
         public bool Set ( [NullValidate("hr.company.param.null")] LongParam<CompanySet> param )
         {
             return this._Service.SetCompany(param.Id, param.Value);

@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.Dept;
 using Basic.HrRemoteModel.Dept.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 using WeDonekRpc.HttpApiGateway.Model;
@@ -23,6 +24,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">部门资料</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.dept.add")]
         public long Add ( [NullValidate("hr.dept.datum.null")] DeptAdd datum )
         {
             return this._Service.AddDept(datum);
@@ -32,6 +34,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除部门
         /// </summary>
         /// <param name="id">部门ID</param>
+        [ApiPower("all", "hr.dept.delete")]
         public void Delete ( [NumValidate("hr.dept.id.error", 1)] long id )
         {
             this._Service.DeleteDept(id);
@@ -42,6 +45,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="deptId">部门ID</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.dept.set")]
         public bool Enable ( [NullValidate("hr.dept.deptId.null")] long[] deptId )
         {
             return this._Service.EnableDept(deptId);
@@ -93,6 +97,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改部门资料
         /// </summary>
         /// <param name="param">参数</param>
+        [ApiPower("all", "hr.dept.set")]
         public void Set ( [NullValidate("hr.dept.param.null")] UI_SetDept param )
         {
             this._Service.SetDept(param.Id, param.Dept);
@@ -101,6 +106,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 设置负载人
         /// </summary>
         /// <param name="leader"></param>
+        [ApiPower("all", "hr.dept.set")]
         public void SetLeader ( LongNullParam<long?> leader )
         {
             this._Service.SetLeader(leader.Id, leader.Value);
@@ -111,6 +117,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="deptId">部门ID</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.dept.set")]
         public bool Stop ( [NumValidate("hr.dept.deptId.error", 1)] long deptId )
         {
             return this._Service.StopDept(deptId);

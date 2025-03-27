@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.LoginUser;
 using Basic.HrRemoteModel.LoginUser.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -19,6 +20,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除账户
         /// </summary>
         /// <param name="empId">人员ID</param>
+        [ApiPower("all", "hr.user.delete")]
         public void DeleteAccount ( [NumValidate("hr.loginuser.empId.error", 1)] long empId )
         {
             this._Service.DeleteAccount(empId);
@@ -27,6 +29,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 重置密码
         /// </summary>
         /// <param name="empId"></param>
+        [ApiPower("all", "hr.user.pwd.reset")]
         public void ResetPwd ( [NumValidate("hr.loginuser.empId.error", 1)] long empId )
         {
             this._Service.ResetPwd(empId);
@@ -43,6 +46,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 开通账号
         /// </summary>
         /// <param name="set">人员ID</param>
+        [ApiPower("all", "hr.emp.open.account")]
         public void OpenAccount ( LongParam<long[]> set )
         {
             this._Service.OpenAccount(set.Value, set.Id);

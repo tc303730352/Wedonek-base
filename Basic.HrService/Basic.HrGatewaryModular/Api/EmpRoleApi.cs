@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.EmpRole;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 
@@ -26,6 +27,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改人员角色
         /// </summary>
         /// <param name="param">参数</param>
+        [ApiPower("all", "hr.emp.role.set")]
         public void Set ( [NullValidate("hr.emprole.param.null")] UI_SetEmpRole param )
         {
             this._Service.SetEmpRole(param.EmpId, base.UserState.ToCompanyId(), param.RoleId);

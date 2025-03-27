@@ -2,6 +2,11 @@
   <el-card>
     <div slot="header">
       <span>组织结构图</span>
+      <el-checkbox
+        v-model="isShowAll"
+        style="float: right"
+        @change="init"
+      >显示子公司</el-checkbox>
     </div>
     <div class="structure" :style="{ height: height }">
       <zm-tree-org
@@ -88,7 +93,7 @@
   </el-card>
 </template>
 <script>
-import { getTallyTrees, stop, enable } from '@/api/unit/dept'
+import { getTallyTree, stop, enable } from '@/api/unit/dept'
 import { HrItemDic } from '@/config/publicDic'
 import empModel from '@/components/emp/empModel.vue'
 import { GetItemName } from '@/api/base/dictItem'
@@ -114,7 +119,7 @@ export default {
       comVisible: false,
       viewVisible: false,
       empVisible: false,
-      status: null,
+      isShowAll: false,
       parentId: null
     }
   },
@@ -236,42 +241,44 @@ export default {
       this.init()
     },
     async init() {
-      const list = await getTallyTrees({
+      const res = await getTallyTree({
         CompanyId: this.comId,
-        Status: this.status
+        IsShowChildren: this.isShowAll
       })
-      this.depts = {
-        id: this.comId,
-        label: this.comName,
+      const dept = {
+        id: res.Id,
+        label: res.Name,
         type: 'company',
-        children: list.map((c) => {
-          return {
+        children: []
+      }
+      this.format(dept, res)
+      this.depts = dept
+    },
+    format(node, res) {
+      if (res.Children != null && res.Children.length !== 0) {
+        res.Children.forEach(c => {
+          const com = {
             id: c.Id,
-            pid: null,
             label: c.Name,
-            type: c.IsUnit ? 'unit' : 'dept',
-            isEnable: c.Status === 1,
-            unitId: c.UnitId,
-            expand: true,
-            EmpNum: c.EmpNum,
-            EmpTotal: c.EmpTotal,
-            LeaderName: c.LeaderName,
-            LeaderId: c.LeaderId,
-            DeptShow: c.DeptShow,
-            DeptTag: c.DeptTag,
-            children: this.getChilldren(c)
+            type: 'company',
+            children: []
           }
+          this.format(com, c)
+          node.children.push(com)
         })
       }
-    },
-    getChilldren(a) {
-      if (a.Children == null || a.Children.length === 0) {
-        return null
+      if (res.Dept != null && res.Dept.length > 0) {
+        this.initChilldren(node, res.Dept)
       }
-      return a.Children.map((c) => {
-        return {
+    },
+    initChilldren(node, list) {
+      if (list == null || list.length === 0) {
+        return
+      }
+      list.forEach((c) => {
+        const t = {
           id: c.Id,
-          pid: a.Id,
+          pid: node.id,
           label: c.Name,
           expand: true,
           type: c.IsUnit ? 'unit' : 'dept',
@@ -283,8 +290,12 @@ export default {
           LeaderId: c.LeaderId,
           DeptShow: c.DeptShow,
           DeptTag: c.DeptTag,
-          children: this.getChilldren(c)
+          children: []
         }
+        if (c.Children != null && c.Children.length > 0) {
+          this.initChilldren(t, c.Children)
+        }
+        node.children.push(t)
       })
     }
   }

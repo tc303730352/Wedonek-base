@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.Role;
 using Basic.HrRemoteModel.Role.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -20,6 +21,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">角色资料</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.role.add")]
         public long Add ( [NullValidate("hr.role.datum.null")] RoleSet datum )
         {
             return this._Service.AddRole(datum, base.UserState.ToCompanyId());
@@ -29,6 +31,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除角色
         /// </summary>
         /// <param name="id">角色ID</param>
+        [ApiPower("all", "hr.role.delete")]
         public void Delete ( [NumValidate("hr.role.id.error", 1)] long id )
         {
             this._Service.DeleteRole(id);
@@ -59,15 +62,17 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.Query(param);
         }
+        [ApiPower("all", "hr.role.set")]
         public void SetIsEnable ( LongParam<bool> set )
         {
             this._Service.SetIsEnable(set.Id, set.Value);
         }
-
+        [ApiPower("all", "hr.role.set")]
         public void SetIsDefRole ( [NumValidate("hr.role.id.error", 1)] long id )
         {
             this._Service.SetIsDefRole(id);
         }
+        [ApiPower("all", "hr.role.set")]
         public void SetIsAdmin ( LongParam<bool> set )
         {
             this._Service.SetIsAdmin(set.Id, set.Value);
@@ -77,6 +82,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.role.set")]
         public bool Set ( [NullValidate("hr.role.param.null")] UI_SetRole param )
         {
             return this._Service.SetRole(param.Id, param.Datum);

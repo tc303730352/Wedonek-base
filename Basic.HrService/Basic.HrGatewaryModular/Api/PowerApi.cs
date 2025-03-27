@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.Power;
 using Basic.HrRemoteModel.Power.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -20,6 +21,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">目录权限资料</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.power.add")]
         public long Add ( [NullValidate("hr.power.datum.null")] PowerAdd datum )
         {
             return this._Service.AddPower(datum);
@@ -81,6 +83,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
+        [ApiPower("all", "hr.power.set")]
         public bool SetSort ( LongParam<int> param )
         {
             return this._Service.SetSort(param.Id, param.Value);
@@ -90,6 +93,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.power.set")]
         public bool Set ( [NullValidate("hr.power.param.null")] LongParam<PowerSetDto> param )
         {
             return this._Service.SetPower(param.Id, param.Value);
@@ -98,6 +102,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除权限
         /// </summary>
         /// <param name="id"></param>
+        [ApiPower("all", "hr.power.delete")]
         public void Delete ( [NumValidate("hr.power.id.error", 1)] long id )
         {
             this._Service.Delete(id);
@@ -106,6 +111,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 设置是否启用
         /// </summary>
         /// <param name="param"></param>
+        [ApiPower("all", "hr.power.set")]
         public void SetIsEnable ( LongParam<bool> param )
         {
             this._Service.SetIsEnable(param.Id, param.Value);

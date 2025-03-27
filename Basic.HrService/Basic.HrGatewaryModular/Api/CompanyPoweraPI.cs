@@ -1,4 +1,5 @@
 ﻿using Basic.HrGatewaryModular.Interface;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 using WeDonekRpc.HttpApiGateway.Model;
@@ -18,7 +19,7 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.GetPowerIds(companyId);
         }
-
+        [ApiPower("all", "hr.company.set")]
         public bool Sync ( LongParam<long[]> param )
         {
             return this._Service.Sync(param.Id, param.Value);

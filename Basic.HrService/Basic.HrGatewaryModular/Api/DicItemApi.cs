@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.DicItem;
 using Basic.HrRemoteModel.DicItem.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 using WeDonekRpc.HttpApiGateway.Model;
@@ -19,6 +20,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">字典项资料</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.dic.set")]
         public long Add ( [NullValidate("hr.dicitem.datum.null")] DicItemAdd datum )
         {
             return this._Service.AddDicItem(datum);
@@ -28,18 +30,23 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除字典项
         /// </summary>
         /// <param name="id">字典项ID</param>
+        [ApiPower("all", "hr.dic.delete")]
         public void Delete ( [NumValidate("hr.dicitem.id.error", 1)] long id )
         {
             this._Service.DeleteDicItem(id);
         }
+
+
         public DicItemDto Get ( [NumValidate("hr.dicitem.id.error", 1)] long id )
         {
             return this._Service.GetDicItem(id);
         }
+
         /// <summary>
         /// 启用字典项
         /// </summary>
         /// <param name="id">启用字典项ID</param>
+        [ApiPower("all", "hr.dic.set")]
         public void Enable ( [NumValidate("hr.dicitem.id.error", 1)] long id )
         {
             this._Service.EnableDicItem(id);
@@ -81,6 +88,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="param">参数</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.dic.set")]
         public bool Set ( [NullValidate("hr.dicitem.param.null")] UI_SetDicItem param )
         {
             return this._Service.SetDicItem(param.Id, param.ItemSet);
@@ -90,6 +98,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 停用字典项
         /// </summary>
         /// <param name="id">字典项ID</param>
+        [ApiPower("all", "hr.dic.set")]
         public void Stop ( [NumValidate("hr.dicitem.id.error", 1)] long id )
         {
             this._Service.StopDicItem(id);
@@ -98,7 +107,8 @@ namespace Basic.HrGatewaryModular.Api
         /// 设置排序位
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="sort"></param>
+        /// <param name="toId"></param>
+        [ApiPower("all", "hr.dic.set")]
         public void Move ( [NumValidate("hr.dicitem.id.error", 1)] long id, [NumValidate("hr.dicitem.to.id.error", 1)] long toId )
         {
             this._Service.Move(id, toId);

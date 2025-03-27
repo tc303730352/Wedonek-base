@@ -75,9 +75,9 @@ export function setLeader(id, leaderId) {
   })
 }
 
-export function getTallyTrees(data) {
+export function getTallyTree(data) {
   return request({
-    url: formatRequestUri('GetTallyTrees'),
+    url: formatRequestUri('GetTallyTree'),
     method: 'post',
     data
   })

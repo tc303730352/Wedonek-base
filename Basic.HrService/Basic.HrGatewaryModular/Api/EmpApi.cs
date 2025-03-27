@@ -2,6 +2,7 @@
 using Basic.HrGatewaryModular.Model.Emp;
 using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Emp.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -16,6 +17,11 @@ namespace Basic.HrGatewaryModular.Api
         {
             this._Service = service;
         }
+        /// <summary>
+        /// 人员借调
+        /// </summary>
+        /// <param name="obj"></param>
+        [ApiPower("all", "hr.emp.entry")]
         public void SetEmpEntry ( LongParam<EmpEntry> obj )
         {
             this._Service.SetEmpEntry(obj.Id, obj.Value);
@@ -33,6 +39,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改人员岗位
         /// </summary>
         /// <param name="set"></param>
+        [ApiPower("all", "hr.emp.set")]
         public void SetEmpPost ( LongParam<string> set )
         {
             this._Service.SetEmpPost(set.Id, set.Value);
@@ -42,6 +49,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">人员信息</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.emp.add")]
         public long Add ( [NullValidate("hr.emp.datum.null")] EmpAdd datum )
         {
             return this._Service.AddEmp(datum);
@@ -50,6 +58,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 保存人员头像
         /// </summary>
         /// <param name="head"></param>
+        [ApiPower("all", "hr.emp.set")]
         public void SaveHead ( SetEmpHead head )
         {
             this._Service.SetEmpHead(head.Id, head.HeadUrl, head.FileId);
@@ -58,6 +67,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除人员
         /// </summary>
         /// <param name="id">人员ID</param>
+        [ApiPower("all", "hr.emp.delete")]
         public void Delete ( [NumValidate("hr.emp.id.error", 1)] long id )
         {
             this._Service.DeleteEmp(id);
@@ -135,6 +145,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改人员资料
         /// </summary>
         /// <param name="param">参数</param>
+        [ApiPower("all", "hr.emp.set")]
         public void Set ( [NullValidate("hr.emp.param.null")] UI_SetEmp param )
         {
             this._Service.SetEmp(param.Id, param.Datum);
@@ -143,6 +154,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 启用
         /// </summary>
         /// <param name="set"></param>
+        [ApiPower("all", "hr.emp.set")]
         public void SetStatus ( LongParam<HrEmpStatus> set )
         {
             this._Service.SetStatus(set.Id, set.Value);

@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrRemoteModel.DeptChange.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 namespace Basic.HrGatewaryModular.Api
@@ -8,7 +9,7 @@ namespace Basic.HrGatewaryModular.Api
     {
         private readonly IDeptChangeService _Service;
 
-        public DeptChangeApi (IDeptChangeService service)
+        public DeptChangeApi ( IDeptChangeService service )
         {
             this._Service = service;
         }
@@ -17,7 +18,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="deptId"></param>
         /// <returns></returns>
-        public ChangeDeptTree GetDept ([NumValidate("hr.dept.id.error", 1)] long deptId, bool? isUnit)
+        public ChangeDeptTree GetDept ( [NumValidate("hr.dept.id.error", 1)] long deptId, bool? isUnit )
         {
             return this._Service.GetDept(deptId, isUnit);
         }
@@ -26,7 +27,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public DisbandedDeptEmp[] GetDisbandedEmps (DeptDisbandedArg obj)
+        public DisbandedDeptEmp[] GetDisbandedEmps ( DeptDisbandedArg obj )
         {
             return this._Service.GetDisbandedEmps(obj);
         }
@@ -35,7 +36,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="arg"></param>
         /// <returns></returns>
-        public MergeEmp GetMergeEmp (DeptMergeArg arg)
+        public MergeEmp GetMergeEmp ( DeptMergeArg arg )
         {
             return this._Service.GetMergeEmp(arg);
         }
@@ -44,7 +45,8 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="deptId"></param>
         /// <param name="toDeptId"></param>
-        public void Merge ([NumValidate("hr.dept.id.error", 1)] long deptId, [NumValidate("hr.to.dept.id.error", 1)] long toDeptId)
+        [ApiPower("all", "hr.dept.merge")]
+        public void Merge ( [NumValidate("hr.dept.id.error", 1)] long deptId, [NumValidate("hr.to.dept.id.error", 1)] long toDeptId )
         {
             this._Service.Merge(deptId, toDeptId);
         }
@@ -53,7 +55,8 @@ namespace Basic.HrGatewaryModular.Api
         /// 解散部门
         /// </summary>
         /// <param name="deptId"></param>
-        public void ToVoid ([NumValidate("hr.dept.id.error", 1)] long deptId)
+        [ApiPower("all", "hr.dept.merge")]
+        public void ToVoid ( [NumValidate("hr.dept.id.error", 1)] long deptId )
         {
             this._Service.ToVoid(deptId);
         }

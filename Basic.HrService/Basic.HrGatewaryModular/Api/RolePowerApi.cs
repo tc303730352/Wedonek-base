@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.RolePower;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.HttpApiGateway;
 
 namespace Basic.HrGatewaryModular.Api
@@ -20,6 +21,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 修改权限集
         /// </summary>
         /// <param name="param"></param>
+        [ApiPower("all", "hr.role.set")]
         public void Set ( RolePowerSet param )
         {
             this._Service.Set(param);

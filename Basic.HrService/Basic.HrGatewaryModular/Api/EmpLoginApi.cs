@@ -14,6 +14,19 @@ namespace Basic.HrGatewaryModular.Api
             this._Service = service;
         }
         /// <summary>
+        /// 检查权限
+        /// </summary>
+        /// <param name="power"></param>
+        /// <returns></returns>
+        public string[] CheckPower ( [NullValidate("hr.power.null")] string[] power )
+        {
+            if ( this.UserState.IsAdmin() )
+            {
+                return power;
+            }
+            return base.UserState.Power.Intersect(power).ToArray();
+        }
+        /// <summary>
         /// 获取登陆资料
         /// </summary>
         /// <returns></returns>

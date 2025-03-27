@@ -108,30 +108,35 @@ namespace Basic.HrService.lmpl
             DeptBaseDto[] depts = this._Dept.GetDepts<DeptBaseDto>(new DeptGetParam
             {
                 CompanyId = coms.ConvertAll(a => a.Id),
-                IsAllChildren = true,
                 Status = new HrDeptStatus[]
                 {
                      HrDeptStatus.启用,
                       HrDeptStatus.停用
                 }
             });
+            CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
             if ( depts.IsNull() )
             {
-                return null;
+                return new ComTallyTree
+                {
+                    Id = com.Id,
+                    Name = com.ShortName.GetValueOrDefault(com.FullName)
+                };
             }
             Dictionary<long, int> empNum = this._Emp.GetDeptEmpNum(depts.Convert(c => c.IsUnit == false, c => c.Id));
             Dictionary<long, string> empName = this._Emp.GetName(depts.Convert(c => c.IsUnit == false && c.LeaderId.HasValue, c => c.LeaderId.Value));
-            CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
             ComTallyTree obj = new ComTallyTree
             {
                 Id = com.Id,
                 Name = com.ShortName.GetValueOrDefault(com.FullName),
-                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToTree(empNum, empName)
+                Dept = depts.FindAll(a => a.CompanyId == com.Id).ToTree(empNum, empName)
             };
             if ( coms.Length == 1 )
             {
+                obj.Dept = depts.ToTree(empNum, empName);
                 return obj;
             }
+            obj.Dept = depts.FindAll(a => a.CompanyId == com.Id).ToTree(empNum, empName);
             obj.Children = this._GetChildren(com, coms, depts, empNum, empName);
             return obj;
         }
@@ -145,7 +150,7 @@ namespace Basic.HrService.lmpl
             {
                 Id = a.Id,
                 Name = a.ShortName.GetValueOrDefault(a.FullName),
-                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToTree(empNum, empName),
+                Dept = depts.FindAll(c => c.CompanyId == a.Id).ToTree(empNum, empName),
                 Children = this._GetChildren(a, coms, depts, empNum, empName)
             });
         }

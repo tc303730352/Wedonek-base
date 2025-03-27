@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model.DeptPower;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 
@@ -26,6 +27,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 设置员工部门权限
         /// </summary>
         /// <param name="param">参数</param>
+        [ApiPower("all", "hr.emp.dept.power")]
         public void Set ( [NullValidate("hr.dept.power.param.null")] UI_SetDeptPower param )
         {
             this._Service.SetDeptPower(param.EmpId, param.CompanyId, param.DeptId);

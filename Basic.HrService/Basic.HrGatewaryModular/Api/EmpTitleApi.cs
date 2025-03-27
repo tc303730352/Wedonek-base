@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrRemoteModel.EmpTitle.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 
@@ -17,6 +18,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="datum">职务资料</param>
         /// <returns></returns>
+        [ApiPower("all", "hr.emp.title.set")]
         public long Add ( [NullValidate("hr.emptitle.datum.null")] EmpTitleAdd datum )
         {
             return this._Service.AddEmpTitle(datum);
@@ -35,6 +37,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除人员职务
         /// </summary>
         /// <param name="id">职务ID</param>
+        [ApiPower("all", "hr.emp.title.set")]
         public void Delete ( [NumValidate("hr.emptitle.id.error", 1)] long id )
         {
             this._Service.DeleteEmpTitle(id);
