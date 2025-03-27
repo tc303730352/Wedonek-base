@@ -58,7 +58,7 @@ namespace Basic.HrCollect.Impl
         {
             if ( !companyId.IsNull() )
             {
-                return this._EmpTitle.Gets<Result>(a => a.EmpId == empId && companyId.Contains(a.Id));
+                return this._EmpTitle.Gets<Result>(a => a.EmpId == empId && companyId.Contains(a.CompanyId));
             }
             return this._EmpTitle.Gets<Result>(a => a.EmpId == empId);
         }

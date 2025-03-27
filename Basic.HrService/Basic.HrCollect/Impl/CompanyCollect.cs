@@ -60,7 +60,7 @@ namespace Basic.HrCollect.Impl
             if ( add.CompanyType != HrCompanyType.总公司 )
             {
                 string code = this._Company.Get(add.ParentId, a => a.LevelCode);
-                levelCode = code + add.ParentId + "|";
+                levelCode = ( code == string.Empty ? "|" : code ) + add.ParentId + "|";
             }
             else
             {
