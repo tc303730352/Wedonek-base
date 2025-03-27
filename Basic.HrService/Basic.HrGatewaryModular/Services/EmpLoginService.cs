@@ -33,6 +33,7 @@ namespace Basic.HrGatewaryModular.Services
                 CurSubSysId = datum.CurSubSysId,
                 Power = datum.Power,
                 SubSystem = datum.SubSystem,
+                Operate = state.Power,
                 Datum = new LoginUser
                 {
                     EmpId = empId,

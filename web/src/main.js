@@ -30,6 +30,9 @@ import 'zm-tree-org/lib/zm-tree-org.css'
 Vue.use(ZmTreeOrg)
 Vue.prototype.$moment = moment
 Vue.prototype.$erd = ElementResizeDetectorMaker()
+Vue.prototype.$checkPower = function(powers) {
+  return store.dispatch('user/checkPower', powers)
+}
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

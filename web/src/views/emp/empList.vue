@@ -261,6 +261,7 @@ export default {
       emps: [],
       chioseEmp: [],
       status: [],
+      rolePower: [],
       isShowChildren: false,
       title: '员工列表',
       columns: [
@@ -379,7 +380,10 @@ export default {
       return this.$store.getters.curComId
     }
   },
-  mounted() {},
+  mounted() {
+    this.rolePower = this.$checkPower(['hr.emp.add'])
+    console.log(this.rolePower)
+  },
   methods: {
     moment,
     empEntry(emp) {

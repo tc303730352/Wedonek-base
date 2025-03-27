@@ -25,5 +25,10 @@ namespace Basic.HrGatewaryModular.Model.EmpLogin
         public long CurSubSysId { get; set; }
 
         public LoginUser Datum { get; set; }
+
+        /// <summary>
+        /// 操作权限
+        /// </summary>
+        public string[] Operate { get; set; }
     }
 }

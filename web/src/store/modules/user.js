@@ -64,6 +64,17 @@ async function checkLoginState() {
     return false
   }
 }
+function checkOpPower(powers) {
+  const tokenId = getToken()
+  if (cache.isCache(tokenId)) {
+    const cache = cache.getCache(tokenId)
+    if (cache.Operate.includes('all')) {
+      return powers
+    }
+    return powers.filters(c => cache.Operate.includes(c))
+  }
+  return false
+}
 async function switchCom(commit, companyId) {
   const comId = cache.getCurComId()
   if (comId === companyId) {
@@ -123,8 +134,10 @@ const actions = {
     commit('SET_CurSysId', sysId)
   },
   async switchCompany({ commit }, companyId) {
-    console.log(companyId)
     return await switchCom(commit, companyId)
+  },
+  checkPower(powers) {
+    return checkOpPower(powers)
   },
   // user logout
   logout({ dispatch, commit }) {
