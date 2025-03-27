@@ -31,20 +31,46 @@ namespace Basic.HrService.lmpl
             BasicCompany[] items = this._Company.Gets<BasicCompany>(new ComGetParam
             {
                 ParentId = parentId,
+                IsAllChildren = true,
                 Status = new HrCompanyStatus[]
                 {
                     HrCompanyStatus.启用
                 }
             });
-            if ( items.IsNull() )
+            if ( !parentId.HasValue && items.IsNull() )
             {
                 return Array.Empty<CompanyTreeItem>();
             }
-            long pid = parentId.GetValueOrDefault(0);
-            return items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == pid, ( a, b ) =>
+            else if ( parentId.HasValue )
             {
-                b.Name = a.ShortName.GetValueOrDefault(a.FullName);
-            }, ( a, b ) => a.ParentId == b.Id,);
+                BasicCompany com = this._Company.Get<BasicCompany>(parentId.Value);
+                CompanyTreeItem item = new CompanyTreeItem
+                {
+                    CompanyType = com.CompanyType,
+                    Id = com.Id,
+                    LeaverId = com.LeaverId,
+                    Name = com.ShortName.GetValueOrDefault(com.FullName)
+                };
+                if ( !items.IsNull() )
+                {
+                    item.Children = items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == com.Id, ( a, b ) =>
+                    {
+                        b.Name = a.ShortName.GetValueOrDefault(a.FullName);
+                    }, ( a, b ) => a.ParentId == b.Id);
+                }
+                return new CompanyTreeItem[]
+                   {
+                       item
+                   };
+            }
+            else
+            {
+                long pid = parentId.GetValueOrDefault(0);
+                return items.ConvertTree<BasicCompany, CompanyTreeItem>(a => a.ParentId == 0, ( a, b ) =>
+                {
+                    b.Name = a.ShortName.GetValueOrDefault(a.FullName);
+                }, ( a, b ) => a.ParentId == b.Id);
+            }
         }
         public long Add ( CompanyAdd add )
         {

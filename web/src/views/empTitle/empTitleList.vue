@@ -8,7 +8,6 @@
     :close-on-click-modal="false"
   >
     <div style="text-align: right; padding-bottom: 10px">
-      <el-switch v-model="isShowAll" active-text="只显示本公司职务" inactive-text="显示所有" @change="load" style="margin-right: 20px;" />
       <el-button
         type="primary"
         size="mini"
@@ -35,7 +34,12 @@
         label="部门"
         min-width="200"
       />
-      <el-table-column prop="Title" label="职务" align="center" min-width="200" />
+      <el-table-column
+        prop="Title"
+        label="职务"
+        align="center"
+        min-width="200"
+      />
       <el-table-column prop="action" label="操作">
         <template slot-scope="scope">
           <el-button
@@ -48,11 +52,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <addEmpTitle
-      :emp-id="empId"
-      :visible="addVisible"
-      @close="closeAdd"
-    />
+    <addEmpTitle :emp-id="empId" :visible="addVisible" @close="closeAdd" />
   </el-dialog>
 </template>
 
@@ -79,7 +79,6 @@ export default {
       titles: [],
       title: '人员职务',
       isRefresh: false,
-      isShowAll: true,
       addVisible: false
     }
   },
@@ -134,11 +133,7 @@ export default {
       this.$emit('cancel', this.isRefresh)
     },
     async load() {
-      let comId = null
-      if (!this.isShowAll) {
-        comId = this.comId
-      }
-      this.titles = await empTitleApi.gets(this.empId, comId)
+      this.titles = await empTitleApi.gets(this.empId, this.comId)
     }
   }
 }

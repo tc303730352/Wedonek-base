@@ -11,12 +11,14 @@
       <el-form-item label="任职公司" prop="CompanyId">
         <companySelect
           v-model="empTitle.CompanyId"
+          :parent-id="comId"
           placeholder="选择任职公司"
         />
       </el-form-item>
       <el-form-item label="任职部门" prop="DeptId">
         <deptSelect
           v-model="empTitle.DeptId"
+          :company-id="empTitle.CompanyId"
           :status="[1]"
           :is-chiose-unit="false"
           placeholder="选择任职部门"
@@ -71,6 +73,13 @@ export default {
             trigger: 'blur'
           }
         ],
+        CompanyId: [
+          {
+            required: true,
+            message: '任职公司不能为空！',
+            trigger: 'blur'
+          }
+        ],
         TitleCode: [
           { required: true, message: '职务不能为空!', trigger: 'blur' }
         ]
@@ -121,7 +130,9 @@ export default {
       this.$emit('close', false)
     },
     resetForm() {
-      this.empTitle = {}
+      this.empTitle = {
+        CompanyId: this.comId
+      }
     }
   }
 }

@@ -42,7 +42,7 @@ export default {
     },
     isChoiceEnd: {
       type: Boolean,
-      default: true
+      default: false
     },
     parentId: {
       type: String,
@@ -103,7 +103,7 @@ export default {
       }
     },
     async loadTree() {
-      const res = await GetTreeItems(this.dicId)
+      const res = await GetTreeItems(this.parentId)
       this.props.checkStrictly = this.isChoiceEnd === false
       this.props.multiple = this.isMultiple
       this.cache = {}

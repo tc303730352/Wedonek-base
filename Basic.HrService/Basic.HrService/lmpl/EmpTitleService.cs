@@ -44,9 +44,10 @@ namespace Basic.HrService.lmpl
             dto.Title = this._TitleDic.GetTitleName(title.TitleCode);
             return dto;
         }
-        public EmpTitleDatum[] Gets ( long empId, long? companyId )
+        public EmpTitleDatum[] Gets ( long empId, long companyId )
         {
-            DBEmpTitle[] titles = this._Service.GetEmpTitle<DBEmpTitle>(empId, companyId);
+            long[] ids = this._Company.GetSubIds(companyId).Add(companyId);
+            DBEmpTitle[] titles = this._Service.GetEmpTitle<DBEmpTitle>(empId, ids);
             if ( titles.IsNull() )
             {
                 return null;

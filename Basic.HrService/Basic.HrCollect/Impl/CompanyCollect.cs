@@ -194,6 +194,16 @@ namespace Basic.HrCollect.Impl
         {
             return this._Company.GetName(companyId);
         }
+        public long[] GetSubIds ( long companyId )
+        {
+            string code = this._Company.Get(a => a.Id == companyId, a => a.LevelCode);
+            if ( code == string.Empty )
+            {
+                return this._Company.Gets<long>(a => a.Status == HrCompanyStatus.启用, a => a.Id);
+            }
+            code = code + companyId + "|";
+            return this._Company.Gets<long>(a => a.LevelCode.StartsWith(code) && a.Status == HrCompanyStatus.启用, a => a.Id);
+        }
         public CompanyName[] GetSubs ( string levelCode )
         {
             return this._Company.Gets<CompanyName>(a => a.LevelCode.StartsWith(levelCode) && a.Status == HrCompanyStatus.启用);

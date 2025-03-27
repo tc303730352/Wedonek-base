@@ -439,11 +439,12 @@
             <param name="id">职务ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.GetList(System.Int64,System.Nullable{System.Int64})">
+        <member name="M:Basic.HrGatewaryModular.Api.EmpTitleApi.GetList(System.Int64,System.Int64)">
             <summary>
             获取职务列表
             </summary>
             <param name="empId">人员ID</param>
+            <param name="companyId">公司ID</param>
             <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.EnumApi.GetItems(System.String)">
@@ -1080,7 +1081,7 @@
             <param name="id">职务ID</param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.GetEmpTitleList(System.Int64,System.Nullable{System.Int64})">
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpTitleService.GetEmpTitleList(System.Int64,System.Int64)">
             <summary>
             获取职务列表
             </summary>

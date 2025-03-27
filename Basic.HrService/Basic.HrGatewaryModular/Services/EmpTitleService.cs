@@ -30,7 +30,7 @@ namespace Basic.HrGatewaryModular.Services
             }.Send();
         }
 
-        public EmpTitleDatum[] GetEmpTitleList ( long empId, long? companyId )
+        public EmpTitleDatum[] GetEmpTitleList ( long empId, long companyId )
         {
             return new GetEmpTitleList
             {

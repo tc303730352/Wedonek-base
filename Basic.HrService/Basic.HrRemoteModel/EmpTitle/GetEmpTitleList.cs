@@ -17,6 +17,6 @@ namespace Basic.HrRemoteModel.EmpTitle
         /// <summary>
         /// 公司ID
         /// </summary>
-        public long? CompanyId { get; set; }
+        public long CompanyId { get; set; }
     }
 }

@@ -54,13 +54,17 @@ namespace Basic.HrCollect.Impl
         {
             return this._EmpTitle.Gets<Result>(a => a.EmpId == empId);
         }
-        public Result[] GetEmpTitle<Result> ( long empId, long? companyId ) where Result : class, new()
+        public Result[] GetEmpTitle<Result> ( long empId, long[] companyId ) where Result : class, new()
         {
-            if ( companyId.HasValue )
+            if ( !companyId.IsNull() )
             {
-                return this._EmpTitle.Gets<Result>(a => a.EmpId == empId && a.CompanyId == companyId.Value);
+                return this._EmpTitle.Gets<Result>(a => a.EmpId == empId && companyId.Contains(a.Id));
             }
             return this._EmpTitle.Gets<Result>(a => a.EmpId == empId);
+        }
+        public Result[] GetEmpTitle<Result> ( long empId, long companyId ) where Result : class, new()
+        {
+            return this._EmpTitle.Gets<Result>(a => a.EmpId == empId && a.CompanyId == companyId);
         }
         public Dictionary<long, string[]> GetEmpDeptTitle ( long[] empId, long deptId )
         {

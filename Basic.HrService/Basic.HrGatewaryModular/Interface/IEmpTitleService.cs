@@ -29,7 +29,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <param name="empId">人员ID</param>
         /// <returns></returns>
-        EmpTitleDatum[] GetEmpTitleList ( long empId, long? companyId );
+        EmpTitleDatum[] GetEmpTitleList ( long empId, long companyId );
 
     }
 }

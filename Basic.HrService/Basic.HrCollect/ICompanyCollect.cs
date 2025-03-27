@@ -24,5 +24,6 @@ namespace Basic.HrCollect
         bool Set ( DBCompany source, CompanySet set );
         CompanyName[] GetSubs ( string levelCode );
         string[] GetNameList ( long[] ids );
+        long[] GetSubIds ( long companyId );
     }
 }

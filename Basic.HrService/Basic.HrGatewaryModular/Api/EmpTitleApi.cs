@@ -45,8 +45,9 @@ namespace Basic.HrGatewaryModular.Api
         /// 获取职务列表
         /// </summary>
         /// <param name="empId">人员ID</param>
+        /// <param name="companyId">公司ID</param>
         /// <returns></returns>
-        public EmpTitleDatum[] GetList ( [NumValidate("hr.emp.id.error", 1)] long empId, [NumValidate("hr.company.id.error", 1)] long? companyId )
+        public EmpTitleDatum[] GetList ( [NumValidate("hr.emp.id.error", 1)] long empId, [NumValidate("hr.company.id.error", 1)] long companyId )
         {
             return this._Service.GetEmpTitleList(empId, companyId);
         }
