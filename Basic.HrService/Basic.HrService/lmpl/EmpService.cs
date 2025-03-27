@@ -350,7 +350,7 @@ namespace Basic.HrService.lmpl
             DBEmpList emp = this._Service.Get<DBEmpList>(id);
             EmpEntrySet set = new EmpEntrySet
             {
-                CompanyId = emp.CompanyId,
+                CompanyId = datum.CompanyId,
                 DeptId = datum.DeptId,
                 IsRetainTitle = datum.IsRetainTitle,
                 PostCode = datum.PostCode,

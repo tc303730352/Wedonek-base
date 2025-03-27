@@ -9,7 +9,11 @@ namespace Basic.HrModel.Dept
             get;
             set;
         }
-
+        public long CompanyId
+        {
+            get;
+            set;
+        }
         public long ParentId
         {
             get;

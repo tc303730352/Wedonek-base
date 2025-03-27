@@ -81,6 +81,10 @@
       :visible="empVisible"
       @close="empVisible=false"
     />
+    <companyView
+      :id="id"
+      :visible.sync="comVisible"
+    />
   </el-card>
 </template>
 <script>
@@ -90,11 +94,13 @@ import empModel from '@/components/emp/empModel.vue'
 import { GetItemName } from '@/api/base/dictItem'
 import editDept from './components/editDept.vue'
 import deptView from './components/deptView.vue'
+import companyView from '../company/components/companyView.vue'
 export default {
   components: {
     editDept,
     deptView,
-    empModel
+    empModel,
+    companyView
   },
   data() {
     return {
@@ -105,6 +111,7 @@ export default {
       isUnit: false,
       unitId: null,
       visible: false,
+      comVisible: false,
       viewVisible: false,
       empVisible: false,
       status: null,
@@ -207,8 +214,9 @@ export default {
         this.unitId = node.unitId
         this.visible = true
       } else if (e.command === 'view') {
-        if (e.type === 'company') {
-
+        if (e.node.type === 'company') {
+          this.id = node.id
+          this.comVisible = true
         } else {
           this.id = node.id
           this.viewVisible = true

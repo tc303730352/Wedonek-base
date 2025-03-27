@@ -4,7 +4,7 @@ namespace Basic.HrService.Interface
 {
     public interface IDeptService
     {
-        DeptTallyTree[] GetTallyTrees ( DeptGetArg arg );
+        ComTallyTree GetTallyTrees ( DeptTallyGetParam arg );
         DeptSelect[] GetDeptSelect ( DeptGetArg arg );
         long Add ( DeptAdd add );
         void Delete ( long id );

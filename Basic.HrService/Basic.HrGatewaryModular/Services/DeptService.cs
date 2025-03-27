@@ -13,12 +13,8 @@ namespace Basic.HrGatewaryModular.Services
                 Datum = datum,
             }.Send();
         }
-        public DeptTallyTree[] GetTallyTrees ( DeptGetArg param )
+        public ComTallyTree GetTallyTree ( DeptTallyGetParam param )
         {
-            if ( param.DeptId != null && param.DeptId.Length == 0 )
-            {
-                return Array.Empty<DeptTallyTree>();
-            }
             return new GetTallyTrees
             {
                 Param = param

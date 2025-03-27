@@ -43,7 +43,7 @@ namespace Basic.HrService.RpcEvent
         {
             return this._Service.GetDeptSelect(arg.GetParam);
         }
-        public DeptTallyTree[] GetTallyTrees ( GetTallyTrees obj )
+        public ComTallyTree GetTallyTrees ( GetTallyTrees obj )
         {
             return this._Service.GetTallyTrees(obj.Param);
         }

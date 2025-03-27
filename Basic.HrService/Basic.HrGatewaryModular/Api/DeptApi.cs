@@ -14,10 +14,9 @@ namespace Basic.HrGatewaryModular.Api
         {
             this._Service = service;
         }
-        public DeptTallyTree[] GetTallyTrees ( DeptGetArg param )
+        public ComTallyTree GetTallyTree ( DeptTallyGetParam param )
         {
-            param.DeptId = base.UserState.PowerDeptId(param.DeptId);
-            return this._Service.GetTallyTrees(param);
+            return this._Service.GetTallyTree(param);
         }
         /// <summary>
         /// 添加部门

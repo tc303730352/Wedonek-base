@@ -26,7 +26,7 @@ namespace Basic.HrRemoteModel.Emp.Model
         /// 职位码
         /// </summary>
         [NullValidate("hr.title.code.null")]
-        [LenValidate("hr.title.code.len", 2, 20)]
+        [LenValidate("hr.title.code.len", 2, 20, true)]
         [FormatValidate("hr.title.code.error", ValidateFormat.数字字母)]
         public string[] Title { get; set; }
 

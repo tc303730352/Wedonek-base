@@ -5,11 +5,11 @@ using WeDonekRpc.Model;
 namespace Basic.HrRemoteModel.Dept
 {
     [IRemoteConfig("basic.hr.service")]
-    public class GetTallyTrees : RpcRemoteArray<DeptTallyTree>
+    public class GetTallyTrees : RpcRemote<ComTallyTree>
     {
         /// <summary>
         /// 部门查询参数
         /// </summary>
-        public DeptGetArg Param { get; set; }
+        public DeptTallyGetParam Param { get; set; }
     }
 }

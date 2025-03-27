@@ -16,9 +16,6 @@ module.exports = {
     },
     1: {
       text: '子公司'
-    },
-    2: {
-      text: '分公司'
     }
   },
   HrItemDic: {

@@ -39,6 +39,9 @@
           placeholder="职务"
         />
       </el-form-item>
+      <el-form-item label="保留原职务" prop="IsRetainTitle">
+        <el-switch v-model="empEntry.IsRetainTitle" active-text="是" inactive-text="否" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="save">保存</el-button>
         <el-button @click="resetForm">重置</el-button>

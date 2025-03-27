@@ -1,6 +1,8 @@
 ﻿using Basic.HrCollect;
+using Basic.HrModel.Company;
 using Basic.HrModel.DB;
 using Basic.HrModel.Dept;
+using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Dept.Model;
 using Basic.HrService.Interface;
 using WeDonekRpc.Client;
@@ -12,8 +14,10 @@ namespace Basic.HrService.lmpl
     {
         private readonly IDeptCollect _Dept;
         private readonly IEmpCollect _Emp;
-        public DeptService ( IDeptCollect dept, IEmpCollect emp )
+        private readonly ICompanyCollect _Company;
+        public DeptService ( IDeptCollect dept, IEmpCollect emp, ICompanyCollect company )
         {
+            this._Company = company;
             this._Emp = emp;
             this._Dept = dept;
         }
@@ -84,25 +88,67 @@ namespace Basic.HrService.lmpl
             });
             return depts.ToTree();
         }
-        public DeptTallyTree[] GetTallyTrees ( DeptGetArg arg )
+        private CompanyName[] _GetCompanys ( long comId, bool IsSub )
         {
+            CompanyName name = this._Company.Get<CompanyName>(comId);
+            if ( IsSub )
+            {
+                string code = this._Company.Get(comId, a => a.LevelCode);
+                code = ( code == string.Empty ? "|" : code ) + comId + "|";
+                return this._Company.GetSubs(code).Add(name);
+            }
+            else
+            {
+                return new CompanyName[] { name };
+            }
+        }
+        public ComTallyTree GetTallyTrees ( DeptTallyGetParam arg )
+        {
+            CompanyName[] coms = this._GetCompanys(arg.CompanyId, arg.IsShowChildren);
             DeptBaseDto[] depts = this._Dept.GetDepts<DeptBaseDto>(new DeptGetParam
             {
-                CompanyId = [arg.CompanyId],
-                ParentId = arg.ParentId,
+                CompanyId = coms.ConvertAll(a => a.Id),
                 IsAllChildren = true,
-                Status = arg.Status,
-                DeptId = arg.DeptId,
+                Status = new HrDeptStatus[]
+                {
+                     HrDeptStatus.启用,
+                      HrDeptStatus.停用
+                }
             });
             if ( depts.IsNull() )
             {
-                return Array.Empty<DeptTallyTree>();
+                return null;
             }
             Dictionary<long, int> empNum = this._Emp.GetDeptEmpNum(depts.Convert(c => c.IsUnit == false, c => c.Id));
             Dictionary<long, string> empName = this._Emp.GetName(depts.Convert(c => c.IsUnit == false && c.LeaderId.HasValue, c => c.LeaderId.Value));
-            return depts.ToTree(empNum, empName);
+            CompanyName com = coms.Find(a => a.Id == arg.CompanyId);
+            ComTallyTree obj = new ComTallyTree
+            {
+                Id = com.Id,
+                Name = com.ShortName.GetValueOrDefault(com.FullName),
+                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToTree(empNum, empName)
+            };
+            if ( coms.Length == 1 )
+            {
+                return obj;
+            }
+            obj.Children = this._GetChildren(com, coms, depts, empNum, empName);
+            return obj;
         }
-
+        private ComTallyTree[] _GetChildren ( CompanyName prt,
+            CompanyName[] coms,
+            DeptBaseDto[] depts,
+            Dictionary<long, int> empNum,
+            Dictionary<long, string> empName )
+        {
+            return coms.Convert(a => a.ParentId == prt.Id, a => new ComTallyTree
+            {
+                Id = a.Id,
+                Name = a.ShortName.GetValueOrDefault(a.FullName),
+                Dept = depts.FindAll(a => a.CompanyId == a.Id).ToTree(empNum, empName),
+                Children = this._GetChildren(a, coms, depts, empNum, empName)
+            });
+        }
         public bool Stop ( long deptId )
         {
             DBDept dept = this._Dept.Get(deptId);

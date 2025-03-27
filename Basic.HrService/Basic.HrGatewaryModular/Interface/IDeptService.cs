@@ -4,7 +4,7 @@ namespace Basic.HrGatewaryModular.Interface
 {
     public interface IDeptService
     {
-        DeptTallyTree[] GetTallyTrees ( DeptGetArg param );
+        ComTallyTree GetTallyTree ( DeptTallyGetParam param );
         /// <summary>
         /// 添加部门
         /// </summary>
