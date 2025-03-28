@@ -101,6 +101,7 @@ namespace Basic.HrService.lmpl
             {
                 return Array.Empty<PowerDataTree>();
             }
+            list = list.OrderBy(a => a.Sort).ToArray();
             int lvl = list.Min(c => c.LevelNum);
             return list.Convert(c => c.LevelNum == lvl, c =>
             {
