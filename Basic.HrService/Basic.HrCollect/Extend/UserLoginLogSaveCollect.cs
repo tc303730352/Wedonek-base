@@ -14,11 +14,9 @@ namespace Basic.HrCollect.Extend
 {
     internal class UserLoginLogSaveCollect : IUserLoginLogSaveCollect
     {
-        private readonly IErrorManage _Error;
         private readonly IDelayDataSave<LoginLogAdd> _DelaySave;
-        public UserLoginLogSaveCollect ( IErrorManage error )
+        public UserLoginLogSaveCollect ()
         {
-            this._Error = error;
             this._DelaySave = new DelayDataSave<LoginLogAdd>(this._save, 10, 5);
         }
         private void _save ( ref LoginLogAdd[] datas )
@@ -28,7 +26,7 @@ namespace Basic.HrCollect.Extend
             {
                 c.Id = IdentityHelper.CreateId();
                 c.Address = _GetIpAddress(c.LoginIp);
-                if ( !c.IsSuccess && this._Error.TryGet(c.ErrorCode, out ErrorMsg msg) )
+                if ( !c.IsSuccess && LocalErrorManage.GetErrorMsg(c.ErrorCode, out ErrorMsg msg) )
                 {
                     c.FailShow = msg.Text;
                 }
