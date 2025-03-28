@@ -19,5 +19,9 @@ namespace Basic.HrRemoteModel.EmpLogin
         /// 登陆密码
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// 登陆状态
+        /// </summary>
+        public LoginState LoginState { get; set; }
     }
 }

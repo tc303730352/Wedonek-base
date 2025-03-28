@@ -1,9 +1,31 @@
-﻿using WeDonekRpc.Modular;
+﻿using Basic.HrRemoteModel.EmpLogin.Model;
+using WeDonekRpc.Helper.UAParser;
+using WeDonekRpc.HttpService;
+using WeDonekRpc.HttpService.Interface;
+using WeDonekRpc.Modular;
 
 namespace Basic.HrGatewaryModular
 {
     internal static class LinqHelper
     {
+        private static readonly Parser _UAgentParser = null;
+
+        static LinqHelper ()
+        {
+            _UAgentParser = Parser.GetDefault();
+        }
+
+        public static LoginState ToLoginState ( this IHttpRequest request )
+        {
+            string agent = request.UAgent();
+            ClientInfo client = _UAgentParser.Parse(agent);
+            return new LoginState
+            {
+                LoginIp = request.ClientIp,
+                Browser = client.UA.ToString(),
+                SysName = client.OS.ToString(),
+            };
+        }
         public static long ToEmpId ( this IUserState state )
         {
             return state.GetValue<long>("UserId");

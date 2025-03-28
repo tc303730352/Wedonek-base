@@ -6,6 +6,6 @@ namespace Basic.HrService.Interface
     {
         ComSwitchResult Switch ( long empId, long companyId );
         LoginResult Login ( long empId );
-        LoginResult PwdLogin ( string username, string password );
+        LoginResult PwdLogin ( string username, string password, LoginState loginState );
     }
 }

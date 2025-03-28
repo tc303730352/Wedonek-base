@@ -7,6 +7,7 @@ using Basic.HrRemoteModel.Dept.Model;
 using Basic.HrRemoteModel.Dic.Model;
 using Basic.HrRemoteModel.DicItem.Model;
 using Basic.HrRemoteModel.Emp.Model;
+using Basic.HrRemoteModel.LoginLog.Model;
 using Basic.HrRemoteModel.Power.Model;
 using Basic.HrRemoteModel.Role.Model;
 using Basic.HrRemoteModel.TreeDic.Model;
@@ -20,6 +21,39 @@ namespace Basic.HrDAL.Repository
 {
     internal static class WhereLinq
     {
+        public static Expression<Func<DBUserLoginLog, bool>> ToWhere ( this LoginLogQuery query )
+        {
+            ExpressionStarter<DBUserLoginLog> where = PredicateBuilder.New<DBUserLoginLog>();
+            if ( query.LoginName.IsNotNull() )
+            {
+                where = where.And(a => a.LoginName == query.LoginName);
+            }
+            if ( query.LoginIp.IsNotNull() )
+            {
+                where = where.And(a => a.LoginIp == query.LoginIp);
+            }
+            if ( query.IsSuccess.HasValue )
+            {
+                where = where.And(a => a.IsSuccess == query.IsSuccess.Value);
+            }
+            if ( query.Begin.HasValue && query.End.HasValue )
+            {
+                where = where.And(a => SqlFunc.Between(a.LoginTime, query.Begin.Value, query.End.Value));
+            }
+            else if ( query.Begin.HasValue )
+            {
+                where = where.And(a => a.LoginTime >= query.Begin.Value);
+            }
+            else if ( query.End.HasValue )
+            {
+                where = where.And(a => a.LoginTime <= query.End.Value);
+            }
+            if ( where.IsStarted )
+            {
+                return where;
+            }
+            return null;
+        }
         public static Expression<Func<DBPowerList, bool>> ToWhere ( this PowerGetParam query, long[] subSysId )
         {
             ExpressionStarter<DBPowerList> where = PredicateBuilder.New<DBPowerList>(a => subSysId.Contains(a.SubSystemId));

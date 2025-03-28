@@ -91,12 +91,13 @@ namespace Basic.HrGatewaryModular.Services
                 AccreditId = accreditId
             };
         }
-        public EmpLoginRes EmpPwdLogin ( string loginName, string password )
+        public EmpLoginRes EmpPwdLogin ( string loginName, string password, LoginState state )
         {
             LoginResult result = new EmpPwdLogin
             {
                 LoginName = loginName,
                 Password = password,
+                LoginState = state
             }.Send();
             return this._GetLoginResult(result);
         }

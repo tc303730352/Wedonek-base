@@ -51,7 +51,7 @@ namespace Basic.HrGatewaryModular.Api
         [ApiPower(false)]
         public EmpLoginRes EmpPwdLogin ( [NullValidate("hr.emplogin.param.null")] UI_EmpPwdLogin param )
         {
-            return this._Service.EmpPwdLogin(param.LoginName, param.Password);
+            return this._Service.EmpPwdLogin(param.LoginName, param.Password, this.Request.ToLoginState());
         }
 
         public void LoginOut ()

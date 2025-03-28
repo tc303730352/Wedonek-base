@@ -23,7 +23,7 @@ namespace Basic.HrService.RpcEvent
         }
         public LoginResult EmpPwdLogin ( EmpPwdLogin obj )
         {
-            return this._Service.PwdLogin(obj.LoginName, obj.Password);
+            return this._Service.PwdLogin(obj.LoginName, obj.Password, obj.LoginState);
         }
     }
 }

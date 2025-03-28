@@ -18,15 +18,18 @@ namespace Basic.HrService.lmpl
         private readonly IRoleOperatePowerCollect _RolePower;
         private readonly IEmpRoleCollect _EmpRole;
         private readonly IEmpDeptPowerCollect _DeptPower;
+        private readonly IUserLoginLogSaveCollect _LoginLog;
         public EmpLoginService ( ILoginUserCollect loginUser,
             IEmpCollect emp,
             IHrConfig config,
             IEmpTitleCollect empTitle,
             IRoleOperatePowerCollect rolePower,
             IEmpDeptPowerCollect deptPower,
+            IUserLoginLogSaveCollect loginLog,
             IEmpRoleCollect empRole,
             IDeptCollect dept )
         {
+            this._LoginLog = loginLog;
             this._DeptPower = deptPower;
             this._LoginUser = loginUser;
             this._Emp = emp;
@@ -59,9 +62,9 @@ namespace Basic.HrService.lmpl
         public LoginResult Login ( long empId )
         {
             DBEmpList emp = this._Emp.Get<DBEmpList>(empId);
-            return this._Login(emp);
+            return this._EmpLogin(emp);
         }
-        private LoginResult _Login ( DBEmpList emp )
+        private LoginResult _EmpLogin ( DBEmpList emp )
         {
             if ( emp.Status != HrEmpStatus.启用 )
             {
@@ -94,7 +97,7 @@ namespace Basic.HrService.lmpl
                 IsAdmin = isAdmin,
             };
         }
-        public LoginResult PwdLogin ( string username, string password )
+        private LoginResult _Login ( string username, string password )
         {
             long empId = this._LoginUser.GetEmpId(username);
             DBEmpList emp = this._Emp.Get<DBEmpList>(empId);
@@ -103,7 +106,21 @@ namespace Basic.HrService.lmpl
             {
                 throw new ErrorException("hr.user.pwd.error");
             }
-            return this._Login(emp);
+            return this._EmpLogin(emp);
+        }
+        public LoginResult PwdLogin ( string username, string password, LoginState state )
+        {
+            try
+            {
+                LoginResult result = this._Login(username, password);
+                this._LoginLog.Add(username, state);
+                return result;
+            }
+            catch ( ErrorException ex )
+            {
+                this._LoginLog.AddFailLog(username, ex, state);
+                throw;
+            }
         }
     }
 }

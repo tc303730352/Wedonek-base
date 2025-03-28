@@ -1,4 +1,5 @@
 ﻿using Basic.HrGatewaryModular.Model.EmpLogin;
+using Basic.HrRemoteModel.EmpLogin.Model;
 using WeDonekRpc.Modular;
 
 namespace Basic.HrGatewaryModular.Interface
@@ -19,7 +20,7 @@ namespace Basic.HrGatewaryModular.Interface
         /// <param name="loginName">登陆名</param>
         /// <param name="password">登陆密码</param>
         /// <returns>登陆结果</returns>
-        EmpLoginRes EmpPwdLogin ( string loginName, string password );
+        EmpLoginRes EmpPwdLogin ( string loginName, string password, LoginState state );
 
     }
 }
