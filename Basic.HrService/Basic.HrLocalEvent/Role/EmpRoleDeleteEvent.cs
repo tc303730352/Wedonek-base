@@ -17,7 +17,7 @@ namespace Basic.HrLocalEvent.Role
 
         public void HandleEvent ( RoleEvent data, string eventName )
         {
-            this._Service.Clear(data.Role.Id);
+            this._Service.ClearByRoleId(data.Role.Id);
         }
     }
 }

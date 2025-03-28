@@ -158,7 +158,7 @@ namespace Basic.HrDAL.Repository
             }
         }
 
-        public string[] SetEmpEntry ( DBEmpList soure, EmpEntrySet datum )
+        public void SetEmpEntry ( DBEmpList soure, EmpEntrySet datum )
         {
             long companyId = soure.CompanyId;
             long deptId = soure.DeptId;
@@ -193,7 +193,6 @@ namespace Basic.HrDAL.Repository
                 }));
             }
             _ = queue.Submit();
-            return cols;
         }
     }
 }

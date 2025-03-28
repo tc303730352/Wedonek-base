@@ -10,12 +10,12 @@ namespace Basic.HrLocalEvent.User
     {
         private readonly IEmpRoleCollect _EmpRole;
 
-        public ClearEmpRole (IEmpRoleCollect empRole)
+        public ClearEmpRole ( IEmpRoleCollect empRole )
         {
             this._EmpRole = empRole;
         }
 
-        public void HandleEvent (UserChangeEvent data, string eventName)
+        public void HandleEvent ( UserChangeEvent data, string eventName )
         {
             this._EmpRole.Clear(data.EmpId);
         }

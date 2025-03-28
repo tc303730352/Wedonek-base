@@ -191,9 +191,9 @@ namespace Basic.HrCollect.Impl
             this._Emp.SetEmpPost(empId, post);
         }
 
-        public string[] SetEmpEntry ( DBEmpList emp, EmpEntrySet datum )
+        public void SetEmpEntry ( DBEmpList emp, EmpEntrySet datum )
         {
-            return this._Emp.SetEmpEntry(emp, datum);
+            this._Emp.SetEmpEntry(emp, datum);
         }
 
         public bool CheckIsNull ( long companyId )

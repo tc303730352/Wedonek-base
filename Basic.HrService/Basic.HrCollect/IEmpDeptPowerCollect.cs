@@ -17,5 +17,6 @@ namespace Basic.HrCollect
         EmpDeptPower[] GetDeptPower ( long[] empId, long[] deptId );
 
         void Add ( DeptPowerAdd add );
+        void Clear ( long companyId, long empId );
     }
 }

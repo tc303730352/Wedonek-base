@@ -105,7 +105,8 @@ export default {
   methods: {
     moment,
     async initPower() {
-      this.isPower = await this.$checkPower(['hr.emp.title.set']).length === 1
+      const res = await this.$checkPower(['hr.emp.title.set'])
+      this.isPower = res.length === 1
     },
     addTitle() {
       this.addVisible = true

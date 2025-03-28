@@ -82,5 +82,14 @@ namespace Basic.HrCollect.Impl
             }
             this._DeptPower.Add(add);
         }
+
+        public void Clear ( long companyId, long empId )
+        {
+            long[] ids = this._DeptPower.Gets(a => a.CompanyId == companyId && a.EmpId == empId, a => a.Id);
+            if ( !ids.IsNull() )
+            {
+                this._DeptPower.Delete(ids);
+            }
+        }
     }
 }

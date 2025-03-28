@@ -1,25 +1,30 @@
 ﻿using Basic.HrCollect;
 using Basic.HrLocalEvent.Model;
-using WeDonekRpc.Client.Attr;
 using WeDonekRpc.Client.Interface;
 
 namespace Basic.HrLocalEvent.Emp
 {
-    [LocalEventName("Delete")]
-    internal class ClearEmpRole : IEventHandler<EmpLocalEvent>
+    internal class ClearEmpRole : IEventHandler<EmpEntryEvent>
     {
-        private readonly IEmpDeptPowerCollect _Service;
+        private readonly IEmpRoleCollect _EmpRole;
+        private readonly IEmpTitleCollect _EmpTitle;
+        private readonly IEmpDeptPowerCollect _DeptPower;
 
-        public ClearEmpRole (IEmpDeptPowerCollect service)
+        public ClearEmpRole ( IEmpRoleCollect empRole,
+            IEmpTitleCollect empTitle,
+            IEmpDeptPowerCollect deptPower )
         {
-            this._Service = service;
+            this._EmpRole = empRole;
+            this._EmpTitle = empTitle;
+            this._DeptPower = deptPower;
         }
 
-        public void HandleEvent (EmpLocalEvent data, string eventName)
+        public void HandleEvent ( EmpEntryEvent data, string eventName )
         {
-            if (data.Emp.IsOpenAccount)
+            if ( data.Emp.IsOpenAccount && !this._EmpTitle.CheckIsExists(data.Emp.EmpId, data.CompanyId) )
             {
-                this._Service.Clear(data.Emp.EmpId);
+                this._EmpRole.Clear(data.CompanyId, data.Emp.EmpId);
+                this._DeptPower.Clear(data.CompanyId, data.Emp.EmpId);
             }
         }
     }

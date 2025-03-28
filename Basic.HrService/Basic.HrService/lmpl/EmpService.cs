@@ -366,8 +366,9 @@ namespace Basic.HrService.lmpl
             {
                 set.DropTitleId = titles.Convert(c => !datum.Title.Contains(c.TitleCode), c => c.Id);
             }
-            string[] cols = this._Service.SetEmpEntry(emp, set);
-            new EmpLocalEvent(emp, cols).AsyncSend("Update");
+            long companyId = emp.CompanyId;
+            this._Service.SetEmpEntry(emp, set);
+            new EmpEntryEvent(emp, companyId).AsyncSend();
         }
 
         public Dictionary<long, string> GetEmpName ( long[] ids )
