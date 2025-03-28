@@ -120,7 +120,7 @@ namespace Basic.HrService.lmpl
                         c.DeptTitleId = title.ConvertAll(a => a.TitleCode);
                         c.DeptTitle = title.Join(",", a => titleName.GetValueOrDefault(a.TitleCode));
                     }
-                    c.Title = titles.Convert(a => a.EmpId == a.EmpId && a.DeptId != a.DeptId, a => new EmpTitle
+                    c.Title = titles.Convert(a => a.EmpId == c.EmpId && a.DeptId != c.DeptId, a => new EmpTitle
                     {
                         DeptId = a.DeptId,
                         TitleCode = a.TitleCode,
@@ -195,7 +195,7 @@ namespace Basic.HrService.lmpl
                         c.DeptTitleId = title.ConvertAll(a => a.TitleCode);
                         c.DeptTitle = title.Join(",", a => titleName.GetValueOrDefault(a.TitleCode));
                     }
-                    c.Title = titles.Convert(a => a.EmpId == a.EmpId && a.DeptId != a.DeptId, a => new EmpTitle
+                    c.Title = titles.Convert(a => a.EmpId == c.EmpId && a.DeptId != c.DeptId, a => new EmpTitle
                     {
                         DeptId = a.DeptId,
                         TitleCode = a.TitleCode,
