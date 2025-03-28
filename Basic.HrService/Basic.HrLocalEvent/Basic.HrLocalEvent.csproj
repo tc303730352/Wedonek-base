@@ -10,7 +10,7 @@
 		<PackageReference Include="WeDonekRpc.Client" Version="1.1.2" />
 		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.2" />
 		<PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
-		<PackageReference Include="WeDonekRpc.Modular" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Modular" Version="1.1.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Base.FileService\Base.FileRemoteModel\Base.FileRemoteModel.csproj" />

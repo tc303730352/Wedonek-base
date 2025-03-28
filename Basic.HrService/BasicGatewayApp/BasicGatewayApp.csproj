@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="WeDonekRpc.Helper" Version="1.1.2" />
     <PackageReference Include="WeDonekRpc.HttpApiDoc" Version="1.1.0" />
-    <PackageReference Include="WeDonekRpc.Modular" Version="1.1.0" />
+    <PackageReference Include="WeDonekRpc.Modular" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
