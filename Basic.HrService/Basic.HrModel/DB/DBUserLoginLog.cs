@@ -20,6 +20,7 @@ namespace Basic.HrModel.DB
 
         public bool IsSuccess { get; set; }
 
+        public string ErrorCode { get; set; }
         public string FailShow { get; set; }
 
         public DateTime LoginTime { get; set; }

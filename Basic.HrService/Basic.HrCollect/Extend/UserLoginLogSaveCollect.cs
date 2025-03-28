@@ -6,6 +6,7 @@ using Basic.HrRemoteModel.EmpLogin.Model;
 using WeDonekRpc.Client;
 using WeDonekRpc.Client.Ioc;
 using WeDonekRpc.Helper;
+using WeDonekRpc.Helper.Error;
 using WeDonekRpc.Helper.IdGenerator;
 using WeDonekRpc.Helper.Interface;
 
@@ -13,15 +14,24 @@ namespace Basic.HrCollect.Extend
 {
     internal class UserLoginLogSaveCollect : IUserLoginLogSaveCollect
     {
-        private readonly IDelayDataSave<LoginLogAdd> _DelaySave = new DelayDataSave<LoginLogAdd>(_save, 10, 5);
-
-        private static void _save ( ref LoginLogAdd[] datas )
+        private readonly IErrorManage _Error;
+        private readonly IDelayDataSave<LoginLogAdd> _DelaySave;
+        public UserLoginLogSaveCollect ( IErrorManage error )
+        {
+            this._Error = error;
+            this._DelaySave = new DelayDataSave<LoginLogAdd>(this._save, 10, 5);
+        }
+        private void _save ( ref LoginLogAdd[] datas )
         {
             DBUserLoginLog[] logs = datas.ConvertMap<LoginLogAdd, DBUserLoginLog>();
             logs.ForEach(c =>
             {
                 c.Id = IdentityHelper.CreateId();
                 c.Address = _GetIpAddress(c.LoginIp);
+                if ( !c.IsSuccess && this._Error.TryGet(c.ErrorCode, out ErrorMsg msg) )
+                {
+                    c.FailShow = msg.Text;
+                }
             });
             using ( IocScope scope = RpcClient.Ioc.CreateScore() )
             {
