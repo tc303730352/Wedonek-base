@@ -291,7 +291,13 @@
             设置排序位
             </summary>
             <param name="id"></param>
-            <param name="sort"></param>
+            <param name="toId"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpApi.SetEmpEntry(WeDonekRpc.HttpApiGateway.Model.LongParam{Basic.HrRemoteModel.Emp.Model.EmpEntry})">
+            <summary>
+            人员借调
+            </summary>
+            <param name="obj"></param>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.EmpApi.CheckIsRepeat(Basic.HrRemoteModel.Emp.Model.DataRepeatCheck)">
             <summary>
@@ -385,6 +391,13 @@
             启用
             </summary>
             <param name="set"></param>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.EmpLoginApi.CheckPower(System.String[])">
+            <summary>
+            检查权限
+            </summary>
+            <param name="power"></param>
+            <returns></returns>
         </member>
         <member name="M:Basic.HrGatewaryModular.Api.EmpLoginApi.GetLoginDatum">
             <summary>
@@ -1444,6 +1457,11 @@
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.CurSubSysId">
             <summary>
             当前选择的子系统
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginDatum.Operate">
+            <summary>
+            操作权限
             </summary>
         </member>
         <member name="P:Basic.HrGatewaryModular.Model.EmpLogin.LoginUser.EmpId">

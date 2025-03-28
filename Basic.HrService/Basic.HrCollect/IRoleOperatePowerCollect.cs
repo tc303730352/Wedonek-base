@@ -5,6 +5,7 @@ namespace Basic.HrCollect
     public interface IRoleOperatePowerCollect
     {
         void Clear ( long roleId );
+        void Clear ( long id, long[] powerId );
         void ClearByPowerId ( long powerId );
         long[] GetOperateId ( long roleId, long powerId );
         string[] GetOperateVal ( long roleId );

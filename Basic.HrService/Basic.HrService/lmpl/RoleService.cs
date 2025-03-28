@@ -73,7 +73,7 @@ namespace Basic.HrService.lmpl
             RoleSetDatum datum = set.ConvertMap<RoleSet, RoleSetDatum>();
             if ( this._Role.Set(role, datum, powers) )
             {
-                new RoleEvent(role).AsyncPublic("Update");
+                new RoleEvent(role, set.PowerId).AsyncPublic("Update");
                 return true;
             }
             return false;

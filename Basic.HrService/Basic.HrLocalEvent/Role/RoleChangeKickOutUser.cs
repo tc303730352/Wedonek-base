@@ -7,25 +7,25 @@ using WeDonekRpc.Modular;
 
 namespace Basic.HrLocalEvent.Role
 {
-    [LocalEventName("SetIsEnable", "Delete", "SetIsAdmin", "Update")]
+    [LocalEventName("SetIsEnable")]
     internal class RoleChangeKickOutUser : IEventHandler<RoleEvent>
     {
         private readonly IEmpRoleCollect _EmpRole;
         private readonly IAccreditService _Accredit;
-        public RoleChangeKickOutUser (IEmpRoleCollect empRole, IAccreditService accredit)
+        public RoleChangeKickOutUser ( IEmpRoleCollect empRole, IAccreditService accredit )
         {
             this._Accredit = accredit;
             this._EmpRole = empRole;
         }
 
-        public void HandleEvent (RoleEvent data, string eventName)
+        public void HandleEvent ( RoleEvent data, string eventName )
         {
-            if (eventName != "SetIsEnable" && !data.Role.IsEnable)
+            if ( !data.Role.IsEnable )
             {
                 return;
             }
             long[] empId = this._EmpRole.GetEmpId(data.Role.Id);
-            if (!empId.IsNull())
+            if ( !empId.IsNull() )
             {
                 empId.ForEach(c =>
                 {

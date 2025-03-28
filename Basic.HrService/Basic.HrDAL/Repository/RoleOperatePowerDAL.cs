@@ -58,6 +58,13 @@ namespace Basic.HrDAL.Repository
                 throw new ErrorException("hr.role.operate.power.delete.fail");
             }
         }
+        public void Clear ( long roleId, long[] powerId )
+        {
+            if ( !this._BasicDAL.Delete(a => a.RoleId == roleId && powerId.Contains(a.PowerId)) )
+            {
+                throw new ErrorException("hr.role.operate.power.delete.fail");
+            }
+        }
         public void Set ( long roleId, long powerId, OperateItem[] powers )
         {
             long[] ids = this._BasicDAL.Gets(a => a.RoleId == roleId && a.PowerId == powerId, a => a.Id);

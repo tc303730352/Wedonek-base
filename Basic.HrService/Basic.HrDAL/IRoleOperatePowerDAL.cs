@@ -7,6 +7,7 @@ namespace Basic.HrDAL
     {
         long Add ( DBRoleOperatePower add );
         void Clear ( long roleId );
+        void Clear ( long roleId, long[] ids );
         void Set ( long roleId, long powerId, OperateItem[] powers );
     }
 }

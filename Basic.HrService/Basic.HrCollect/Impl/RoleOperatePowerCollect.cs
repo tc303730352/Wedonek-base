@@ -21,6 +21,15 @@ namespace Basic.HrCollect.Impl
         {
             this._BasicDAL.Clear(roleId);
         }
+        public void Clear ( long roleId, long[] powerId )
+        {
+            long[] ids = this._BasicDAL.Gets(a => a.RoleId == roleId, a => a.PowerId);
+            ids = ids.Remove(powerId);
+            if ( ids.Length > 0 )
+            {
+                this._BasicDAL.Clear(roleId, ids);
+            }
+        }
         public string[] GetOperateVal ( long roleId )
         {
             return this._BasicDAL.Gets(a => a.RoleId == roleId, a => a.OperateVal);

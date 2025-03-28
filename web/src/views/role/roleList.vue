@@ -36,7 +36,7 @@
       </template>
       <template slot="IsAdmin" slot-scope="e">
         <el-switch
-          :disabled="checkPower('hr.role.set') == false"
+          :disabled="e.row.IsEnable || checkPower('hr.role.set') == false"
           :value="e.row.IsAdmin"
           :inactive-value="false"
           :active-value="true"
