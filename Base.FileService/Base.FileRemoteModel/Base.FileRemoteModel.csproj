@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="WeDonekRpc.Helper" Version="1.1.3" />
+	  <PackageReference Include="WeDonekRpc.Helper" Version="1.1.4" />
     <PackageReference Include="WeDonekRpc.Client" Version="1.1.2" />
     <PackageReference Include="WeDonekRpc.Model" Version="1.1.0" />
   </ItemGroup>
