@@ -72,12 +72,19 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button v-if="checkPower('hr.emp.add')" type="success" @click="addEmp">添加员工</el-button>
+              <el-button
+                v-if="checkPower('hr.emp.add')"
+                type="success"
+                @click="addEmp"
+              >添加员工</el-button>
               <el-button @click="reset">重置</el-button>
             </el-form-item>
           </el-form>
         </el-row>
-        <p v-if="chioseEmp.length > 0 && checkPower('hr.emp.open.account')" :gutter="24">
+        <p
+          v-if="chioseEmp.length > 0 && checkPower('hr.emp.open.account')"
+          :gutter="24"
+        >
           <span style="margin-right: 10px">已选择:{{ chioseEmp.length }}</span>
           <el-button
             type="primary"
@@ -145,19 +152,37 @@
             {{ HrUserType[e.row.UserType].text }}
           </template>
           <template slot="empTitle" slot-scope="e">
-            <span v-if="e.row.DeptTitle">{{ e.row.DeptTitle }}</span>
-            <el-tooltip
-              v-if="e.row.Title && e.row.Title.length > 0"
-              effect="dark"
-              placement="bottom"
-            >
-              <div slot="content">
-                <p v-for="(t, index) in e.row.Title" :key="index">
-                  {{ t.Show }}
-                </p>
-              </div>
-              <i class="el-icon-more" />
-            </el-tooltip>
+            <template v-if="e.row.DeptTitle != null && e.row.DeptTitle != ''">
+              <span>{{ e.row.DeptTitle }}</span>
+              <el-tooltip
+                v-if="e.row.Title && e.row.Title.length > 0"
+                style="margin-left: 5px"
+                effect="dark"
+                placement="bottom"
+              >
+                <div slot="content">
+                  <p v-for="(t, index) in e.row.Title" :key="index">
+                    {{ t.Show }}
+                  </p>
+                </div>
+                <i class="el-icon-more" />
+              </el-tooltip>
+            </template>
+            <template v-else-if="e.row.Title && e.row.Title.length > 0">
+              {{ e.row.Title[0].Show }}
+              <el-tooltip
+                v-if="e.row.Title.length > 1"
+                effect="dark"
+                placement="bottom"
+              >
+                <div slot="content">
+                  <p v-for="(t, index) in e.row.Title" :key="index">
+                    {{ t.Show }}
+                  </p>
+                </div>
+                <i class="el-icon-more" />
+              </el-tooltip>
+            </template>
           </template>
           <template slot="birthday" slot-scope="e">
             {{
@@ -202,7 +227,11 @@
               @click="empEntry(e.row)"
             />
             <el-button
-              v-if="e.row.Status == 0 && comId == e.row.CompanyId && checkPower('hr.emp.delete')"
+              v-if="
+                e.row.Status == 0 &&
+                  comId == e.row.CompanyId &&
+                  checkPower('hr.emp.delete')
+              "
               size="mini"
               type="danger"
               title="删除员工"
@@ -217,13 +246,23 @@
     <empTitleEdit
       :emp-id="empId"
       :visible="visible"
-      @cancel="() => (visible = false)"
+      @cancel="(isRefresh) => {
+        visible = false
+        if(isRefresh) {
+          loadEmp()
+        }
+      }"
     />
     <editEmpEntry
       :emp="emp"
       :company-id="queryParam.CompanyId"
       :visible="entryVisible"
-      @close="entryVisible = false"
+      @close="(isRefresh) => {
+        entryVisible = false
+        if(isRefresh) {
+          loadEmp()
+        }
+      }"
     />
   </div>
 </template>
@@ -263,7 +302,14 @@ export default {
       emps: [],
       chioseEmp: [],
       status: [],
-      rolePower: ['hr.emp.open.account', 'hr.emp.add', 'hr.emp.set', 'hr.emp.delete', 'hr.emp.title.set', 'hr.emp.entry'],
+      rolePower: [
+        'hr.emp.open.account',
+        'hr.emp.add',
+        'hr.emp.set',
+        'hr.emp.delete',
+        'hr.emp.title.set',
+        'hr.emp.entry'
+      ],
       isShowChildren: false,
       title: '员工列表',
       columns: [
