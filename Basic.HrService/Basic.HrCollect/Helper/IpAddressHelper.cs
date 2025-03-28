@@ -9,7 +9,8 @@ namespace Basic.HrCollect.Helper
         private static readonly string _IpUri = "http://whois.pconline.com.cn/ipJson.jsp";
         private static readonly RequestSet _RequestSet = new RequestSet
         {
-            ResponseEncoding = Encoding.GetEncoding("GBK")
+            ResponseEncoding = Encoding.GetEncoding("GBK"),
+            UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0"
         };
         private static readonly string _LocalIp = "127.0.0.1";
         // 10.x.x.x/8
