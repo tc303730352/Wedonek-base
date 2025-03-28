@@ -4,13 +4,16 @@ using WeDonekRpc.Helper.Http;
 
 namespace Basic.HrCollect.Helper
 {
+    public class IpAddr
+    {
+        public string addr { get; set; }
+    }
     internal static class IpAddressHelper
     {
         private static readonly string _IpUri = "http://whois.pconline.com.cn/ipJson.jsp";
         private static readonly RequestSet _RequestSet = new RequestSet
         {
-            ResponseEncoding = Encoding.GetEncoding("GBK"),
-            UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0"
+            ResponseEncoding = Encoding.GetEncoding("GBK")
         };
         private static readonly string _LocalIp = "127.0.0.1";
         // 10.x.x.x/8
@@ -35,7 +38,7 @@ namespace Basic.HrCollect.Helper
             }
             string uri = string.Format("{0}?ip={1}&json=true", _IpUri, ip);
             HttpResult result = HttpClientFactory.Create().SendGet(new Uri(uri), _RequestSet);
-            dynamic obj = result.GetObject<object>();
+            IpAddr obj = result.GetObject<IpAddr>();
             return obj.addr;
         }
         public static bool InternalIp ( string ip )
