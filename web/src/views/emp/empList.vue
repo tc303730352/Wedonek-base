@@ -72,12 +72,12 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="success" @click="addEmp">添加员工</el-button>
+              <el-button v-if="checkPower('hr.emp.add')" type="success" @click="addEmp">添加员工</el-button>
               <el-button @click="reset">重置</el-button>
             </el-form-item>
           </el-form>
         </el-row>
-        <p v-if="chioseEmp.length > 0" :gutter="24">
+        <p v-if="chioseEmp.length > 0 && checkPower('hr.emp.open.account')" :gutter="24">
           <span style="margin-right: 10px">已选择:{{ chioseEmp.length }}</span>
           <el-button
             type="primary"
@@ -89,7 +89,7 @@
           :data="emps"
           :columns="columns"
           :is-paging="true"
-          :is-select="true"
+          :is-select="checkPower('hr.emp.open.account')"
           row-key="EmpId"
           :select-keys="chioseEmp"
           :is-multiple="true"
@@ -134,6 +134,7 @@
           </template>
           <template slot="status" slot-scope="e">
             <el-switch
+              :disabled="!checkPower('hr.emp.set')"
               :value="e.row.Status"
               :inactive-value="2"
               :active-value="1"
@@ -174,7 +175,7 @@
           </template>
           <template slot="action" slot-scope="e">
             <el-button
-              v-if="comId == e.row.CompanyId"
+              v-if="comId == e.row.CompanyId && checkPower('hr.emp.set')"
               size="mini"
               type="primary"
               title="编辑人员资料"
@@ -183,6 +184,7 @@
               @click="editEmp(e.row.EmpId)"
             />
             <el-button
+              v-if="checkPower('hr.emp.title.set')"
               size="mini"
               type="default"
               title="编辑人员职务"
@@ -191,7 +193,7 @@
               @click="editEmpTitle(e.row.EmpId)"
             />
             <el-button
-              v-if="e.row.Status == 1"
+              v-if="e.row.Status == 1 && checkPower('hr.emp.entry')"
               size="mini"
               type="default"
               title="人员调任"
@@ -200,7 +202,7 @@
               @click="empEntry(e.row)"
             />
             <el-button
-              v-if="e.row.Status == 0 && comId == e.row.CompanyId"
+              v-if="e.row.Status == 0 && comId == e.row.CompanyId && checkPower('hr.emp.delete')"
               size="mini"
               type="danger"
               title="删除员工"
@@ -261,7 +263,7 @@ export default {
       emps: [],
       chioseEmp: [],
       status: [],
-      rolePower: [],
+      rolePower: ['hr.emp.open.account', 'hr.emp.add', 'hr.emp.set', 'hr.emp.delete', 'hr.emp.title.set', 'hr.emp.entry'],
       isShowChildren: false,
       title: '员工列表',
       columns: [
@@ -381,11 +383,16 @@ export default {
     }
   },
   mounted() {
-    this.rolePower = this.$checkPower(['hr.emp.add'])
-    console.log(this.rolePower)
+    this.initPower()
   },
   methods: {
     moment,
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     empEntry(emp) {
       this.emp.CompanyId = this.queryParam.CompanyId
       this.emp.EmpId = emp.EmpId

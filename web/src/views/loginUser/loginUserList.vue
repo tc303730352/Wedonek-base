@@ -85,6 +85,7 @@
           <template slot="Role" slot-scope="e">
             <el-row>
               <el-link
+                v-if="checkPower('hr.user.role.set')"
                 style="margin-right: 10px"
                 icon="el-icon-edit"
                 @click="editRole(e.row)"
@@ -105,6 +106,7 @@
             >拥有所有部门权限</span>
             <div v-else>
               <el-button
+                :disabled="checkPower('hr.user.dept.power.set') == false"
                 type="text"
                 icon="el-icon-edit"
                 @click="editDept(e.row)"
@@ -119,6 +121,7 @@
           </template>
           <template slot="action" slot-scope="e">
             <el-button
+              v-if="checkPower('hr.user.pwd.reset')"
               size="mini"
               type="warning"
               title="重置登陆密码"
@@ -127,6 +130,7 @@
               @click="resetPwd(e.row)"
             />
             <el-button
+              v-if="checkPower('hr.user.delete')"
               size="mini"
               type="danger"
               title="删除用户"
@@ -176,6 +180,7 @@ export default {
       empId: null,
       roleTitle: null,
       visibleDept: false,
+      rolePower: ['hr.user.pwd.reset', 'hr.user.delete', 'hr.user.role.set', 'hr.user.dept.power.set'],
       columns: [
         {
           key: 'EmpNo',
@@ -255,9 +260,16 @@ export default {
     if (query != null) {
       this.initQuery(query)
     }
+    this.initPower()
   },
   methods: {
     moment,
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     initQuery(query) {
       if (query.roleId) {
         this.queryParam.RoleId = [query.roleId]

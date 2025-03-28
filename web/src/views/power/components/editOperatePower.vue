@@ -6,7 +6,7 @@
     :before-close="closeForm"
     :close-on-click-modal="false"
   >
-    <div style="width: 100%;text-align: right;margin-bottom: 10px;">
+    <div v-if="checkPower('hr.power.operate.add')" style="width: 100%;text-align: right;margin-bottom: 10px;">
       <el-button type="success" @click="addOp">新增</el-button>
     </div>
     <w-table
@@ -57,6 +57,7 @@
         </template>
         <template v-else-if="e.row.IsEnable == false">
           <el-button
+            v-if="checkPower('hr.power.operate.set')"
             size="mini"
             type="primary"
             title="编辑菜单"
@@ -65,6 +66,7 @@
             @click="editOp(e.row)"
           />
           <el-button
+            v-if="checkPower('hr.power.operate.delete')"
             size="mini"
             type="danger"
             title="删除菜单"
@@ -100,6 +102,7 @@ export default {
     return {
       title: '新增菜单',
       powers: [],
+      rolePower: ['hr.power.operate.add', 'hr.power.operate.set', 'hr.power.operate.delete'],
       columns: [
         {
           key: 'OperateName',
@@ -149,8 +152,16 @@ export default {
       immediate: true
     }
   },
-  mounted() {},
+  mounted() {
+    this.initPower()
+  },
   methods: {
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     async reset() {
       const res = await Gets(this.powerId)
       res.forEach(a => {

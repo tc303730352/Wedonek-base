@@ -67,11 +67,11 @@ async function checkLoginState() {
 function checkOpPower(powers) {
   const tokenId = getToken()
   if (cache.isCache(tokenId)) {
-    const cache = cache.getCache(tokenId)
-    if (cache.Operate.includes('all')) {
+    const user = cache.getCache(tokenId)
+    if (user.Operate.includes('all')) {
       return powers
     }
-    return powers.filters(c => cache.Operate.includes(c))
+    return powers.filters(c => user.Operate.includes(c))
   }
   return false
 }
@@ -136,7 +136,7 @@ const actions = {
   async switchCompany({ commit }, companyId) {
     return await switchCom(commit, companyId)
   },
-  checkPower(powers) {
+  checkPower({ commit }, powers) {
     return checkOpPower(powers)
   },
   // user logout

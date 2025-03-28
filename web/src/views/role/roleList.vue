@@ -13,7 +13,7 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="success" @click="addRole">添加角色</el-button>
+          <el-button v-if="checkPower('hr.role.add')" type="success" @click="addRole">添加角色</el-button>
           <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -28,7 +28,7 @@
       <template slot="IsEnable" slot-scope="e">
         <el-switch
           :value="e.row.IsEnable"
-          :disabled="e.row.IsDefRole"
+          :disabled="e.row.IsDefRole || checkPower('hr.role.set') == false"
           :inactive-value="false"
           :active-value="true"
           @change="(val) => setIsEnable(e.row, val)"
@@ -36,6 +36,7 @@
       </template>
       <template slot="IsAdmin" slot-scope="e">
         <el-switch
+          :disabled="checkPower('hr.role.set') == false"
           :value="e.row.IsAdmin"
           :inactive-value="false"
           :active-value="true"
@@ -48,7 +49,7 @@
       <template slot="IsDefRole" slot-scope="e">
         <el-switch
           :value="e.row.IsDefRole"
-          :disabled="e.row.IsEnable == false"
+          :disabled="e.row.IsEnable == false || checkPower('hr.role.set') == false"
           :inactive-value="false"
           :active-value="true"
           @change="(val) => setIsDefRole(e.row, val)"
@@ -67,7 +68,7 @@
           @click="showView(e.row)"
         />
         <el-button
-          v-if="e.row.IsEnable == false"
+          v-if="e.row.IsEnable == false && checkPower('hr.role.set')"
           size="mini"
           type="primary"
           title="编辑角色"
@@ -76,7 +77,7 @@
           @click="edit(e.row)"
         />
         <el-button
-          v-if="e.row.IsEnable == false"
+          v-if="e.row.IsEnable == false && checkPower('hr.role.delete')"
           size="mini"
           type="danger"
           title="删除角色"
@@ -188,14 +189,22 @@ export default {
         SortName: 'Id',
         IsDesc: false,
         Total: 0
-      }
+      },
+      rolePower: ['hr.role.add', 'hr.role.set', 'hr.role.delete']
     }
   },
   mounted() {
+    this.initPower()
     this.load()
   },
   methods: {
     moment,
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     showEmp(row) {
       this.$router.push({ name: 'user', query: { roleId: row.Id }})
     },

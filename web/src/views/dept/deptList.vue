@@ -38,13 +38,14 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="warning" @click="deptChange">合并解散单位/部门</el-button>
+              <el-button v-if="checkPower('hr.dept.merge')" type="warning" @click="deptChange">合并解散单位/部门</el-button>
               <el-button
+                v-if="checkPower('hr.dept.add')"
                 type="success"
                 @click="addUnit(null)"
               >新增单位</el-button>
               <el-button
-                v-if="this.queryParam.UnitId != null"
+                v-if="queryParam.UnitId != null && checkPower('hr.dept.add')"
                 type="primary"
                 @click="addDept(null)"
               >新增部门</el-button>
@@ -58,6 +59,7 @@
           >
             <template slot="status" slot-scope="e">
               <el-switch
+                :disabled="checkPower('hr.dept.set') == false"
                 :value="e.row.Status"
                 :inactive-value="2"
                 :active-value="1"
@@ -67,6 +69,7 @@
             <template slot="Leader" slot-scope="e">
               <span>{{ e.row.LeaderName }}</span>
               <i
+                v-if="checkPower('hr.dept.set')"
                 class="el-icon-edit"
                 style="margin-left: 5px; cursor: pointer"
                 @click="editLeader(e.row)"
@@ -78,13 +81,14 @@
             </template>
             <template slot="action" slot-scope="e">
               <el-button
+                v-if="checkPower('hr.dept.add')"
                 icon="el-icon-plus"
                 size="mini"
                 circle
                 @click="addDept(e.row.Id)"
               />
               <el-button
-                v-if="e.row.Status == 0"
+                v-if="e.row.Status == 0 && checkPower('hr.dept.delete')"
                 size="mini"
                 icon="el-icon-delete"
                 type="danger"
@@ -92,6 +96,7 @@
                 @click="deleteDept(e.row)"
               />
               <el-button
+                v-if="checkPower('hr.dept.set')"
                 icon="el-icon-edit"
                 size="mini"
                 type="primary"
@@ -201,13 +206,21 @@ export default {
       visible: false,
       dept: null,
       empTitle: null,
-      deptTag: {}
+      deptTag: {},
+      rolePower: ['hr.dept.add', 'hr.dept.set', 'hr.dept.delete', 'hr.dept.merge']
     }
   },
   mounted() {
+    this.initPower()
     this.initDic()
   },
   methods: {
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     async initDic() {
       this.deptTag = await GetItemName(HrItemDic.deptTag)
     },

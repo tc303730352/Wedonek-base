@@ -26,7 +26,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [ApiPower("all", "hr.power.add")]
+        [ApiPower("all", "hr.power.operate.add")]
         public long Add ( OperatePowerAdd data )
         {
             return this._Service.Add(data);
@@ -55,7 +55,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [ApiPower("all", "hr.power.set")]
+        [ApiPower("all", "hr.power.operate.set")]
         public bool Set ( LongParam<OperatePowerSet> data )
         {
             return this._Service.Set(data.Id, data.Value);
@@ -66,7 +66,7 @@ namespace Basic.HrGatewaryModular.Api
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [ApiPower("all", "hr.power.set")]
+        [ApiPower("all", "hr.power.operate.set")]
         public bool SetIsEnable ( LongParam<bool> data )
         {
             return this._Service.SetIsEnable(data.Id, data.Value);
@@ -75,7 +75,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 删除操作权限
         /// </summary>
         /// <param name="id"></param>
-        [ApiPower("all", "hr.power.delete")]
+        [ApiPower("all", "hr.power.operate.delete")]
         public void Delete ( [NumValidate("hr.operate.power.id.error", 1)] long id )
         {
             this._Service.Delete(id);

@@ -25,7 +25,7 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="success" @click="addItem">添加字典项</el-button>
+          <el-button v-if="checkPower('hr.dic.add')" type="success" @click="addItem">添加字典项</el-button>
           <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -44,6 +44,7 @@
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.DicStatus"
+            :disabled="checkPower('hr.dic.set') == false"
             :active-value="1"
             :inactive-value="2"
             @change="(val) => setStatus(scope.row, val)"
@@ -57,34 +58,38 @@
         width="100"
       >
         <template slot-scope="scope">
-          <el-button
-            v-if="scope.row.Sort != 1"
-            icon="el-icon-caret-top"
-            size="mini"
-            style="float: left"
-            circle
-            @click="upItem(scope.row)"
-          />
-          <el-button
-            v-if="scope.row.Sort != scope.row.MaxSort"
-            size="mini"
-            style="float: right"
-            icon="el-icon-caret-bottom"
-            circle
-            @click="downItem(scope.row)"
-          />
+          <span v-if="!checkPower('hr.dic.set')">{{ scope.row.Sort }}</span>
+          <template v-else>
+            <el-button
+              v-if="scope.row.Sort != 1"
+              icon="el-icon-caret-top"
+              size="mini"
+              style="float: left"
+              circle
+              @click="upItem(scope.row)"
+            />
+            <el-button
+              v-if="scope.row.Sort != scope.row.MaxSort"
+              size="mini"
+              style="float: right"
+              icon="el-icon-caret-bottom"
+              circle
+              @click="downItem(scope.row)"
+            />
+          </template>
         </template>
       </el-table-column>
       <el-table-column prop="Action" label="操作" sortable width="150">
         <template slot-scope="scope">
           <el-button
+            v-if="checkPower('hr.dic.add')"
             icon="el-icon-plus"
             size="mini"
             circle
             @click="addItem(scope.row)"
           />
           <el-button
-            v-if="scope.row.DicStatus == 0"
+            v-if="scope.row.DicStatus == 0 && checkPower('hr.dic.delete')"
             size="mini"
             icon="el-icon-delete"
             type="danger"
@@ -92,6 +97,7 @@
             @click="deleteItem(scope.row)"
           />
           <el-button
+            v-if="checkPower('hr.dic.set')"
             icon="el-icon-edit"
             size="mini"
             type="primary"
@@ -148,7 +154,8 @@ export default {
         DicId: null,
         QueryKey: null,
         Status: null
-      }
+      },
+      rolePower: ['hr.dic.add', 'hr.dic.set', 'hr.dic.delete']
     }
   },
   watch: {
@@ -161,7 +168,16 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.initPower()
+  },
   methods: {
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     closeEdit(isRefresh) {
       this.visibleEdit = false
       if (isRefresh) {

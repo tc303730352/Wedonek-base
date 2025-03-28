@@ -7,7 +7,7 @@
     :before-close="closeForm"
     :close-on-click-modal="false"
   >
-    <div style="text-align: right; padding-bottom: 10px">
+    <div v-if="isPower" style="text-align: right; padding-bottom: 10px">
       <el-button
         type="primary"
         size="mini"
@@ -43,6 +43,7 @@
       <el-table-column prop="action" label="操作">
         <template slot-scope="scope">
           <el-button
+            v-if="isPower"
             size="mini"
             type="danger"
             icon="el-icon-delete"
@@ -78,6 +79,7 @@ export default {
     return {
       titles: [],
       title: '人员职务',
+      isPower: false,
       isRefresh: false,
       addVisible: false
     }
@@ -97,8 +99,14 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.initPower()
+  },
   methods: {
     moment,
+    async initPower() {
+      this.isPower = await this.$checkPower(['hr.emp.title.set']).length === 1
+    },
     addTitle() {
       this.addVisible = true
     },

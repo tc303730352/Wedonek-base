@@ -22,7 +22,11 @@
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="success" @click="addDic">添加字典</el-button>
+          <el-button
+            v-if="checkPower('hr.dic.add')"
+            type="success"
+            @click="addDic"
+          >添加字典</el-button>
           <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -36,6 +40,7 @@
     >
       <template slot="Status" slot-scope="e">
         <el-switch
+          :disabled="checkPower('hr.dic.set') == false"
           :value="e.row.Status"
           :inactive-value="2"
           :active-value="1"
@@ -60,7 +65,7 @@
           @click="show(e.row)"
         />
         <el-button
-          v-if="e.row.IsSysDic == false"
+          v-if="e.row.IsSysDic == false && checkPower('hr.dic.set')"
           size="mini"
           type="warning"
           title="编辑字典"
@@ -69,7 +74,11 @@
           @click="edit(e.row)"
         />
         <el-button
-          v-if="e.row.IsSysDic == false && e.row.Status == 0"
+          v-if="
+            e.row.IsSysDic == false &&
+              e.row.Status == 0 &&
+              checkPower('hr.dic.delete')
+          "
           size="mini"
           type="danger"
           title="删除字典"
@@ -186,14 +195,22 @@ export default {
         SortName: 'Id',
         IsDesc: false,
         Total: 0
-      }
+      },
+      rolePower: ['hr.dic.add', 'hr.dic.set', 'hr.dic.delete']
     }
   },
   mounted() {
+    this.initPower()
     this.loadDic()
   },
   methods: {
     moment,
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     addDic() {
       this.dicId = null
       this.visable = true

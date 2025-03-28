@@ -72,7 +72,7 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="success" @click="addPower">添加菜单</el-button>
+              <el-button v-if="checkPower('hr.power.add')" type="success" @click="addPower">添加菜单</el-button>
               <el-button @click="reset">重置</el-button>
             </el-form-item>
           </el-form>
@@ -90,6 +90,7 @@
           <template slot="IsEnable" slot-scope="e">
             <el-switch
               v-model="e.row.IsEnable"
+              :disabled="checkPower('hr.power.set') == false"
               active-text="启用"
               inactive-text="停用"
               @change="setState(e.row)"
@@ -113,7 +114,7 @@
               @click="showPower(e.row)"
             />
             <el-button
-              v-if="!e.row.IsEnable"
+              v-if="!e.row.IsEnable && checkPower('hr.power.set')"
               size="mini"
               type="primary"
               title="编辑菜单"
@@ -122,7 +123,7 @@
               @click="editPower(e.row)"
             />
             <el-button
-              v-if="!e.row.IsEnable"
+              v-if="!e.row.IsEnable && checkPower('hr.power.delete')"
               size="mini"
               type="danger"
               title="删除菜单"
@@ -229,15 +230,23 @@ export default {
         align: 'left',
         slotName: 'action',
         width: 200
-      }]
+      }],
+      rolePower: ['hr.power.add', 'hr.power.set', 'hr.power.delete']
     }
   },
   computed: {
   },
   mounted() {
+    this.initPower()
     this.loadTrees()
   },
   methods: {
+    async initPower() {
+      this.rolePower = await this.$checkPower(this.rolePower)
+    },
+    checkPower(power) {
+      return this.rolePower.includes(power)
+    },
     addPower() {
       this.id = null
       this.visible = true

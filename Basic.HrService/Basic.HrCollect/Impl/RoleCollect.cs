@@ -153,7 +153,7 @@ namespace Basic.HrCollect.Impl
 
         public RoleSelectItem[] GetSelect ( long companyId )
         {
-            return this._RoleDAL.Gets<RoleSelectItem>(a => a.IsEnable);
+            return this._RoleDAL.Gets<RoleSelectItem>(a => a.CompanyId == companyId && a.IsEnable);
         }
         public void Clear ( long companyId )
         {
