@@ -18,12 +18,19 @@ namespace Basic.HrLocalEvent.Role
 
         public void HandleEvent ( RoleEvent data, string eventName )
         {
-            if ( data.PowerId.IsNull() )
+            if ( data.Role.IsAdmin )
+            {
+                return;
+            }
+            else if ( data.PowerId.IsNull() )
             {
                 this._Service.Clear(data.Role.Id);
                 return;
             }
-            this._Service.Clear(data.Role.Id, data.PowerId);
+            else
+            {
+                this._Service.Clear(data.Role.Id, data.PowerId);
+            }
         }
     }
 }

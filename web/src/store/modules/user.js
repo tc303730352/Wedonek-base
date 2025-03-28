@@ -71,7 +71,7 @@ function checkOpPower(powers) {
     if (user.Operate.includes('all')) {
       return powers
     }
-    return powers.filters(c => user.Operate.includes(c))
+    return powers.filter(c => user.Operate.includes(c))
   }
   return false
 }

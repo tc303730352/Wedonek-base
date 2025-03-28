@@ -122,9 +122,10 @@ namespace Basic.HrService
                 Children = _GetChildren(a, depts)
             });
         }
-        public static UnitTree[] ToUnitTree ( this DeptBase[] depts, long parentId )
+        public static UnitTree[] ToUnitTree ( this DeptBase[] depts )
         {
-            return depts.Convert(a => a.ParentId == parentId, a => new UnitTree
+            int lvl = depts.Min(c => c.Lvl);
+            return depts.Convert(a => a.Lvl == lvl, a => new UnitTree
             {
                 Id = a.Id,
                 Name = a.ShortName.GetValueOrDefault(a.DeptName),

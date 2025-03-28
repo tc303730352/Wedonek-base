@@ -7,7 +7,7 @@ using WeDonekRpc.Modular;
 
 namespace Basic.HrLocalEvent.Role
 {
-    [LocalEventName("SetIsEnable")]
+    [LocalEventName("SetIsEnable", "SetIsAdmin")]
     internal class RoleChangeKickOutUser : IEventHandler<RoleEvent>
     {
         private readonly IEmpRoleCollect _EmpRole;

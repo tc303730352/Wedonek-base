@@ -301,6 +301,9 @@ export default {
       } else {
         const res = await roleApi.get(this.roleId)
         this.title = '编辑角色：' + res.RoleName
+        if (res.PowerId == null) {
+          res.PowerId = []
+        }
         this.role = res
         this.source = res
         this.powerId = res.PowerId

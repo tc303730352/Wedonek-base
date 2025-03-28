@@ -130,6 +130,7 @@ namespace Basic.HrCollect.Impl
                 throw new ErrorException("hr.role.power.null");
             }
             this._RoleDAL.SetIsEnable(role, enable);
+            role.IsEnable = enable;
             return true;
         }
         public bool SetIsAdmin ( DBRole role, bool isAdmin )
@@ -144,6 +145,8 @@ namespace Basic.HrCollect.Impl
                 isEnable = this._RolePower.IsExists(c => c.RoleId == role.Id);
             }
             this._RoleDAL.SetIsAdmin(role, isAdmin, isEnable);
+            role.IsAdmin = isAdmin;
+            role.IsEnable = isEnable;
             return true;
         }
         public bool CheckIsAdmin ( long companyId, long[] roleId )

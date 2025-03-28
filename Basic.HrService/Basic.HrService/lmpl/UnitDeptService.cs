@@ -112,7 +112,7 @@ namespace Basic.HrService.lmpl
             {
                 Id = com.Id,
                 Name = com.ShortName.GetValueOrDefault(com.FullName),
-                Dept = depts.FindAll(a => a.CompanyId == com.Id).ToUnitTree(arg.ParentId.GetValueOrDefault())
+                Dept = depts.FindAll(a => a.CompanyId == com.Id).ToUnitTree()
             };
             if ( coms.Length == 1 )
             {
@@ -127,7 +127,7 @@ namespace Basic.HrService.lmpl
             {
                 Id = a.Id,
                 Name = a.ShortName.GetValueOrDefault(a.FullName),
-                Dept = depts.FindAll(c => c.CompanyId == a.Id).ToUnitTree(0),
+                Dept = depts.FindAll(c => c.CompanyId == a.Id).ToUnitTree(),
                 Children = this._GetUnitChildren(a, coms, depts)
             });
         }
