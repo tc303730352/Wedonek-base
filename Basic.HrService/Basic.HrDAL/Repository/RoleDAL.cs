@@ -44,7 +44,6 @@ namespace Basic.HrDAL.Repository
                     Id = IdentityHelper.CreateId(),
                     SubSystemId = a.SubSystemId,
                     PowerId = a.PowerId,
-                    PowerType = a.PowerType,
                     RoleId = role.Id
                 }));
             }
@@ -70,7 +69,6 @@ namespace Basic.HrDAL.Repository
                     Id = IdentityHelper.CreateId(),
                     SubSystemId = a.SubSystemId,
                     PowerId = a.PowerId,
-                    PowerType = a.PowerType,
                     RoleId = add.Id
                 }));
                 if ( queue.Submit() <= 0 )

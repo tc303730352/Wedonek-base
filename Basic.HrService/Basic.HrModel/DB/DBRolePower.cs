@@ -1,5 +1,4 @@
-﻿using Basic.HrRemoteModel;
-using SqlSugar;
+﻿using SqlSugar;
 
 namespace Basic.HrModel.DB
 {
@@ -17,7 +16,5 @@ namespace Basic.HrModel.DB
         public long SubSystemId { get; set; }
 
         public long PowerId { get; set; }
-
-        public PowerType PowerType { get; set; }
     }
 }

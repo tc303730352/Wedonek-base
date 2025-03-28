@@ -171,7 +171,7 @@ export default {
   },
   methods: {
     checkIsChiose() {
-      if (this.chioseId == null ? false : this.chioseKeys.includes(this.chioseId)) {
+      if (this.chioseId != null && this.chioseKeys.includes(this.chioseId)) {
         return true
       }
       return false
@@ -285,8 +285,8 @@ export default {
         this.selectKeys = []
         return
       }
-      this.powers = res.Powers
-      this.selectKeys = res.Selected
+      this.powers = res.Powers == null ? [] : res.Powers
+      this.selectKeys = res.Selected == null ? [] : res.Selected
     },
     async reset() {
       if (this.roleId == null) {

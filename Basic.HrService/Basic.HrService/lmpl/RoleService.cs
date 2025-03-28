@@ -4,6 +4,7 @@ using Basic.HrModel.DB;
 using Basic.HrModel.Power;
 using Basic.HrModel.Role;
 using Basic.HrModel.RolePower;
+using Basic.HrRemoteModel;
 using Basic.HrRemoteModel.Role.Model;
 using Basic.HrService.Interface;
 using WeDonekRpc.Client;
@@ -38,7 +39,7 @@ namespace Basic.HrService.lmpl
             RolePower[] powers = null;
             if ( !add.PowerId.IsNull() )
             {
-                PowerBasic[] list = this._Power.GetFulls(add.PowerId);
+                PowerBasic[] list = this._Power.Gets(add.PowerId);
                 if ( list.IsNull() )
                 {
                     throw new ErrorException("hr.power.not.find");
@@ -46,8 +47,7 @@ namespace Basic.HrService.lmpl
                 powers = list.ConvertAll(c => new RolePower
                 {
                     PowerId = c.Id,
-                    SubSystemId = c.SubSystemId,
-                    PowerType = c.PowerType
+                    SubSystemId = c.SubSystemId
                 });
             }
             RoleSetDatum datum = add.ConvertMap<RoleSet, RoleSetDatum>();
@@ -59,7 +59,7 @@ namespace Basic.HrService.lmpl
             RolePower[] powers = null;
             if ( !set.PowerId.IsNull() )
             {
-                PowerBasic[] list = this._Power.GetFulls(set.PowerId);
+                PowerBasic[] list = this._Power.Gets(set.PowerId).Remove(a => a.PowerType == PowerType.dir);
                 if ( list.IsNull() )
                 {
                     throw new ErrorException("hr.power.not.find");
@@ -67,8 +67,7 @@ namespace Basic.HrService.lmpl
                 powers = list.ConvertAll(c => new RolePower
                 {
                     PowerId = c.Id,
-                    SubSystemId = c.SubSystemId,
-                    PowerType = c.PowerType
+                    SubSystemId = c.SubSystemId
                 });
             }
             RoleSetDatum datum = set.ConvertMap<RoleSet, RoleSetDatum>();

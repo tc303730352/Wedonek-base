@@ -1,6 +1,4 @@
-﻿using Basic.HrRemoteModel;
-
-namespace Basic.HrModel.RolePower
+﻿namespace Basic.HrModel.RolePower
 {
     public class RolePower
     {
@@ -10,7 +8,5 @@ namespace Basic.HrModel.RolePower
         public long SubSystemId { get; set; }
 
         public long PowerId { get; set; }
-
-        public PowerType PowerType { get; set; }
     }
 }

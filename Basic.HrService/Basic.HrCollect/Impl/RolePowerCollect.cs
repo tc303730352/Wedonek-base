@@ -2,7 +2,6 @@
 using Basic.HrModel.DB;
 using Basic.HrModel.Power;
 using Basic.HrModel.RolePower;
-using Basic.HrRemoteModel;
 using WeDonekRpc.Helper;
 
 namespace Basic.HrCollect.Impl
@@ -25,14 +24,11 @@ namespace Basic.HrCollect.Impl
         {
             return this._RolePower.GetSubSysId(roleId);
         }
-        public long[] GetPowerId ( long[] roleId, long subSysId, PowerType powerType )
-        {
-            return this._RolePower.GetPowerId(roleId, subSysId, powerType);
-        }
+
 
         public PowerRouteDto[] GetPower ( long[] roleId )
         {
-            long[] powerId = this._RolePower.GetPowerId(roleId, PowerType.menu);
+            long[] powerId = this._RolePower.GetPowerId(roleId);
             if ( powerId.IsNull() )
             {
                 return Array.Empty<PowerRouteDto>();
@@ -56,7 +52,7 @@ namespace Basic.HrCollect.Impl
         }
         public string GetHomeUri ( long systemId, long[] roleId )
         {
-            long[] powerId = this._RolePower.GetPowerId(roleId, PowerType.menu);
+            long[] powerId = this._RolePower.GetPowerId(roleId);
             return this._Power.GetHomeUri(systemId, powerId);
         }
         public void Set ( DBRole role, RolePower[] powers )

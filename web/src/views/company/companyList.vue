@@ -225,8 +225,8 @@ export default {
     },
     saveEmp(e) {
       this.empVisible = false
-      if (this.type === 'leaver') {
-        this.SetLeaver(e)
+      if (this.op === 'leaver') {
+        this.setLeader(e)
       } else {
         this.setAdmin(e)
       }

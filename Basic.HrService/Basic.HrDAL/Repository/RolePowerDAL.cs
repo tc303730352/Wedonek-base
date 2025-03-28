@@ -1,6 +1,5 @@
 ﻿using Basic.HrModel.DB;
 using Basic.HrModel.RolePower;
-using Basic.HrRemoteModel;
 using WeDonekRpc.Helper;
 using WeDonekRpc.Helper.IdGenerator;
 using WeDonekRpc.SqlSugar;
@@ -20,13 +19,9 @@ namespace Basic.HrDAL.Repository
                 throw new ErrorException("hr.role.power.clear.fail");
             }
         }
-        public long[] GetPowerId ( long[] roleId, PowerType powerType )
+        public long[] GetPowerId ( long[] roleId )
         {
-            return this._BasicDAL.Gets(a => roleId.Contains(a.RoleId) && a.PowerType == powerType, a => a.PowerId).Distinct();
-        }
-        public long[] GetPowerId ( long[] roleId, long subSysId, PowerType powerType )
-        {
-            return this._BasicDAL.Gets(a => roleId.Contains(a.RoleId) && a.SubSystemId == subSysId && a.PowerType == powerType, a => a.PowerId).Distinct();
+            return this._BasicDAL.Gets(a => roleId.Contains(a.RoleId), a => a.PowerId).Distinct();
         }
         public long[] GetPowerId ( long roleId )
         {
@@ -35,7 +30,7 @@ namespace Basic.HrDAL.Repository
 
         public long[] GetSubSysId ( long[] roleId )
         {
-            return this._BasicDAL.GroupBy(a => roleId.Contains(a.RoleId) && a.PowerType == PowerType.menu, a => a.SubSystemId, a => a.SubSystemId);
+            return this._BasicDAL.GroupBy(a => roleId.Contains(a.RoleId), a => a.SubSystemId, a => a.SubSystemId);
         }
 
         public void Set ( long roleId, RolePower[] powers )
@@ -52,7 +47,6 @@ namespace Basic.HrDAL.Repository
                     Id = IdentityHelper.CreateId(),
                     SubSystemId = a.SubSystemId,
                     PowerId = a.PowerId,
-                    PowerType = a.PowerType,
                     RoleId = roleId
                 }));
                 return;
@@ -63,7 +57,6 @@ namespace Basic.HrDAL.Repository
             {
                 Id = IdentityHelper.CreateId(),
                 SubSystemId = a.SubSystemId,
-                PowerType = a.PowerType,
                 PowerId = a.PowerId,
                 RoleId = roleId
             }));

@@ -29,7 +29,7 @@ namespace Basic.HrService.lmpl
         public void Set ( long roleId, long powerId, long[] operateId )
         {
             OperateItem[] items = null;
-            if ( operateId.IsNull() )
+            if ( !operateId.IsNull() )
             {
                 items = this._Operate.Gets<OperateItem>(operateId);
             }
