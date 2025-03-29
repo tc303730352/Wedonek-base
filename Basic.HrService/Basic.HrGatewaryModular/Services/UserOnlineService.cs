@@ -34,6 +34,43 @@ namespace Basic.HrGatewaryModular.Services
             };
             _ = this._RedisList.InsertBefore(this._CacheKey, 0, t);
         }
+        public void ClearOnlineUser ()
+        {
+            long count = this._RedisList.Count(this._CacheKey);
+            if ( count == 0 )
+            {
+                return;
+            }
+            int skip = 0;
+            int size = 50;
+            List<OnlineUser> removes = new List<OnlineUser>(10);
+            do
+            {
+                OnlineUser[] users = this._RedisList.Gets<OnlineUser>(this._CacheKey, skip, size);
+                if ( users.IsNull() )
+                {
+                    break;
+                }
+                string[] ids = users.ConvertAll(a => a.AccreditId);
+                List<AccreditState> state = this._Accredit.GetState(ids);
+                DateTime now = DateTime.Now;
+                users.ForEach(a =>
+                {
+                    if ( !state.IsExists(c => c.AccreditId == a.AccreditId && ( c.Expire.HasValue == false || c.Expire.Value > now )) )
+                    {
+                        removes.Add(a);
+                    }
+                });
+                skip += size;
+            } while ( skip < count );
+            if ( removes.Count > 0 )
+            {
+                removes.ForEach(c =>
+                {
+                    _ = this._RedisList.Remove(this._CacheKey, c, 1);
+                });
+            }
+        }
 
         public void KickOut ( string accreditId )
         {

@@ -7,6 +7,7 @@ namespace Basic.HrGatewaryModular.Interface
 {
     public interface IUserOnlineService
     {
+        void ClearOnlineUser ();
         void Add ( LoginResult res, LoginState state, string accreditId );
         void KickOut ( string accreditId );
         PagingResult<OnlineUser> Query ( IBasicPage paging );

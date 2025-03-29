@@ -518,6 +518,24 @@
             <param name="param">参数</param>
             <returns>登陆用户资料</returns>
         </member>
+        <member name="T:Basic.HrGatewaryModular.Api.OnlineUserApi">
+            <summary>
+            在线用户列表
+            </summary>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OnlineUserApi.Query(WeDonekRpc.Model.BasicPage)">
+            <summary>
+            查询在线用户
+            </summary>
+            <param name="paging"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.OnlineUserApi.KickOut(System.String)">
+            <summary>
+            踢出用户
+            </summary>
+            <param name="accreditId"></param>
+        </member>
         <member name="T:Basic.HrGatewaryModular.Api.OperatePowerApi">
             <summary>
             操作权限接口
