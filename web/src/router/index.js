@@ -115,12 +115,13 @@ const createRouter = (routers) => {
     const list = [].concat(defRoute)
     mergeRoute(list, routers)
     return new Router({
+      mode: 'history',
       scrollBehavior: () => ({ y: 0 }),
       routes: list
     })
   } else {
     return new Router({
-      // mode: 'history', // require service support
+      mode: 'history',
       scrollBehavior: () => ({ y: 0 }),
       routes: defRoute
     })

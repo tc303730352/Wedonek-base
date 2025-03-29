@@ -30,6 +30,18 @@ namespace Basic.HrGatewaryModular
         {
             return state.GetValue<long>("UserId");
         }
+        public static string ToUserType ( this IUserState state )
+        {
+            return state.GetValue<string>("UserType");
+        }
+        public static string ToDeptName ( this IUserState state )
+        {
+            return state.GetValue<string>("DeptName");
+        }
+        public static string ToEmpName ( this IUserState state )
+        {
+            return state.GetValue<string>("EmpName");
+        }
         public static long ToCompanyId ( this IUserState state )
         {
             return state.GetValue<long>("CompanyId");

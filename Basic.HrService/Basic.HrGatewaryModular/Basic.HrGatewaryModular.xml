@@ -475,6 +475,18 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="T:Basic.HrGatewaryModular.Api.LoginLogApi">
+            <summary>
+            登陆日志
+            </summary>
+        </member>
+        <member name="M:Basic.HrGatewaryModular.Api.LoginLogApi.Query(WeDonekRpc.HttpApiGateway.Model.PagingParam{Basic.HrRemoteModel.LoginLog.Model.LoginLogQuery})">
+            <summary>
+            查询用户登陆日志
+            </summary>
+            <param name="query">查询参数</param>
+            <returns></returns>
+        </member>
         <member name="M:Basic.HrGatewaryModular.Api.LoginUserApi.DeleteAccount(System.Int64)">
             <summary>
             删除账户
@@ -1004,7 +1016,7 @@
             <param name="companyId"></param>
             <returns></returns>
         </member>
-        <member name="M:Basic.HrGatewaryModular.Interface.IEmpLoginService.EmpPwdLogin(System.String,System.String)">
+        <member name="M:Basic.HrGatewaryModular.Interface.IEmpLoginService.EmpPwdLogin(System.String,System.String,Basic.HrRemoteModel.EmpLogin.Model.LoginState)">
             <summary>
             人员密码登陆
             </summary>
@@ -1127,6 +1139,16 @@
             <param name="query">查询参数</param>
             <param name="paging">分页参数</param>
             <returns>登陆用户资料</returns>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Interface.IOperateLogConfig.IsEnable">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Interface.IOperateLogConfig.Range">
+            <summary>
+            记录范围
+            </summary>
         </member>
         <member name="M:Basic.HrGatewaryModular.Interface.IPowerService.AddPower(Basic.HrRemoteModel.Power.Model.PowerAdd)">
             <summary>

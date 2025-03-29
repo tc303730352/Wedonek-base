@@ -13,7 +13,7 @@ const name = defaultSettings.title || 'vue Element Admin' // page title
 // For example, Mac: sudo npm run
 // You can change the port by the following method:
 // port = 9527 npm run dev OR npm run dev --port = 9527
-const port = process.env.port || process.env.npm_config_port || 9527 // dev port
+const port = process.env.port || process.env.npm_config_port || 81 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -31,6 +31,7 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
+    host: 'hr.meilixiaoyuan.cn',
     open: true,
     overlay: {
       warnings: false,
@@ -38,15 +39,11 @@ module.exports = {
     }
   },
   css: {
-    //   extract: true // 是否使用css分离插件 ExtractTextPlugin（开启骨架屏必须这个配置）
-    // css预设器配置项
-    // sass 版本 9 中使用 additionalData 版本 8 中使用 prependData,其他版本，使用data
-    //这里的分号；必填
     loaderOptions: {
       sass: {
         prependData: '@import "./src/styles/variables.scss";'
       }
-    },
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

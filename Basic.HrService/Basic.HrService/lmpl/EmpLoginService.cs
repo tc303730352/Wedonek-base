@@ -19,6 +19,8 @@ namespace Basic.HrService.lmpl
         private readonly IEmpRoleCollect _EmpRole;
         private readonly IEmpDeptPowerCollect _DeptPower;
         private readonly IUserLoginLogSaveCollect _LoginLog;
+        private readonly IDeptCollect _Dept;
+        private readonly ICompanyCollect _Company;
         public EmpLoginService ( ILoginUserCollect loginUser,
             IEmpCollect emp,
             IHrConfig config,
@@ -27,8 +29,11 @@ namespace Basic.HrService.lmpl
             IEmpDeptPowerCollect deptPower,
             IUserLoginLogSaveCollect loginLog,
             IEmpRoleCollect empRole,
+            ICompanyCollect company,
             IDeptCollect dept )
         {
+            this._Company = company;
+            this._Dept = dept;
             this._LoginLog = loginLog;
             this._DeptPower = deptPower;
             this._LoginUser = loginUser;
@@ -87,12 +92,16 @@ namespace Basic.HrService.lmpl
                 power = this._RolePower.GetOperateVal(roles.Convert(a => a.CompanyId == emp.CompanyId, a => a.RoleId).Distinct());
                 deptId = this._DeptPower.GetDeptId(emp.EmpId, emp.CompanyId);
             }
+            string dept = this._Dept.GetDeptName(emp.DeptId);
+            string com = this._Company.GetName(emp.CompanyId);
             return new LoginResult
             {
                 EmpId = emp.EmpId,
                 CompanyId = emp.CompanyId,
                 Power = power,
                 DeptId = deptId,
+                EmpName = emp.EmpName,
+                DeptName = com + "-" + dept,
                 Company = roles.Distinct(a => a.CompanyId),
                 IsAdmin = isAdmin,
             };

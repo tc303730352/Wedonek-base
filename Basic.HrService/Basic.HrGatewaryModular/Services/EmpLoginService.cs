@@ -80,6 +80,8 @@ namespace Basic.HrGatewaryModular.Services
                     {"UserId",new StateParam(result.EmpId) },
                     {"UserType",new StateParam("emp") },
                     {"CompanyId",new StateParam(result.CompanyId)},
+                    {"EmpName",new StateParam(result.EmpName) },
+                    {"DeptName",new StateParam(result.DeptName) },
                     {"DeptId",new StateParam(result.DeptId)},
                     {"IsAdmin",new StateParam(result.IsAdmin)},
                     {"Company",new StateParam(result.Company) }

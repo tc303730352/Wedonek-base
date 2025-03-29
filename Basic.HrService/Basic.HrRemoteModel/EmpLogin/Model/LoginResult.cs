@@ -29,6 +29,11 @@
         /// 部门权限
         /// </summary>
         public long[] DeptId { get; set; }
+
+        public string EmpName { get; set; }
+
+        public string DeptName { get; set; }
+
         public bool IsAdmin { get; set; }
     }
 }
