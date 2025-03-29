@@ -39,7 +39,8 @@ namespace Basic.HrCollect.Extend
                     ReqParam = a.PostStr,
                     Title = a.Title,
                     Uri = a.Uri.AbsolutePath,
-                    UserType = a.UserType
+                    UserType = a.UserType,
+                    Duration = a.Duration
                 };
                 if ( !a.IsError && LocalErrorManage.GetErrorMsg(a.LastError, out ErrorMsg msg) )
                 {

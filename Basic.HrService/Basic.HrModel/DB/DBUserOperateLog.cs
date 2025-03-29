@@ -82,6 +82,11 @@ namespace Basic.HrModel.DB
         /// </summary>
         public string FailShow { get; set; }
 
+        /// <summary>
+        /// 耗时
+        /// </summary>
+        public int Duration { get; set; }
+
         public DateTime AddTime { get; set; }
     }
 }
