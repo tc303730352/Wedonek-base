@@ -12,9 +12,10 @@ namespace Basic.HrGatewaryModular.Services
     internal class EmpLoginService : IEmpLoginService
     {
         private readonly IAccreditService _Accredit;
-
-        public EmpLoginService ( IAccreditService accredit )
+        private readonly IUserOnlineService _OnlineUser;
+        public EmpLoginService ( IAccreditService accredit, IUserOnlineService online )
         {
+            this._OnlineUser = online;
             this._Accredit = accredit;
         }
         public LoginDatum GetLoginDatum ( IUserState state )
@@ -101,7 +102,9 @@ namespace Basic.HrGatewaryModular.Services
                 Password = password,
                 LoginState = state
             }.Send();
-            return this._GetLoginResult(result);
+            EmpLoginRes res = this._GetLoginResult(result);
+            this._OnlineUser.Add(result, state, res.AccreditId);
+            return res;
         }
     }
 }

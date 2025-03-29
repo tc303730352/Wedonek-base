@@ -8,6 +8,7 @@ using Basic.HrRemoteModel.Dic.Model;
 using Basic.HrRemoteModel.DicItem.Model;
 using Basic.HrRemoteModel.Emp.Model;
 using Basic.HrRemoteModel.LoginLog.Model;
+using Basic.HrRemoteModel.OpLog.Model;
 using Basic.HrRemoteModel.Power.Model;
 using Basic.HrRemoteModel.Role.Model;
 using Basic.HrRemoteModel.TreeDic.Model;
@@ -21,6 +22,43 @@ namespace Basic.HrDAL.Repository
 {
     internal static class WhereLinq
     {
+        public static Expression<Func<DBUserOperateLog, bool>> ToWhere ( this OpLogQueryParam query )
+        {
+            ExpressionStarter<DBUserOperateLog> where = PredicateBuilder.New<DBUserOperateLog>();
+            if ( query.QueryKey.IsNotNull() )
+            {
+                where = where.And(a => a.Title.Contains(query.QueryKey));
+            }
+            if ( query.EmpId.HasValue )
+            {
+                where = where.And(a => a.EmpId == query.EmpId.Value);
+            }
+            if ( query.IsSuccess.HasValue )
+            {
+                where = where.And(a => a.IsSuccess == query.IsSuccess.Value);
+            }
+            if ( query.BusType.IsNotNull() )
+            {
+                where = where.And(a => a.BusType == query.BusType);
+            }
+            if ( query.Begin.HasValue && query.End.HasValue )
+            {
+                where = where.And(a => SqlFunc.Between(a.AddTime, query.Begin.Value, query.End.Value));
+            }
+            else if ( query.Begin.HasValue )
+            {
+                where = where.And(a => a.AddTime >= query.Begin.Value);
+            }
+            else if ( query.End.HasValue )
+            {
+                where = where.And(a => a.AddTime <= query.End.Value);
+            }
+            if ( where.IsStarted )
+            {
+                return where;
+            }
+            return null;
+        }
         public static Expression<Func<DBUserLoginLog, bool>> ToWhere ( this LoginLogQuery query )
         {
             ExpressionStarter<DBUserLoginLog> where = PredicateBuilder.New<DBUserLoginLog>();

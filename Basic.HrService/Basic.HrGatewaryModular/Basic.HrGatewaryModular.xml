@@ -1601,6 +1601,21 @@
             查询参数
             </summary>
         </member>
+        <member name="P:Basic.HrGatewaryModular.Model.OnlineUser.IsOnline">
+            <summary>
+            是否在线
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.OnlineUser.LoginTime">
+            <summary>
+            登陆时间
+            </summary>
+        </member>
+        <member name="P:Basic.HrGatewaryModular.Model.OnlineUser.Expire">
+            <summary>
+            过期时间
+            </summary>
+        </member>
         <member name="P:Basic.HrGatewaryModular.Model.OpPower.OperatePower.Powers">
             <summary>
             操作权限列表
