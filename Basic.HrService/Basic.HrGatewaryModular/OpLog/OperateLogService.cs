@@ -45,19 +45,25 @@ namespace Basic.HrGatewaryModular.OpLog
             OperateMenu[] menus = new GetOperateMenus().Send();
             if ( menus.IsNull() )
             {
+                _Menus.Clear();
                 return;
             }
             menus.ForEach(a =>
             {
-                string path = a.RoutePath.ToLower();
-                if ( !_Menus.ContainsKey(path) )
+                a.RoutePath = a.RoutePath.ToLower();
+                if ( !_Menus.ContainsKey(a.RoutePath) )
                 {
-                    _ = _Menus.TryAdd(path, new OpMenu
+                    _ = _Menus.TryAdd(a.RoutePath, new OpMenu
                     {
                         BusType = a.BusType,
                         Title = a.Title
                     });
                 }
+            });
+            string[] keys = _Menus.Where(a => !menus.IsExists(c => c.RoutePath == a.Key)).Select(a => a.Key).ToArray();
+            keys.ForEach(c =>
+            {
+                _ = _Menus.TryRemove(c, out _);
             });
         }
 
