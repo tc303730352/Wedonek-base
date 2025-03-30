@@ -83,6 +83,16 @@
       <template slot="AddTime" slot-scope="e">
         {{ moment(e.row.AddTime).format("YYYY-MM-DD HH:mm:ss") }}
       </template>
+      <template slot="action" slot-scope="e">
+        <el-button
+          size="mini"
+          type="primary"
+          title="显示信息"
+          icon="el-icon-eye"
+          circle
+          @click="show(e.row)"
+        />
+      </template>
     </w-table>
   </el-card>
 </template>
@@ -171,6 +181,13 @@ export default {
           align: 'center',
           slotName: 'AddTime',
           minWidth: 110
+        },
+        {
+          key: 'Action',
+          title: '操作',
+          align: 'left',
+          width: '100px',
+          slotName: 'action'
         }
       ],
       paging: {
