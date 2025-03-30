@@ -398,7 +398,6 @@ export default {
     },
     indexChange(val) {
       this.paging.Index = val
-      this.loading = true
       this.$emit('load', this.paging)
     }
   }

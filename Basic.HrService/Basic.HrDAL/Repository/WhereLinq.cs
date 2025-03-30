@@ -10,6 +10,7 @@ using Basic.HrRemoteModel.DicItem.Model;
 using Basic.HrRemoteModel.Emp.Model;
 using Basic.HrRemoteModel.LoginLog.Model;
 using Basic.HrRemoteModel.OpLog.Model;
+using Basic.HrRemoteModel.OpMenu.Model;
 using Basic.HrRemoteModel.Power.Model;
 using Basic.HrRemoteModel.Role.Model;
 using Basic.HrRemoteModel.TreeDic.Model;
@@ -23,6 +24,23 @@ namespace Basic.HrDAL.Repository
 {
     internal static class WhereLinq
     {
+        public static Expression<Func<DBOperateMenu, bool>> ToWhere ( this OpMenuQuery query )
+        {
+            ExpressionStarter<DBOperateMenu> where = PredicateBuilder.New<DBOperateMenu>();
+            if ( query.QueryKey.IsNotNull() )
+            {
+                where = where.And(a => a.Title.Contains(query.QueryKey));
+            }
+            if ( query.BusType.IsNotNull() )
+            {
+                where = where.And(a => a.BusType == query.BusType);
+            }
+            if ( where.IsStarted )
+            {
+                return where;
+            }
+            return null;
+        }
         public static Expression<Func<DBUserOperateLog, bool>> ToWhere ( this OpLogQueryParam query )
         {
             ExpressionStarter<DBUserOperateLog> where = PredicateBuilder.New<DBUserOperateLog>();

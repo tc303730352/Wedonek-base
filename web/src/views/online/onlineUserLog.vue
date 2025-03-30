@@ -155,6 +155,7 @@ export default {
         this.logs = []
       }
       this.paging.Total = res.Count
+      console.log(this.paging)
     },
     reset() {
       this.queryParam.QueryKey = null

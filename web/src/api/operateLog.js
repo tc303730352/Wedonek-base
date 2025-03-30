@@ -16,3 +16,13 @@ export function query(query, paging) {
     }
   })
 }
+
+export function get(id) {
+  return request({
+    url: formatRequestUri('Get'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

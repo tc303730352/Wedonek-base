@@ -88,12 +88,16 @@
           size="mini"
           type="primary"
           title="显示信息"
-          icon="el-icon-eye"
+          icon="el-icon-view"
           circle
           @click="show(e.row)"
         />
       </template>
     </w-table>
+    <operateView
+      :id="id"
+      :visible.sync="visible"
+    />
   </el-card>
 </template>
 
@@ -102,12 +106,17 @@ import moment from 'moment'
 import * as opLogApi from '@/api/operateLog'
 import { GetItemName } from '@/api/base/dictItem'
 import { HrLoginUserType } from '@/config/publicDic'
+import operateView from './operateView.vue'
 export default {
-  components: {},
+  components: {
+    operateView
+  },
   data() {
     return {
       HrLoginUserType,
       logs: [],
+      visible: false,
+      id: null,
       columns: [
         {
           key: 'Title',
@@ -213,6 +222,10 @@ export default {
   },
   methods: {
     moment,
+    show(row) {
+      this.id = row.Id
+      this.visible = true
+    },
     async loadItem() {
       this.busType = await GetItemName('6')
     },
