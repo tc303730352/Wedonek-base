@@ -281,7 +281,6 @@ import {
 import unitDeptTree from '@/components/unit/unitDeptTree.vue'
 import editEmpEntry from './components/editEmpEntry.vue'
 export default {
-  name: 'DeptList',
   components: {
     unitDeptTree,
     empTitleEdit,

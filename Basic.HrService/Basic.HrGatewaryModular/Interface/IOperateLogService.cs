@@ -6,6 +6,7 @@ namespace Basic.HrGatewaryModular.Interface
 {
     public interface IOperateLogService
     {
+        OperateLogData Get ( long id );
         PagingResult<OperateLogDto> Query ( PagingParam<OpLogQueryParam> param );
     }
 }

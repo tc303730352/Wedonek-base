@@ -1,4 +1,5 @@
 ﻿using Basic.HrCollect;
+using Basic.HrModel.DB;
 using Basic.HrRemoteModel.OpLog;
 using Basic.HrRemoteModel.OpLog.Model;
 using WeDonekRpc.Client;
@@ -19,6 +20,11 @@ namespace Basic.HrService.RpcEvent
         {
             OperateLogDto[] logs = this._OpLog.Query<OperateLogDto>(obj.Query, obj.ToBasicPage(), out int count);
             return new PagingResult<OperateLogDto>(logs, count);
+        }
+        public OperateLogData GetOperateLog ( GetOperateLog obj )
+        {
+            DBUserOperateLog log = this._OpLog.Get(obj.Id);
+            return log.ConvertMap<DBUserOperateLog, OperateLogData>();
         }
         public void SaveOperateLog ( SaveOperateLog obj )
         {

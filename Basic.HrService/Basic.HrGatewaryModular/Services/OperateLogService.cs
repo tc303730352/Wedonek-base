@@ -8,6 +8,14 @@ namespace Basic.HrGatewaryModular.Services
 {
     internal class OperateLogService : IOperateLogService
     {
+        public OperateLogData Get ( long id )
+        {
+            return new GetOperateLog
+            {
+                Id = id
+            }.Send();
+        }
+
         public PagingResult<OperateLogDto> Query ( PagingParam<OpLogQueryParam> param )
         {
             return new QueryOperateLog

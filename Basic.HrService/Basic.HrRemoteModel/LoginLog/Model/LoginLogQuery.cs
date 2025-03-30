@@ -2,9 +2,7 @@
 {
     public class LoginLogQuery
     {
-        public string LoginName { get; set; }
-
-        public string LoginIp { get; set; }
+        public string QueryKey { get; set; }
 
         public bool? IsSuccess { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Basic.HrRemoteModel.OpLog.Model
 {
-    public class OperateLogDto
+    public class OperateLogData
     {
         public long Id { get; set; }
 
@@ -35,6 +35,15 @@
         public string UserType { get; set; }
 
         /// <summary>
+        /// 请求路径
+        /// </summary>
+        public string Uri { get; set; }
+
+        /// <summary>
+        /// 实际请求路径
+        /// </summary>
+        public string Referer { get; set; }
+        /// <summary>
         /// IP地址
         /// </summary>
         public string Ip { get; set; }
@@ -43,6 +52,16 @@
         /// 地址
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// 结果
+        /// </summary>
+        public string Result { get; set; }
+
+        /// <summary>
+        /// 注册参数
+        /// </summary>
+        public string ReqParam { get; set; }
 
         /// <summary>
         /// 是否成功

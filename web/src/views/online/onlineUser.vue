@@ -11,7 +11,7 @@
       :paging="paging"
     >
       <template slot="isOnline" slot-scope="e">
-        {{ e.row.IsOnline ? '是' : '否' }}
+        <span :style="{color: e.row.IsOnline ? '#43AF2B' :'#999'}">{{ e.row.IsOnline ? '是' : '否' }}</span>
       </template>
       <template slot="loginTime" slot-scope="e">
         {{ moment(e.row.LoginTime).format('YYYY-MM-DD HH:mm:ss') }}
@@ -50,7 +50,7 @@ export default {
           key: 'AccreditId',
           title: '授权码',
           align: 'left',
-          width: 200
+          width: 270
         },
         {
           key: 'UserName',
@@ -94,13 +94,6 @@ export default {
           title: '登陆时间',
           align: 'center',
           slotName: 'loginTime',
-          minWidth: 150
-        },
-        {
-          key: 'Expire',
-          title: '过期时间',
-          align: 'center',
-          slotName: 'expire',
           minWidth: 150
         },
         {

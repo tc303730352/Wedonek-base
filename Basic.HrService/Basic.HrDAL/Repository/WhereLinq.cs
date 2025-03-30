@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Basic.HrModel.DB;
 using Basic.HrModel.Dept;
 using Basic.HrModel.Emp;
@@ -62,13 +63,16 @@ namespace Basic.HrDAL.Repository
         public static Expression<Func<DBUserLoginLog, bool>> ToWhere ( this LoginLogQuery query )
         {
             ExpressionStarter<DBUserLoginLog> where = PredicateBuilder.New<DBUserLoginLog>();
-            if ( query.LoginName.IsNotNull() )
+            if ( query.QueryKey.IsNotNull() )
             {
-                where = where.And(a => a.LoginName == query.LoginName);
-            }
-            if ( query.LoginIp.IsNotNull() )
-            {
-                where = where.And(a => a.LoginIp == query.LoginIp);
+                if ( Regex.IsMatch(query.QueryKey, @"^([.]{0,1}\d{1,3}){1,4}$", RegexOptions.IgnoreCase) )
+                {
+                    where = where.And(a => a.LoginIp == query.QueryKey);
+                }
+                else
+                {
+                    where = where.And(a => a.LoginName.Contains(query.QueryKey));
+                }
             }
             if ( query.IsSuccess.HasValue )
             {

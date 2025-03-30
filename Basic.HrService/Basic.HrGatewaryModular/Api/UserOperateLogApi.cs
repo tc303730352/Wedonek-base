@@ -18,5 +18,9 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.Query(query);
         }
+        public OperateLogData Get ( long id )
+        {
+            return _Service.Get(id);
+        }
     }
 }

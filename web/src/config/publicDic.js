@@ -10,6 +10,11 @@ module.exports = {
     companyType: 'HrCompanyType',
     hrPowerType: 'PowerType'
   },
+  HrLoginUserType: {
+    'emp': {
+      text: '人员名'
+    }
+  },
   hrCompanyType: {
     0: {
       text: '总公司'
