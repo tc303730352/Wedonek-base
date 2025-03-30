@@ -42,8 +42,11 @@ namespace Basic.HrGatewaryModular.OpLog
         }
         private static void _Refresh ( object? state )
         {
-            OperateMenu[] menus = new GetOperateMenus().Send();
-            if ( menus.IsNull() )
+            if ( !new GetOperateMenus().Send(out OperateMenu[] menus, out string error) )
+            {
+                return;
+            }
+            else if ( menus.IsNull() )
             {
                 _Menus.Clear();
                 return;
