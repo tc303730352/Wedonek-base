@@ -14,17 +14,7 @@ namespace Basic.HrRemoteModel.OpMenu.Model
             get;
             set;
         }
-        /// <summary>
-        /// Referer 路径
-        /// </summary>
-        [NullValidate("hr.operate.referer.path.null")]
-        [LenValidate("hr.operate.referer.path.len", 10, 2000)]
-        [FormatValidate("hr.operate.referer.path.error", ValidateFormat.相对路径)]
-        public string RefererPath
-        {
-            get;
-            set;
-        }
+
         /// <summary>
         /// 路由路径
         /// </summary>
