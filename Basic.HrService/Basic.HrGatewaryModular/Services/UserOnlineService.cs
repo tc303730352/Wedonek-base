@@ -6,7 +6,6 @@ using WeDonekRpc.Client;
 using WeDonekRpc.Helper;
 using WeDonekRpc.Model;
 using WeDonekRpc.Modular;
-using WeDonekRpc.ModularModel.Accredit.Model;
 
 namespace Basic.HrGatewaryModular.Services
 {
@@ -33,7 +32,7 @@ namespace Basic.HrGatewaryModular.Services
                 UserName = res.EmpName,
                 IsOnline = true
             };
-            _ = this._RedisList.InsertBefore(this._CacheKey, 0, t);
+            _ = this._RedisList.Insert(this._CacheKey, t);
         }
         public void ClearOnlineUser ()
         {
@@ -53,11 +52,11 @@ namespace Basic.HrGatewaryModular.Services
                     break;
                 }
                 string[] ids = users.ConvertAll(a => a.AccreditId);
-                List<AccreditState> state = this._Accredit.GetState(ids);
+                List<string> state = this._Accredit.CheckIsAccredit(ids);
                 DateTime now = DateTime.Now;
                 users.ForEach(a =>
                 {
-                    if ( !state.IsExists(c => c.AccreditId == a.AccreditId && ( c.Expire.HasValue == false || c.Expire.Value > now )) )
+                    if ( !state.Contains(a.AccreditId) )
                     {
                         removes.Add(a);
                     }
@@ -87,20 +86,10 @@ namespace Basic.HrGatewaryModular.Services
             {
                 return new PagingResult<OnlineUser>(list, count);
             }
-            List<AccreditState> state = this._Accredit.GetState(list.ConvertAll(a => a.AccreditId));
+            List<string> state = this._Accredit.CheckIsAccredit(list.ConvertAll(a => a.AccreditId));
             list.ForEach(c =>
             {
-                AccreditState t = state.Find(a => a.AccreditId == c.AccreditId);
-                if ( t != null )
-                {
-                    c.IsOnline = true;
-                    c.Expire = t.Expire;
-                }
-                else
-                {
-                    c.IsOnline = false;
-                    c.Expire = null;
-                }
+                c.IsOnline = state.Contains(c.AccreditId);
             });
             return new PagingResult<OnlineUser>(list, count);
         }

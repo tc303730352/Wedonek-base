@@ -37,9 +37,5 @@
             get;
             set;
         }
-        /// <summary>
-        /// 过期时间
-        /// </summary>
-        public DateTime? Expire { get; set; }
     }
 }

@@ -50,7 +50,7 @@ export default {
           key: 'AccreditId',
           title: '授权码',
           align: 'left',
-          width: 150
+          width: 200
         },
         {
           key: 'UserName',
@@ -60,7 +60,7 @@ export default {
         },
         {
           key: 'DeptName',
-          title: 'DeptName',
+          title: '部门名',
           align: 'center',
           minWidth: 150
         },
@@ -123,6 +123,7 @@ export default {
   },
   mounted() {
     this.initPower()
+    this.reset()
   },
   methods: {
     moment,

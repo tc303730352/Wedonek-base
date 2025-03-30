@@ -1629,11 +1629,6 @@
             登陆时间
             </summary>
         </member>
-        <member name="P:Basic.HrGatewaryModular.Model.OnlineUser.Expire">
-            <summary>
-            过期时间
-            </summary>
-        </member>
         <member name="P:Basic.HrGatewaryModular.Model.OpPower.OperatePower.Powers">
             <summary>
             操作权限列表

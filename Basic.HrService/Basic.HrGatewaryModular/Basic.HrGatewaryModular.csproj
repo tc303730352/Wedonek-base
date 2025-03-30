@@ -21,8 +21,8 @@
 	  <PackageReference Include="WeDonekRpc.Helper" Version="1.1.7" />
 	  <PackageReference Include="WeDonekRpc.HttpApiGateway" Version="1.1.4" />
 	  <PackageReference Include="WeDonekRpc.HttpService" Version="1.1.1" />
-	  <PackageReference Include="WeDonekRpc.Modular" Version="1.1.3" />
-	  <PackageReference Include="WeDonekRpc.ModularModel" Version="1.1.2" />
+	  <PackageReference Include="WeDonekRpc.Modular" Version="1.1.4" />
+	  <PackageReference Include="WeDonekRpc.ModularModel" Version="1.1.3" />
 	</ItemGroup>
 
 	<ItemGroup>
