@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrRemoteModel.OpLog.Model;
 using WeDonekRpc.Client;
+using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
 using WeDonekRpc.HttpApiGateway.Model;
 
@@ -18,9 +19,9 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.Query(query);
         }
-        public OperateLogData Get ( long id )
+        public OperateLogData Get ( [NumValidate("hr.operate.log.id.error", 1)] long id )
         {
-            return _Service.Get(id);
+            return this._Service.Get(id);
         }
     }
 }
