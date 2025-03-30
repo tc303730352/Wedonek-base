@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrGatewaryModular.Model;
+using WeDonekRpc.ApiGateway.Attr;
 using WeDonekRpc.Client;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -31,6 +32,7 @@ namespace Basic.HrGatewaryModular.Api
         /// 踢出用户
         /// </summary>
         /// <param name="accreditId"></param>
+        [ApiPower("all", "hr.user.kickout")]
         public void KickOut ( [NullValidate("hr.accredit.id.null")][LenValidate("hr.accredit.id.error", 32)] string accreditId )
         {
             this._Service.KickOut(accreditId);

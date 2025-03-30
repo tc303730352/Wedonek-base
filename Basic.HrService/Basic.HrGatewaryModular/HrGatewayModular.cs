@@ -1,5 +1,6 @@
 ﻿using Basic.HrGatewaryModular.ExtendService;
 using Basic.HrGatewaryModular.OpLog;
+using WeDonekRpc.CacheModular;
 using WeDonekRpc.Client;
 using WeDonekRpc.Client.Interface;
 namespace Basic.HrGatewaryModular
@@ -24,7 +25,7 @@ namespace Basic.HrGatewaryModular
 
         public void Load ( RpcInitOption option )
         {
-
+            option.LoadModular<CacheModular>();
         }
     }
 }

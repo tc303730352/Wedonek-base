@@ -15,8 +15,9 @@ namespace Basic.HrGatewaryModular.Services
         private readonly IRedisListController _RedisList;
         private readonly IAccreditService _Accredit;
         private readonly string _CacheKey = "OnlineUser";
-        public UserOnlineService ( IRedisListController redisList )
+        public UserOnlineService ( IRedisListController redisList, IAccreditService accredit )
         {
+            this._Accredit = accredit;
             this._RedisList = redisList;
         }
         public void Add ( LoginResult res, LoginState state, string accreditId )
