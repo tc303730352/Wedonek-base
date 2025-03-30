@@ -27,6 +27,16 @@ export function Get(id) {
   })
 }
 
+export function SetIsEnable(id, isEnable) {
+  return request({
+    url: formatRequestUri('SetIsEnable'),
+    method: 'post',
+    data: {
+      Id: id,
+      Value: isEnable
+    }
+  })
+}
 export function Delete(id) {
   return request({
     url: formatRequestUri('Delete'),

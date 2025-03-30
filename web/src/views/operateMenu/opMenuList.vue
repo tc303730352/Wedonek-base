@@ -62,7 +62,7 @@
         />
       </template>
     </w-table>
-    <addOpMenu :visible="visible" @close="visible = false" />
+    <addOpMenu :visible="visible" @close="close" />
   </el-card>
 </template>
 
@@ -92,6 +92,13 @@ export default {
           title: '业务类型',
           align: 'center',
           slotName: 'BusType',
+          width: 150
+        },
+        {
+          key: 'IsEnable',
+          title: '是否启用',
+          align: 'center',
+          slotName: 'IsEnable',
           width: 150
         },
         {
@@ -134,6 +141,19 @@ export default {
   },
   methods: {
     moment,
+    close(isRefresh) {
+      this.visible = false
+      if (isRefresh) {
+        this.load()
+      }
+    },
+    async setState(row) {
+      await opMenuApi.SetIsEnable(row.Id, row.IsEnable)
+      this.$message({
+        type: 'success',
+        message: '保存成功!'
+      })
+    },
     addMenu() {
       this.visible = true
     },
@@ -156,6 +176,7 @@ export default {
     },
     async submitDrop(id) {
       await opMenuApi.Delete(id)
+      this.load()
     },
     async loadItem() {
       this.busType = await GetItemName('6')

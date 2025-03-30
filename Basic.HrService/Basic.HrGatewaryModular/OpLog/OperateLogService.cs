@@ -49,9 +49,10 @@ namespace Basic.HrGatewaryModular.OpLog
             }
             menus.ForEach(a =>
             {
-                if ( !_Menus.ContainsKey(a.RoutePath) )
+                string path = a.RoutePath.ToLower();
+                if ( !_Menus.ContainsKey(path) )
                 {
-                    _ = _Menus.TryAdd(a.RoutePath, new OpMenu
+                    _ = _Menus.TryAdd(path, new OpMenu
                     {
                         BusType = a.BusType,
                         Title = a.Title
