@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="WeDonekRpc.ApiGateway" Version="1.1.2" />
+		<PackageReference Include="WeDonekRpc.CacheClient" Version="1.1.1" />
+		<PackageReference Include="WeDonekRpc.CacheModular" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Client" Version="1.1.3" />
+		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.7" />
+		<PackageReference Include="WeDonekRpc.HttpApiGateway" Version="1.1.5" />
+		<PackageReference Include="WeDonekRpc.HttpService" Version="1.1.1" />
+		<PackageReference Include="WeDonekRpc.Modular" Version="1.1.4" />
+		<PackageReference Include="WeDonekRpc.ModularModel" Version="1.1.3" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Basic.FormRemoteModel\Basic.FormRemoteModel.csproj" />
+	</ItemGroup>
+</Project>

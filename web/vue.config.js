@@ -31,7 +31,7 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    host: 'hr.meilixiaoyuan.cn',
+    host: 'hr.wedonek.com',
     open: true,
     overlay: {
       warnings: false,

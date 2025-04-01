@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="WeDonekRpc.Helper" Version="1.1.7" />
+		<PackageReference Include="WeDonekRpc.HttpApiDoc" Version="1.1.0" />
+		<PackageReference Include="WeDonekRpc.Modular" Version="1.1.4" />
+		<PackageReference Include="WeDonekRpc.ModularModel" Version="1.1.3" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Basic.FormGatewaryModular\Basic.FormGatewaryModular.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -136,6 +136,7 @@ export default {
   },
   computed: {},
   mounted() {
+    this.initPower()
     this.loadItem()
     this.load()
   },
