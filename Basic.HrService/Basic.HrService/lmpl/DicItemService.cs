@@ -73,5 +73,10 @@ namespace Basic.HrService.lmpl
         {
             return this._DictItem.GetTextList(dicId, values);
         }
+
+        public DicItemName[] GetNames ( long[] dicId )
+        {
+            return this._DictItem.Gets<DicItemName>(dicId);
+        }
     }
 }

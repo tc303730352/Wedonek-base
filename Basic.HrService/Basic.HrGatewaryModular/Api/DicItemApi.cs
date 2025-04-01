@@ -73,6 +73,10 @@ namespace Basic.HrGatewaryModular.Api
         {
             return this._Service.GetItemName(dicId);
         }
+        public Dictionary<long, Dictionary<string, string>> GetItemNames ( [NullValidate("hr.dicitem.dicId.null")] long[] dicId )
+        {
+            return this._Service.GetItemNames(dicId);
+        }
         /// <summary>
         /// 查询字典项
         /// </summary>

@@ -55,6 +55,6 @@ namespace Basic.HrGatewaryModular.Interface
         /// </summary>
         /// <param name="id">字典项ID</param>
         void StopDicItem ( long id );
-
+        Dictionary<long, Dictionary<string, string>> GetItemNames ( long[] dicId );
     }
 }

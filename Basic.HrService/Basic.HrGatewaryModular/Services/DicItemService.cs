@@ -1,6 +1,7 @@
 ﻿using Basic.HrGatewaryModular.Interface;
 using Basic.HrRemoteModel.DicItem;
 using Basic.HrRemoteModel.DicItem.Model;
+using WeDonekRpc.Helper;
 
 namespace Basic.HrGatewaryModular.Services
 {
@@ -93,6 +94,19 @@ namespace Basic.HrGatewaryModular.Services
                 DicId = dicId,
                 Values = values
             }.Send();
+        }
+
+        public Dictionary<long, Dictionary<string, string>> GetItemNames ( long[] dicId )
+        {
+            DicItemName[] items = new GetDictItemNames
+            {
+                DicId = dicId
+            }.Send();
+            if ( items.IsNull() )
+            {
+                return null;
+            }
+            return items.GroupBy(a => a.DicId).ToDictionary(a => a.Key, a => a.ToDictionary(c => c.DicValue, c => c.DicText));
         }
     }
 }

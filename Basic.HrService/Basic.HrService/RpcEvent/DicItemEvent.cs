@@ -13,6 +13,10 @@ namespace Basic.HrService.RpcEvent
         {
             this._Service = service;
         }
+        public DicItemName[] GetDictItemNames ( GetDictItemNames obj )
+        {
+            return this._Service.GetNames(obj.DicId);
+        }
         public string[] GetDicTextList ( GetDicTextList obj )
         {
             return this._Service.GetTextList(obj.DicId, obj.Values);

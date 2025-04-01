@@ -98,6 +98,10 @@ export default {
     sysHead: {
       type: String,
       default: 'hr'
+    },
+    enumItems: {
+      type: Array,
+      default: null
     }
   },
   data() {
@@ -140,7 +144,7 @@ export default {
       } else {
         this.items = res
       }
-      this.$emit('load', res)
+      this.$emit('update:enumItems', res)
       this.loadNames()
     },
     loadNames() {

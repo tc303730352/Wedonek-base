@@ -15,5 +15,6 @@ namespace Basic.HrService.Interface
         void Stop ( long id );
         DicItemDto Get ( long id );
         string[] GetTextList ( long dicId, string[] values );
+        DicItemName[] GetNames ( long[] dicId );
     }
 }

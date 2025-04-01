@@ -13,54 +13,54 @@ namespace Basic.HrCollect.Impl
     {
         private readonly IDicItemDAL _DictItem;
 
-        public DicItemCollect (IDicItemDAL dictItem)
+        public DicItemCollect ( IDicItemDAL dictItem )
         {
             this._DictItem = dictItem;
         }
-        public DicItem[] GetItems (long dicId)
+        public DicItem[] GetItems ( long dicId )
         {
             return this._DictItem.GetItems(dicId);
         }
-        public DicItemBase[] GetItems (long[] dicId)
+        public DicItemBase[] GetItems ( long[] dicId )
         {
             return this._DictItem.GetItems(dicId);
         }
-        public void Delete (DBDicItem item)
+        public void Delete ( DBDicItem item )
         {
-            if (item.DicStatus == DicItemStatus.启用)
+            if ( item.DicStatus == DicItemStatus.启用 )
             {
                 throw new ErrorException("hr.dic.item.not.allow.update");
             }
             this._DictItem.Delete(item.Id);
         }
-        public bool Set (DBDicItem item, DicItemSet set)
+        public bool Set ( DBDicItem item, DicItemSet set )
         {
-            if (item.DicStatus == DicItemStatus.启用)
+            if ( item.DicStatus == DicItemStatus.启用 )
             {
                 throw new ErrorException("hr.dic.item.not.allow.update");
             }
-            else if (item.DicText != set.DicText && this._DictItem.IsExists(c => c.DicId == item.DicId && c.DicText == set.DicText))
+            else if ( item.DicText != set.DicText && this._DictItem.IsExists(c => c.DicId == item.DicId && c.DicText == set.DicText) )
             {
                 throw new ErrorException("hr.dic.item.text.repeat");
             }
             return this._DictItem.Update(item, set);
         }
-        public long Add (DicItemAdd item)
+        public long Add ( DicItemAdd item )
         {
-            if (item.DicValue.IsNotNull() && this._DictItem.IsExists(c => c.DicId == item.DicId && c.DicValue == item.DicValue))
+            if ( item.DicValue.IsNotNull() && this._DictItem.IsExists(c => c.DicId == item.DicId && c.DicValue == item.DicValue) )
             {
                 throw new ErrorException("hr.dic.item.value.repeat");
             }
-            if (this._DictItem.IsExists(c => c.DicId == item.DicId && c.DicText == item.DicText))
+            if ( this._DictItem.IsExists(c => c.DicId == item.DicId && c.DicText == item.DicText) )
             {
                 throw new ErrorException("hr.dic.item.text.repeat");
             }
             DBDicItem add = item.ConvertMap<DicItemAdd, DBDicItem>();
             add.Sort = this._DictItem.GetSort(item.DicId) + 1;
-            if (add.DicValue.IsNull())
+            if ( add.DicValue.IsNull() )
             {
                 string max = this._DictItem.Get(a => a.DicId == item.DicId && a.IsAuto, a => SqlFunc.AggregateMax(a.DicValue));
-                if (max.IsNull())
+                if ( max.IsNull() )
                 {
                     add.DicValue = "001";
                 }
@@ -72,63 +72,67 @@ namespace Basic.HrCollect.Impl
             this._DictItem.Add(add);
             return add.Id;
         }
-        public string[] GetTextList (long dictId, string[] values)
+        public string[] GetTextList ( long dictId, string[] values )
         {
             return this._DictItem.GetTextList(dictId, values);
         }
 
-        public Dictionary<string, string> GetTexts (long dictId, string[] values)
+        public Dictionary<string, string> GetTexts ( long dictId, string[] values )
         {
             return this._DictItem.GetTexts(dictId, values);
         }
 
-        public DBDicItem Get (long id)
+        public DBDicItem Get ( long id )
         {
             return this._DictItem.Get(id);
         }
 
-        public void Enable (DBDicItem item)
+        public void Enable ( DBDicItem item )
         {
-            if (item.DicStatus == DicItemStatus.启用)
+            if ( item.DicStatus == DicItemStatus.启用 )
             {
                 return;
             }
             this._DictItem.SetStatus(item, DicItemStatus.启用);
         }
 
-        public void Stop (DBDicItem item)
+        public void Stop ( DBDicItem item )
         {
-            if (item.DicStatus == DicItemStatus.停用)
+            if ( item.DicStatus == DicItemStatus.停用 )
             {
                 return;
             }
             this._DictItem.SetStatus(item, DicItemStatus.停用);
         }
-        public Dictionary<long, int> GetItemNum (long[] dicId)
+        public Dictionary<long, int> GetItemNum ( long[] dicId )
         {
-            if (dicId.IsNull())
+            if ( dicId.IsNull() )
             {
                 return null;
             }
             return this._DictItem.GetItemNum(dicId);
         }
 
-        public void Clear (long dicId)
+        public void Clear ( long dicId )
         {
             long[] ids = this._DictItem.Gets(a => a.DicId == dicId, a => a.Id);
-            if (ids.IsNull())
+            if ( ids.IsNull() )
             {
                 return;
             }
             this._DictItem.Delete(ids);
         }
 
-        public Result[] Gets<Result> (DicItemQuery query) where Result : class, new()
+        public Result[] Gets<Result> ( DicItemQuery query ) where Result : class, new()
         {
             return this._DictItem.Gets<Result>(query);
         }
+        public Result[] Gets<Result> ( long[] dicId ) where Result : class, new()
+        {
+            return this._DictItem.Gets<Result>(a => dicId.Contains(a.DicId) && a.DicStatus == DicItemStatus.启用);
+        }
 
-        public void Move (DBDicItem item, DBDicItem toItem)
+        public void Move ( DBDicItem item, DBDicItem toItem )
         {
             this._DictItem.Move(item, toItem);
         }

@@ -18,6 +18,7 @@
             :dic-key="EnumDic.ControlType"
             sys-head="form"
             placeholder="控件类型"
+            :enum-items.sync="controlType"
             @change="load"
           />
         </el-form-item>
@@ -44,25 +45,11 @@
       :paging="paging"
       @load="load"
     >
-      <template slot="failShow" slot-scope="e">
-        <span
-          v-if="!e.row.IsSuccess"
-        >{{ e.row.FailShow == null ? e.row.ErrorCode : e.row.FailShow }}
-        </span>
+      <template slot="ControlType" slot-scope="e">
+        {{ getEnumName(controlType, e.row.ControlType) }}
       </template>
-      <template slot="Duration" slot-scope="e">
-        {{ e.row.Duration + " 毫秒" }}
-      </template>
-      <template slot="UserType" slot-scope="e">
-        {{ HrLoginUserType[e.row.UserType].text }}
-      </template>
-      <template slot="BusType" slot-scope="e">
-        {{ busType[e.row.BusType] }}
-      </template>
-      <template slot="IsSuccess" slot-scope="e">
-        <span :style="{ color: e.row.IsSuccess ? '#43AF2B' : '#999' }">{{
-          e.row.IsSuccess ? "成功" : "失败"
-        }}</span>
+      <template slot="Status" slot-scope="e">
+        {{ ControlStatus[e.row.Status].text }}
       </template>
       <template slot="AddTime" slot-scope="e">
         {{ moment(e.row.AddTime).format("YYYY-MM-DD HH:mm:ss") }}
@@ -84,13 +71,16 @@
 <script>
 import moment from 'moment'
 import * as controlApi from '@/customForm/api/control'
-import { EnumDic } from '@/customForm/config/formConfig'
+import { GetItemName } from '@/api/base/dictItem'
+import { ControlStatus, EnumDic, DictItemDic } from '@/customForm/config/formConfig'
 export default {
   components: {
   },
   data() {
     return {
       EnumDic,
+      ControlStatus,
+      controlType: [],
       controls: [],
       columns: [
         {
@@ -109,6 +99,7 @@ export default {
           key: 'ControlType',
           title: '控件类型',
           align: 'center',
+          slotName: 'ControlType',
           width: 100
         },
         {
@@ -169,6 +160,13 @@ export default {
     show(row) {
       this.id = row.Id
       this.visible = true
+    },
+    getEnumName(list, key) {
+      if (list == null || list.length === 0) {
+        return null
+      }
+      const item = list.find(a => a.Value === key)
+      return item == null ? null : item.Text
     },
     async load() {
       const res = await controlApi.Query(this.queryParam, this.paging)
