@@ -1,4 +1,5 @@
-﻿using WeDonekRpc.Client.Attr;
+﻿using Basic.FormGatewaryModular.ExtendService;
+using WeDonekRpc.Client.Attr;
 using WeDonekRpc.HttpApiGateway;
 using WeDonekRpc.HttpApiGateway.Interface;
 
@@ -19,6 +20,11 @@ namespace Basic.FormGatewaryModular
                     body.SetLifetimeType(ClassLifetimeType.SingleInstance);
                 }
             });
+        }
+        protected override void Init ()
+        {
+            base.Init();
+            EnumService.Load();
         }
     }
 }

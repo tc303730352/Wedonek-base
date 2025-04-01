@@ -16,6 +16,7 @@
           <enumItem
             v-model="queryParam.ControlType"
             :dic-key="EnumDic.ControlType"
+            sys-head="form"
             placeholder="控件类型"
             @change="load"
           />
@@ -24,6 +25,7 @@
           <enumItem
             v-model="queryParam.Status"
             :dic-key="EnumDic.ControlStatus"
+            sys-head="form"
             placeholder="控件状态"
             :multiple="true"
             @change="load"
