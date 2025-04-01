@@ -19,10 +19,12 @@ namespace Basic.FormModel.DB
         /// 控件说明
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// 控件类型
         /// </summary>
         public ControlType ControlType { get; set; }
+
         /// <summary>
         /// 编辑控件
         /// </summary>
@@ -32,15 +34,18 @@ namespace Basic.FormModel.DB
         /// 显示控件
         /// </summary>
         public string ShowControl { get; set; }
+
         /// <summary>
         /// 控件配置
         /// </summary>
+        [SugarColumn(IsJson = true)]
         public ControlConfig[] Config { get; set; }
 
         /// <summary>
         /// 控件最小宽度
         /// </summary>
         public int? MinWidth { get; set; }
+
         /// <summary>
         /// 控件状态
         /// </summary>

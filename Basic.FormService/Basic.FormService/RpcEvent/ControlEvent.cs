@@ -14,7 +14,10 @@ namespace Basic.FormService.RpcEvent
         {
             this._Service = service;
         }
-
+        public bool SetControlStatus ( SetControlStatus obj )
+        {
+            return this._Service.SetStatus(obj.Id, obj.Status);
+        }
         public long AddControl ( AddControl data )
         {
             return this._Service.Add(data.Datum);

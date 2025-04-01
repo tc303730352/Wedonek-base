@@ -6,7 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import BasicLayout from '@/layout/basicLayout'
-const defLoadRoute = []
+const defLoadRoute = ['customForm']
 const defRoute = []
 export const getLayout = (name) => {
   if (name === 'BasicLayout') {

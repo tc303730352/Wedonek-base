@@ -56,5 +56,15 @@ namespace Basic.FormCollect.lmpl
             }
             this._ControlDAL.Delete(control.Id);
         }
+
+        public bool SetStatus ( DBCustomControl control, ControlStatus status )
+        {
+            if ( control.Status == status )
+            {
+                return false;
+            }
+            this._ControlDAL.SetStatus(control.Id, status);
+            return true;
+        }
     }
 }

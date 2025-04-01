@@ -30,6 +30,14 @@ namespace Basic.FormGatewaryModular.Api
         {
             return this._Service.Get(id);
         }
+        public bool Enable ( [NumValidate("form.control.id.error", 1)] long id )
+        {
+            return this._Service.Enable(id);
+        }
+        public bool Disable ( [NumValidate("form.control.id.error", 1)] long id )
+        {
+            return this._Service.Disable(id);
+        }
 
         public PagingResult<ControlDto> Query ( PagingParam<ControlQuery> param )
         {

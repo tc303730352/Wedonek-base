@@ -1,6 +1,8 @@
 ﻿using Basic.FormModel.DB;
+using Basic.FormRemoteModel;
 using Basic.FormRemoteModel.Control.Model;
 using WeDonekRpc.Client;
+using WeDonekRpc.Helper;
 using WeDonekRpc.Helper.IdGenerator;
 using WeDonekRpc.Model;
 using WeDonekRpc.SqlSugar;
@@ -24,6 +26,14 @@ namespace Basic.FormDAL.Repository
         {
             paging.InitOrderBy("Id", true);
             return this._BasicDAL.Query<Result>(query.ToWhere(), paging, out count);
+        }
+
+        public void SetStatus ( long id, ControlStatus status )
+        {
+            if ( !this._BasicDAL.Update(a => a.Status == status, a => a.Id == id) )
+            {
+                throw new ErrorException("form.control.set.fail");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Basic.FormGatewaryModular.Interface;
+using Basic.FormRemoteModel;
 using Basic.FormRemoteModel.Control;
 using Basic.FormRemoteModel.Control.Model;
 using WeDonekRpc.Client;
@@ -22,6 +23,24 @@ namespace Basic.FormGatewaryModular.Services
             {
                 Id = id
             }.Send();
+        }
+
+        public bool Disable ( long id )
+        {
+            return new SetControlStatus
+            {
+                Id = id,
+                Status = ControlStatus.停用
+            }.Send();
+        }
+
+        public bool Enable ( long id )
+        {
+            return new SetControlStatus
+            {
+                Id = id,
+                Status = ControlStatus.启用
+            }.Send(); throw new NotImplementedException();
         }
 
         public ControlDetailed Get ( long id )

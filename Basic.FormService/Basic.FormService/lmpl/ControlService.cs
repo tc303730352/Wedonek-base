@@ -1,5 +1,6 @@
 ﻿using Basic.FormCollect;
 using Basic.FormModel.DB;
+using Basic.FormRemoteModel;
 using Basic.FormRemoteModel.Control.Model;
 using Basic.FormService.Interface;
 using WeDonekRpc.Client;
@@ -15,7 +16,11 @@ namespace Basic.FormService.lmpl
         {
             this._Control = control;
         }
-
+        public bool SetStatus ( long id, ControlStatus status )
+        {
+            DBCustomControl db = this._Control.Get(id);
+            return this._Control.SetStatus(db, status);
+        }
         public long Add ( ControlAdd data )
         {
             return this._Control.Add(data);
