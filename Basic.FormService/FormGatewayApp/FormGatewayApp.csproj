@@ -15,5 +15,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Basic.FormGatewaryModular\Basic.FormGatewaryModular.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="LocalConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
