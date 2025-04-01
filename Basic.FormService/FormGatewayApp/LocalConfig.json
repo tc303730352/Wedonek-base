@@ -27,10 +27,5 @@
         "RpcAppSecret": "475b1cf2686f4906a4ae6925396d59da",
         "RpcSystemType": "basic.form.gateway",
         "LocalMac": "7c:b2:7d:ea:fd:df"
-    },
-    "hr": {
-        "operateLog": {
-            "IsEnable": true
-        }
     }
 }

@@ -10,7 +10,7 @@
     "SqlSugar": [
         {
             "ConfigId": "default",
-            "ConnectionString": "Data Source=.;Initial Catalog=WedonekBase;Persist Security Info=True;User ID=sa;Password=tc426831;Max Pool Size = 1024;Encrypt=True;TrustServerCertificate=True;"
+            "ConnectionString": "Data Source=.;Initial Catalog=WedonekForm;Persist Security Info=True;User ID=sa;Password=tc426831;Max Pool Size = 1024;Encrypt=True;TrustServerCertificate=True;"
         }
     ]
   }
