@@ -17,7 +17,7 @@ namespace Basic.FormGatewaryModular.ExtendService
         public static void Load ()
         {
             IConfigSection section = RpcClient.Config.GetSection("dic");
-            string[] names = section.GetValue("enum", new string[] { "Basic.HrRemoteModel", "Base.FileRemoteModel" });
+            string[] names = section.GetValue("enum", new string[] { "Basic.FormRemoteModel" });
             if ( names.IsNull() )
             {
                 return;

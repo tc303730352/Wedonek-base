@@ -2,8 +2,8 @@
     "gateway": {
         "http": {
             "server": {
-                "RealRequestUri": "http://150.138.78.137:11093/",
-                "Url": "http://*:93/"
+                "RealRequestUri": "http://150.138.78.137:11096/",
+                "Url": "http://*:96/"
             },
             "up": {
                 "MemoryUpSize": 10485760

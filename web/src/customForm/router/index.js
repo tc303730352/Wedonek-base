@@ -1,5 +1,4 @@
 import BasicLayout from '@/layout/basicLayout'
-import Layout from '@/layout'
 
 export const routes = [
   {
