@@ -51,8 +51,11 @@
       <template slot="Status" slot-scope="e">
         {{ ControlStatus[e.row.Status].text }}
       </template>
-      <template slot="AddTime" slot-scope="e">
-        {{ moment(e.row.AddTime).format("YYYY-MM-DD HH:mm:ss") }}
+      <template slot="EditControl" slot-scope="e">
+        <span v-if="dictItems[DictItemDic.editControl] && e.row.EditControl">{{ dictItems[DictItemDic.editControl][e.row.EditControl] }}</span>
+      </template>
+      <template slot="ShowControl" slot-scope="e">
+        <span v-if="dictItems[DictItemDic.showControl] && e.row.ShowControl">{{ dictItems[DictItemDic.showControl][e.row.ShowControl] }}</span>
       </template>
       <template slot="action" slot-scope="e">
         <el-button
@@ -71,7 +74,7 @@
 <script>
 import moment from 'moment'
 import * as controlApi from '@/customForm/api/control'
-import { GetItemName } from '@/api/base/dictItem'
+import { GetItemNames } from '@/api/base/dictItem'
 import { ControlStatus, EnumDic, DictItemDic } from '@/customForm/config/formConfig'
 export default {
   components: {
@@ -79,6 +82,7 @@ export default {
   data() {
     return {
       EnumDic,
+      DictItemDic,
       ControlStatus,
       controlType: [],
       controls: [],
@@ -104,7 +108,7 @@ export default {
         },
         {
           key: 'MinWidth',
-          title: '控件最小宽度',
+          title: '控件宽度(px)',
           align: 'right',
           minWidth: 120
         },
@@ -148,15 +152,23 @@ export default {
         QueryKey: null,
         ControlType: null,
         Status: null
-      }
+      },
+      dictItems: {}
     }
   },
   computed: {},
   mounted() {
+    this.loadDict()
     this.load()
   },
   methods: {
     moment,
+    async loadDict() {
+      const res = await GetItemNames([DictItemDic.editControl, DictItemDic.showControl])
+      if (res != null) {
+        this.dictItems = res
+      }
+    },
     show(row) {
       this.id = row.Id
       this.visible = true

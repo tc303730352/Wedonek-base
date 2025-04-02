@@ -22,6 +22,13 @@ export function GetItemName(dicId) {
     }
   })
 }
+export function GetItemNames(dicId) {
+  return request({
+    url: formatRequestUri('GetItemNames'),
+    method: 'post',
+    data: dicId
+  })
+}
 
 export function GetItems(query) {
   return request({
