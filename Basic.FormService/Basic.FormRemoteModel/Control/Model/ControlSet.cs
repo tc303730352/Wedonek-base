@@ -16,6 +16,10 @@ namespace Basic.FormRemoteModel.Control.Model
         [LenValidate("form.control.name.len", 0, 100)]
         public string Description { get; set; }
 
+        /// <summary>
+        /// 图标
+        /// </summary>
+        public string Icon { get; set; }
 
         /// <summary>
         /// 控件最小宽度

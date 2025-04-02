@@ -16,6 +16,10 @@ namespace Basic.FormModel.DB
         public string Name { get; set; }
 
         /// <summary>
+        /// 图标
+        /// </summary>
+        public string Icon {  get; set; }
+        /// <summary>
         /// 控件说明
         /// </summary>
         public string Description { get; set; }

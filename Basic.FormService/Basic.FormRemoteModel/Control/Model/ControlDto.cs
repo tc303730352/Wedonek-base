@@ -8,7 +8,10 @@
         /// 控件名
         /// </summary>
         public string Name { get; set; }
-
+        /// <summary>
+        /// 图标
+        /// </summary>
+        public string Icon { get; set; }
         /// <summary>
         /// 控件说明
         /// </summary>
