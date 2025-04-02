@@ -23,6 +23,15 @@ namespace Basic.FormDAL.Repository
             base._BasicDAL.Insert(db);
             return db.Id;
         }
+
+        public void Drop(long id)
+        {
+            if (!_BasicDAL.Update(a => a.IsDrop == true, a => a.Id == id))
+            {
+                throw new ErrorException("form.drop.fail");
+            }
+        }
+
         public Result[] Query<Result>(FormQuery query, IBasicPage paging, out int count) where Result : class
         {
             paging.InitOrderBy("Id", true);

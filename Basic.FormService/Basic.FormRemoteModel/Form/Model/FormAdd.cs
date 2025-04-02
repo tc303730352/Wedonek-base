@@ -7,7 +7,7 @@ namespace Basic.FormRemoteModel.Form.Model
         /// <summary>
         /// 公司ID
         /// </summary>
-        [NumValidate("form.company.id.error", 1)]
+        [NumValidate("hr.company.id.error", 1)]
         public long CompanyId { get; set; }
 
         /// <summary>

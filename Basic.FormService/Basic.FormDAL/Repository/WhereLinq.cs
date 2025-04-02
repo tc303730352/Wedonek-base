@@ -32,7 +32,7 @@ namespace Basic.FormDAL.Repository
         }
         public static Expression<Func<DBCustomForm, bool>> ToWhere(this FormQuery query)
         {
-            ExpressionStarter<DBCustomForm> where = PredicateBuilder.New<DBCustomForm>();
+            ExpressionStarter<DBCustomForm> where = PredicateBuilder.New<DBCustomForm>(a=>a.CompanyId==query.CompanyId);
             if (query.QueryKey.IsNotNull())
             {
                 where = where.And(a => a.FormName.Contains(query.QueryKey));
@@ -45,11 +45,7 @@ namespace Basic.FormDAL.Repository
             {
                 where = where.And(a => query.Status.Contains(a.FormStatus));
             }
-            if (where.IsStarted)
-            {
-                return where;
-            }
-            return null;
+            return where.And(a => a.IsDrop == false);
         }
     }
 }

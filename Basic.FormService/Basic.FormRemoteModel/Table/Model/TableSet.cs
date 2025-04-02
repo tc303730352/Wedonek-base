@@ -1,4 +1,6 @@
-﻿namespace Basic.FormRemoteModel.Table.Model
+﻿using WeDonekRpc.Helper.Validate;
+
+namespace Basic.FormRemoteModel.Table.Model
 {
     public class TableSet
     {
@@ -10,6 +12,8 @@
         /// <summary>
         /// 列表行自动生成方式
         /// </summary>
+        [NullValidate("form.table.row.generate.mode.null")]
+        [LenValidate("form.table.row.generate.mode.len",3)]
         public string RowGenerateMode { get; set; }
 
         /// <summary>

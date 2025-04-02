@@ -39,7 +39,12 @@ namespace Basic.FormCollect.lmpl
         }
         public DBCustomForm Get(long id)
         {
-            return this._FormDAL.Get(id);
+            DBCustomForm form= this._FormDAL.Get(id);
+            if (form.IsDrop)
+            {
+                throw new ErrorException("form.already.drop");
+            }
+            return form;
         }
         public bool Set(DBCustomForm source, FormSet set)
         {
@@ -51,11 +56,18 @@ namespace Basic.FormCollect.lmpl
         }
         public void Delete(DBCustomForm source)
         {
-            if (source.FormStatus != FormStatus.起草)
+            if (source.FormStatus == FormStatus.启用)
             {
                 throw new ErrorException("form.not.allow.delete");
             }
-            this._FormDAL.Delete(source.Id);
+            else if (source.FormStatus == FormStatus.起草)
+            {
+                this._FormDAL.Delete(source.Id);
+            }
+            else
+            {
+                this._FormDAL.Drop(source.Id);
+            }
         }
 
         public bool SetStatus(DBCustomForm source, FormStatus status)
