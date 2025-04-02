@@ -16,6 +16,11 @@ namespace Basic.FormModel.DB
         /// 公司ID
         /// </summary>
         public long CompanyId { get; set; }
+
+        /// <summary>
+        /// 表单分类
+        /// </summary>
+        public string FormType {  get; set; }
         /// <summary>
         /// 表单名称
         /// </summary>
@@ -32,24 +37,14 @@ namespace Basic.FormModel.DB
         public FormStatus FormStatus { get; set; }
 
         /// <summary>
+        /// 版本号
+        /// </summary>
+        public string Ver { get; set; }
+        /// <summary>
         /// 是否删除
         /// </summary>
         public bool IsDrop { get; set; }
 
-        /// <summary>
-        /// 创建人
-        /// </summary>
-        public long CreateBy { get; set; }
-
-        /// <summary>
-        /// 编辑人
-        /// </summary>
-        public long? EditBy { get; set; }
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime? EditTime { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

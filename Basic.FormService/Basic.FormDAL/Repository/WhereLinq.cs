@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Basic.FormModel.DB;
 using Basic.FormRemoteModel.Control.Model;
+using Basic.FormRemoteModel.Form.Model;
 using LinqKit;
 using WeDonekRpc.Helper;
 
@@ -24,6 +25,27 @@ namespace Basic.FormDAL.Repository
                 where = where.And(a => query.Status.Contains(a.Status));
             }
             if ( where.IsStarted )
+            {
+                return where;
+            }
+            return null;
+        }
+        public static Expression<Func<DBCustomForm, bool>> ToWhere(this FormQuery query)
+        {
+            ExpressionStarter<DBCustomForm> where = PredicateBuilder.New<DBCustomForm>();
+            if (query.QueryKey.IsNotNull())
+            {
+                where = where.And(a => a.FormName.Contains(query.QueryKey));
+            }
+            if (query.FormType.IsNotNull())
+            {
+                where = where.And(a => a.FormType == query.FormType);
+            }
+            if (!query.Status.IsNull())
+            {
+                where = where.And(a => query.Status.Contains(a.FormStatus));
+            }
+            if (where.IsStarted)
             {
                 return where;
             }
