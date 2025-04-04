@@ -21,7 +21,10 @@
         /// 控件类型
         /// </summary>
         public ControlType ControlType { get; set; }
-
+        /// <summary>
+        /// 是否为基础控件
+        /// </summary>
+        public bool IsBaseControl { get; set; }
         /// <summary>
         /// 编辑控件
         /// </summary>

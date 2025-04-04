@@ -8,8 +8,6 @@ module.exports = {
     ValidateRuleType: 'ValidateRuleType'
   },
   DictItemDic: {
-    editControl: 8,
-    showControl: 9
   },
   ControlStatus: {
     0: {

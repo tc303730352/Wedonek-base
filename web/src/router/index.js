@@ -233,7 +233,6 @@ export const formatPage = (page, level) => {
     }
   }
   const path = page.PagePath
-  console.log(path)
   route.component = resolve => require(['@/' + path], resolve)
   if (page.Children != null && page.Children.length > 0) {
     const lev = level + 1

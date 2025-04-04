@@ -18,16 +18,22 @@ namespace Basic.FormModel.DB
         /// <summary>
         /// 图标
         /// </summary>
-        public string Icon {  get; set; }
+        public string Icon { get; set; }
         /// <summary>
         /// 控件说明
         /// </summary>
         public string Description { get; set; }
 
+
         /// <summary>
         /// 控件类型
         /// </summary>
         public ControlType ControlType { get; set; }
+
+        /// <summary>
+        /// 是否为基础控件
+        /// </summary>
+        public bool IsBaseControl { get; set; }
 
         /// <summary>
         /// 编辑控件

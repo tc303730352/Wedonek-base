@@ -12,13 +12,6 @@ namespace Basic.FormRemoteModel.Table.Model
         public string Title { get; set; }
 
         /// <summary>
-        /// 说明
-        /// </summary>
-        [LenValidate("form.table.description.len", 0, 100)]
-        public string Description { get; set; }
-
-
-        /// <summary>
         /// 表单设置
         /// </summary>
         [NullValidate("form.table.set.null")]

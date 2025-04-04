@@ -25,6 +25,7 @@ import leftRightSplit from '@/components/tools/leftRightSplit.vue'
 import * as filters from './filters' // global filters
 import moment from 'moment'
 import ZmTreeOrg from 'zm-tree-org'
+import icon from './components/tools/icon.vue'
 import 'zm-tree-org/lib/zm-tree-org.css'
 
 Vue.use(ZmTreeOrg)
@@ -45,6 +46,7 @@ Vue.component('treeDicItem', treeDicItem)
 Vue.component('leftRightSplit', leftRightSplit)
 Vue.component('dictItem', dictItem)
 Vue.component('enumItem', enumItem)
+Vue.component('icon', icon)
 Vue.component('w-table', table)
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size

@@ -112,7 +112,9 @@ export default {
         'tree',
         'user',
         'wechat',
-        'zip'
+        'zip',
+        'text',
+        'input'
       ],
       icons: [
         'el-icon-platform-eleme',

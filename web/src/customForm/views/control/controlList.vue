@@ -34,6 +34,7 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="reset">重置</el-button>
+          <el-button type="success" @click="add">新增控件</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -45,17 +46,29 @@
       :paging="paging"
       @load="load"
     >
+      <template slot="Name" slot-scope="e">
+        <p style="margin: 0; line-height: 26px;">
+          <icon
+            v-if="e.row.Icon"
+            style="font-size: 24px; margin-right: 5px"
+            :icon="e.row.Icon"
+          />{{ e.row.Name }}
+        </p>
+      </template>
       <template slot="ControlType" slot-scope="e">
         {{ getEnumName(controlType, e.row.ControlType) }}
       </template>
       <template slot="Status" slot-scope="e">
         {{ ControlStatus[e.row.Status].text }}
       </template>
+      <template slot="IsBaseControl" slot-scope="e">
+        {{ e.row.IsBaseControl ? '基础组件': '扩展组件' }}
+      </template>
       <template slot="EditControl" slot-scope="e">
-        <span v-if="dictItems[DictItemDic.editControl] && e.row.EditControl">{{ dictItems[DictItemDic.editControl][e.row.EditControl] }}</span>
+        {{ e.row.EditControl }}
       </template>
       <template slot="ShowControl" slot-scope="e">
-        <span v-if="dictItems[DictItemDic.showControl] && e.row.ShowControl">{{ dictItems[DictItemDic.showControl][e.row.ShowControl] }}</span>
+        {{ e.row.ShowControl }}
       </template>
       <template slot="action" slot-scope="e">
         <el-button
@@ -66,18 +79,32 @@
           circle
           @click="show(e.row)"
         />
+        <el-button
+          size="mini"
+          type="primary"
+          title="编辑控件信息"
+          icon="el-icon-edit"
+          circle
+          @click="edit(e.row)"
+        />
       </template>
     </w-table>
+    <editControl :id="id" :visible="visible" @close="close" />
   </el-card>
 </template>
 
 <script>
 import moment from 'moment'
 import * as controlApi from '@/customForm/api/control'
-import { GetItemNames } from '@/api/base/dictItem'
-import { ControlStatus, EnumDic, DictItemDic } from '@/customForm/config/formConfig'
+import {
+  ControlStatus,
+  EnumDic,
+  DictItemDic
+} from '@/customForm/config/formConfig'
+import editControl from './editControl.vue'
 export default {
   components: {
+    editControl
   },
   data() {
     return {
@@ -85,12 +112,15 @@ export default {
       DictItemDic,
       ControlStatus,
       controlType: [],
+      visible: false,
+      id: null,
       controls: [],
       columns: [
         {
           key: 'Name',
-          title: '控件名称',
+          title: '控件Icon名称',
           align: 'center',
+          slotName: 'Name',
           width: 200
         },
         {
@@ -105,6 +135,13 @@ export default {
           align: 'center',
           slotName: 'ControlType',
           width: 100
+        },
+        {
+          key: 'IsBaseControl',
+          title: '是否为基础组件',
+          align: 'center',
+          slotName: 'IsBaseControl',
+          width: 130
         },
         {
           key: 'MinWidth',
@@ -158,15 +195,22 @@ export default {
   },
   computed: {},
   mounted() {
-    this.loadDict()
     this.load()
   },
   methods: {
     moment,
-    async loadDict() {
-      const res = await GetItemNames([DictItemDic.editControl, DictItemDic.showControl])
-      if (res != null) {
-        this.dictItems = res
+    add() {
+      this.id = null
+      this.visible = true
+    },
+    edit(row) {
+      this.id = row.Id
+      this.visible = true
+    },
+    close(isRefresh) {
+      this.visible = false
+      if (isRefresh) {
+        this.load()
       }
     },
     show(row) {
@@ -177,7 +221,7 @@ export default {
       if (list == null || list.length === 0) {
         return null
       }
-      const item = list.find(a => a.Value === key)
+      const item = list.find((a) => a.Value === key)
       return item == null ? null : item.Text
     },
     async load() {

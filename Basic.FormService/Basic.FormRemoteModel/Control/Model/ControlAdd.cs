@@ -23,6 +23,10 @@ namespace Basic.FormRemoteModel.Control.Model
         public string ShowControl { get; set; }
 
         /// <summary>
+        /// 是否为基础控件
+        /// </summary>
+        public bool IsBaseControl { get; set; }
+        /// <summary>
         /// 控件配置
         /// </summary>
         public ControlConfig[] Config { get; set; }
