@@ -1,9 +1,9 @@
-import BasicLayout from '@/layout/basicLayout'
+import Layout from '@/layout'
 
 export const routes = [
   {
     path: '/form',
-    component: BasicLayout,
+    component: Layout,
     children: [
       {
         path: '/form/body/edit/:id',

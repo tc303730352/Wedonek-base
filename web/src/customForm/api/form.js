@@ -73,3 +73,13 @@ export function Disable(id) {
     }
   })
 }
+
+export function GetBody(id) {
+  return request({
+    url: formatRequestUri('GetBody'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

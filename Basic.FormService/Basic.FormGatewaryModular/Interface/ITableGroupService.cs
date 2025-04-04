@@ -8,6 +8,6 @@ namespace Basic.FormGatewaryModular.Interface
         void Delete ( long id );
         TableGroupDto Get ( long id );
         bool Set ( long id, TableGroupSet datum );
-        void SetSort ( KeyValuePair<long, int>[] sort );
+        void SetSort ( Dictionary<long, int> sort );
     }
 }

@@ -39,11 +39,11 @@ namespace Basic.FormGatewaryModular.Services
             }.Send();
         }
 
-        public void SetSort ( KeyValuePair<long, int>[] sort )
+        public void SetSort ( Dictionary<long, int> sort )
         {
             new SetTableGroupSort
             {
-                Sort = sort,
+                Sort = sort.ToArray(),
             }.Send();
         }
 

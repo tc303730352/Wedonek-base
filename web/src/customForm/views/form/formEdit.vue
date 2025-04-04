@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <div slot="header">
-      <span>表单管理</span>
+      <span>编辑表单-{{ title }}</span>
     </div>
     <div class="formMainBody">
       <div class="body">
@@ -48,11 +48,37 @@
                 :move="checkIsMove"
               >
                 <transition-group>
-                  <div v-for="item in controls" :key="item.key" class="item">
+                  <div v-for="item in controls" :key="item.Id" class="item">
                     <div class="icon">
-                      <icon :icon="item.icon" />
+                      <icon :icon="item.Icon" />
                     </div>
-                    <span>{{ item.Title }}</span>
+                    <span>{{ item.Name }}</span>
+                  </div>
+                </transition-group>
+              </draggable>
+            </div>
+          </div>
+          <div class="card">
+            <div class="header">
+              <div class="title">
+                <el-divider direction="vertical" />
+                扩展控件
+              </div>
+            </div>
+            <div class="list">
+              <draggable
+                v-model="controls"
+                :allback-on-body="true"
+                :sort="false"
+                :group="controlGroup"
+                :move="checkIsMove"
+              >
+                <transition-group>
+                  <div v-for="item in extendControl" :key="item.Id" class="item">
+                    <div class="icon">
+                      <icon :icon="item.Icon" />
+                    </div>
+                    <span>{{ item.Name }}</span>
                   </div>
                 </transition-group>
               </draggable>
@@ -77,7 +103,7 @@
                   class="item"
                 >
                   <formTable
-                    v-if="item.type == 'form'"
+                    v-if="item.TableType == 0"
                     :table="item"
                   />
                 </div>
@@ -94,6 +120,8 @@
 <script>
 import moment from 'moment'
 import * as formApi from '@/customForm/api/form'
+import * as tableApi from '@/customForm/api/table'
+import { GetItems } from '@/customForm/api/control'
 import draggable from 'vuedraggable'
 import formTable from './components/formTable.vue'
 export default {
@@ -103,6 +131,7 @@ export default {
   },
   data() {
     return {
+      title: null,
       layoutGroup: {
         name: 'layout',
         pull: 'clone',
@@ -130,14 +159,8 @@ export default {
           icon: 'table'
         }
       ],
-      controls: [
-        {
-          key: '1',
-          type: 'input',
-          Title: '文本控件',
-          icon: 'input'
-        }
-      ],
+      extendControl: [],
+      controls: [],
       tables: [],
       tableList: [],
       form: {},
@@ -147,9 +170,42 @@ export default {
   computed: {},
   mounted() {
     this.formId = this.$route.params.id
+    if (this.formId == null) {
+      return
+    }
+    this.initControl()
+    this.initForm()
   },
   methods: {
     moment,
+    async initForm() {
+      const res = await formApi.GetBody(this.formId)
+      this.title = res.FormName
+      if (res.Tables != null) {
+        this.tableList = res.Tables
+        this.tables = res.Tables.map(c => {
+          if (c.FormType === 0) {
+            return {
+              id: c.Id,
+              type: 'form',
+              Title: '表单',
+              icon: 'form'
+            }
+          }
+          return {
+            id: c.Id,
+            type: 'table',
+            Title: '多行列表',
+            icon: 'table'
+          }
+        })
+      }
+    },
+    async initControl() {
+      const list = await GetItems()
+      this.extendControl = list.filter(a => a.IsBaseControl === false)
+      this.controls = list.filter(a => a.IsBaseControl)
+    },
     checkIsMove(e) {
       if (e.relatedContext == null) {
         return false
@@ -160,18 +216,36 @@ export default {
       }
       return true
     },
-    addTable(e) {
+    async addTable(e) {
       const index = e.newIndex
       const t = Object.assign({}, this.tables[index])
-      t.Controls = []
-      t.Id = this.id
-      this.id = this.id + 1
-      this.tableList.push(t)
+      const add = {
+        FormId: this.formId,
+        TableType: t.type === 'form' ? 0 : 1,
+        Title: this.title + '-' + (index + 1),
+        Sort: index,
+        IsHidden: false,
+        Columns: 2
+      }
+      const id = await tableApi.Add(add)
+      this.tables[index].id = id
+      add.Columns = []
+      add.Id = id
+      this.tableList.push(add)
     },
-    endSort(e) {
+    async endSort(e) {
+      if (this.tableList.length <= 1 || e.newIndex === e.oldIndex) {
+        return
+      }
+      const data = {}
       const arr = this.tableList
       const t = arr[e.newIndex]
-      arr[e.newIndex] = arr[e.oldIndex]
+      const old = arr[e.oldIndex]
+      data[t.Id] = e.oldIndex
+      data[old.Id] = e.newIndex
+      await tableApi.SetSort(data)
+      arr[e.oldIndex].Sort = e.newIndex
+      arr[e.newIndex] = old
       arr[e.oldIndex] = t
       this.tableList = [].concat(arr)
     }

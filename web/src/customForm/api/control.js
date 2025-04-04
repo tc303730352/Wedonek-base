@@ -73,3 +73,10 @@ export function Disable(id) {
     }
   })
 }
+
+export function GetItems() {
+  return request({
+    url: formatRequestUri('GetItems'),
+    method: 'get'
+  })
+}

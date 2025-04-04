@@ -56,7 +56,7 @@ namespace Basic.FormGatewaryModular.Api
         /// 
         /// </summary>
         /// <param name="sort"></param>
-        public void SetSort ( KeyValuePair<long, int>[] sort )
+        public void SetSort ( Dictionary<long, int> sort )
         {
             this._Service.SetSort(sort);
         }

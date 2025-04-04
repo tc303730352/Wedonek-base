@@ -14,7 +14,6 @@ namespace Basic.FormRemoteModel.Table.Model
         /// <summary>
         /// 表单设置
         /// </summary>
-        [NullValidate("form.table.set.null")]
         public TableSet TableSet
         {
             get;

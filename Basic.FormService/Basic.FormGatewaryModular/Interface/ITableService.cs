@@ -8,6 +8,6 @@ namespace Basic.FormGatewaryModular.Interface
         void Delete ( long id );
         CustomTable Get ( long id );
         bool Set ( long id, CustomTableSet datum );
-        void SetSort ( KeyValuePair<long, int>[] sort );
+        void SetSort ( Dictionary<long, int> sort );
     }
 }
