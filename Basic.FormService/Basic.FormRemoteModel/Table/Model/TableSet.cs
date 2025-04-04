@@ -5,15 +5,10 @@ namespace Basic.FormRemoteModel.Table.Model
     public class TableSet
     {
         /// <summary>
-        /// 单一表单每行列数
-        /// </summary>
-        public int? Columns { get; set; }
-
-        /// <summary>
         /// 列表行自动生成方式
         /// </summary>
         [NullValidate("form.table.row.generate.mode.null")]
-        [LenValidate("form.table.row.generate.mode.len",3)]
+        [LenValidate("form.table.row.generate.mode.len", 3)]
         public string RowGenerateMode { get; set; }
 
         /// <summary>

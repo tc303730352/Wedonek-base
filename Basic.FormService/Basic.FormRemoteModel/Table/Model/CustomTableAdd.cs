@@ -13,7 +13,7 @@ namespace Basic.FormRemoteModel.Table.Model
         /// <summary>
         /// 表单类型
         /// </summary>
-        [EnumValidate("form.table.type.error",typeof(FormTableType))]
+        [EnumValidate("form.table.type.error", typeof(FormTableType))]
         public FormTableType TableType
         {
             get;

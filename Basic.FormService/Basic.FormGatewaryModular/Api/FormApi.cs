@@ -14,6 +14,10 @@ namespace Basic.FormGatewaryModular.Api
         {
             this._Service = service;
         }
+        public FormBody GetBody ( [NumValidate("form.id.error", 1)] long id )
+        {
+            return this._Service.GetBody(id);
+        }
         /// <summary>
         /// 
         /// </summary>

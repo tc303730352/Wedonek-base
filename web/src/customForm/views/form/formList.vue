@@ -9,6 +9,7 @@
           ref="dicItemTree"
           :dic-id="DictItemDic.formType"
           @change="chioseFormType"
+          @load="loadFormType"
         />
       </el-card>
       <el-card slot="right">
@@ -51,6 +52,20 @@
           :paging="paging"
           @load="load"
         >
+          <template slot="formType" slot-scope="e">
+            {{ formType[e.row.FormType] }}
+          </template>
+          <template slot="createTime" slot-scope="e">
+            {{ moment(e.row.CreateTime).format('YYYY-MM-DD HH:mm') }}
+          </template>
+          <template slot="status" slot-scope="e">
+            <el-switch
+              :value="e.row.FormStatus == 1"
+              active-text="启用"
+              :inactive-text="e.row.FormStatus == 0 ? '起草' : '停用'"
+              @change="(val)=> setStatus(e.row, val)"
+            />
+          </template>
           <template slot="action" slot-scope="e">
             <el-button
               size="mini"
@@ -59,6 +74,14 @@
               icon="el-icon-edit"
               circle
               @click="edit(e.row)"
+            />
+            <el-button
+              size="mini"
+              type="primary"
+              title="编辑表单结构"
+              icon="el-icon-setting"
+              circle
+              @click="editForm(e.row)"
             />
             <el-button
               size="mini"
@@ -72,6 +95,7 @@
         </w-table>
       </el-card>
     </leftRightSplit>
+    <editForm :id="id" :form-type="queryParam.FormType" :visible="visible" @close="close" />
   </div>
 </template>
 
@@ -84,9 +108,11 @@ import {
   EnumDic
 } from '@/customForm/config/formConfig'
 import dicItemTree from '@/components/base/dicItemTree.vue'
+import editForm from './editForm.vue'
 export default {
   components: {
-    dicItemTree
+    dicItemTree,
+    editForm
   },
   data() {
     return {
@@ -101,17 +127,18 @@ export default {
       ],
       isShowChildren: false,
       title: '表单列表',
+      formType: {},
       columns: [
         {
           key: 'FormName',
-          title: '表单名称',
+          title: '表单标题',
           align: 'left',
           width: 150
         },
         {
           key: 'FormShow',
           title: '表单使用说明',
-          align: 'center',
+          align: 'right',
           minWidth: 200
         },
         {
@@ -123,7 +150,7 @@ export default {
         },
         {
           key: 'FormStatus',
-          title: '用户状态',
+          title: '表单状态',
           align: 'center',
           slotName: 'status',
           minWidth: 120
@@ -148,14 +175,14 @@ export default {
           title: '操作',
           align: 'left',
           fixed: 'right',
-          width: '150px',
+          width: '180px',
           slotName: 'action'
         }
       ],
       paging: {
         Size: 20,
         Index: 1,
-        SortName: 'EmpId',
+        SortName: 'Id',
         IsDesc: false,
         Total: 0
       },
@@ -177,18 +204,27 @@ export default {
   mounted() {
     this.initPower()
     this.title = '表单列表'
-    this.load()
   },
   methods: {
     moment,
+    close(isRefresh) {
+      this.visible = false
+      if (isRefresh) {
+        this.load()
+      }
+    },
+    loadFormType(e) {
+      this.formType = e.text
+      this.load()
+    },
     async initPower() {
       this.rolePower = await this.$checkPower(this.rolePower)
     },
     checkPower(power) {
       return this.rolePower.includes(power)
     },
-    show(row) {
-      this.$router.push({ name: 'showForm', params: { id: row.Id }})
+    editForm(row) {
+      this.$router.push({ name: 'formBodyEdit', params: { id: row.Id }})
     },
     add() {
       this.id = null
@@ -204,7 +240,7 @@ export default {
         type: 'success',
         message: '设置成功!'
       })
-      row.Status = isEnable ? 1 : 0
+      row.FormStatus = isEnable ? 1 : 0
     },
     async load() {
       this.queryParam.CompanyId = this.comId

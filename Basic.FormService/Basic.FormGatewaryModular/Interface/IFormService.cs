@@ -6,6 +6,7 @@ namespace Basic.FormGatewaryModular.Interface
 {
     public interface IFormService
     {
+        FormBody GetBody ( long id );
         long Add ( FormAdd datum );
         void Delete ( long id );
         void Enable ( long id );

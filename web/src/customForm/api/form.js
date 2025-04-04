@@ -30,7 +30,7 @@ export function Set(id, data) {
     method: 'post',
     data: {
       Id: id,
-      Datum: data
+      Value: data
     }
   })
 }
@@ -66,7 +66,7 @@ export function Enable(id) {
 
 export function Disable(id) {
   return request({
-    url: formatRequestUri('Disable'),
+    url: formatRequestUri('Stop'),
     method: 'get',
     params: {
       id

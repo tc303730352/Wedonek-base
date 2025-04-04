@@ -23,6 +23,8 @@
       <el-form-item label="控件说明" prop="Description">
         <el-input
           v-model="control.Description"
+          type="textarea"
+          :rows="2"
           maxlength="100"
           placeholder="控件说明"
         />

@@ -80,6 +80,7 @@ export default {
       deptDic: {},
       name: null,
       cache: {},
+      valKey: {},
       props: {
         key: 'Id',
         label: 'DicText',
@@ -117,6 +118,9 @@ export default {
       return res
     },
     initTree(res) {
+      if (res.DicValue != null && res.DicValue !== '') {
+        this.valKey[res.DicValue] = res.DicText
+      }
       if (res.Children != null && res.Children.length > 0) {
         res.style = {
           icon: 'el-icon-folder-opened',
@@ -164,6 +168,7 @@ export default {
       this.trees = res
       const e = {
         isMultiple: this.isMultiple,
+        text: this.valKey,
         cache: this.cache,
         value: []
       }
@@ -211,6 +216,7 @@ export default {
       const e = {
         isMultiple: this.isMultiple,
         cache: this.cache,
+        text: this.valKey,
         value: this.checkboxKey.map((c) => this.cache[c])
       }
       this.$emit('change', e)
@@ -220,6 +226,7 @@ export default {
       const e = {
         isMultiple: this.isMultiple,
         cache: this.cache,
+        text: this.valKey,
         value: []
       }
       if (node !== null) {

@@ -15,6 +15,13 @@ namespace Basic.FormGatewaryModular.Services
                 Datum = datum,
             }.Send();
         }
+        public FormBody GetBody ( long id )
+        {
+            return new GetFormBody
+            {
+                Id = id,
+            }.Send();
+        }
 
         public void Delete ( long id )
         {

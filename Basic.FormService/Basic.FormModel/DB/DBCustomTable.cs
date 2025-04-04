@@ -21,11 +21,6 @@ namespace Basic.FormModel.DB
         public string Title { get; set; }
 
         /// <summary>
-        /// 说明
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
         /// 表单类型
         /// </summary>
         public FormTableType TableType
@@ -43,6 +38,10 @@ namespace Basic.FormModel.DB
             get;
             set;
         }
+        /// <summary>
+        /// 每行的列数
+        /// </summary>
+        public int? Columns { get; set; }
         /// <summary>
         /// 排序位
         /// </summary>

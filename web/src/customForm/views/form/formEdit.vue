@@ -93,6 +93,7 @@
 
 <script>
 import moment from 'moment'
+import * as formApi from '@/customForm/api/form'
 import draggable from 'vuedraggable'
 import formTable from './components/formTable.vue'
 export default {
@@ -139,11 +140,14 @@ export default {
       ],
       tables: [],
       tableList: [],
-      id: 1
+      form: {},
+      formId: null
     }
   },
   computed: {},
-  mounted() {},
+  mounted() {
+    this.formId = this.$route.params.id
+  },
   methods: {
     moment,
     checkIsMove(e) {

@@ -29,5 +29,11 @@ namespace Basic.FormRemoteModel.Table.Model
         /// 是否隐藏标题
         /// </summary>
         public bool IsHidden { get; set; }
+
+        /// <summary>
+        /// 每行的列数
+        /// </summary>
+        public int? Columns { get; set; }
+
     }
 }

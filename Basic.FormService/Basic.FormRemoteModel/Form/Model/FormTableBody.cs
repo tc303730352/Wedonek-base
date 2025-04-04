@@ -1,6 +1,6 @@
-﻿namespace Basic.FormRemoteModel.Table.Model
+﻿namespace Basic.FormRemoteModel.Form.Model
 {
-    public class CustomTable
+    public class FormTableBody
     {
         public long Id { get; set; }
 
@@ -17,21 +17,21 @@
             get;
             set;
         }
+
         /// <summary>
-        /// 单一表单每行列数
+        /// 每行的列数
         /// </summary>
-        public int? Columns { get; set; }
-        /// <summary>
-        /// 表单设置
-        /// </summary>
-        public TableSet TableSet
-        {
-            get;
-            set;
-        }
+        public int? ColNum { get; set; }
+
+
         /// <summary>
         /// 是否隐藏标题
         /// </summary>
         public bool IsHidden { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public FormTableColumn[] Columns { get; set; }
     }
 }

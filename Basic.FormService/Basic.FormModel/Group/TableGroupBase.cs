@@ -1,17 +1,8 @@
-﻿using SqlSugar;
-
-namespace Basic.FormModel.DB
+﻿namespace Basic.FormModel.Group
 {
-    [SugarTable("TableGroup")]
-    public class DBTableGroup
+    public class TableGroupBase
     {
-        [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }
-
-        /// <summary>
-        /// 表单ID
-        /// </summary>
-        public long FormId { get; set; }
 
         /// <summary>
         /// 表ID
@@ -30,10 +21,6 @@ namespace Basic.FormModel.DB
         /// </summary>
         public int Sort { get; set; }
 
-        /// <summary>
-        /// 是否固定生成
-        /// </summary>
-        public bool IsFixed { get; set; }
         /// <summary>
         /// 是否隐藏标题
         /// </summary>

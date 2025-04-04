@@ -30,7 +30,7 @@ export function Set(id, data) {
     method: 'post',
     data: {
       Id: id,
-      Datum: data
+      Value: data
     }
   })
 }
