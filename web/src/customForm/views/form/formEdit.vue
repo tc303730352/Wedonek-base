@@ -225,7 +225,7 @@ export default {
         Title: this.title + '-' + (index + 1),
         Sort: index,
         IsHidden: false,
-        Columns: 2
+        ColNum: 2
       }
       const id = await tableApi.Add(add)
       this.tables[index].id = id
@@ -237,12 +237,18 @@ export default {
       if (this.tableList.length <= 1 || e.newIndex === e.oldIndex) {
         return
       }
-      const data = {}
+      const data = []
       const arr = this.tableList
       const t = arr[e.newIndex]
       const old = arr[e.oldIndex]
-      data[t.Id] = e.oldIndex
-      data[old.Id] = e.newIndex
+      data.push({
+        Id: t.Id,
+        Sort: e.oldIndex
+      })
+      data.push({
+        Id: old.Id,
+        Sort: e.newIndex
+      })
       await tableApi.SetSort(data)
       arr[e.oldIndex].Sort = e.newIndex
       arr[e.newIndex] = old

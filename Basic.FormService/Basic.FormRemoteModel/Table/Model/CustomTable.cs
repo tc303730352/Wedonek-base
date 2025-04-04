@@ -20,7 +20,12 @@
         /// <summary>
         /// 单一表单每行列数
         /// </summary>
-        public int? Columns { get; set; }
+        public int? ColNum { get; set; }
+
+        /// <summary>
+        /// 文本宽度
+        /// </summary>
+        public int? LabelWidth { get; set; }
         /// <summary>
         /// 表单设置
         /// </summary>

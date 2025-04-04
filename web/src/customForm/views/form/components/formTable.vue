@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <formContent :controls="controls" :label-width="labelWidth" />
+    <formContent :controls="controls" :label-width="labelWidth" :colSpan="table.ColNum" />
   </el-card>
 </template>
 
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       controls: [],
-      labelWidth: 80
+      labelWidth: 120
     }
   },
   watch: {
@@ -53,8 +53,8 @@ export default {
   mounted() {},
   methods: {
     reset() {
-      this.labelWidth = 80
-      this.controls = this.table.Controls
+      this.labelWidth = this.table.Columns
+      this.controls = this.table.Columns
     }
   }
 }

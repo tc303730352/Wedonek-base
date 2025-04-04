@@ -23,7 +23,10 @@
         /// </summary>
         public int? ColNum { get; set; }
 
-
+        /// <summary>
+        /// 文本宽度
+        /// </summary>
+        public int? LabelWidth { get; set; }
         /// <summary>
         /// 是否隐藏标题
         /// </summary>

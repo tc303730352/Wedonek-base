@@ -106,7 +106,8 @@ namespace Basic.FormService.Extend
             body.Tables = tables.OrderBy(a => a.Sort).Select(a => new FormTableBody
             {
                 Id = a.Id,
-                ColNum = a.Columns,
+                ColNum = a.ColNum,
+                LabelWidth = a.LabelWidth,
                 IsHidden = a.IsHidden,
                 TableType = a.TableType,
                 Title = a.Title

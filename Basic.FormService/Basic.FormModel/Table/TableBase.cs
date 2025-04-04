@@ -23,8 +23,11 @@ namespace Basic.FormModel.Table
         /// <summary>
         /// 每行的列数
         /// </summary>
-        public int? Columns { get; set; }
-
+        public int? ColNum { get; set; }
+        /// <summary>
+        /// 文本宽度
+        /// </summary>
+        public int? LabelWidth { get; set; }
         /// <summary>
         /// 排序位
         /// </summary>
