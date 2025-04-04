@@ -1,4 +1,5 @@
 ﻿using Basic.FormGatewaryModular.Interface;
+using Basic.FormGatewaryModular.Model;
 using Basic.FormRemoteModel.TableGroup;
 using Basic.FormRemoteModel.TableGroup.Model;
 
@@ -39,11 +40,11 @@ namespace Basic.FormGatewaryModular.Services
             }.Send();
         }
 
-        public void SetSort ( Dictionary<long, int> sort )
+        public void SetSort ( SetSort[] sort )
         {
             new SetTableGroupSort
             {
-                Sort = sort.ToArray(),
+                Sort = sort.Select(x => new KeyValuePair<long, int>(x.Id, x.Sort)).ToArray()
             }.Send();
         }
 

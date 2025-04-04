@@ -1,4 +1,5 @@
-﻿using Basic.FormRemoteModel.Table.Model;
+﻿using Basic.FormGatewaryModular.Model;
+using Basic.FormRemoteModel.Table.Model;
 
 namespace Basic.FormGatewaryModular.Interface
 {
@@ -8,6 +9,6 @@ namespace Basic.FormGatewaryModular.Interface
         void Delete ( long id );
         CustomTable Get ( long id );
         bool Set ( long id, CustomTableSet datum );
-        void SetSort ( Dictionary<long, int> sort );
+        void SetSort ( SetSort[] sort );
     }
 }
