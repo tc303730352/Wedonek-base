@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <formContent :controls="controls" :label-width="labelWidth" :colSpan="table.ColNum" />
+    <formContent :formId="formId" :table="table" />
   </el-card>
 </template>
 
@@ -32,30 +32,18 @@ export default {
     table: {
       type: Object,
       default: null
+    },
+    formId: {
+      type: String,
+      default: null
     }
   },
   data() {
     return {
-      controls: [],
-      labelWidth: 120
-    }
-  },
-  watch: {
-    table: {
-      handler(val) {
-        if (val) {
-          this.reset()
-        }
-      },
-      immediate: true
     }
   },
   mounted() {},
   methods: {
-    reset() {
-      this.labelWidth = this.table.Columns
-      this.controls = this.table.Columns
-    }
   }
 }
 </script>

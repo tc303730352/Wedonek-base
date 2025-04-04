@@ -104,6 +104,7 @@
                 >
                   <formTable
                     v-if="item.TableType == 0"
+                    :form-id="formId"
                     :table="item"
                   />
                 </div>
@@ -218,17 +219,18 @@ export default {
     },
     async addTable(e) {
       const index = e.newIndex
-      const t = Object.assign({}, this.tables[index])
+      const t = this.tables[index]
       const add = {
         FormId: this.formId,
         TableType: t.type === 'form' ? 0 : 1,
         Title: this.title + '-' + (index + 1),
         Sort: index,
         IsHidden: false,
+        LabelWidth: 80,
         ColNum: 2
       }
       const id = await tableApi.Add(add)
-      this.tables[index].id = id
+      t.Id = id
       add.Columns = []
       add.Id = id
       this.tableList.push(add)

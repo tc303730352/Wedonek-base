@@ -1,24 +1,31 @@
-﻿namespace Basic.FormRemoteModel.Column.Model
+﻿using WeDonekRpc.Helper.Validate;
+
+namespace Basic.FormRemoteModel.Column.Model
 {
     public class TableColumnSet
     {
         /// <summary>
         /// 控件ID
         /// </summary>
+        [NumValidate("form.control.id.error", 1)]
         public long ControlId { get; set; }
 
         /// <summary>
         /// 列名
         /// </summary>
+        [NullValidate("form.column.name.null")]
         public string ColName { get; set; }
 
         /// <summary>
         /// 列的别名(对应填充字段名)
         /// </summary>
         public string ColAliasName { get; set; }
+
         /// <summary>
         /// 标题
         /// </summary>
+        [NullValidate("form.column.title.null")]
+        [LenValidate("form.column.title.len", 1, 50)]
         public string ColTitle { get; set; }
 
         /// <summary>
@@ -29,6 +36,7 @@
         /// <summary>
         /// 控件类型
         /// </summary>
+        [EnumValidate("form.column.type.error", typeof(ControlType))]
         public ControlType ColType { get; set; }
 
         /// <summary>

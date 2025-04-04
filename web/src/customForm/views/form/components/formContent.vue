@@ -1,5 +1,5 @@
 <template>
-  <el-form :label-width="labelWidth+'px'" class="formContent">
+  <el-form :label-width="labelWidth" class="formContent">
     <el-row :gutter="24">
       <draggable v-model="list" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
         <transition-group class="draggable-group">
@@ -21,18 +21,20 @@
 
 <script>
 import moment from 'moment'
+import { pinyin } from 'pinyin-pro'
+import * as columnApi from '@/customForm/api/column'
 import draggable from 'vuedraggable'
 export default {
   components: {
     draggable
   },
   props: {
-    controls: {
-      type: Array,
+    formId: {
+      type: String,
       default: null
     },
-    labelWidth: {
-      type: Number,
+    table: {
+      type: String,
       default: null
     }
   },
@@ -40,8 +42,7 @@ export default {
     return {
       list: [],
       controlList: [],
-      id: 1,
-      isRefresh: 0,
+      labelWidth: '80px',
       listControl: {
         name: 'control',
         pull: false,
@@ -50,7 +51,7 @@ export default {
     }
   },
   watch: {
-    controls: {
+    table: {
       handler(val) {
         if (val) {
           this.reset()
@@ -64,15 +65,28 @@ export default {
   methods: {
     moment,
     reset() {
-      this.list = this.controls
+      this.list = this.table.controls
     },
-    addControl(e) {
+    async addControl(e) {
       const index = e.newIndex
-      const t = Object.assign({}, this.list[index])
-      t.Id = this.id
-      this.id = this.id + 1
-      this.list[index] = t
-      this.controlList.push(t)
+      const t = this.list[index]
+      const add = {
+        FormId: this.formId,
+        TableId: this.table.Id,
+        ColSpan: 24 / this.table.ColSpan,
+        ControlId: t.Id,
+        ColTitle: t.Name,
+        Name: pinyin.getCamelChars(t.Name) + (index + 1),
+        ColType: t.ColType,
+        Width: t.Width,
+        Sort: index,
+        EditControl: t.EditControl,
+        ShowControl: t.ShowControl
+      }
+      const id = await columnApi.Add(add)
+      t.Id = id
+      add.Id = id
+      this.controlList.push(add)
     },
     endSort(e) {
       const arr = this.controlList
