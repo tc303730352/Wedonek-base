@@ -6,6 +6,7 @@ namespace Basic.FormGatewaryModular.Interface
 {
     public interface IControlService
     {
+        ControlItem[] GetItems ();
         long Add ( ControlAdd data );
         void Delete ( long id );
         ControlDetailed Get ( long id );

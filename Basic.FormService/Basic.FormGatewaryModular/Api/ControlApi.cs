@@ -15,7 +15,10 @@ namespace Basic.FormGatewaryModular.Api
         {
             this._Service = service;
         }
-
+        public ControlItem[] GetItems ()
+        {
+            return this._Service.GetItems();
+        }
         public long Add ( ControlAdd data )
         {
             return this._Service.Add(data);

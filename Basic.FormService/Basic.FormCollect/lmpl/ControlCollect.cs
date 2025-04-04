@@ -16,6 +16,10 @@ namespace Basic.FormCollect.lmpl
         {
             this._ControlDAL = controlDAL;
         }
+        public Result[] GetEnables<Result> () where Result : class, new()
+        {
+            return this._ControlDAL.Gets<Result>(a => a.Status == ControlStatus.启用);
+        }
         public Result[] Gets<Result> ( long[] ids ) where Result : class
         {
             return this._ControlDAL.Gets<Result>(ids);

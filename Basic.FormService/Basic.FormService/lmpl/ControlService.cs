@@ -48,5 +48,10 @@ namespace Basic.FormService.lmpl
             DBCustomControl db = this._Control.Get(id);
             return this._Control.Set(db, set);
         }
+
+        public ControlItem[] GetItems ()
+        {
+            return this._Control.GetEnables<ControlItem>();
+        }
     }
 }

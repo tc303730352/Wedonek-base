@@ -13,5 +13,6 @@ namespace Basic.FormService.Interface
         ControlDetailed Get ( long id );
         PagingResult<ControlDto> Query ( ControlQuery query, IBasicPage paging );
         bool Set ( long id, ControlSet set );
+        ControlItem[] GetItems ();
     }
 }

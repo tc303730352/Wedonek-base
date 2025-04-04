@@ -12,6 +12,8 @@ namespace Basic.FormCollect
         void Delete ( DBCustomControl control );
         DBCustomControl Get ( long id );
         Result[] Gets<Result> ( long[] ids ) where Result : class;
+        Result[] GetEnables<Result> () where Result : class, new();
+
         Result[] Gets<Result> ( long[] ids, Expression<Func<DBCustomControl, Result>> selector );
         Result[] Query<Result> ( ControlQuery query, IBasicPage paging, out int count ) where Result : class;
         bool Set ( DBCustomControl control, ControlSet set );

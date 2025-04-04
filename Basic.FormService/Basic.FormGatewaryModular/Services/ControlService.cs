@@ -16,7 +16,10 @@ namespace Basic.FormGatewaryModular.Services
                 Datum = data
             }.Send();
         }
-
+        public ControlItem[] GetItems ()
+        {
+            return new GetControlItems().Send();
+        }
         public void Delete ( long id )
         {
             new DeleteControl

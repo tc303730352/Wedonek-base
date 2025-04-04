@@ -14,6 +14,10 @@ namespace Basic.FormService.RpcEvent
         {
             this._Service = service;
         }
+        public ControlItem[] GetControlItems ( GetControlItems obj )
+        {
+            return this._Service.GetItems();
+        }
         public bool SetControlStatus ( SetControlStatus obj )
         {
             return this._Service.SetStatus(obj.Id, obj.Status);
