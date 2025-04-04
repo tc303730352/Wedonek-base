@@ -12,6 +12,12 @@
         启用 = 1,
         停用 = 2
     }
+    public enum FormUseRange
+    {
+        业务 = 1,
+        审批流程 = 2,
+        全部 = 0
+    }
     public enum ValidateRuleType
     {
         数字范围 = 0,

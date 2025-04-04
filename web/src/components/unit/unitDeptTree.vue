@@ -283,6 +283,9 @@ export default {
       return null
     },
     async loadTree() {
+      if (this.selectKeys == null || this.selectKeys.length === 0) {
+        this.checkboxKey = []
+      }
       const res = await this.load()
       const e = {
         isMultiple: this.isMultiple,

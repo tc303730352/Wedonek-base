@@ -1,7 +1,7 @@
 <template>
   <el-tree
-    ref="deptTree"
-    :data="units"
+    ref="dictTree"
+    :data="trees"
     :default-expand-all="true"
     :highlight-current="true"
     :props="props"
@@ -12,7 +12,7 @@
     :default-checked-keys="checkboxKey"
     :check-strictly="checkstrictly"
     node-key="Id"
-    @node-click="chioseUnit"
+    @node-click="chioseNode"
     @check-change="checkChange"
   >
     <span slot-scope="{ node, data }" class="slot-t-node">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getTrees, GetNames } from '@/api/base/treeDicItem'
+import { getTrees } from '@/api/base/treeDicItem'
 export default {
   props: {
     dicId: {
@@ -59,6 +59,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isChioseEnd: {
+      type: Boolean,
+      default: true
+    },
     styleSet: {
       type: Object,
       default: () => {
@@ -70,15 +74,15 @@ export default {
   },
   data() {
     return {
-      units: [],
+      trees: [],
       chioseKey: null,
       checkboxKey: [],
       deptDic: {},
       name: null,
-      comNameCache: {},
+      cache: {},
       props: {
         key: 'Id',
-        label: 'Name',
+        label: 'DicText',
         children: 'Children'
       }
     }
@@ -92,7 +96,7 @@ export default {
           this.loadTree()
         }
       },
-      immediate: false
+      immediate: true
     },
     selectKeys: {
       handler(val) {
@@ -103,102 +107,48 @@ export default {
   },
   methods: {
     async load() {
-      const res = await getTrees({
-        CompanyId: this.companyId,
-        Status: this.status,
-        ParentId: this.unitId,
-        IsUnit: this.isUnit,
-        IsSubCompany: this.isSubCompany
-      })
+      const res = await getTrees(this.dicId)
       if (res == null) {
-        return await this.loadDef()
+        return []
       }
-      this.initTree(res)
-      return this.units
+      res.forEach(a => {
+        this.initTree(a)
+      })
+      return res
     },
     initTree(res) {
-      this.comNameCache[res.Id] = res.Name
-      const data = {
-        Id: 'root',
-        Name: res.Name,
-        type: 'com',
-        disabled: this.isMultiple,
-        CompanyId: res.Id,
-        style: {
-          icon: 'el-icon-s-flag',
-          color: '#409eff'
-        },
-        Children: null
-      }
-      this.initChildren(data, res)
-      this.units = [data]
-    },
-    format(data) {
-      if (data.IsUnit) {
-        data.type = 'unit'
-        data.style = {
-          icon: 'tree-table',
+      if (res.Children != null && res.Children.length > 0) {
+        res.style = {
+          icon: 'el-icon-folder-opened',
           color: '#409eff'
         }
+        res.isEnd = false
+        res.Children.forEach(c => {
+          this.initTree(c)
+        })
       } else {
-        data.type = 'dept'
-        data.style = {
-          icon: 'peoples',
+        res.style = {
+          icon: 'el-icon-document',
           color: '#000'
         }
+        res.isEnd = true
       }
-      if (data.Children && data.Children.length > 0) {
-        data.Children.forEach((c) => {
-          c.CompanyId = data.CompanyId
-          this.deptDic[c.Id] = c
-          this.format(c)
-        })
+      this.cache[res.Id] = {
+        value: res.DicValue,
+        text: res.DicText,
+        isEnd: res.isEnd
       }
     },
-    initChildren(data, res) {
-      if (this.isNull(res.Children) && this.isNull(res.Dept)) {
-        return
+    findDef(list) {
+      if (this.isChioseEnd === false) {
+        return list[0].Id
       }
-      const list = []
-      if (!this.isNull(res.Dept)) {
-        res.Dept.forEach((c) => {
-          c.CompanyId = res.Id
-          this.deptDic[c.Id] = c
-          this.format(c)
-          list.push(c)
-        })
-      }
-      if (!this.isNull(res.Children)) {
-        res.Children.forEach(c => {
-          this.comNameCache[c.Id] = c.Name
-          const data = {
-            Id: 'com_' + c.Id,
-            Name: c.Name,
-            disabled: this.isMultiple,
-            type: 'com',
-            CompanyId: c.Id,
-            style: {
-              icon: 'el-icon-s-flag',
-              color: '#409eff'
-            },
-            Children: null
-          }
-          this.initChildren(data, c)
-          list.push(data)
-        })
-      }
-      data.Children = list
-    },
-    isNull(array) {
-      return array == null || array.length === 0
-    },
-    findDept(list) {
       for (let i = 0; i < list.length; i++) {
         const t = list[i]
-        if (t.type !== 'com') {
-          return t
-        } else if (t.Children != null) {
-          const res = this.findDept(t.Children)
+        if (t.isEnd) {
+          return t.Id
+        } else if (t.Children != null && t.Children.length > 0) {
+          const res = this.findDef(t.Children)
           if (res != null) {
             return res
           }
@@ -207,19 +157,22 @@ export default {
       return null
     },
     async loadTree() {
+      if (this.selectKeys == null || this.selectKeys.length === 0) {
+        this.checkboxKey = []
+      }
       const res = await this.load()
+      this.trees = res
       const e = {
         isMultiple: this.isMultiple,
-        companyId: this.companyId,
-        comName: this.comNameCache,
+        cache: this.cache,
         value: []
       }
       if (this.isAutoChiose && res.length > 0) {
-        const chiose = this.findDept(res)
-        this.chioseKey = chiose.Id
-        e.value.push(chiose)
+        const chioseId = this.findDef(res)
+        this.chioseKey = chioseId
+        e.value.push(this.cache[chioseId])
       } else {
-        this.chioseKey = 'root'
+        this.chioseKey = null
       }
       this.$emit('load', e)
     },
@@ -248,7 +201,7 @@ export default {
         }
         this.checkboxKey.push(data.Id)
         if (this.autoChiose(data)) {
-          this.$refs.deptTree.setCheckedKeys(this.checkboxKey, false)
+          this.$refs.dictTree.setCheckedKeys(this.checkboxKey, false)
         }
       } else if (index === -1) {
         return
@@ -257,22 +210,23 @@ export default {
       }
       const e = {
         isMultiple: this.isMultiple,
-        companyId: this.companyId,
-        comName: this.comNameCache,
-        value: this.checkboxKey.map((c) => this.deptDic[c])
+        cache: this.cache,
+        value: this.checkboxKey.map((c) => this.cache[c])
       }
       this.$emit('change', e)
     },
-    chioseUnit(dept) {
-      this.chioseKey = dept.Id
+    chioseNode(node) {
+      this.chioseKey = node.Id
       const e = {
         isMultiple: this.isMultiple,
-        companyId: dept.CompanyId,
-        comName: this.comNameCache,
+        cache: this.cache,
         value: []
       }
-      if (dept.type !== 'com') {
-        e.value.push(this.deptDic[dept.Id])
+      if (node !== null) {
+        this.chioseKey = node.Id
+        e.value.push(this.cache[node.Id])
+      } else {
+        this.chioseKey = null
       }
       this.$emit('change', e)
     }

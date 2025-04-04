@@ -8,6 +8,7 @@ module.exports = {
     ValidateRuleType: 'ValidateRuleType'
   },
   DictItemDic: {
+    formType: '10402849887618197'
   },
   ControlStatus: {
     0: {

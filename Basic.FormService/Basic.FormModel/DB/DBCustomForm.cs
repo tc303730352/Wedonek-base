@@ -20,7 +20,7 @@ namespace Basic.FormModel.DB
         /// <summary>
         /// 表单分类
         /// </summary>
-        public string FormType {  get; set; }
+        public string FormType { get; set; }
         /// <summary>
         /// 表单名称
         /// </summary>

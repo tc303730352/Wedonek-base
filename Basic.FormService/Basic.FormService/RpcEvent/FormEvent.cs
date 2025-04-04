@@ -31,7 +31,7 @@ namespace Basic.FormService.RpcEvent
             return this._Service.Get(obj.Id);
         }
 
-        public PagingResult<FormDto> Query ( QueryForm obj )
+        public PagingResult<FormDto> QueryForm ( QueryForm obj )
         {
             return this._Service.Query(obj.Query, obj);
         }
