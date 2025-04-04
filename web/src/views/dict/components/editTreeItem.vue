@@ -10,6 +10,7 @@
     <el-form ref="dicEdit" :model="item" :rules="rules">
       <el-form-item label="父项" prop="ParentValue">
         <treeDicItem
+          v-if="visible"
           v-model="item.ParentValue"
           :dic-id="dicId"
           :disabled="id != null"

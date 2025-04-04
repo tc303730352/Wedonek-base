@@ -34,7 +34,6 @@
         </el-form-item>
         <el-form-item>
           <el-button @click="reset">重置</el-button>
-          <el-button type="success" @click="add">新增控件</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -59,7 +58,12 @@
         {{ getEnumName(controlType, e.row.ControlType) }}
       </template>
       <template slot="Status" slot-scope="e">
-        {{ ControlStatus[e.row.Status].text }}
+        <el-switch
+          :value="e.row.Status == 1"
+          active-text="启用"
+          :inactive-text="e.row.Status == 0 ? '起草' : '停用'"
+          @change="(val)=> setState(e.row, val)"
+        />
       </template>
       <template slot="IsBaseControl" slot-scope="e">
         {{ e.row.IsBaseControl ? '基础组件': '扩展组件' }}
@@ -71,14 +75,6 @@
         {{ e.row.ShowControl }}
       </template>
       <template slot="action" slot-scope="e">
-        <el-button
-          size="mini"
-          type="primary"
-          title="显示信息"
-          icon="el-icon-view"
-          circle
-          @click="show(e.row)"
-        />
         <el-button
           size="mini"
           type="primary"
@@ -151,14 +147,14 @@ export default {
         },
         {
           key: 'EditControl',
-          title: '编辑控件名',
+          title: '编辑控件路径',
           align: 'center',
           slotName: 'EditControl',
           minWidth: 150
         },
         {
           key: 'ShowControl',
-          title: '显示控件名',
+          title: '显示控件路径',
           slotName: 'ShowControl',
           align: 'center'
         },
@@ -199,13 +195,21 @@ export default {
   },
   methods: {
     moment,
-    add() {
-      this.id = null
-      this.visible = true
-    },
     edit(row) {
       this.id = row.Id
       this.visible = true
+    },
+    async setState(row, isEnable) {
+      if (isEnable) {
+        await controlApi.Enable(row.Id)
+      } else {
+        await controlApi.Disable(row.Id)
+      }
+      this.$message({
+        type: 'success',
+        message: '保存成功!'
+      })
+      row.Status = isEnable ? 1 : 2
     },
     close(isRefresh) {
       this.visible = false

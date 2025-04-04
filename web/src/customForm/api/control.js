@@ -54,13 +54,22 @@ export function Delete(id) {
   })
 }
 
-export function SetStatus(id, status) {
+export function Enable(id) {
   return request({
-    url: formatRequestUri('SetStatus'),
-    method: 'post',
-    data: {
-      Id: id,
-      Value: status
+    url: formatRequestUri('Enable'),
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+
+export function Disable(id) {
+  return request({
+    url: formatRequestUri('Disable'),
+    method: 'get',
+    params: {
+      id
     }
   })
 }

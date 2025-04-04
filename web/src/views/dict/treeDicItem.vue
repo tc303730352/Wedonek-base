@@ -221,7 +221,7 @@ export default {
       })
     },
     async setStatus(row, status) {
-      if (status == 1) {
+      if (status === 1) {
         await dicApi.Enable(row.Id)
       } else {
         await dicApi.Stop(row.Id)
@@ -240,31 +240,34 @@ export default {
       const index = rows.length - 1
       let i = 0
       rows.forEach((a) => {
-        if (a.Children && a.Children.length != 0) {
+        if (a.Children && a.Children.length !== 0) {
           this.format(a.Children)
         }
         a.MaxSort = rows[index].Sort
-        if (a.MaxSort != a.Sort) {
-          a.DownId = tree[i + 1].Id
-        } else if (i != 0) {
-          a.UpId = tree[i - 1].Id
+        if (a.MaxSort !== a.Sort) {
+          a.DownId = rows[i + 1].Id
+        } else if (i !== 0) {
+          a.UpId = rows[i - 1].Id
         }
         i = i + 1
       })
     },
     async load() {
       this.loading = true
-      const tree = await dicApi.getTree(this.queryParam)
+      let tree = await dicApi.getTree(this.queryParam)
+      if (tree == null) {
+        tree = []
+      }
       const index = tree.length - 1
       let i = 0
       tree.forEach((a) => {
-        if (a.Children && a.Children.length != 0) {
+        if (a.Children && a.Children.length !== 0) {
           this.format(a.Children)
         }
         a.MaxSort = tree[index].Sort
-        if (a.MaxSort != a.Sort) {
+        if (a.MaxSort !== a.Sort) {
           a.DownId = tree[i + 1].Id
-        } else if (i != 0) {
+        } else if (i !== 0) {
           a.UpId = tree[i - 1].Id
         }
         i = i + 1

@@ -95,7 +95,14 @@ namespace Basic.HrCollect.Impl
                 if ( item.DicValue.IsNull() )
                 {
                     string maxValue = this._DicItemDAL.Get(c => c.DicId == add.DicId && c.ParentId == add.ParentId && c.IsAutoGenerate, c => SqlSugar.SqlFunc.AggregateMax(c.DicValue));
-                    item.DicValue = prt.DicValue + ( int.Parse(maxValue.Remove(0, prt.DicValue.Length)) + 1 ).ToString().PadLeft(2, '0');
+                    if ( maxValue.IsNull() )
+                    {
+                        item.DicValue = prt.DicValue + "01";
+                    }
+                    else
+                    {
+                        item.DicValue = prt.DicValue + ( int.Parse(maxValue.Remove(0, prt.DicValue.Length)) + 1 ).ToString().PadLeft(2, '0');
+                    }
                     item.IsAutoGenerate = true;
                 }
             }
@@ -106,7 +113,14 @@ namespace Basic.HrCollect.Impl
                 if ( item.DicValue.IsNull() )
                 {
                     string maxValue = this._DicItemDAL.Get(c => c.DicId == add.DicId && c.ParentId == 0 && c.IsAutoGenerate, c => SqlSugar.SqlFunc.AggregateMax(c.DicValue));
-                    item.DicValue = ( int.Parse(maxValue) + 1 ).ToString().PadLeft(2, '0');
+                    if ( maxValue.IsNull() )
+                    {
+                        item.DicValue = "01";
+                    }
+                    else
+                    {
+                        item.DicValue = ( int.Parse(maxValue) + 1 ).ToString().PadLeft(2, '0');
+                    }
                     item.IsAutoGenerate = true;
                 }
             }
