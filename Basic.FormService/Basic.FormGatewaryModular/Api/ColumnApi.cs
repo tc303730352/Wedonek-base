@@ -66,11 +66,14 @@ namespace Basic.FormGatewaryModular.Api
         /// 
         /// </summary>
         /// <param name="sort"></param>
-        public void SetSort ( KeyValuePair<long, int>[] sort )
+        public void SetSort ( LongNullParam<int>[] sort )
         {
             this._Service.SetSort(sort);
         }
-
+        public void SaveSpan ( LongNullParam<int>[] span )
+        {
+            this._Service.SaveSpan(span);
+        }
         /// <summary>
         /// 
         /// </summary>

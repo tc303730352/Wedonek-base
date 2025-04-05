@@ -23,5 +23,6 @@ namespace Basic.FormCollect
         bool SetColSpan ( DBTableColumn source, int span );
         bool SetGroupId ( DBTableColumn source, long groupId );
         void SetSort ( KeyValuePair<long, int>[] sort );
+        void SetColSpan ( KeyValuePair<long, int>[] span );
     }
 }

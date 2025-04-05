@@ -1,5 +1,4 @@
 ﻿using Basic.FormGatewaryModular.Interface;
-using Basic.FormGatewaryModular.Model;
 using Basic.FormRemoteModel.Table.Model;
 using WeDonekRpc.Helper.Validate;
 using WeDonekRpc.HttpApiGateway;
@@ -57,7 +56,7 @@ namespace Basic.FormGatewaryModular.Api
         /// 
         /// </summary>
         /// <param name="sort"></param>
-        public void SetSort ( SetSort[] sort )
+        public void SetSort ( LongNullParam<int>[] sort )
         {
             this._Service.SetSort(sort);
         }

@@ -19,6 +19,10 @@ namespace Basic.FormRemoteModel.Table.Model
             get;
             set;
         }
-
+        /// <summary>
+        /// 排序位
+        /// </summary>
+        [NumValidate("form.table.sort.error", 0)]
+        public int Sort { get; set; }
     }
 }

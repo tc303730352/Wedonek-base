@@ -19,11 +19,7 @@ namespace Basic.FormRemoteModel.Table.Model
             get;
             set;
         }
-        /// <summary>
-        /// 排序位
-        /// </summary>
-        [NumValidate("form.table.sort.error", 0)]
-        public int Sort { get; set; }
+
         /// <summary>
         /// 是否隐藏标题
         /// </summary>
@@ -32,10 +28,12 @@ namespace Basic.FormRemoteModel.Table.Model
         /// <summary>
         /// 每行的列数
         /// </summary>
+        [NumValidate("form.table.label.width.error", 1, 6)]
         public int? ColNum { get; set; }
         /// <summary>
         /// 文本宽度
         /// </summary>
+        [NumValidate("form.table.label.width.error", 80, 200)]
         public int? LabelWidth { get; set; }
 
 

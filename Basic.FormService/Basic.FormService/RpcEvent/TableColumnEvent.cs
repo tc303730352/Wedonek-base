@@ -13,7 +13,10 @@ namespace Basic.FormService.RpcEvent
         {
             this._Service = service;
         }
-
+        public void SaveColumnSpan ( SaveColumnSpan obj )
+        {
+            this._Service.SetColSpan(obj.ColSpan);
+        }
         public long AddColumn ( AddColumn obj )
         {
             return this._Service.Add(obj.Datum);

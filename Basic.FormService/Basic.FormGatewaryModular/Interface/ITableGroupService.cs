@@ -1,5 +1,5 @@
-﻿using Basic.FormGatewaryModular.Model;
-using Basic.FormRemoteModel.TableGroup.Model;
+﻿using Basic.FormRemoteModel.TableGroup.Model;
+using WeDonekRpc.HttpApiGateway.Model;
 
 namespace Basic.FormGatewaryModular.Interface
 {
@@ -9,6 +9,6 @@ namespace Basic.FormGatewaryModular.Interface
         void Delete ( long id );
         TableGroupDto Get ( long id );
         bool Set ( long id, TableGroupSet datum );
-        void SetSort ( SetSort[] sort );
+        void SetSort ( LongNullParam<int>[] sort );
     }
 }

@@ -26,6 +26,17 @@ namespace Basic.FormDAL.Repository
                 throw new ErrorException("form.table.column.set.fail");
             }
         }
+
+        public void SetColSpan ( KeyValuePair<long, int>[] span )
+        {
+            ISqlQueue<DBTableColumn> queue = this._BasicDAL.BeginQueue();
+            span.ForEach(c =>
+            {
+                queue.UpdateOneColumn(a => a.ColSpan == c.Value, a => a.Id == c.Key);
+            });
+            _ = queue.Submit();
+        }
+
         public void SetGroupId ( long id, long groupId )
         {
             if ( !this._BasicDAL.Update(a => a.GroupId == groupId, a => a.Id == id) )

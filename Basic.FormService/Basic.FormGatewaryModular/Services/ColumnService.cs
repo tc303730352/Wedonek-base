@@ -1,6 +1,7 @@
 ﻿using Basic.FormGatewaryModular.Interface;
 using Basic.FormRemoteModel.Column;
 using Basic.FormRemoteModel.Column.Model;
+using WeDonekRpc.HttpApiGateway.Model;
 
 namespace Basic.FormGatewaryModular.Services
 {
@@ -11,6 +12,13 @@ namespace Basic.FormGatewaryModular.Services
             return new AddColumn
             {
                 Datum = datum,
+            }.Send();
+        }
+        public void SaveSpan ( LongNullParam<int>[] span )
+        {
+            new SaveColumnSpan
+            {
+                ColSpan = span.Select(a => new KeyValuePair<long, int>(a.Id, a.Value)).ToArray(),
             }.Send();
         }
 
@@ -48,11 +56,11 @@ namespace Basic.FormGatewaryModular.Services
             }.Send();
         }
 
-        public void SetSort ( KeyValuePair<long, int>[] sort )
+        public void SetSort ( LongNullParam<int>[] sort )
         {
             new SetColumnSort
             {
-                Sort = sort,
+                Sort = sort.Select(a => new KeyValuePair<long, int>(a.Id, a.Value)).ToArray(),
             }.Send();
         }
 

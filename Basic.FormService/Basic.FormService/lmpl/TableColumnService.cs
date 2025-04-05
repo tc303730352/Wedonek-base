@@ -41,7 +41,10 @@ namespace Basic.FormService.lmpl
             DBTableColumn col = this._Column.Get(id);
             return this._Column.SetColSpan(col, span);
         }
-
+        public void SetColSpan ( KeyValuePair<long, int>[] span )
+        {
+            this._Column.SetColSpan(span);
+        }
         public bool SetGroupId ( long id, long groupId )
         {
             DBTableColumn col = this._Column.Get(id);

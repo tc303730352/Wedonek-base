@@ -1,30 +1,35 @@
 <template>
-  <el-card class="table">
-    <div slot="header" class="header">
-      <div class="title">
-        <el-divider direction="vertical" />
-        {{ table.Title }}
+  <div>
+    <el-card class="table">
+      <div slot="header" class="header">
+        <div class="title">
+          <el-divider direction="vertical" />
+          {{ table.Title }}
+        </div>
+        <div class="opBtn">
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click="edit" />
+          <el-button
+            type="danger"
+            size="mini"
+            icon="el-icon-delete"
+            @click="drop"
+          />
+        </div>
       </div>
-      <div class="opBtn">
-        <el-button type="primary" size="mini" icon="el-icon-edit" />
-        <el-button
-          type="danger"
-          size="mini"
-          icon="el-icon-delete"
-          @click="drop"
-        />
-      </div>
-    </div>
-    <formContent :form-id="formId" :table="table" />
-  </el-card>
+      <formContent :form-id="formId" :table="table" :label-width="table.labelWidth" />
+    </el-card>
+    <editFormTable :id="table.Id" :visible.sync="visible" @close="close" />
+  </div>
 </template>
 
 <script>
 import formContent from './formContent.vue'
 import * as tableApi from '@/customForm/api/table'
+import editFormTable from './editFormTable.vue'
 export default {
   components: {
-    formContent
+    formContent,
+    editFormTable
   },
   props: {
     table: {
@@ -37,10 +42,23 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      visible: false
+    }
   },
   mounted() {},
   methods: {
+    close(isSet, table) {
+      if (isSet) {
+        this.table.Title = table.Title
+        this.table.IsHidden = table.IsHidden
+        this.table.ColNum = table.ColNum
+        this.table.LabelWidth = table.LabelWidth
+      }
+    },
+    edit() {
+      this.visible = true
+    },
     drop() {
       const title = '确认删除表单 ' + this.table.Title + '?'
       const that = this

@@ -7,6 +7,7 @@ namespace Basic.FormDAL
     {
         long Add ( TableColumnAdd data );
         void SetColSpan ( long id, int span );
+        void SetColSpan ( KeyValuePair<long, int>[] span );
         void SetGroupId ( long id, long groupId );
         void SetSort ( KeyValuePair<long, int>[] sort );
     }

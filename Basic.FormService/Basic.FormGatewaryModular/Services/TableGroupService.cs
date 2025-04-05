@@ -1,7 +1,7 @@
 ﻿using Basic.FormGatewaryModular.Interface;
-using Basic.FormGatewaryModular.Model;
 using Basic.FormRemoteModel.TableGroup;
 using Basic.FormRemoteModel.TableGroup.Model;
+using WeDonekRpc.HttpApiGateway.Model;
 
 namespace Basic.FormGatewaryModular.Services
 {
@@ -40,11 +40,11 @@ namespace Basic.FormGatewaryModular.Services
             }.Send();
         }
 
-        public void SetSort ( SetSort[] sort )
+        public void SetSort ( LongNullParam<int>[] sort )
         {
             new SetTableGroupSort
             {
-                Sort = sort.Select(x => new KeyValuePair<long, int>(x.Id, x.Sort)).ToArray()
+                Sort = sort.Select(x => new KeyValuePair<long, int>(x.Id, x.Value)).ToArray()
             }.Send();
         }
 

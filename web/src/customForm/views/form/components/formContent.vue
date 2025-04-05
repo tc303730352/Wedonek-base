@@ -1,5 +1,5 @@
 <template>
-  <el-form :label-width="labelWidth" class="formContent">
+  <el-form :label-width="labelWidth+'px'" class="formContent">
     <el-row :gutter="24">
       <draggable v-model="conList" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
         <transition-group class="draggable-group">
@@ -33,6 +33,10 @@ export default {
       type: String,
       default: null
     },
+    labelWidth: {
+      type: Number,
+      default: 120
+    },
     table: {
       type: Object,
       default: null
@@ -42,7 +46,6 @@ export default {
     return {
       conList: [],
       controlList: [],
-      labelWidth: '80px',
       listControl: {
         name: 'control',
         pull: false,
@@ -58,12 +61,29 @@ export default {
         }
       },
       immediate: true
+    },
+    'table.ColNum': {
+      handler(val) {
+        if (val) {
+          this.initColNum()
+        }
+      },
+      immediate: false
     }
   },
   mounted() {
   },
   methods: {
     moment,
+    initColNum() {
+      if (this.controlList.length === 0) {
+        return
+      }
+      this.controlList.forEach(c => {
+        c.ColSpan = 24 / this.table.ColNum
+      })
+      console.log(this.controlList)
+    },
     reset() {
       if (this.table.Columns != null) {
         this.controlList = this.table.Columns

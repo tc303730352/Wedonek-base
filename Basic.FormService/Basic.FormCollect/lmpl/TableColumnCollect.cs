@@ -108,5 +108,10 @@ namespace Basic.FormCollect.lmpl
                 this._Column.Delete(ids);
             }
         }
+
+        public void SetColSpan ( KeyValuePair<long, int>[] span )
+        {
+            this._Column.SetColSpan(span);
+        }
     }
 }

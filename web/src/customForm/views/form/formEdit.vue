@@ -227,7 +227,7 @@ export default {
         Title: this.title + '-' + (index + 1),
         Sort: index,
         IsHidden: false,
-        LabelWidth: 80,
+        LabelWidth: 120,
         ColNum: 2
       }
       const id = await tableApi.Add(add)
@@ -362,5 +362,6 @@ export default {
   min-height: 800px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px;
+  text-align:initial;
 }
 </style>
