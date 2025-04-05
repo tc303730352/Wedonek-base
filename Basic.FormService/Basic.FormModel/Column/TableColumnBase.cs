@@ -1,4 +1,5 @@
 ﻿using Basic.FormRemoteModel;
+using Basic.FormRemoteModel.Column.Model;
 using SqlSugar;
 
 namespace Basic.FormModel.Column
@@ -86,6 +87,11 @@ namespace Basic.FormModel.Column
         /// </summary>
         [SugarColumn(IsJson = true)]
         public Dictionary<string, object> ControlSet { get; set; }
+        /// <summary>
+        /// 验证规则
+        /// </summary>
+        [SugarColumn(IsJson = true)]
+        public ColumnValidateRule[] ValidateRule { get; set; }
 
     }
 }

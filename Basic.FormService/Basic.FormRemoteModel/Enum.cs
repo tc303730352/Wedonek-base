@@ -40,13 +40,13 @@
         Text = 2,
         Label = 3,
         Date = 4,
-        Null = 5,
-        Emp = 6,
-        Dept = 7,
-        Company = 8,
-        Time = 9,
-        Switch = 10,
-        Customize = 11
+        Time = 5,
+        Switch = 6,
+        Emp = 7,
+        Dept = 8,
+        Company = 9,
+        Customize = 10,
+        Datetime = 11,
     }
     public enum FormTableType
     {

@@ -1,4 +1,6 @@
-﻿namespace Basic.FormRemoteModel.Form.Model
+﻿using Basic.FormRemoteModel.Column.Model;
+
+namespace Basic.FormRemoteModel.Form.Model
 {
     public class FormTableColumn
     {
@@ -58,7 +60,7 @@
         public string ShowControl { get; set; }
 
         public Dictionary<string, object> ControlSet { get; set; }
-
+        public ColumnValidateRule[] ValidateRule { get; set; }
         public List<FormTableColumn> Children { get; set; }
     }
 }
