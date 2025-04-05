@@ -40,7 +40,7 @@ namespace Basic.FormService.Extend
                 DefaultVal = col.DefaultVal,
                 Description = col.Description,
                 IsNotNull = col.IsNotNull,
-                Label = col.ColTitle,
+                ColTitle = col.ColTitle,
                 Name = col.ColAliasName.GetValueOrDefault(col.ColName),
                 ControlSet = col.ControlSet,
                 MaxLen = col.MaxLen,

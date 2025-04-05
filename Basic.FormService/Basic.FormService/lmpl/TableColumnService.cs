@@ -14,9 +14,9 @@ namespace Basic.FormService.lmpl
             this._Column = column;
         }
 
-        public long Add ( TableColumnAdd data )
+        public long Add ( TableColumnAdd add )
         {
-            return this._Column.Add(data);
+            return this._Column.Add(add);
         }
 
 

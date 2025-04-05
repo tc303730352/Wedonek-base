@@ -1,10 +1,10 @@
 <template>
   <el-form :label-width="labelWidth" class="formContent">
     <el-row :gutter="24">
-      <draggable v-model="list" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
+      <draggable v-model="conList" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
         <transition-group class="draggable-group">
-          <el-col v-for="item in controlList" :key="item.Id" :span="item.Span == null ? 12 : item.Span">
-            <el-form-item :label="item.Title+item.Id">
+          <el-col v-for="item in controlList" :key="item.Id" :span="item.ColSpan">
+            <el-form-item :label="item.ColTitle">
               <el-input />
               <div class="opBtn">
                 <el-button type="text" icon="el-icon-edit" />
@@ -34,13 +34,13 @@ export default {
       default: null
     },
     table: {
-      type: String,
+      type: Object,
       default: null
     }
   },
   data() {
     return {
-      list: [],
+      conList: [],
       controlList: [],
       labelWidth: '80px',
       listControl: {
@@ -65,18 +65,34 @@ export default {
   methods: {
     moment,
     reset() {
-      this.list = this.table.controls
+      if (this.table.Columns != null) {
+        this.conList = this.table.Columns
+      } else {
+        this.conList = []
+      }
+    },
+    createName(title) {
+      let name = pinyin(title, { pattern: 'first', toneType: 'none', separator: '' })
+      let i = 1
+      do {
+        if (this.controlList.findIndex(c => c.Name === name) === -1) {
+          return name
+        }
+        name = name + i
+        i = i + 1
+      // eslint-disable-next-line no-constant-condition
+      } while (true)
     },
     async addControl(e) {
       const index = e.newIndex
-      const t = this.list[index]
+      const t = this.conList[index]
       const add = {
         FormId: this.formId,
         TableId: this.table.Id,
-        ColSpan: 24 / this.table.ColSpan,
+        ColSpan: 24 / this.table.ColNum,
         ControlId: t.Id,
         ColTitle: t.Name,
-        Name: pinyin.getCamelChars(t.Name) + (index + 1),
+        ColName: this.createName(t.Name),
         ColType: t.ColType,
         Width: t.Width,
         Sort: index,
@@ -88,10 +104,25 @@ export default {
       add.Id = id
       this.controlList.push(add)
     },
-    endSort(e) {
+    async endSort(e) {
+      if (this.controlList.length <= 1 || e.newIndex === e.oldIndex) {
+        return
+      }
+      const data = []
       const arr = this.controlList
       const t = arr[e.newIndex]
-      arr[e.newIndex] = arr[e.oldIndex]
+      const old = arr[e.oldIndex]
+      data.push({
+        Id: t.Id,
+        Sort: e.oldIndex
+      })
+      data.push({
+        Id: old.Id,
+        Sort: e.newIndex
+      })
+      await columnApi.SetSort(data)
+      arr[e.oldIndex].Sort = e.newIndex
+      arr[e.newIndex] = old
       arr[e.oldIndex] = t
       this.controlList = [].concat(arr)
     }

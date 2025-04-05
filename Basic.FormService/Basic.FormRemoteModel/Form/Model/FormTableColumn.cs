@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
 
-        public string Label { get; set; }
+        public string ColTitle { get; set; }
 
         /// <summary>
         /// 说明
