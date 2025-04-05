@@ -41,7 +41,7 @@ namespace Basic.FormService.Extend
                 Description = col.Description,
                 IsNotNull = col.IsNotNull,
                 ColTitle = col.ColTitle,
-                Name = col.ColAliasName.GetValueOrDefault(col.ColName),
+                ColName = col.ColAliasName.GetValueOrDefault(col.ColName),
                 ControlSet = col.ControlSet,
                 MaxLen = col.MaxLen,
                 Width = col.Width
@@ -70,7 +70,7 @@ namespace Basic.FormService.Extend
             {
                 FormTableColumn col = new FormTableColumn
                 {
-                    Name = prt.GroupName,
+                    ColName = prt.GroupName,
                     Children = new List<FormTableColumn>()
                 };
                 if ( gcols.Length > 0 )

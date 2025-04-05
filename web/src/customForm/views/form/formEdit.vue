@@ -331,10 +331,10 @@ export default {
 }
 .controlList .list .item {
   width: 100px;
-  padding: 10px;
+  padding: 5px;
   margin: 5px;
   display: inline-block;
-  height: 100px;
+  height: 80px;
   text-align: center;
   cursor: pointer;
 }
@@ -345,9 +345,9 @@ export default {
 }
 .controlList .list .item span {
   width: 100%;
-  line-height: 25px;
+  line-height: 20px;
   display: inline-block;
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 500;
 }
 .formBody {

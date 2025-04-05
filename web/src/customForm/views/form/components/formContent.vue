@@ -1,6 +1,6 @@
 <template>
   <el-form :label-width="labelWidth+'px'" :rules="rules" class="formContent">
-    <el-row :gutter="24">
+    <el-row :gutter="24"   v-loading="loading">
       <draggable v-model="conList" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
         <transition-group class="draggable-group">
           <el-col v-for="item in controlList" :key="item.ColId" :span="item.ColSpan">
@@ -56,6 +56,7 @@ export default {
       minSpan: 6,
       visible: false,
       id: null,
+      loading: false,
       rules: [],
       listControl: {
         name: 'control',
@@ -154,7 +155,7 @@ export default {
         this.controlList = this.table.Columns
         this.conList = this.table.Columns.map(c => {
           return {
-            ColId: c.Id
+            ColId: c.ColId
           }
         })
         this.initRules()
@@ -165,8 +166,10 @@ export default {
       }
     },
     async remove(item) {
+      this.loading = true
       await columnApi.Delete(item.ColId)
       this.drop(item.ColId)
+      this.loading = false
     },
     drop(id) {
       const index = this.controlList.findIndex(a => a.ColId === id)
@@ -177,20 +180,26 @@ export default {
       this.conList.splice(index, 1)
     },
     createName(title) {
-      let name = pinyin(title, { pattern: 'first', toneType: 'none', separator: '' })
+      const name = pinyin(title, { pattern: 'first', toneType: 'none', separator: '' })
+      console.log(name)
+      let t = name
       let i = 1
       do {
-        if (this.controlList.findIndex(c => c.Name === name) === -1) {
-          return name
+        if (this.controlList.findIndex(c => c.ColName === t) === -1) {
+          return t
         }
-        name = name + i
+        t = name + i
         i = i + 1
       // eslint-disable-next-line no-constant-condition
       } while (true)
     },
     async addControl(e) {
+      this.loading = true
       const index = e.newIndex
       const t = this.conList[index]
+      if (t == null) {
+        return
+      }
       const add = {
         FormId: this.formId,
         TableId: this.table.Id,
@@ -205,9 +214,9 @@ export default {
         ShowControl: t.ShowControl
       }
       const id = await columnApi.Add(add)
-      t.ColId = id
       add.ColId = id
       this.controlList.push(add)
+      this.loading = false
     },
     async endSort(e) {
       if (this.controlList.length <= 1 || e.newIndex === e.oldIndex) {
@@ -236,10 +245,14 @@ export default {
 </script>
 <style scoped>
 .formContent .opBtn {
-  float: right;
+  position: absolute;
+  right: 0;
 }
 .el-col {
   cursor: pointer;
+}
+.formContent .el-form-item {
+  height: 96px;
 }
 .formContent .el-form-item  .opBtn .el-button {
   font-size: 16px;

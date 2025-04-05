@@ -6,7 +6,7 @@ namespace Basic.FormRemoteModel.Form.Model
     {
         public long? ColId { get; set; }
 
-        public string Name { get; set; }
+        public string ColName { get; set; }
 
         public string ColTitle { get; set; }
 
