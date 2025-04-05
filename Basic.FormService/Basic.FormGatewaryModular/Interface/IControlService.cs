@@ -15,5 +15,6 @@ namespace Basic.FormGatewaryModular.Interface
         bool Enable ( long id );
 
         bool Disable ( long id );
+        ControlDatum[] GetList ();
     }
 }

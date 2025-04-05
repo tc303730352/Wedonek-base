@@ -14,7 +14,11 @@ namespace Basic.FormService.RpcEvent
         {
             this._Service = service;
         }
-        public ControlItem[] GetControlItems ( GetControlItems obj )
+        public ControlDatum[] GetControlList ()
+        {
+            return this._Service.GetList();
+        }
+        public ControlItem[] GetControlItems ()
         {
             return this._Service.GetItems();
         }

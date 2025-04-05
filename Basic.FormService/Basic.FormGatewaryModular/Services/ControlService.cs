@@ -43,7 +43,7 @@ namespace Basic.FormGatewaryModular.Services
             {
                 Id = id,
                 Status = ControlStatus.启用
-            }.Send(); throw new NotImplementedException();
+            }.Send();
         }
 
         public ControlDetailed Get ( long id )
@@ -73,6 +73,11 @@ namespace Basic.FormGatewaryModular.Services
                 Datum = set,
                 Id = id
             }.Send();
+        }
+
+        public ControlDatum[] GetList ()
+        {
+            return new GetControlList().Send();
         }
     }
 }

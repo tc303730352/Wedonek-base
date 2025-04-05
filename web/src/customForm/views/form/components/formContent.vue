@@ -9,7 +9,8 @@
               <div class="opBtn">
                 <el-button type="text" icon="el-icon-edit" />
                 <el-button type="text" icon="el-icon-delete" @click="remove(item)" />
-                <el-button type="text" icon="el-icon-s-unfold" />
+                <el-button v-if="item.ColSpan != minSpan" type="text" icon="el-icon-s-fold" @click="setSpan(item, false)" />
+                <el-button v-if="item.ColSpan != maxSpan" type="text" icon="el-icon-s-unfold" @click="setSpan(item, true)" />
               </div>
             </el-form-item>
           </el-col>
@@ -46,6 +47,8 @@ export default {
     return {
       conList: [],
       controlList: [],
+      maxSpan: 24,
+      minSpan: 6,
       listControl: {
         name: 'control',
         pull: false,
@@ -75,16 +78,36 @@ export default {
   },
   methods: {
     moment,
-    initColNum() {
+    async setSpan(item, isAdd) {
+      if (isAdd) {
+        item.ColSpan = parseInt(item.ColSpan) + this.minSpan
+      } else {
+        item.ColSpan = parseInt(item.ColSpan) - this.minSpan
+      }
+      await columnApi.SetSpan(item.ColId, item.ColSpan)
+    },
+    async initColNum() {
+      this.minSpan = 24 / this.table.ColNum
       if (this.controlList.length === 0) {
         return
       }
+      const span = []
       this.controlList.forEach(c => {
-        c.ColSpan = 24 / this.table.ColNum
+        const t = 24 / this.table.ColNum
+        if (t !== c.ColSpan) {
+          c.ColSpan = t
+          span.push({
+            Id: c.ColId,
+            Value: t
+          })
+        }
       })
-      console.log(this.controlList)
+      if (span.length > 0) {
+        await columnApi.SaveSpan(span)
+      }
     },
     reset() {
+      this.minSpan = 24 / this.table.ColNum
       if (this.table.Columns != null) {
         this.controlList = this.table.Columns
         this.conList = this.table.Columns.map(c => {
@@ -152,11 +175,11 @@ export default {
       const old = arr[e.oldIndex]
       data.push({
         Id: t.ColId,
-        Sort: e.oldIndex
+        Value: e.oldIndex
       })
       data.push({
         Id: old.ColId,
-        Sort: e.newIndex
+        Value: e.newIndex
       })
       await columnApi.SetSort(data)
       arr[e.oldIndex].Sort = e.newIndex

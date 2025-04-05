@@ -48,3 +48,20 @@ export function SetSort(data) {
     data
   })
 }
+export function SetSpan(id, span) {
+  return request({
+    url: formatRequestUri('SetSpan'),
+    method: 'post',
+    data: {
+      Id: id,
+      Value: span
+    }
+  })
+}
+export function SaveSpan(data) {
+  return request({
+    url: formatRequestUri('SaveSpan'),
+    method: 'post',
+    data
+  })
+}

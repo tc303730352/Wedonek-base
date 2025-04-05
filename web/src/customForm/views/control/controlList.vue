@@ -209,6 +209,7 @@ export default {
         type: 'success',
         message: '保存成功!'
       })
+      // eslint-disable-next-line require-atomic-updates
       row.Status = isEnable ? 1 : 2
     },
     close(isRefresh) {

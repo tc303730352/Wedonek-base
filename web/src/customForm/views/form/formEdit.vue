@@ -254,11 +254,11 @@ export default {
       const old = arr[e.oldIndex]
       data.push({
         Id: t.Id,
-        Sort: e.oldIndex
+        Value: e.oldIndex
       })
       data.push({
         Id: old.Id,
-        Sort: e.newIndex
+        Value: e.newIndex
       })
       await tableApi.SetSort(data)
       arr[e.oldIndex].Sort = e.newIndex

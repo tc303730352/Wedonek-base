@@ -7,7 +7,7 @@
   >
     <el-form ref="tableEdit" :model="table" :rules="rules" label-width="120px">
       <el-form-item label="标题" prop="Title">
-        <el-input v-model="table.Title" :maxlength="50" placeholder="控件名" />
+        <el-input v-model="table.Title" :maxlength="50" placeholder="标题" />
       </el-form-item>
       <el-form-item label="是否隐藏标题" prop="IsHidden">
         <el-switch v-model="table.IsHidden" active-text="隐藏" inactive-text="显示" />
@@ -57,7 +57,15 @@ export default {
     return {
       title: '编辑表单信息',
       table: {},
-      rules: {},
+      rules: {
+        Title: [
+          {
+            required: true,
+            message: '标题不能为空！',
+            trigger: 'blur'
+          }
+        ]
+      },
       tableType: 0
     }
   },

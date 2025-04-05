@@ -14,5 +14,6 @@ namespace Basic.FormService.Interface
         PagingResult<ControlDto> Query ( ControlQuery query, IBasicPage paging );
         bool Set ( long id, ControlSet set );
         ControlItem[] GetItems ();
+        ControlDatum[] GetList ();
     }
 }

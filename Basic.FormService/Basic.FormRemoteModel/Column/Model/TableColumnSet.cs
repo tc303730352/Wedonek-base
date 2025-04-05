@@ -60,11 +60,6 @@ namespace Basic.FormRemoteModel.Column.Model
         public int? Width { get; set; }
 
         /// <summary>
-        /// 排序位
-        /// </summary>
-        public int Sort { get; set; }
-
-        /// <summary>
         /// 编辑控件
         /// </summary>
         public string EditControl { get; set; }
