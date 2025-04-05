@@ -1,13 +1,13 @@
 <template>
-  <el-form :label-width="labelWidth+'px'" class="formContent">
+  <el-form :label-width="labelWidth+'px'" :rules="rules" class="formContent">
     <el-row :gutter="24">
       <draggable v-model="conList" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
         <transition-group class="draggable-group">
           <el-col v-for="item in controlList" :key="item.ColId" :span="item.ColSpan">
-            <el-form-item :label="item.ColTitle">
-              <el-input />
+            <el-form-item :label="item.ColTitle" :prop="item.ColId">
+              <formControl :control="item" />
               <div class="opBtn">
-                <el-button type="text" icon="el-icon-edit" />
+                <el-button type="text" icon="el-icon-edit" @click="edit(item)" />
                 <el-button type="text" icon="el-icon-delete" @click="remove(item)" />
                 <el-button v-if="item.ColSpan != minSpan" type="text" icon="el-icon-s-fold" @click="setSpan(item, false)" />
                 <el-button v-if="item.ColSpan != maxSpan" type="text" icon="el-icon-s-unfold" @click="setSpan(item, true)" />
@@ -17,6 +17,7 @@
         </transition-group>
       </draggable>
     </el-row>
+    <editColumn :id="id" :visible.sync="visible" :table-type="table.TableType" @close="close" />
   </el-form>
 </template>
 
@@ -25,9 +26,13 @@ import moment from 'moment'
 import { pinyin } from 'pinyin-pro'
 import * as columnApi from '@/customForm/api/column'
 import draggable from 'vuedraggable'
+import editColumn from './editColumn.vue'
+import formControl from './formControl.vue'
 export default {
   components: {
-    draggable
+    draggable,
+    editColumn,
+    formControl
   },
   props: {
     formId: {
@@ -49,6 +54,9 @@ export default {
       controlList: [],
       maxSpan: 24,
       minSpan: 6,
+      visible: false,
+      id: null,
+      rules: [],
       listControl: {
         name: 'control',
         pull: false,
@@ -78,6 +86,40 @@ export default {
   },
   methods: {
     moment,
+    edit(item) {
+      this.id = item.ColId
+      this.visible = true
+    },
+    close(isSet, data) {
+      if (!isSet) {
+        return
+      }
+      const col = this.controlList.find(a => a.ColId === this.id)
+      col.ColName = data.ColName
+      col.ControlId = data.ControlId
+      col.ColTitle = data.ColTitle
+      col.ColType = data.ColType
+      col.Description = data.Description
+      col.MaxLen = data.MaxLen
+      col.IsNotNull = data.IsNotNull
+      col.DefaultVal = data.DefaultVal
+      col.EditControl = data.EditControl
+      col.ShowControl = data.ShowControl
+      this.initRules()
+    },
+    initRules() {
+      const rules = {}
+      this.controlList.forEach(c => {
+        if (c.IsNotNull === true) {
+          rules[c.ColId] = [{
+            required: true,
+            message: c.ColTitle + '不能为空！',
+            trigger: 'blur'
+          }]
+        }
+      })
+      this.rules = rules
+    },
     async setSpan(item, isAdd) {
       if (isAdd) {
         item.ColSpan = parseInt(item.ColSpan) + this.minSpan
@@ -115,9 +157,11 @@ export default {
             ColId: c.Id
           }
         })
+        this.initRules()
       } else {
         this.controlList = []
         this.conList = []
+        this.rules = {}
       }
     },
     async remove(item) {
@@ -154,7 +198,7 @@ export default {
         ControlId: t.Id,
         ColTitle: t.Name,
         ColName: this.createName(t.Name),
-        ColType: t.ColType,
+        ColType: t.ControlType,
         Width: t.Width,
         Sort: index,
         EditControl: t.EditControl,

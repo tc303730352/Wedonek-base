@@ -46,8 +46,21 @@ export default {
       config: {}
     }
   },
+  watch: {
+    control: {
+      handler(val) {
+        if (val) {
+          this.reset()
+        }
+      },
+      immediate: true
+    }
+  },
   mounted() {},
   methods: {
+    reset() {
+      this.type = this.control.ColType 
+    }
   }
 }
 </script>

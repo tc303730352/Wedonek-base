@@ -16,8 +16,7 @@
 </template>
 
 <script>
-import { GetItems } from '@/customForm/api/control'
-import object from 'element-resize-detector/src/detection-strategy/object'
+import { GetList } from '@/customForm/api/control'
 export default {
   components: {
   },
@@ -31,14 +30,14 @@ export default {
       default: null
     },
     control: {
-      type: object,
+      type: Object,
       default: null
     }
   },
   data() {
     return {
       title: '编辑表单信息',
-      groups: {},
+      groups: [],
       cache: {}
     }
   },
@@ -65,32 +64,33 @@ export default {
       }
     },
     async load() {
-      const res = await GetItems(this.id)
-      const base = {
+      const res = await GetList(this.id)
+      const one = {
         key: 'base',
         label: '基础控件',
         list: []
       }
-      const extend = {
-        key: 'base',
+      const two = {
+        key: 'extend',
         label: '扩展控件',
         list: []
       }
       res.forEach(c => {
         this.cache[c.Id] = c
         if (c.IsBaseControl) {
-          base.list.push({
+          one.list.push({
             Id: c.Id,
             Name: c.Name
           })
         } else {
-          extend.list.push({
+          two.list.push({
             Id: c.Id,
             Name: c.Name
           })
         }
       })
-      this.groups = [base, extend]
+      this.groups.push(one)
+      this.groups.push(two)
       if (this.value != null) {
         this.reset()
       }

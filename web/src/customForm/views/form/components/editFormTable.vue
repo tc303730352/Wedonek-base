@@ -3,6 +3,7 @@
     :title="title"
     :visible.sync="visible"
     width="800px"
+    :close-on-click-modal="false"
     :before-close="handleClose"
   >
     <el-form ref="tableEdit" :model="table" :rules="rules" label-width="120px">

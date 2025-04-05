@@ -22,7 +22,7 @@
         /// <summary>
         /// 控件类型
         /// </summary>
-        public ControlType ColType { get; set; }
+        public ControlType ControlType { get; set; }
 
         /// <summary>
         /// 编辑控件

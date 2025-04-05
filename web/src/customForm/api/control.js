@@ -80,3 +80,10 @@ export function GetItems() {
     method: 'get'
   })
 }
+
+export function GetList() {
+  return request({
+    url: formatRequestUri('GetList'),
+    method: 'get'
+  })
+}
