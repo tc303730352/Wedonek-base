@@ -1,4 +1,5 @@
 ﻿using Basic.FormCollect;
+using Basic.FormLocalEvent.Model;
 using Basic.FormModel.DB;
 using Basic.FormRemoteModel;
 using Basic.FormRemoteModel.Form.Model;
@@ -31,6 +32,7 @@ namespace Basic.FormService.lmpl
         {
             DBCustomForm form = this._Form.Get(id);
             this._Form.Delete(form);
+            new FormEvent(form).AsyncSend("Delete");
         }
 
         public PagingResult<FormDto> Query ( FormQuery query, IBasicPage paging )

@@ -106,6 +106,7 @@
                     v-if="item.TableType == 0"
                     :form-id="formId"
                     :table="item"
+                    @remove="dropTable"
                   />
                 </div>
               </transition-group>
@@ -234,6 +235,14 @@ export default {
       add.Columns = []
       add.Id = id
       this.tableList.push(add)
+    },
+    dropTable(id) {
+      const index = this.tableList.findIndex(a => a.Id === id)
+      if (index === -1) {
+        return
+      }
+      this.tableList.splice(index, 1)
+      this.tables.splice(index, 1)
     },
     async endSort(e) {
       if (this.tableList.length <= 1 || e.newIndex === e.oldIndex) {

@@ -10,6 +10,9 @@ namespace Basic.FormCollect
         bool CheckIsNull ( long formId );
         void Clear ( long formId );
         void ClearByTableId ( long tableId );
+
+        void ClearByGroupId ( long groupId );
+
         void Delete ( DBTableColumn source );
         DBTableColumn Get ( long id );
         Result Get<Result> ( long id ) where Result : class;

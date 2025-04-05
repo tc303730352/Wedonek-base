@@ -1,4 +1,5 @@
 ﻿using Basic.FormCollect;
+using Basic.FormLocalEvent.Model;
 using Basic.FormModel.DB;
 using Basic.FormRemoteModel.Table.Model;
 using Basic.FormService.Interface;
@@ -24,6 +25,7 @@ namespace Basic.FormService.lmpl
         {
             DBCustomTable table = this._Table.Get(id);
             this._Table.Delete(table);
+            new TableEvent(table).AsyncSend("Delete");
         }
 
         public CustomTable Get ( long id )

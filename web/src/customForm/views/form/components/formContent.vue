@@ -3,12 +3,12 @@
     <el-row :gutter="24">
       <draggable v-model="conList" class="draggable" :sort="true" :group="listControl" @end="endSort" @add="addControl">
         <transition-group class="draggable-group">
-          <el-col v-for="item in controlList" :key="item.Id" :span="item.ColSpan">
+          <el-col v-for="item in controlList" :key="item.ColId" :span="item.ColSpan">
             <el-form-item :label="item.ColTitle">
               <el-input />
               <div class="opBtn">
                 <el-button type="text" icon="el-icon-edit" />
-                <el-button type="text" icon="el-icon-delete" />
+                <el-button type="text" icon="el-icon-delete" @click="remove(item)" />
                 <el-button type="text" icon="el-icon-s-unfold" />
               </div>
             </el-form-item>
@@ -66,10 +66,28 @@ export default {
     moment,
     reset() {
       if (this.table.Columns != null) {
-        this.conList = this.table.Columns
+        this.controlList = this.table.Columns
+        this.conList = this.table.Columns.map(c => {
+          return {
+            ColId: c.Id
+          }
+        })
       } else {
+        this.controlList = []
         this.conList = []
       }
+    },
+    async remove(item) {
+      await columnApi.Delete(item.ColId)
+      this.drop(item.ColId)
+    },
+    drop(id) {
+      const index = this.controlList.findIndex(a => a.ColId === id)
+      if (index === -1) {
+        return
+      }
+      this.controlList.splice(index, 1)
+      this.conList.splice(index, 1)
     },
     createName(title) {
       let name = pinyin(title, { pattern: 'first', toneType: 'none', separator: '' })
@@ -100,8 +118,8 @@ export default {
         ShowControl: t.ShowControl
       }
       const id = await columnApi.Add(add)
-      t.Id = id
-      add.Id = id
+      t.ColId = id
+      add.ColId = id
       this.controlList.push(add)
     },
     async endSort(e) {
@@ -113,11 +131,11 @@ export default {
       const t = arr[e.newIndex]
       const old = arr[e.oldIndex]
       data.push({
-        Id: t.Id,
+        Id: t.ColId,
         Sort: e.oldIndex
       })
       data.push({
-        Id: old.Id,
+        Id: old.ColId,
         Sort: e.newIndex
       })
       await columnApi.SetSort(data)

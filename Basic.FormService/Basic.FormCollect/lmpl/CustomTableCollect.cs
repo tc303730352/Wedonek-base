@@ -22,15 +22,14 @@ namespace Basic.FormCollect.lmpl
         {
             this._Table.SetSort(sort);
         }
-        public bool Clear ( long formId )
+        public void Clear ( long formId )
         {
             long[] ids = this._Table.Gets(a => a.FormId == formId, a => a.Id);
             if ( ids.IsNull() )
             {
-                return false;
+                return;
             }
             this._Table.Delete(ids);
-            return true;
         }
         public Result[] Gets<Result> ( long[] ids ) where Result : class
         {

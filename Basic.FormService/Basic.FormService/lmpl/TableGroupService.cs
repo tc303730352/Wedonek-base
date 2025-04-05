@@ -1,4 +1,5 @@
 ﻿using Basic.FormCollect;
+using Basic.FormLocalEvent.Model;
 using Basic.FormModel.DB;
 using Basic.FormRemoteModel.TableGroup.Model;
 using Basic.FormService.Interface;
@@ -24,6 +25,7 @@ namespace Basic.FormService.lmpl
         {
             DBTableGroup source = this._Group.Get(id);
             this._Group.Delete(source);
+            new TableGroupEvent(source).AsyncSend("Delete");
         }
 
         public TableGroupDto Get ( long id )

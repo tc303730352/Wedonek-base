@@ -99,5 +99,14 @@ namespace Basic.FormCollect.lmpl
         {
             return this._Column.Get<Result>(id);
         }
+
+        public void ClearByGroupId ( long groupId )
+        {
+            long[] ids = this._Column.Gets(a => a.GroupId == groupId, a => a.Id);
+            if ( !ids.IsNull() )
+            {
+                this._Column.Delete(ids);
+            }
+        }
     }
 }

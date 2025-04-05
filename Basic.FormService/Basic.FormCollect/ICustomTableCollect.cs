@@ -8,7 +8,7 @@ namespace Basic.FormCollect
     {
         long Add ( CustomTableAdd data );
         bool CheckIsNull ( long formId );
-        bool Clear ( long formId );
+        void Clear ( long formId );
         void Delete ( DBCustomTable source );
         DBCustomTable Get ( long id );
         Result Get<Result> ( long id ) where Result : class;
