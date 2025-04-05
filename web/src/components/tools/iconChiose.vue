@@ -114,7 +114,10 @@ export default {
         'wechat',
         'zip',
         'text',
-        'input'
+        'input',
+        'time',
+        'label',
+        'number'
       ],
       icons: [
         'el-icon-platform-eleme',
