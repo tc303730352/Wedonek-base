@@ -53,6 +53,19 @@ export default {
         }
       },
       immediate: true
+    },
+    'control.ColType': {
+      handler(val) {
+        this.reset()
+      },
+      immediate: false
+    },
+    'control.ControlSet': {
+      handler(val) {
+        this.reset()
+      },
+      deep: true,
+      immediate: false
     }
   },
   mounted() {},
@@ -61,7 +74,6 @@ export default {
       this.type = this.control.ColType
       const set = this.control.ControlSet != null ? this.control.ControlSet : {}
       set.placeholder = this.control.Description
-      set.maxlength = this.control.MaxLen
       this.controlSet = set
     }
   }

@@ -46,7 +46,7 @@ export default {
       handler(val) {
         this.reset()
       },
-      immediate: true
+      immediate: false
     }
   },
   mounted() {

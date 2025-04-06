@@ -25,13 +25,6 @@
             <el-form-item label="必填" prop="IsNotNull">
               <el-switch v-model="column.IsNotNull" active-text="不能为空" inactive-text="可为空" />
             </el-form-item>
-            <el-form-item v-if="colType == ControlType.input.value || colType == ControlType.text.value" label="最大文本长度" prop="MaxLen">
-              <el-input-number
-                v-model="column.MaxLen"
-                :precision="0"
-                placeholder="最大文本长度"
-              />
-            </el-form-item>
             <el-form-item label="默认值" prop="DefaultVal">
               <el-input v-model="column.DefaultVal" :maxlength="50" placeholder="默认值" />
             </el-form-item>
@@ -169,7 +162,7 @@ export default {
     async reset() {
       const res = await columnApi.Get(this.id)
       this.column = res
-      this.intiControl()
+      this.$nextTick(this.intiControl)
     },
     titleChange() {
       this.column.ColName = pinyin(this.column.ColTitle, { pattern: 'first', toneType: 'none', separator: '' })
@@ -185,8 +178,7 @@ export default {
         ColTitle: this.column.ColTitle,
         ColAliasName: this.column.ColAliasName,
         Description: this.column.Description,
-        ColType: this.control.ColType,
-        MaxLen: this.column.MaxLen,
+        ColType: this.control.ControlType,
         IsNotNull: this.column.IsNotNull,
         DefaultVal: this.column.DefaultVal,
         Width: this.column.Width,

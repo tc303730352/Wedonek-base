@@ -21,11 +21,6 @@ namespace Basic.FormRemoteModel.Form.Model
         public ControlType ColType { get; set; }
 
         /// <summary>
-        /// 最大文本长度
-        /// </summary>
-        public int? MaxLen { get; set; }
-
-        /// <summary>
         /// 是否不能为空
         /// </summary>
         public bool IsNotNull { get; set; }

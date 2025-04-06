@@ -106,6 +106,7 @@ export default {
       col.DefaultVal = data.DefaultVal
       col.EditControl = data.EditControl
       col.ShowControl = data.ShowControl
+      col.ControlSet = data.ControlSet
       this.initRules()
     },
     initRules() {
