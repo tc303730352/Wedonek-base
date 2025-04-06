@@ -1,20 +1,19 @@
 <template>
-  <el-input v-if="type===ControlType.input.value" v-model="value" :placeholder="control.Description" :maxlength="control.MaxLen" />
-  <el-input-number v-else-if="type===ControlType.number.value" v-model="value" :placeholder="control.Description" />
-  <el-input v-else-if="type===ControlType.text.value" v-model="value" type="textarea" :placeholder="control.Description" :maxlength="control.MaxLen" />
+  <el-input v-if="type===ControlType.input.value" v-model="value" v-bind="controlSet" />
+  <el-input-number v-else-if="type===ControlType.number.value" v-model="value" v-bind="controlSet" />
+  <el-input v-else-if="type===ControlType.text.value" v-model="value" type="textarea" v-bind="controlSet" />
   <span v-else-if="type===ControlType.label.value">{{ value }}</span>
-  <el-date-picker v-else-if="type===ControlType.date.value" v-model="value" type="date" :placeholder="control.Description" />
-  <el-date-picker v-else-if="type===ControlType.dateTime.value" v-model="value" type="datetime" :placeholder="control.Description" />
-  <el-time-select v-else-if="type===ControlType.time.value" v-model="value" :placeholder="control.Description" />
+  <el-date-picker v-else-if="type===ControlType.date.value" v-model="value" type="date" v-bind="controlSet" />
+  <el-date-picker v-else-if="type===ControlType.dateTime.value" v-model="value" type="datetime" v-bind="controlSet" />
+  <el-time-select v-else-if="type===ControlType.time.value" v-model="value" v-bind="controlSet" />
   <el-switch
     v-else-if="type===ControlType.switch.value"
     v-model="value"
-    :active-text="config.Active"
-    :inactive-text="config.Inactive"
+    v-bind="controlSet"
   />
-  <empInput v-else-if="type===ControlType.emp.value" v-model="value" :placeholder="control.Description" />
-  <deptSelect v-else-if="type===ControlType.dept.value" v-model="value" :placeholder="control.Description" />
-  <companySelect v-else-if="type===ControlType.company.value" v-model="value" :placeholder="control.Description" />
+  <empInput v-else-if="type===ControlType.emp.value" v-model="value" v-bind="controlSet" />
+  <deptSelect v-else-if="type===ControlType.dept.value" v-model="value" v-bind="controlSet" />
+  <companySelect v-else-if="type===ControlType.company.value" v-model="value" v-bind="controlSet" />
 </template>
 
 <script>
@@ -43,7 +42,7 @@ export default {
       ControlType,
       type: 0,
       value: null,
-      config: {}
+      controlSet: {}
     }
   },
   watch: {
@@ -60,6 +59,10 @@ export default {
   methods: {
     reset() {
       this.type = this.control.ColType
+      const set = this.control.ControlSet != null ? this.control.ControlSet : {}
+      set.placeholder = this.control.Description
+      set.maxlength = this.control.MaxLen
+      this.controlSet = set
     }
   }
 }

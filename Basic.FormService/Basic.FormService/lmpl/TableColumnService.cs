@@ -2,6 +2,7 @@
 using Basic.FormModel.DB;
 using Basic.FormRemoteModel.Column.Model;
 using Basic.FormService.Interface;
+using WeDonekRpc.Client;
 
 namespace Basic.FormService.lmpl
 {
@@ -28,11 +29,14 @@ namespace Basic.FormService.lmpl
 
         public TableColumnDto Get ( long id )
         {
-            return this._Column.Get<TableColumnDto>(id);
+            DBTableColumn col = this._Column.Get(id);
+            return col.ConvertMap<DBTableColumn, TableColumnDto>();
         }
         public bool Set ( long id, TableColumnSet set )
         {
             DBTableColumn col = this._Column.Get(id);
+            set.EditControl ??= string.Empty;
+            set.ShowControl ??= string.Empty;
             return this._Column.Set(col, set);
         }
 

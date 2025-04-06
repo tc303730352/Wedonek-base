@@ -45,25 +45,25 @@
           </el-form>
         </el-card>
       </el-col>
-      <el-col :span="14">
+      <el-col :span="13" :offset="1">
         <el-card header="控件配置">
           <el-form v-if="control.Config" ref="controlEdit" :model="controlSet" label-width="120px">
-            <el-form-item v-for="item in control.Config" :key="item.Key" :label="item.Label" :prop="item.key">
-              <el-input v-if="item.Type == 0" v-model="controlSet[item.key]" :maxlength="50" :placeholder="item.Placeholder" />
+            <el-form-item v-for="item in control.Config" :key="item.Key" :label="item.Label" :prop="item.Key">
+              <el-input v-if="item.Type == 0" v-model="controlSet[item.Key]" :maxlength="50" :placeholder="item.Placeholder" />
               <treeDicItem
                 v-else-if="item.Type == 1"
-                v-model="controlSet[item.key]"
+                v-model="controlSet[item.Key]"
                 :dic-id="item.DicId"
                 :placeholder="item.Placeholder"
               />
               <dictItem
                 v-else-if="item.Type == 2"
-                v-model="controlSet[item.key]"
+                v-model="controlSet[item.Key]"
                 :dic-id="item.DicId"
                 :placeholder="item.Placeholder"
               />
-              <el-switch v-else-if="item.Type == 3" v-model="controlSet[item.key]" />
-              <el-select v-else-if="item.Type == 4" v-model="controlSet[item.key]">
+              <el-switch v-else-if="item.Type == 3" v-model="controlSet[item.Key]" />
+              <el-select v-else-if="item.Type == 4" v-model="controlSet[item.Key]">
                 <el-option v-for="op in item.Items" :key="op.Key" :value="op.Key">{{ op.Value }}</el-option>
               </el-select>
               <span v-else-if="item.Type == 6">{{ controlSet[item.key] }}</span>
@@ -149,10 +149,10 @@ export default {
   mounted() {},
   methods: {
     intiControl() {
-      this.colType = this.control.ColType
+      this.colType = this.control.ControlType
       const data = {}
       if (this.control.Config != null && this.control.Config.length !== 0) {
-        const sour = this.control.ColType === this.column.ColType ? this.column.ControlSet : null
+        const sour = this.control.ControlType === this.column.ColType ? this.column.ControlSet : null
         this.control.Config.forEach(c => {
           if (c.Type === 6) {
             data[c.Key] = c.DefValue
@@ -163,6 +163,7 @@ export default {
           }
         })
       }
+      console.log(data)
       this.controlSet = data
     },
     async reset() {
@@ -178,9 +179,25 @@ export default {
       this.$emit('close', false)
     },
     async set() {
-      const isSet = await columnApi.Set(this.id, this.column)
+      const data = {
+        ControlId: this.column.ControlId,
+        ColName: this.column.ColName,
+        ColTitle: this.column.ColTitle,
+        ColAliasName: this.column.ColAliasName,
+        Description: this.column.Description,
+        ColType: this.control.ColType,
+        MaxLen: this.column.MaxLen,
+        IsNotNull: this.column.IsNotNull,
+        DefaultVal: this.column.DefaultVal,
+        Width: this.column.Width,
+        EditControl: this.control.EditControl,
+        ShowControl: this.control.ShowControl,
+        ControlSet: this.controlSet,
+        ValidateRule: null
+      }
+      const isSet = await columnApi.Set(this.id, data)
       this.$emit('update:visible', false)
-      this.$emit('close', isSet, this.column)
+      this.$emit('close', isSet, data)
     },
     save() {
       this.$refs['columnEdit'].validate((valid) => {
