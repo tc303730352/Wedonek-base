@@ -94,6 +94,7 @@ export default {
       if (this.value != null) {
         this.reset()
       }
+      this.$emit('load')
     },
     selectChange(val) {
       if (val == null) {

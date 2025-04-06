@@ -181,7 +181,6 @@ export default {
     },
     createName(title) {
       const name = pinyin(title, { pattern: 'first', toneType: 'none', separator: '' })
-      console.log(name)
       let t = name
       let i = 1
       do {

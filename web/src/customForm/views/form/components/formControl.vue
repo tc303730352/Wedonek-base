@@ -59,7 +59,7 @@ export default {
   mounted() {},
   methods: {
     reset() {
-      this.type = this.control.ColType 
+      this.type = this.control.ColType
     }
   }
 }

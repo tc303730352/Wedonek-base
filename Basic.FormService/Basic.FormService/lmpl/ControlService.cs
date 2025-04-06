@@ -1,4 +1,5 @@
 ﻿using Basic.FormCollect;
+using Basic.FormModel.Control;
 using Basic.FormModel.DB;
 using Basic.FormRemoteModel;
 using Basic.FormRemoteModel.Control.Model;
@@ -50,7 +51,8 @@ namespace Basic.FormService.lmpl
         }
         public ControlDatum[] GetList ()
         {
-            return this._Control.GetEnables<ControlDatum>();
+            CustomControl[] list = this._Control.GetEnables<CustomControl>();
+            return list.ConvertMap<CustomControl, ControlDatum>();
         }
         public ControlItem[] GetItems ()
         {
